@@ -383,6 +383,70 @@ function intersection(a, b) {
     if (sOver.length) throw new Error('simon r2 herhaalde vorige ronde: ' + sOver.join(','));
     ok('Simon zegt ronde 2 uniek en niet uit ronde 1: ' + s2.join(', '));
 
+    async function waitRijTik(page, prev, ms) {
+      var deadline = Date.now() + (ms || 12000);
+      while (Date.now() < deadline) {
+        const seq = await page.evaluate((prev) => {
+          var row = document.getElementById('rij-row');
+          if (!row || row.getAttribute('data-phase') !== 'tik') return null;
+          var s = row.getAttribute('data-seq') || '';
+          if (!s) return null;
+          if (prev && s === prev) return null;
+          return s;
+        }, prev || '');
+        if (seq) return seq;
+        await wait(120);
+      }
+      return null;
+    }
+    async function playRijRound(page, n) {
+      var keys = [], i, key, parts, j;
+      var prev = '';
+      for (i = 0; i < n; i++) {
+        key = await waitRijTik(page, prev, 12000);
+        if (!key) throw new Error('rij not ready item ' + (i + 1));
+        keys.push(key);
+        parts = key.split(',');
+        for (j = 0; j < parts.length; j++) {
+          await page.evaluate((pic) => {
+            var b = document.querySelector('#rij-choices [data-act="rij-pick"][data-pic="' + pic + '"]');
+            if (b) b.click();
+          }, parts[j]);
+          await wait(80);
+        }
+        prev = key;
+        await wait(300);
+      }
+      return keys;
+    }
+
+    await fresh(page);
+    await page.click('#btn-goto-memory');
+    await wait(280);
+    await page.click('[data-game="rij"]');
+    await wait(280);
+    var r1 = await playRijRound(page, 5);
+    assertUnique(r1, 'rij r1');
+    ok('Onthoud de rij ronde 1 uniek: ' + r1.join(', '));
+    var rwR = Date.now() + 5000;
+    while (Date.now() < rwR) {
+      const on = await page.evaluate(() => {
+        var el = document.getElementById('overlay-reward');
+        return !!(el && el.className.indexOf('is-hidden') === -1);
+      });
+      if (on) break;
+      await wait(150);
+    }
+    await page.click('#btn-verder');
+    await wait(400);
+    await page.click('[data-game="rij"]');
+    await wait(280);
+    var r2 = await playRijRound(page, 5);
+    assertUnique(r2, 'rij r2');
+    var rOver = r1.filter(function (k) { return r2.indexOf(k) !== -1; });
+    if (rOver.length) throw new Error('rij r2 herhaalde vorige ronde: ' + rOver.join(','));
+    ok('Onthoud de rij ronde 2 uniek en niet uit ronde 1: ' + r2.join(', '));
+
     console.log('\nALL UNIQUE-ROUND CHECKS OK (' + results.length + ')');
     await browser.close();
     process.exit(0);

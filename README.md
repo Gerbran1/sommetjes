@@ -30,6 +30,7 @@ Op het startscherm kies je **Getallen**, **Letters**, **Puzzels** of **Geheugen*
 15. **Memory** — draai de kaartjes om en zoek twee dezelfde. Je kiest 6, 12 of 16 kaartjes (3×2, 4×3 of 4×4). Een heel bord is één ster; daarna ga je terug naar het Geheugen-menu.
 16. **Wat is er weg?** — kijk naar vier plaatjes; één verdwijnt, en je tikt wat er weg is.
 17. **Simon zegt** — kijk en luister naar de gekleurde knoppen en tik dezelfde volgorde na. De rij wordt steeds een stukje langer.
+18. **Onthoud de rij** — onthoud de plaatjes in volgorde en tik ze daarna in dezelfde volgorde na.
 
 Bij de getallen- en letterspellen heeft elke vraag drie grote antwoordknoppen. Bij een goed antwoord of een voltooide puzzel krijg je een ster. Na vijf sterren volgt een klein feestje; daarna ga je terug naar het menu van dat spel. Een fout antwoord is niet erg: je mag het gewoon nog eens proberen.
 

@@ -197,7 +197,7 @@
       line-height: 1;
     }
 
-    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon {
+    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -1707,6 +1707,63 @@
       box-shadow: 0 8px 0 #1565C0, 0 10px 14px rgba(0,0,0,0.12);
     }
     .pad-blue.lit, .pad-blue.pressed, .pad-blue:active { background: #90CAF9; }
+    #rij-row {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      width: 100%;
+      padding: 8px;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+    .rij-slot {
+      -webkit-flex: 0 1 22%;
+      flex: 0 1 22%;
+      max-width: 150px;
+      height: 140px;
+      margin: 8px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.35);
+      border: 4px dashed #B8C4D0;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+    }
+    .rij-slot.filled, .rij-slot.show {
+      background: #FFFDF7;
+      border: 4px solid #FFFDF7;
+      -webkit-box-shadow: 0 6px 0 rgba(0,0,0,0.08);
+      box-shadow: 0 6px 0 rgba(0,0,0,0.08);
+    }
+    .rij-slot.on {
+      border-color: #9B6BFF;
+      -webkit-box-shadow: 0 0 0 4px #E0C8FF, 0 6px 0 rgba(0,0,0,0.08);
+      box-shadow: 0 0 0 4px #E0C8FF, 0 6px 0 rgba(0,0,0,0.08);
+    }
+    .rij-slot .obj-svg, .rij-slot .word-svg, .rij-slot svg {
+      width: 86%;
+      height: 86%;
+      display: block;
+      pointer-events: none;
+    }
+    #rij-choices {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      width: 100%;
+      padding: 4px 8px 12px 8px;
+      min-height: 128px;
+    }
     .lvl-slide {
       background: #FF8A4C;
       -webkit-box-shadow: 0 8px 0 #D4692C, 0 12px 16px rgba(0,0,0,0.15);
@@ -2354,6 +2411,9 @@
       .pic-answer { width: 96px; height: 96px; margin: 0 8px; }
       #weg-answers { min-height: 104px; padding-bottom: 6px; }
       .simon-pad { height: 112px; margin: 6px; border-radius: 22px; }
+      .rij-slot { height: 108px; margin: 6px; border-radius: 16px; }
+      #rij-choices { min-height: 104px; padding-bottom: 6px; }
+      #rij-choices .pic-answer { width: 88px; height: 88px; margin: 0 6px; }
       .letter-set-btn { min-height: 40px; font-size: 18px; }
     }
     @media screen and (max-height: 700px) {
@@ -3085,6 +3145,29 @@
       <div class="prompt" id="simon-prompt">Simon zegt</div>
       <div class="progress-row"></div>
       <div id="simon-board"></div>
+    </div>
+
+    <div id="screen-rij" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-rij-back" data-act="back" title="Terug">
+            <span id="rij-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-rij-home" data-act="home" title="Start" style="margin-left:8px;">
+            <span id="rij-home-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="rij-star-icon"></span>
+            <span class="star-count" id="rij-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt" id="rij-prompt">Onthoud de rij</div>
+      <div class="progress-row"></div>
+      <div id="rij-row"></div>
+      <div id="rij-choices"></div>
     </div>
   </div>
 
@@ -4051,6 +4134,10 @@
     }
     else if (state.level === 'simon') {
       startSimon(false);
+      return;
+    }
+    else if (state.level === 'rij') {
+      startRij(false);
       return;
     }
     else {
@@ -5067,7 +5154,7 @@
   /* ---------- UI ---------- */
   function updateStarsUI() {
     var i, row, html, filled, el, rows;
-    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars'], String(state.stars));
+    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars'], String(state.stars));
     filled = state.towardsReward;
     if (filled > 5) filled = 5;
     html = '';
@@ -5100,7 +5187,7 @@
   function showScreen(name) {
     var ids, i, el;
     state.screen = name;
-    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon'];
+    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij'];
     for (i = 0; i < ids.length; i++) {
       el = $('screen-' + ids[i]);
       if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
@@ -5717,6 +5804,173 @@
         if (state.level !== 'simon' || !state.simon) return;
         playSimonStep(0);
       }, 900);
+    }
+  }
+
+  function setRijPhase(phase) {
+    var row;
+    if (!state.rij) return;
+    state.rij.phase = phase;
+    row = $('rij-row');
+    if (row) row.setAttribute('data-phase', phase);
+  }
+
+  function renderRijSlots(visibleCount, highlight, placed) {
+    var row, html, i, pic, cls;
+    row = $('rij-row');
+    if (!row || !state.rij) return;
+    row.setAttribute('data-seq', state.rij.seq.join(','));
+    row.setAttribute('data-phase', state.rij.phase);
+    html = '';
+    for (i = 0; i < state.rij.seq.length; i++) {
+      cls = 'rij-slot';
+      pic = '';
+      if (placed && i < placed.length) {
+        pic = placed[i];
+        cls += ' filled';
+      } else if (i < visibleCount) {
+        pic = state.rij.seq[i];
+        cls += ' show';
+        if (i === highlight) cls += ' on';
+      }
+      html += '<div class="' + cls + '">' + (pic ? memoryPicHtml(pic) : '') + '</div>';
+    }
+    row.innerHTML = html;
+  }
+
+  function renderRijChoices(show) {
+    var box, html, i, pic, choices;
+    box = $('rij-choices');
+    if (!box || !state.rij) return;
+    if (!show) {
+      box.innerHTML = '';
+      return;
+    }
+    choices = state.rij.choices.slice(0);
+    html = '';
+    for (i = 0; i < choices.length; i++) {
+      pic = choices[i];
+      html += '<button type="button" class="tap pic-answer" data-act="rij-pick" data-pic="' + pic + '">' +
+        memoryPicHtml(pic) + '</button>';
+    }
+    box.innerHTML = html;
+  }
+
+  function playRijStep(step) {
+    if (!state.rij || state.level !== 'rij') return;
+    if (step >= state.rij.seq.length) {
+      renderRijSlots(0, -1, null);
+      renderRijChoices(true);
+      setRijPhase('tik');
+      state.rij.progress = 0;
+      state.rij.placed = [];
+      state.locked = false;
+      elSet('rij-prompt', 'Tik ze in dezelfde volgorde');
+      speak('rij-tik');
+      return;
+    }
+    setRijPhase('show');
+    state.locked = true;
+    renderRijSlots(step + 1, step, null);
+    playTone(330 + step * 40, 0.16, 'sine', 0.08, 0);
+    geheugenTimer = window.setTimeout(function () {
+      geheugenTimer = null;
+      playRijStep(step + 1);
+    }, 900);
+  }
+
+  function startRijPlayback() {
+    clearGeheugenTimer();
+    state.locked = true;
+    setRijPhase('show');
+    renderRijChoices(false);
+    renderRijSlots(0, -1, null);
+    geheugenTimer = window.setTimeout(function () {
+      geheugenTimer = null;
+      playRijStep(0);
+    }, 700);
+  }
+
+  function startRij(fresh) {
+    var pool, len, keys, sets, tries, seq, rest, choices, key, i, pickSet, extra;
+    state.level = 'rij';
+    state.locked = true;
+    if (fresh) {
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+      state.lastWasPersonal = false;
+      resetVoiceCycle();
+    }
+    clearGeheugenTimer();
+    len = ((state.towardsReward || 0) >= 2) ? 4 : 3;
+    pool = memoryPicIds();
+    keys = [];
+    sets = [];
+    for (tries = 0; tries < 40; tries++) {
+      shuffle(pool);
+      seq = pool.slice(0, len);
+      rest = pool.slice(len);
+      extra = (len === 3) ? 2 : 1;
+      choices = seq.concat(rest.slice(0, extra));
+      shuffle(choices);
+      key = seq.join(',');
+      if (!contains(keys, key)) {
+        keys.push(key);
+        sets.push({ seq: seq, choices: choices });
+      }
+    }
+    key = pickAvoiding(keys) || keys[0];
+    pickSet = sets[0];
+    for (i = 0; i < keys.length; i++) {
+      if (keys[i] === key) {
+        pickSet = sets[i];
+        break;
+      }
+    }
+    rememberRoundKey(key);
+    state.rij = { seq: pickSet.seq, choices: pickSet.choices, progress: 0, placed: [], phase: 'show', key: key };
+    hideReward();
+    showScreen('rij');
+    updateStarsUI();
+    elSet('rij-prompt', 'Onthoud de rij');
+    renderRijSlots(0, -1, null);
+    renderRijChoices(false);
+    beginQuestionVoice();
+    speak('rij');
+    startRijPlayback();
+  }
+
+  function onRijPick(el) {
+    var pic;
+    if (state.locked || !state.rij || state.rij.phase !== 'tik') return;
+    pic = el.getAttribute('data-pic');
+    if (pic === state.rij.seq[state.rij.progress]) {
+      state.rij.placed.push(pic);
+      state.rij.progress += 1;
+      renderRijSlots(0, -1, state.rij.placed);
+      playTone(392, 0.1, 'sine', 0.08, 0);
+      el.className = 'tap pic-answer is-correct';
+      if (state.rij.progress >= state.rij.seq.length) {
+        state.locked = true;
+        setRijPhase('done');
+        awardCorrect();
+      }
+    } else {
+      playWrong();
+      el.className = 'tap pic-answer is-wrong shake';
+      showToast('Probeer nog eens', false);
+      speak('retry');
+      state.locked = true;
+      state.rij.progress = 0;
+      state.rij.placed = [];
+      setRijPhase('show');
+      clearGeheugenTimer();
+      geheugenTimer = window.setTimeout(function () {
+        geheugenTimer = null;
+        if (state.level !== 'rij' || !state.rij) return;
+        renderRijChoices(false);
+        startRijPlayback();
+      }, 800);
     }
   }
 
@@ -7970,6 +8224,8 @@
         startWeg(true);
       } else if (g === 'simon') {
         startSimon(true);
+      } else if (g === 'rij') {
+        startRij(true);
       } else {
         showToast('Die komt zo', false);
       }
@@ -7981,6 +8237,10 @@
     }
     if (act === 'simon-pad') {
       onSimonPad(el);
+      return;
+    }
+    if (act === 'rij-pick') {
+      onRijPick(el);
       return;
     }
     if (act === 'memory-size') {
@@ -8220,6 +8480,7 @@
     elSet('memoryplay-home-icon', homeIconHtml());
     elSet('weg-home-icon', homeIconHtml());
     elSet('simon-home-icon', homeIconHtml());
+    elSet('rij-home-icon', homeIconHtml());
     elSet('play-back-icon', backIconHtml());
     elSet('picker-back-icon', backIconHtml());
     elSet('trace-back-icon', backIconHtml());
@@ -8237,6 +8498,7 @@
     elSet('memoryplay-back-icon', backIconHtml());
     elSet('weg-back-icon', backIconHtml());
     elSet('simon-back-icon', backIconHtml());
+    elSet('rij-back-icon', backIconHtml());
     elSet('letters-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('trace-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('names-star-icon', starSvg('#FFD54F', '#F9A825'));
@@ -8255,6 +8517,7 @@
     elSet('memoryplay-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('weg-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('simon-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('rij-star-icon', starSvg('#FFD54F', '#F9A825'));
     if ($('icon-vormen')) {
       $('icon-vormen').innerHTML =
         vormSvg('circle', '#2FB3F0', '#1A7FB3', 0) +

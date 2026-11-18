@@ -13,7 +13,7 @@ const wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms)
 const SCREENS = [
   'start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay',
   'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken',
-  'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon'
+  'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij'
 ];
 
 async function visibleScreen(page) {
@@ -375,6 +375,17 @@ async function waitSpiegelNext(page) {
     ok('Simon zegt terug → Geheugen, home → start');
 
     await fresh(page);
+    await tap(page, '#btn-goto-memory');
+    await tap(page, '[data-game="rij"]');
+    await expectScreen(page, 'rij', 'onthoud de rij');
+    await tap(page, '#btn-rij-back');
+    await expectScreen(page, 'memory', 'rij back');
+    await tap(page, '[data-game="rij"]');
+    await tap(page, '#btn-rij-home');
+    await expectScreen(page, 'start', 'rij home');
+    ok('Onthoud de rij terug → Geheugen, home → start');
+
+    await fresh(page);
     await tap(page, '#btn-goto-games');
     await tap(page, '[data-level="plus5"]');
     await wait(400);
@@ -573,6 +584,56 @@ async function waitSpiegelNext(page) {
     await expectScreen(page, 'memory', 'auto after simon reward');
     if (await rewardVisible(page)) throw new Error('reward still visible after simon auto-return');
     ok('Ronde van 5 (Simon zegt): na beloning automatisch naar Geheugen-menu');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-memory');
+    await tap(page, '[data-game="rij"]');
+    await expectScreen(page, 'rij', 'rij reward setup');
+    for (var ri = 0; ri < 5; ri++) {
+      var deadlineR = Date.now() + 12000;
+      var seqR = null;
+      while (Date.now() < deadlineR) {
+        seqR = await page.evaluate(function () {
+          var row = document.getElementById('rij-row');
+          if (!row || row.getAttribute('data-phase') !== 'tik') return null;
+          var s = row.getAttribute('data-seq') || '';
+          return s ? s.split(',') : null;
+        });
+        if (seqR && seqR.length) break;
+        await wait(120);
+      }
+      if (!seqR || !seqR.length) throw new Error('rij sequence not ready on item ' + (ri + 1));
+      for (var rj = 0; rj < seqR.length; rj++) {
+        await tap(page, '#rij-choices [data-act="rij-pick"][data-pic="' + seqR[rj] + '"]');
+      }
+      if (ri < 4) {
+        var nextR = Date.now() + 10000;
+        var movedR = false;
+        while (Date.now() < nextR) {
+          movedR = await page.evaluate(function (prev) {
+            var row = document.getElementById('rij-row');
+            if (!row) return false;
+            var phase = row.getAttribute('data-phase');
+            var seq = row.getAttribute('data-seq') || '';
+            return phase === 'show' || (phase === 'tik' && seq && seq !== prev);
+          }, seqR.join(','));
+          if (movedR) break;
+          await wait(150);
+        }
+      } else if (!(await waitReward(page, 4500))) {
+        throw new Error('rij reward did not appear');
+      }
+    }
+    var dRij = Date.now() + 5000;
+    while (Date.now() < dRij) {
+      const sRij = await visibleScreen(page);
+      const rwRij = await rewardVisible(page);
+      if (sRij === 'memory' && !rwRij) break;
+      await wait(150);
+    }
+    await expectScreen(page, 'memory', 'auto after rij reward');
+    if (await rewardVisible(page)) throw new Error('reward still visible after rij auto-return');
+    ok('Ronde van 5 (Onthoud de rij): na beloning automatisch naar Geheugen-menu');
 
     console.log('\nALL NAV CHECKS OK (' + results.length + ')');
     await browser.close();
