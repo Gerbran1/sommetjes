@@ -605,12 +605,12 @@
     .table-btn {
       -webkit-flex: 0 0 17%;
       flex: 0 0 17%;
-      max-width: 120px;
-      height: 100px;
+      max-width: 130px;
+      height: 112px;
       margin: 8px 1%;
       border-radius: 24px;
       color: #fff;
-      font-size: 42px;
+      font-size: 56px;
       font-weight: 800;
       background: #8B7CFF;
       -webkit-box-shadow: 0 6px 0 #5E4ED1, 0 10px 14px rgba(0,0,0,0.12);
@@ -727,6 +727,10 @@
       flex: 0 0 auto;
       line-height: 1.15;
     }
+    .prompt.prompt-sum {
+      font-size: 80px;
+      line-height: 1.1;
+    }
     .progress-row {
       display: -webkit-flex;
       display: flex;
@@ -840,11 +844,11 @@
       flex: 1 1 28%;
       max-width: 260px;
       margin: 0 10px;
-      height: 110px;
+      height: 128px;
       border-radius: 28px;
       background: #FFFDF7;
       color: #243044;
-      font-size: 64px;
+      font-size: 80px;
       font-weight: 800;
       line-height: 1;
       -webkit-box-shadow: 0 8px 0 #E2D3A8, 0 12px 16px rgba(0,0,0,0.12);
@@ -1561,11 +1565,12 @@
       .level-btn { min-height: 160px; }
       .level-label { font-size: 28px; }
       .prompt, .prompt-xl, .trace-prompt { font-size: 56px; }
-      .obj { width: 72px; height: 72px; margin: 4px; }
-      .answer-btn { height: 120px; font-size: 68px; margin: 0 8px; }
+      .prompt.prompt-sum { font-size: 80px; }
+      .obj { width: 68px; height: 68px; margin: 4px; }
+      .answer-btn { height: 136px; font-size: 80px; margin: 0 8px; }
       .group { max-width: 360px; }
-      #toast { bottom: 170px; }
-      .table-btn { height: 110px; font-size: 44px; }
+      #toast { bottom: 190px; }
+      .table-btn { height: 118px; font-size: 56px; }
       .table-all { height: 88px; font-size: 30px; }
       .big-letter { font-size: 140px; }
       .word-box .word-svg { width: 200px; height: 200px; }
@@ -1587,12 +1592,16 @@
       .level-icon svg, .level-icon .mini { width: 40px; height: 40px; }
       .level-label { font-size: 26px; }
       .prompt, .prompt-xl, .trace-prompt { font-size: 56px; margin: 0 0 4px 0; }
-      .obj { width: 70px; height: 70px; margin: 4px; }
-      .answer-btn { height: 96px; font-size: 56px; }
-      .op-sign { width: 56px; height: 56px; -webkit-flex-basis: 56px; flex-basis: 56px; }
-      #toast { bottom: 130px; font-size: 24px; }
-      .table-btn { height: 84px; font-size: 36px; margin: 6px 1%; }
-      .table-all { height: 68px; font-size: 26px; margin-top: 10px; }
+      .prompt.prompt-sum { font-size: 80px; margin: 0 0 4px 0; }
+      .obj { width: 60px; height: 60px; margin: 3px; }
+      .tray.size-lg .obj { width: 84px; height: 84px; margin: 5px; }
+      .tray.size-md .obj { width: 72px; height: 72px; margin: 4px; }
+      .tray.size-sm .obj { width: 54px; height: 54px; margin: 3px; }
+      .answer-btn { height: 120px; font-size: 80px; }
+      .op-sign { width: 48px; height: 48px; -webkit-flex-basis: 48px; flex-basis: 48px; }
+      #toast { bottom: 150px; font-size: 24px; }
+      .table-btn { height: 100px; font-size: 52px; margin: 6px 1%; }
+      .table-all { height: 72px; font-size: 26px; margin-top: 10px; }
       .big-letter { font-size: 110px; }
       .word-box .word-svg { width: 130px; height: 130px; }
       .word-label { font-size: 22px; }
@@ -2398,6 +2407,10 @@
   var audioUnlocked = false;
   var lastClipKey = '';
   var lastClipAt = 0;
+  var advanceTimer = null;
+  var advanceEndedHandler = null;
+  var advanceMetaHandler = null;
+  var advancePending = false;
 
   function ensureVoiceAudio() {
     if (!voiceAudio) {
@@ -2427,6 +2440,93 @@
       voiceAudio.pause();
       if (voiceAudio.currentTime) voiceAudio.currentTime = 0;
     } catch (e) {}
+  }
+
+  function clearAdvanceWait() {
+    if (advanceTimer) {
+      window.clearTimeout(advanceTimer);
+      advanceTimer = null;
+    }
+    if (voiceAudio) {
+      if (advanceEndedHandler) {
+        try { voiceAudio.removeEventListener('ended', advanceEndedHandler, false); } catch (e1) {}
+      }
+      if (advanceMetaHandler) {
+        try { voiceAudio.removeEventListener('loadedmetadata', advanceMetaHandler, false); } catch (e1b) {}
+        try { voiceAudio.removeEventListener('canplay', advanceMetaHandler, false); } catch (e1c) {}
+      }
+    }
+    advanceEndedHandler = null;
+    advanceMetaHandler = null;
+  }
+
+  function cancelAdvanceWait() {
+    advancePending = false;
+    clearAdvanceWait();
+  }
+
+  function scheduleAfterPraise(done) {
+    var a, started;
+    clearAdvanceWait();
+    advancePending = true;
+    started = false;
+
+    function go() {
+      if (!advancePending || started) return;
+      started = true;
+      advancePending = false;
+      clearAdvanceWait();
+      done();
+    }
+
+    function goAfterPause() {
+      if (!advancePending || started) return;
+      if (advanceTimer) {
+        window.clearTimeout(advanceTimer);
+        advanceTimer = null;
+      }
+      advanceTimer = window.setTimeout(go, 300);
+    }
+
+    function armFallback(ms) {
+      if (ms < 600) ms = 600;
+      if (ms > 3000) ms = 3000;
+      if (advanceTimer) window.clearTimeout(advanceTimer);
+      advanceTimer = window.setTimeout(go, ms);
+    }
+
+    if (!state.soundOn) {
+      armFallback(1100);
+      return;
+    }
+
+    a = voiceAudio;
+    armFallback(3000);
+    if (!a) return;
+
+    function syncFallback() {
+      var left, ms;
+      if (!advancePending || started) return;
+      try {
+        if (a.duration && isFinite(a.duration) && a.duration > 0) {
+          left = a.duration - (a.currentTime || 0);
+          if (left < 0) left = 0;
+          ms = Math.ceil(left * 1000) + 300;
+          armFallback(ms);
+        }
+      } catch (e2) {}
+    }
+
+    advanceEndedHandler = function () { goAfterPause(); };
+    advanceMetaHandler = syncFallback;
+    a.addEventListener('ended', advanceEndedHandler, false);
+    a.addEventListener('loadedmetadata', advanceMetaHandler, false);
+    a.addEventListener('canplay', advanceMetaHandler, false);
+    a.onerror = function () {
+      try { a.pause(); } catch (e3) {}
+      armFallback(1100);
+    };
+    syncFallback();
   }
 
   function beginQuestionVoice() {
@@ -2677,7 +2777,7 @@
     box = $('objects');
     html = '';
     if (q.mode === 'tables') {
-      $('prompt').className = 'prompt';
+      $('prompt').className = 'prompt prompt-sum';
       box.innerHTML = q.showVisual ? visualTableHtml(q.a, q.b) : '';
       buttons = $('answers').getElementsByTagName('button');
       for (i = 0; i < 3; i++) {
@@ -2695,7 +2795,7 @@
       speak(q.speech);
       return;
     }
-    $('prompt').className = 'prompt';
+    $('prompt').className = (q.mode === 'plus' || q.mode === 'minus') ? 'prompt prompt-sum' : 'prompt';
     if (q.mode === 'count') {
       html = '<div class="group">';
       for (i = 0; i < q.answer; i++) html += objectHtml(q.kind, false);
@@ -3262,13 +3362,13 @@
     showToast(praise.text, true);
     speak(praise.id);
     updateStarsUI();
-    window.setTimeout(function () {
+    scheduleAfterPraise(function () {
       if (state.towardsReward >= 5) {
         showReward();
       } else {
         nextQuestion();
       }
-    }, 1100);
+    });
   }
 
   /* canvas tracing */
@@ -4505,32 +4605,15 @@
   }
 
   function onAnswer(btn) {
-    var val, correct, praiseA;
+    var val, correct;
     if (state.locked) return;
     if (!state.question) return;
     val = btn.getAttribute('data-value');
     correct = String(state.question.answer);
     if (String(val) === correct) {
-      state.locked = true;
-      state.stars += 1;
-      state.sessionCorrect += 1;
-      state.towardsReward += 1;
       state.lastAnswer = correct;
-      saveStars();
       btn.className = 'tap answer-btn is-correct';
-      playSuccess();
-      showBurst();
-      praiseA = choosePraise();
-      showToast(praiseA.text, true);
-      speak(praiseA.id);
-      updateStarsUI();
-      window.setTimeout(function () {
-        if (state.towardsReward >= 5) {
-          showReward();
-        } else {
-          nextQuestion();
-        }
-      }, 1100);
+      awardCorrect();
     } else {
       playWrong();
       btn.className = 'tap answer-btn is-wrong shake';
@@ -4593,6 +4676,7 @@
       return;
     }
     if (act === 'home') {
+      cancelAdvanceWait();
       if (state.screen === 'play' && state.level === 'tables') {
         showPicker();
       } else if (state.screen === 'play' && state.level === 'letters') {
@@ -4619,14 +4703,17 @@
       return;
     }
     if (act === 'goto-games') {
+      cancelAdvanceWait();
       showGamesMenu();
       return;
     }
     if (act === 'goto-letters') {
+      cancelAdvanceWait();
       showLettersMenu();
       return;
     }
     if (act === 'goto-puzzles') {
+      cancelAdvanceWait();
       showPuzzlesMenu();
       return;
     }
@@ -4649,6 +4736,7 @@
       return;
     }
     if (act === 'verder') {
+      cancelAdvanceWait();
       hideReward();
       state.towardsReward = 0;
       updateStarsUI();
@@ -4656,6 +4744,7 @@
       return;
     }
     if (act === 'level') {
+      cancelAdvanceWait();
       level = el.getAttribute('data-level');
       if (level === 'tables') {
         showPicker();
