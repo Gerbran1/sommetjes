@@ -142,6 +142,8 @@
       align-items: center;
       -webkit-justify-content: center;
       justify-content: center;
+      padding: 0;
+      line-height: 0;
     }
     .icon-btn.pressed, .icon-btn:active {
       -webkit-transform: translateY(2px);
@@ -149,7 +151,23 @@
       -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.12);
       box-shadow: 0 1px 0 rgba(0,0,0,0.12);
     }
-    .icon-btn svg { width: 30px; height: 30px; }
+    .icon-btn span {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      line-height: 0;
+    }
+    .icon-btn svg {
+      display: block;
+      width: 30px;
+      height: 30px;
+      margin: 0;
+    }
 
     .star-badge {
       display: -webkit-flex;
@@ -172,7 +190,7 @@
       line-height: 1;
     }
 
-    #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay {
+    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -344,6 +362,75 @@
       opacity: 0.9;
     }
 
+    #choice-grid {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: stretch;
+      align-items: stretch;
+      -webkit-align-content: center;
+      align-content: center;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      max-width: 900px;
+      margin: 8px auto 0 auto;
+    }
+    .choice-btn {
+      -webkit-flex: 0 0 44%;
+      flex: 0 0 44%;
+      max-width: 380px;
+      min-height: 240px;
+      margin: 1.5%;
+      border-radius: 36px;
+      color: #fff;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      padding: 20px 12px;
+    }
+    .choice-btn.pressed, .choice-btn:active {
+      -webkit-transform: translateY(8px);
+      transform: translateY(8px);
+    }
+    .choice-numbers {
+      background: #2FB3F0;
+      -webkit-box-shadow: 0 10px 0 #1A7FB3, 0 14px 20px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 0 #1A7FB3, 0 14px 20px rgba(0,0,0,0.15);
+    }
+    .choice-numbers.pressed, .choice-numbers:active {
+      -webkit-box-shadow: 0 2px 0 #1A7FB3, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #1A7FB3, 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .choice-letters {
+      background: #2EC4B6;
+      -webkit-box-shadow: 0 10px 0 #1A9A8E, 0 14px 20px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 0 #1A9A8E, 0 14px 20px rgba(0,0,0,0.15);
+    }
+    .choice-letters.pressed, .choice-letters:active {
+      -webkit-box-shadow: 0 2px 0 #1A9A8E, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #1A9A8E, 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .choice-glyph {
+      font-size: 72px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .choice-label {
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
     .home-hint {
       font-size: 16px;
       color: #215078;
@@ -509,11 +596,9 @@
     .dots-md .tdot { width: 20px; height: 20px; margin: 5px; }
     .dots-sm .tdot { width: 14px; height: 14px; margin: 3px; -webkit-box-shadow: 0 2px 0 #C85A00; box-shadow: 0 2px 0 #C85A00; }
 
-    .prompt-xl { font-size: 72px; }
-
     /* PLAY */
-    .prompt {
-      font-size: 40px;
+    .prompt, .prompt-xl, .trace-prompt {
+      font-size: 56px;
       font-weight: 800;
       color: #1A4A6A;
       text-align: center;
@@ -521,6 +606,7 @@
       text-shadow: 0 1px 0 rgba(255,255,255,0.7);
       -webkit-flex: 0 0 auto;
       flex: 0 0 auto;
+      line-height: 1.15;
     }
     .progress-row {
       display: -webkit-flex;
@@ -951,10 +1037,6 @@
       display: block;
     }
     .trace-prompt {
-      font-size: 36px;
-      font-weight: 800;
-      color: #1A4A6A;
-      text-align: center;
       margin: 2px 0 4px 0;
     }
     .trace-clear {
@@ -1087,10 +1169,12 @@
     @media screen and (max-width: 800px) {
       .title { font-size: 54px; }
       .sun { width: 96px; height: 96px; }
+      .choice-btn { min-height: 280px; }
+      .choice-glyph { font-size: 80px; }
+      .choice-label { font-size: 44px; }
       .level-btn { min-height: 160px; }
       .level-label { font-size: 28px; }
-      .prompt { font-size: 36px; }
-      .prompt-xl { font-size: 60px; }
+      .prompt, .prompt-xl, .trace-prompt { font-size: 56px; }
       .obj { width: 72px; height: 72px; margin: 4px; }
       .answer-btn { height: 120px; font-size: 68px; margin: 0 8px; }
       .group { max-width: 360px; }
@@ -1105,12 +1189,14 @@
     @media screen and (max-height: 800px) {
       .sun { width: 72px; height: 72px; }
       .title { font-size: 46px; }
+      .choice-btn { min-height: 200px; }
+      .choice-glyph { font-size: 60px; }
+      .choice-label { font-size: 36px; }
       .level-btn { min-height: 118px; }
       .level-icon { height: 48px; margin-bottom: 2px; }
       .level-icon svg, .level-icon .mini { width: 40px; height: 40px; }
       .level-label { font-size: 26px; }
-      .prompt { font-size: 34px; margin: 0 0 4px 0; }
-      .prompt-xl { font-size: 56px; }
+      .prompt, .prompt-xl, .trace-prompt { font-size: 56px; margin: 0 0 4px 0; }
       .obj { width: 70px; height: 70px; margin: 4px; }
       .answer-btn { height: 96px; font-size: 56px; }
       .op-sign { width: 56px; height: 56px; -webkit-flex-basis: 56px; flex-basis: 56px; }
@@ -1124,7 +1210,6 @@
       .name-box { width: 58px; height: 70px; font-size: 36px; margin: 4px; }
       .name-tile { width: 60px; height: 60px; font-size: 32px; margin: 6px; }
       .name-pick { height: 76px; font-size: 32px; margin: 8px 0; }
-      .trace-prompt { font-size: 28px; }
       #letters-grid .level-label { font-size: 22px; }
       #letters-grid .level-btn { min-height: 110px; }
     }
@@ -1141,7 +1226,7 @@
   <div id="c3" class="cloud"></div>
 
   <div id="app">
-    <div id="screen-home">
+    <div id="screen-start">
       <div class="topbar">
         <div class="topbar-left">
           <button type="button" class="tap icon-btn" id="btn-sound" data-act="sound" title="Geluid">
@@ -1150,8 +1235,8 @@
         </div>
         <div class="topbar-right">
           <div class="star-badge">
-            <span class="mini-star" id="home-star-icon"></span>
-            <span class="star-count" id="home-stars">0</span>
+            <span class="mini-star" id="start-star-icon"></span>
+            <span class="star-count" id="start-stars">0</span>
           </div>
         </div>
       </div>
@@ -1161,6 +1246,38 @@
         <h1 class="title">Sommetjes</h1>
         <div class="subtitle">Kies een spel</div>
       </div>
+
+      <div id="choice-grid">
+        <button type="button" class="tap choice-btn choice-numbers" id="btn-goto-games" data-act="goto-games">
+          <div class="choice-glyph">123</div>
+          <div class="choice-label">Getallen</div>
+        </button>
+        <button type="button" class="tap choice-btn choice-letters" id="btn-goto-letters" data-act="goto-letters">
+          <div class="choice-glyph">m</div>
+          <div class="choice-label">Letters</div>
+        </button>
+      </div>
+      <div class="home-hint" id="home-hint"></div>
+    </div>
+
+    <div id="screen-home">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-games-home" data-act="home" title="Terug">
+            <span id="games-home-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-sound-games" data-act="sound" title="Geluid" style="margin-left:8px;">
+            <span id="sound-icon-games"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="games-star-icon"></span>
+            <span class="star-count" id="games-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt">Getallen</div>
 
       <div id="level-grid">
         <button type="button" class="tap level-btn lvl-count" id="btn-count" data-act="level" data-level="count">
@@ -1188,13 +1305,7 @@
           <div class="level-label">Tafels</div>
           <div class="level-sub">1 tot 10</div>
         </button>
-        <button type="button" class="tap level-btn lvl-letters" id="btn-letters" data-act="level" data-level="letters">
-          <div class="level-icon" id="icon-letters"></div>
-          <div class="level-label">Letters</div>
-          <div class="level-sub">m r s …</div>
-        </button>
       </div>
-      <div class="home-hint" id="home-hint"></div>
     </div>
 
     <div id="screen-picker" class="is-hidden">
@@ -1587,8 +1698,8 @@
   }
 
   function homeIconHtml() {
-    return '<svg viewBox="0 0 30 30" width="30" height="30" focusable="false">' +
-      '<path d="M5 14 L15 6 L25 14 V24 H18 V18 H12 V24 H5 Z" fill="#1A7FB3" stroke="#1A7FB3" stroke-width="1.5" stroke-linejoin="round"/>' +
+    return '<svg viewBox="0 0 24 24" width="30" height="30" focusable="false">' +
+      '<path d="M12 3.2 L21.2 11.6 V20.8 H15.2 V14.2 H8.8 V20.8 H2.8 V11.6 Z" fill="#1A7FB3" stroke="#1A7FB3" stroke-width="1.2" stroke-linejoin="round"/>' +
       '</svg>';
   }
 
@@ -1755,7 +1866,7 @@
       a: a,
       b: b,
       answer: sum,
-      prompt: 'Hoeveel?',
+      prompt: a + ' + ' + b + ' = ?',
       speech: a + ' plus ' + b + '. Hoeveel is dat?',
       choices: makeChoices(sum, 1, maxSum)
     };
@@ -1778,7 +1889,7 @@
       total: total,
       take: take,
       answer: left,
-      prompt: 'Hoeveel blijven er?',
+      prompt: total + ' − ' + take + ' = ?',
       speech: 'Er zijn ' + total + ', er gaan ' + take + ' weg. Hoeveel blijven er?',
       choices: makeChoices(left, 0, maxN)
     };
@@ -1907,7 +2018,7 @@
     box = $('objects');
     html = '';
     if (q.mode === 'tables') {
-      $('prompt').className = q.showVisual ? 'prompt' : 'prompt prompt-xl';
+      $('prompt').className = 'prompt';
       box.innerHTML = q.showVisual ? visualTableHtml(q.a, q.b) : '';
       buttons = $('answers').getElementsByTagName('button');
       for (i = 0; i < 3; i++) {
@@ -2593,7 +2704,7 @@
   /* ---------- UI ---------- */
   function updateStarsUI() {
     var i, row, html, filled, el, rows;
-    fillCounts(['home-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars'], String(state.stars));
+    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars'], String(state.stars));
     filled = state.towardsReward;
     if (filled > 5) filled = 5;
     html = '';
@@ -2618,6 +2729,7 @@
   function updateSoundIcons() {
     var html = state.soundOn ? soundOnHtml() : soundOffHtml();
     elSet('sound-icon', html);
+    elSet('sound-icon-games', html);
     elSet('sound-icon-play', html);
     elSet('sound-icon-picker', html);
     elSet('sound-icon-letters', html);
@@ -2634,7 +2746,7 @@
   function showScreen(name) {
     var ids, i, el;
     state.screen = name;
-    ids = ['home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay'];
+    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay'];
     for (i = 0; i < ids.length; i++) {
       el = $('screen-' + ids[i]);
       if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
@@ -2700,6 +2812,16 @@
   }
 
   function goHome() {
+    state.level = null;
+    state.letterMode = null;
+    state.locked = false;
+    state.question = null;
+    hideReward();
+    showScreen('start');
+    updateStarsUI();
+  }
+
+  function showGamesMenu() {
     state.level = null;
     state.locked = false;
     state.question = null;
@@ -2820,16 +2942,28 @@
     if (act === 'home') {
       if (state.screen === 'play' && state.level === 'tables') {
         showPicker();
-      } else if ((state.screen === 'play' || state.screen === 'trace') && state.level === 'letters') {
+      } else if (state.screen === 'play' && state.level === 'letters') {
+        showLettersMenu();
+      } else if (state.screen === 'trace') {
         showLettersMenu();
       } else if (state.screen === 'nameplay') {
         showScreen('names');
         updateStarsUI();
       } else if (state.screen === 'names' || state.screen === 'letters') {
         goHome();
+      } else if (state.screen === 'play' || state.screen === 'picker' || state.screen === 'home') {
+        showGamesMenu();
       } else {
         goHome();
       }
+      return;
+    }
+    if (act === 'goto-games') {
+      showGamesMenu();
+      return;
+    }
+    if (act === 'goto-letters') {
+      showLettersMenu();
       return;
     }
     if (act === 'verder') {
@@ -2944,10 +3078,12 @@
 
   function decorateStatic() {
     $('sun-icon').innerHTML = sunHtml();
-    $('home-star-icon').innerHTML = starSvg('#FFD54F', '#F9A825');
+    elSet('start-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('games-star-icon', starSvg('#FFD54F', '#F9A825'));
     $('play-star-icon').innerHTML = starSvg('#FFD54F', '#F9A825');
     $('picker-star-icon').innerHTML = starSvg('#FFD54F', '#F9A825');
     $('home-icon').innerHTML = homeIconHtml();
+    elSet('games-home-icon', homeIconHtml());
     $('picker-home-icon').innerHTML = homeIconHtml();
     elSet('letters-home-icon', homeIconHtml());
     elSet('trace-home-icon', homeIconHtml());
@@ -2978,7 +3114,6 @@
       '<div class="trow"><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span></div>' +
       '<div class="trow"><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span></div>' +
       '</div>';
-    $('icon-letters').innerHTML = '<div class="glyph-m">m</div>';
     if ($('icon-begint')) $('icon-begint').innerHTML = '<span class="mini-pic">' + wordSvg('maan') + '</span>';
     if ($('icon-trace-act')) $('icon-trace-act').innerHTML = '<span style="font-size:44px;letter-spacing:2px;border-bottom:3px dotted #6A3E00;">a</span>';
 
@@ -2994,7 +3129,7 @@
     loadState();
     decorateStatic();
     updateStarsUI();
-    showScreen('home');
+    showScreen('start');
 
     document.addEventListener('touchstart', onTouchStart, false);
     document.addEventListener('touchmove', onTouchMove, false);

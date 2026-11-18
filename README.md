@@ -1,6 +1,6 @@
 # Sommetjes
 
-Een eenvoudige rekenapp voor kinderen van 4 tot 6 jaar. Werkt op een oude iPad 2 (iOS 9) als web-app op het beginscherm.
+Een eenvoudige oefenapp voor kinderen van 4 tot 6 jaar, met getallen en letters. Werkt op een oude iPad 2 (iOS 9) als web-app op het beginscherm.
 
 ## Wat kun je oefenen?
 
