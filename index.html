@@ -172,7 +172,7 @@
       line-height: 1;
     }
 
-    #screen-home, #screen-play {
+    #screen-home, #screen-play, #screen-picker {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -225,16 +225,16 @@
       -webkit-flex: 1 1 auto;
       flex: 1 1 auto;
       width: 100%;
-      max-width: 780px;
+      max-width: 920px;
       margin: 8px auto 0 auto;
       -webkit-align-content: center;
       align-content: center;
     }
     .level-btn {
-      -webkit-flex: 0 0 46%;
-      flex: 0 0 46%;
-      max-width: 340px;
-      margin: 1.4%;
+      -webkit-flex: 0 0 30%;
+      flex: 0 0 30%;
+      max-width: 280px;
+      margin: 1%;
       border-radius: 28px;
       color: #fff;
       min-height: 150px;
@@ -289,6 +289,15 @@
       -webkit-box-shadow: 0 2px 0 #D44E86, 0 4px 8px rgba(0,0,0,0.15);
       box-shadow: 0 2px 0 #D44E86, 0 4px 8px rgba(0,0,0,0.15);
     }
+    .lvl-tables {
+      background: #8B7CFF;
+      -webkit-box-shadow: 0 8px 0 #5E4ED1, 0 12px 18px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 0 #5E4ED1, 0 12px 18px rgba(0,0,0,0.15);
+    }
+    .lvl-tables.pressed, .lvl-tables:active {
+      -webkit-box-shadow: 0 2px 0 #5E4ED1, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #5E4ED1, 0 4px 8px rgba(0,0,0,0.15);
+    }
     .level-icon {
       height: 70px;
       width: 100%;
@@ -334,6 +343,164 @@
       min-height: 20px;
       font-weight: 600;
     }
+
+    .tbl-icon {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+    }
+    .tbl-icon .trow {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+    }
+    .tbl-icon .tdot {
+      width: 11px;
+      height: 11px;
+      margin: 3px;
+      border-radius: 50%;
+      background: #fff;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+    }
+
+    #table-grid {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-align-content: center;
+      align-content: center;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .table-btn {
+      -webkit-flex: 0 0 17%;
+      flex: 0 0 17%;
+      max-width: 120px;
+      height: 100px;
+      margin: 8px 1%;
+      border-radius: 24px;
+      color: #fff;
+      font-size: 42px;
+      font-weight: 800;
+      background: #8B7CFF;
+      -webkit-box-shadow: 0 6px 0 #5E4ED1, 0 10px 14px rgba(0,0,0,0.12);
+      box-shadow: 0 6px 0 #5E4ED1, 0 10px 14px rgba(0,0,0,0.12);
+    }
+    .table-btn.pressed, .table-btn:active {
+      -webkit-transform: translateY(5px);
+      transform: translateY(5px);
+      -webkit-box-shadow: 0 2px 0 #5E4ED1, 0 4px 8px rgba(0,0,0,0.12);
+      box-shadow: 0 2px 0 #5E4ED1, 0 4px 8px rgba(0,0,0,0.12);
+    }
+    .t-a {
+      background: #2FB3F0;
+      -webkit-box-shadow: 0 6px 0 #1A7FB3, 0 10px 14px rgba(0,0,0,0.12);
+      box-shadow: 0 6px 0 #1A7FB3, 0 10px 14px rgba(0,0,0,0.12);
+    }
+    .t-a.pressed, .t-a:active {
+      -webkit-box-shadow: 0 2px 0 #1A7FB3, 0 4px 8px rgba(0,0,0,0.12);
+      box-shadow: 0 2px 0 #1A7FB3, 0 4px 8px rgba(0,0,0,0.12);
+    }
+    .t-b {
+      background: #4CC86E;
+      -webkit-box-shadow: 0 6px 0 #2E9A4F, 0 10px 14px rgba(0,0,0,0.12);
+      box-shadow: 0 6px 0 #2E9A4F, 0 10px 14px rgba(0,0,0,0.12);
+    }
+    .t-b.pressed, .t-b:active {
+      -webkit-box-shadow: 0 2px 0 #2E9A4F, 0 4px 8px rgba(0,0,0,0.12);
+      box-shadow: 0 2px 0 #2E9A4F, 0 4px 8px rgba(0,0,0,0.12);
+    }
+    .t-c {
+      background: #FFC93A;
+      color: #6A3E00;
+      -webkit-box-shadow: 0 6px 0 #D49A12, 0 10px 14px rgba(0,0,0,0.12);
+      box-shadow: 0 6px 0 #D49A12, 0 10px 14px rgba(0,0,0,0.12);
+    }
+    .t-c.pressed, .t-c:active {
+      -webkit-box-shadow: 0 2px 0 #D49A12, 0 4px 8px rgba(0,0,0,0.12);
+      box-shadow: 0 2px 0 #D49A12, 0 4px 8px rgba(0,0,0,0.12);
+    }
+    .t-d {
+      background: #FF7EB3;
+      -webkit-box-shadow: 0 6px 0 #D44E86, 0 10px 14px rgba(0,0,0,0.12);
+      box-shadow: 0 6px 0 #D44E86, 0 10px 14px rgba(0,0,0,0.12);
+    }
+    .t-d.pressed, .t-d:active {
+      -webkit-box-shadow: 0 2px 0 #D44E86, 0 4px 8px rgba(0,0,0,0.12);
+      box-shadow: 0 2px 0 #D44E86, 0 4px 8px rgba(0,0,0,0.12);
+    }
+    .t-e {
+      background: #8B7CFF;
+      -webkit-box-shadow: 0 6px 0 #5E4ED1, 0 10px 14px rgba(0,0,0,0.12);
+      box-shadow: 0 6px 0 #5E4ED1, 0 10px 14px rgba(0,0,0,0.12);
+    }
+    .t-e.pressed, .t-e:active {
+      -webkit-box-shadow: 0 2px 0 #5E4ED1, 0 4px 8px rgba(0,0,0,0.12);
+      box-shadow: 0 2px 0 #5E4ED1, 0 4px 8px rgba(0,0,0,0.12);
+    }
+    .table-all {
+      -webkit-flex: 0 0 70%;
+      flex: 0 0 70%;
+      max-width: 420px;
+      height: 80px;
+      margin-top: 14px;
+      font-size: 28px;
+      background: #FF8A4C;
+      -webkit-box-shadow: 0 6px 0 #D4692C, 0 10px 14px rgba(0,0,0,0.12);
+      box-shadow: 0 6px 0 #D4692C, 0 10px 14px rgba(0,0,0,0.12);
+    }
+    .table-all.pressed, .table-all:active {
+      -webkit-box-shadow: 0 2px 0 #D4692C, 0 4px 8px rgba(0,0,0,0.12);
+      box-shadow: 0 2px 0 #D4692C, 0 4px 8px rgba(0,0,0,0.12);
+    }
+
+    .tray.vis-table {
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+      padding: 16px 20px;
+    }
+    .trow {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      width: 100%;
+    }
+    .tdot {
+      width: 22px;
+      height: 22px;
+      margin: 5px;
+      border-radius: 50%;
+      background: #EF6C00;
+      -webkit-box-shadow: 0 3px 0 #C85A00;
+      box-shadow: 0 3px 0 #C85A00;
+    }
+    .dots-lg .tdot { width: 28px; height: 28px; margin: 6px; }
+    .dots-md .tdot { width: 20px; height: 20px; margin: 5px; }
+    .dots-sm .tdot { width: 14px; height: 14px; margin: 3px; -webkit-box-shadow: 0 2px 0 #C85A00; box-shadow: 0 2px 0 #C85A00; }
+
+    .prompt-xl { font-size: 72px; }
 
     /* PLAY */
     .prompt {
@@ -669,26 +836,32 @@
     @media screen and (max-width: 800px) {
       .title { font-size: 54px; }
       .sun { width: 96px; height: 96px; }
-      .level-btn { min-height: 170px; }
-      .level-label { font-size: 30px; }
+      .level-btn { min-height: 160px; }
+      .level-label { font-size: 28px; }
       .prompt { font-size: 36px; }
+      .prompt-xl { font-size: 60px; }
       .obj { width: 72px; height: 72px; margin: 4px; }
       .answer-btn { height: 120px; font-size: 68px; margin: 0 8px; }
       .group { max-width: 360px; }
       #toast { bottom: 170px; }
+      .table-btn { height: 110px; font-size: 44px; }
+      .table-all { height: 88px; font-size: 30px; }
     }
     @media screen and (max-height: 800px) {
-      .sun { width: 84px; height: 84px; }
-      .title { font-size: 52px; }
-      .level-btn { min-height: 132px; }
-      .level-icon { height: 56px; margin-bottom: 2px; }
-      .level-icon svg, .level-icon .mini { width: 44px; height: 44px; }
-      .level-label { font-size: 28px; }
+      .sun { width: 72px; height: 72px; }
+      .title { font-size: 46px; }
+      .level-btn { min-height: 118px; }
+      .level-icon { height: 48px; margin-bottom: 2px; }
+      .level-icon svg, .level-icon .mini { width: 40px; height: 40px; }
+      .level-label { font-size: 26px; }
       .prompt { font-size: 34px; margin: 0 0 4px 0; }
+      .prompt-xl { font-size: 56px; }
       .obj { width: 70px; height: 70px; margin: 4px; }
       .answer-btn { height: 96px; font-size: 56px; }
       .op-sign { width: 56px; height: 56px; -webkit-flex-basis: 56px; flex-basis: 56px; }
       #toast { bottom: 130px; font-size: 24px; }
+      .table-btn { height: 84px; font-size: 36px; margin: 6px 1%; }
+      .table-all { height: 68px; font-size: 26px; margin-top: 10px; }
     }
     @media screen and (max-height: 700px) {
       .home-hero { margin-top: 0; }
@@ -745,8 +918,46 @@
           <div class="level-label">Min</div>
           <div class="level-sub">Aftrekken</div>
         </button>
+        <button type="button" class="tap level-btn lvl-tables" id="btn-tables" data-act="level" data-level="tables">
+          <div class="level-icon" id="icon-tables"></div>
+          <div class="level-label">Tafels</div>
+          <div class="level-sub">1 tot 10</div>
+        </button>
       </div>
       <div class="home-hint" id="home-hint"></div>
+    </div>
+
+    <div id="screen-picker" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-picker-home" data-act="home" title="Terug">
+            <span id="picker-home-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-sound-picker" data-act="sound" title="Geluid" style="margin-left:8px;">
+            <span id="sound-icon-picker"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="picker-star-icon"></span>
+            <span class="star-count" id="picker-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt" id="picker-title">Kies een tafel</div>
+      <div id="table-grid">
+        <button type="button" class="tap table-btn t-a" data-act="table" data-table="1">1</button>
+        <button type="button" class="tap table-btn t-b" data-act="table" data-table="2">2</button>
+        <button type="button" class="tap table-btn t-c" data-act="table" data-table="3">3</button>
+        <button type="button" class="tap table-btn t-d" data-act="table" data-table="4">4</button>
+        <button type="button" class="tap table-btn t-e" data-act="table" data-table="5">5</button>
+        <button type="button" class="tap table-btn t-a" data-act="table" data-table="6">6</button>
+        <button type="button" class="tap table-btn t-b" data-act="table" data-table="7">7</button>
+        <button type="button" class="tap table-btn t-c" data-act="table" data-table="8">8</button>
+        <button type="button" class="tap table-btn t-d" data-act="table" data-table="9">9</button>
+        <button type="button" class="tap table-btn t-e" data-act="table" data-table="10">10</button>
+        <button type="button" class="tap table-btn table-all" data-act="table" data-table="0">Alle tafels</button>
+      </div>
     </div>
 
     <div id="screen-play" class="is-hidden">
@@ -806,7 +1017,10 @@
     soundOn: true,
     audioCtx: null,
     minusHard: false,
-    towardsReward: 0
+    towardsReward: 0,
+    tableN: 0,
+    lastA: -1,
+    lastB: -1
   };
 
   var toastTimer = null;
@@ -1183,6 +1397,96 @@
     return q;
   }
 
+  function dutchNum(n) {
+    var words = ['nul', 'één', 'twee', 'drie', 'vier', 'vijf', 'zes', 'zeven', 'acht', 'negen', 'tien'];
+    if (n >= 0 && n <= 10) return words[n];
+    return String(n);
+  }
+
+  function makeTableChoices(a, b) {
+    var correct, raw, others, choices, i, n, extra, down, up;
+    correct = a * b;
+    raw = [
+      a * (b + 1),
+      a * (b - 1),
+      (a + 1) * b,
+      (a - 1) * b,
+      correct + a,
+      correct - a,
+      correct + b,
+      correct - b,
+      a + b,
+      a * a,
+      b * b,
+      correct + 1,
+      correct - 1,
+      (a + 1) * (b + 1)
+    ];
+    others = [];
+    for (i = 0; i < raw.length; i++) {
+      n = raw[i];
+      if (n >= 1 && n <= 120 && n !== correct && !contains(others, n)) {
+        others.push(n);
+      }
+    }
+    shuffle(others);
+    choices = [correct];
+    if (others.length > 0) choices.push(others[0]);
+    if (others.length > 1) choices.push(others[1]);
+    extra = 1;
+    while (choices.length < 3) {
+      down = correct - extra;
+      up = correct + extra;
+      if (down >= 1 && !contains(choices, down)) choices.push(down);
+      if (choices.length < 3 && !contains(choices, up)) choices.push(up);
+      extra += 1;
+    }
+    return shuffle(choices);
+  }
+
+  function makeTableQ() {
+    var a, b, product, tries, q;
+    tries = 0;
+    do {
+      if (state.tableN === 0) {
+        a = randInt(1, 10);
+        b = randInt(1, 10);
+      } else {
+        a = state.tableN;
+        b = randInt(1, 10);
+      }
+      product = a * b;
+      tries += 1;
+    } while (a === state.lastA && b === state.lastB && tries < 8);
+    q = {
+      mode: 'tables',
+      a: a,
+      b: b,
+      answer: product,
+      prompt: a + ' × ' + b + ' = ?',
+      speech: dutchNum(a) + ' keer ' + dutchNum(b),
+      choices: makeTableChoices(a, b),
+      showVisual: product <= 30
+    };
+    return q;
+  }
+
+  function visualTableHtml(rows, cols) {
+    var r, c, html, sizeCls, n;
+    n = rows * cols;
+    sizeCls = (n >= 20) ? 'dots-sm' : (n >= 12 ? 'dots-md' : 'dots-lg');
+    html = '<div class="tray vis-table ' + sizeCls + '">';
+    for (r = 0; r < rows; r++) {
+      html += '<div class="trow">';
+      for (c = 0; c < cols; c++) {
+        html += '<span class="tdot"></span>';
+      }
+      html += '</div>';
+    }
+    html += '</div>';
+    return html;
+  }
+
   function nextQuestion() {
     var q, maxN;
     state.locked = false;
@@ -1191,12 +1495,17 @@
     if (state.level === 'count') q = makeCountQ();
     else if (state.level === 'plus5') q = makePlusQ(5);
     else if (state.level === 'plus10') q = makePlusQ(10);
+    else if (state.level === 'tables') q = makeTableQ();
     else {
       if (state.sessionCorrect >= 5) state.minusHard = true;
       maxN = state.minusHard ? 10 : 5;
       q = makeMinusQ(maxN);
     }
     state.question = q;
+    if (q.mode === 'tables') {
+      state.lastA = q.a;
+      state.lastB = q.b;
+    }
     renderQuestion(q);
   }
 
@@ -1205,6 +1514,25 @@
     $('prompt').innerHTML = q.prompt;
     box = $('objects');
     html = '';
+    if (q.mode === 'tables') {
+      $('prompt').className = q.showVisual ? 'prompt' : 'prompt prompt-xl';
+      box.innerHTML = q.showVisual ? visualTableHtml(q.a, q.b) : '';
+      buttons = $('answers').getElementsByTagName('button');
+      for (i = 0; i < 3; i++) {
+        btn = buttons[i];
+        val = q.choices[i];
+        btn.innerHTML = String(val);
+        btn.setAttribute('data-value', String(val));
+        btn.setAttribute('data-act', 'answer');
+        if (val === q.answer) btn.setAttribute('data-ok', '1');
+        else btn.removeAttribute('data-ok');
+        btn.className = 'tap answer-btn';
+      }
+      updateStarsUI();
+      speak(q.speech);
+      return;
+    }
+    $('prompt').className = 'prompt';
     if (q.mode === 'count') {
       html = '<div class="group">';
       for (i = 0; i < q.answer; i++) html += objectHtml(q.kind, false);
@@ -1248,6 +1576,7 @@
     var i, row, html, filled, el;
     if ($('home-stars')) $('home-stars').innerHTML = String(state.stars);
     if ($('play-stars')) $('play-stars').innerHTML = String(state.stars);
+    if ($('picker-stars')) $('picker-stars').innerHTML = String(state.stars);
     row = $('progress-row');
     if (row) {
       filled = state.towardsReward;
@@ -1267,6 +1596,7 @@
     var html = state.soundOn ? soundOnHtml() : soundOffHtml();
     elSet('sound-icon', html);
     elSet('sound-icon-play', html);
+    elSet('sound-icon-picker', html);
   }
 
   function elSet(id, html) {
@@ -1276,13 +1606,9 @@
 
   function showScreen(name) {
     state.screen = name;
-    if (name === 'home') {
-      $('screen-home').className = '';
-      $('screen-play').className = 'is-hidden';
-    } else {
-      $('screen-home').className = 'is-hidden';
-      $('screen-play').className = '';
-    }
+    $('screen-home').className = (name === 'home') ? '' : 'is-hidden';
+    $('screen-picker').className = (name === 'picker') ? '' : 'is-hidden';
+    $('screen-play').className = (name === 'play') ? '' : 'is-hidden';
     hideReward();
     hideToast();
     hideBurst();
@@ -1352,12 +1678,23 @@
     updateStarsUI();
   }
 
+  function showPicker() {
+    state.level = 'tables';
+    state.locked = false;
+    state.question = null;
+    hideReward();
+    showScreen('picker');
+    updateStarsUI();
+  }
+
   function startLevel(level) {
     state.level = level;
     state.sessionCorrect = 0;
     state.towardsReward = 0;
     state.locked = false;
     state.lastAnswer = -1;
+    state.lastA = -1;
+    state.lastB = -1;
     state.minusHard = false;
     showScreen('play');
     nextQuestion();
@@ -1443,14 +1780,18 @@
   }
 
   function handleAct(el) {
-    var act, level;
+    var act, level, t;
     act = el.getAttribute('data-act');
     if (act === 'sound') {
       toggleSound();
       return;
     }
     if (act === 'home') {
-      goHome();
+      if (state.screen === 'play' && state.level === 'tables') {
+        showPicker();
+      } else {
+        goHome();
+      }
       return;
     }
     if (act === 'verder') {
@@ -1462,7 +1803,18 @@
     }
     if (act === 'level') {
       level = el.getAttribute('data-level');
+      if (level === 'tables') {
+        showPicker();
+        return;
+      }
       if (level) startLevel(level);
+      return;
+    }
+    if (act === 'table') {
+      t = parseInt(el.getAttribute('data-table'), 10);
+      if (isNaN(t)) return;
+      state.tableN = t;
+      startLevel('tables');
       return;
     }
     if (act === 'answer') {
@@ -1532,7 +1884,9 @@
     $('sun-icon').innerHTML = sunHtml();
     $('home-star-icon').innerHTML = starSvg('#FFD54F', '#F9A825');
     $('play-star-icon').innerHTML = starSvg('#FFD54F', '#F9A825');
+    $('picker-star-icon').innerHTML = starSvg('#FFD54F', '#F9A825');
     $('home-icon').innerHTML = homeIconHtml();
+    $('picker-home-icon').innerHTML = homeIconHtml();
     $('icon-count').innerHTML =
       '<span class="mini">' + appleSvg() + '</span>' +
       '<span class="mini">' + appleSvg() + '</span>' +
@@ -1548,6 +1902,12 @@
     $('icon-minus').innerHTML =
       '<span class="mini">' + objectHtml('apple', false).replace('class="obj"', 'class="obj" style="width:44px;height:44px;margin:0 2px;"') + '</span>' +
       '<span class="mini">' + objectHtml('apple', true).replace('class="obj obj-gone"', 'class="obj obj-gone" style="width:44px;height:44px;margin:0 2px;"') + '</span>';
+    $('icon-tables').innerHTML =
+      '<div class="tbl-icon">' +
+      '<div class="trow"><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span></div>' +
+      '<div class="trow"><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span></div>' +
+      '<div class="trow"><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span></div>' +
+      '</div>';
 
     if (window.navigator && window.navigator.standalone) {
       document.body.className = 'standalone';
