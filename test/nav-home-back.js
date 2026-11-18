@@ -13,7 +13,7 @@ const wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms)
 const SCREENS = [
   'start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay',
   'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken',
-  'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn'
+  'tangram', 'waar', 'doolhof', 'doolhoflevel', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn'
 ];
 
 async function visibleScreen(page) {
@@ -202,8 +202,8 @@ async function waitSpiegelNext(page) {
     await tap(page, '#btn-goto-tekenen');
     await tap(page, '[data-act="teken-kleur"]');
     await expectScreen(page, 'kleurkies', 'kleurplaten kiezer');
-    await tap(page, '[data-page="kat"]');
-    await expectScreen(page, 'teken', 'kleurplaat kat');
+    await tap(page, '[data-page="monstertruck"]');
+    await expectScreen(page, 'teken', 'kleurplaat monstertruck');
     await tap(page, '#btn-teken-back');
     await expectScreen(page, 'kleurkies', 'kleurplaat back');
     await tap(page, '#btn-kleurkies-back');
@@ -359,8 +359,7 @@ async function waitSpiegelNext(page) {
       { game: 'spiegel', screen: 'spiegel', back: '#btn-spiegel-back', home: '#btn-spiegel-home' },
       { game: 'nateken', screen: 'nateken', back: '#btn-nateken-back', home: '#btn-nateken-home' },
       { game: 'tangram', screen: 'tangram', back: '#btn-tangram-back', home: '#btn-tangram-home' },
-      { game: 'waar', screen: 'waar', back: '#btn-waar-back', home: '#btn-waar-home' },
-      { game: 'doolhof', screen: 'doolhof', back: '#btn-doolhof-back', home: '#btn-doolhof-home' }
+      { game: 'waar', screen: 'waar', back: '#btn-waar-back', home: '#btn-waar-home' }
     ];
     for (const g of puzzles) {
       await fresh(page);
@@ -374,6 +373,29 @@ async function waitSpiegelNext(page) {
       await expectScreen(page, 'start', g.game + ' home');
       ok('Puzzel ' + g.game + ' terug → menu, home → start');
     }
+
+    await fresh(page);
+    await tap(page, '#btn-goto-puzzles');
+    await tap(page, '[data-game="doolhof"]');
+    await expectScreen(page, 'doolhoflevel', 'doolhoflevel');
+    await tap(page, '#btn-doolhoflevel-back');
+    await expectScreen(page, 'puzzles', 'doolhoflevel back');
+    await tap(page, '[data-game="doolhof"]');
+    await tap(page, '#btn-doolhoflevel-home');
+    await expectScreen(page, 'start', 'doolhoflevel home');
+    ok('Doolhof-kiezer terug → Puzzels, home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-puzzles');
+    await tap(page, '[data-game="doolhof"]');
+    await tap(page, '[data-n="5"]');
+    await expectScreen(page, 'doolhof', 'doolhof 5');
+    await tap(page, '#btn-doolhof-back');
+    await expectScreen(page, 'doolhoflevel', 'doolhof play back');
+    await tap(page, '[data-n="5"]');
+    await tap(page, '#btn-doolhof-home');
+    await expectScreen(page, 'start', 'doolhof play home');
+    ok('Doolhofje klein terug → kiezer, home → start');
 
     await fresh(page);
     await tap(page, '#btn-goto-puzzles');

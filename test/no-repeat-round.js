@@ -480,6 +480,124 @@ function intersection(a, b) {
     if (lOverlap.length) throw new Error('lijn r2 herhaalt r1: ' + lOverlap.join(','));
     ok('Getallenlijn tot 10 ronde 2 uniek en niet uit ronde 1: ' + l2.join(' | '));
 
+    async function waitDoolhofReady(page, ms) {
+      var deadline = Date.now() + (ms || 10000);
+      while (Date.now() < deadline) {
+        const ready = await page.evaluate(() => {
+          var w = document.getElementById('doolhof-wrap');
+          var scr = document.getElementById('screen-doolhof');
+          return !!(scr && scr.className.indexOf('is-hidden') === -1 &&
+            w && w.getAttribute('data-sol') && w.getAttribute('data-done') !== '1' &&
+            parseInt(w.getAttribute('data-cell') || '0', 10) > 0);
+        });
+        if (ready) return true;
+        await wait(120);
+      }
+      return false;
+    }
+    async function solveDoolhof(page) {
+      if (!(await waitDoolhofReady(page, 10000))) throw new Error('doolhof not ready');
+      const info = await page.evaluate(() => {
+        var w = document.getElementById('doolhof-wrap');
+        var r = w.getBoundingClientRect();
+        return {
+          sol: w.getAttribute('data-sol') || '',
+          key: w.getAttribute('data-key') || '',
+          cell: parseInt(w.getAttribute('data-cell'), 10),
+          ox: parseInt(w.getAttribute('data-ox'), 10),
+          oy: parseInt(w.getAttribute('data-oy'), 10),
+          left: r.left,
+          top: r.top
+        };
+      });
+      var cells = info.sol.split(';'), i, p, parts;
+      if (!cells.length) throw new Error('doolhof empty sol for ' + info.key);
+      function pos(s) {
+        parts = s.split(',');
+        return {
+          x: info.left + info.ox + (parseInt(parts[1], 10) + 0.5) * info.cell,
+          y: info.top + info.oy + (parseInt(parts[0], 10) + 0.5) * info.cell
+        };
+      }
+      p = pos(cells[0]);
+      await page.mouse.move(p.x, p.y);
+      await page.mouse.down();
+      for (i = 1; i < cells.length; i++) {
+        p = pos(cells[i]);
+        await page.mouse.move(p.x, p.y, { steps: 4 });
+        await wait(20);
+      }
+      await page.mouse.up();
+      return info.key;
+    }
+    async function playDoolhofRound(page, n) {
+      var keys = [], i, key, moved, deadline, rewarded;
+      for (i = 0; i < n; i++) {
+        key = await solveDoolhof(page);
+        keys.push(key);
+        if (i < n - 1) {
+          deadline = Date.now() + 12000;
+          moved = false;
+          while (Date.now() < deadline) {
+            moved = await page.evaluate((prev) => {
+              var w = document.getElementById('doolhof-wrap');
+              var k = w ? w.getAttribute('data-key') : '';
+              var done = w && w.getAttribute('data-done') === '1';
+              return !!(k && k !== prev && !done);
+            }, key);
+            if (moved) break;
+            await wait(150);
+          }
+          if (!moved) throw new Error('doolhof next maze did not appear after ' + key);
+        }
+      }
+      deadline = Date.now() + 14000;
+      rewarded = false;
+      while (Date.now() < deadline) {
+        rewarded = await page.evaluate(() => {
+          var rew = document.getElementById('overlay-reward');
+          return !!(rew && rew.className.indexOf('is-hidden') === -1);
+        });
+        if (rewarded) break;
+        await wait(150);
+      }
+      if (!rewarded) throw new Error('doolhof expected reward after 5, keys=' + keys.join('|'));
+      return keys;
+    }
+
+    await fresh(page);
+    await page.click('#btn-goto-puzzles');
+    await wait(280);
+    await page.click('[data-game="doolhof"]');
+    await wait(280);
+    await page.click('[data-n="5"]');
+    await wait(400);
+    var d1 = await playDoolhofRound(page, 5);
+    assertUnique(d1, 'doolhof r1');
+    ok('Doolhofje klein ronde 1 uniek: ' + d1.join(' | '));
+
+    var dMenu = Date.now() + 15000;
+    var onPuzz = false;
+    while (Date.now() < dMenu) {
+      onPuzz = await page.evaluate(() => {
+        var el = document.getElementById('screen-puzzles');
+        return !!(el && el.className.indexOf('is-hidden') === -1);
+      });
+      if (onPuzz) break;
+      await wait(150);
+    }
+    if (!onPuzz) throw new Error('doolhof did not return to Puzzels after reward');
+    await page.click('[data-game="doolhof"]');
+    await wait(280);
+    await page.click('[data-n="5"]');
+    await wait(400);
+    var d2 = await playDoolhofRound(page, 5);
+    assertUnique(d2, 'doolhof r2');
+    var dOverlap = intersection(d1, d2);
+    if (dOverlap.length) throw new Error('doolhof r2 herhaalt r1: ' + dOverlap.join(','));
+    ok('Doolhofje klein ronde 2 uniek en niet uit ronde 1: ' + d2.join(' | '));
+
+
 
     async function waitWegReady(page, ms) {
       var deadline = Date.now() + (ms || 6000);

@@ -197,7 +197,7 @@
       line-height: 1;
     }
 
-    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij, #screen-cups, #screen-veranderd, #screen-tekenmenu, #screen-kleurkies, #screen-teken, #screen-klinkers, #screen-lijnlevel, #screen-lijn {
+    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-doolhoflevel, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij, #screen-cups, #screen-veranderd, #screen-tekenmenu, #screen-kleurkies, #screen-teken, #screen-klinkers, #screen-lijnlevel, #screen-lijn {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -2329,15 +2329,42 @@
       min-height: 0;
       overflow: hidden;
     }
-    #doolhof-svg, #doolhof-trail {
+    #doolhof-grid, #doolhof-trail {
       position: absolute;
       left: 0;
       top: 0;
       width: 100%;
       height: 100%;
     }
-    #doolhof-svg { z-index: 1; }
+    #doolhof-grid { z-index: 1; pointer-events: none; }
     #doolhof-trail { z-index: 2; pointer-events: none; }
+    #doolhoflevel-grid {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: stretch;
+      align-items: stretch;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      max-width: 860px;
+      margin: 8px auto 0 auto;
+      -webkit-align-content: center;
+      align-content: center;
+    }
+    #doolhoflevel-grid .level-btn {
+      -webkit-flex: 0 0 30%;
+      flex: 0 0 30%;
+      max-width: 280px;
+      margin: 1.5%;
+      min-height: 160px;
+    }
+    @media screen and (max-height: 800px) {
+      #doolhoflevel-grid .level-btn { min-height: 120px; }
+    }
     .doolhof-icon {
       position: absolute;
       z-index: 3;
@@ -3634,6 +3661,41 @@
       </div>
     </div>
 
+    <div id="screen-doolhoflevel" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-doolhoflevel-back" data-act="back" title="Terug">
+            <span id="doolhoflevel-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-doolhoflevel-home" data-act="home" title="Start">
+            <span id="doolhoflevel-home-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="doolhoflevel-star-icon"></span>
+            <span class="star-count" id="doolhoflevel-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt">Doolhofje</div>
+      <div id="doolhoflevel-grid">
+        <button type="button" class="tap level-btn lvl-count" data-act="doolhof-size" data-n="5">
+          <div class="level-label">Klein</div>
+          <div class="level-sub">5 × 5</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-plus10" data-act="doolhof-size" data-n="7">
+          <div class="level-label">Middel</div>
+          <div class="level-sub">7 × 7</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-plus30" data-act="doolhof-size" data-n="9">
+          <div class="level-label">Groot</div>
+          <div class="level-sub">9 × 9</div>
+        </button>
+      </div>
+    </div>
+
+
     <div id="screen-doolhof" class="is-hidden">
       <div class="topbar">
         <div class="topbar-left">
@@ -3651,7 +3713,7 @@
           </div>
         </div>
       </div>
-      <div class="prompt" id="doolhof-prompt">Breng de muis naar de kaas</div>
+      <div class="prompt" id="doolhof-prompt">Breng het kind naar huis</div>
       <div id="doolhof-wrap"></div>
     </div>
 
@@ -4181,6 +4243,7 @@
     if (level === 'tables') return 'tables-' + String(state.tableN);
     if (level === 'memory') return 'memory-' + String(state.memoryN || 0);
     if (level === 'lijn') return 'lijn-' + String(state.lijnMax || lijnState.max || 0);
+    if (level === 'doolhof') return 'doolhof-' + String(state.doolhofN || 0);
     return level || 'game';
   }
 
@@ -6884,7 +6947,7 @@
   /* ---------- UI ---------- */
   function updateStarsUI() {
     var i, row, html, filled, el, rows;
-    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars', 'cups-stars', 'veranderd-stars', 'klinkers-stars', 'lijnlevel-stars', 'lijn-stars'], String(state.stars));
+    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars', 'cups-stars', 'veranderd-stars', 'klinkers-stars', 'lijnlevel-stars', 'lijn-stars', 'doolhoflevel-stars'], String(state.stars));
     filled = state.towardsReward;
     if (filled > 5) filled = 5;
     html = '';
@@ -6917,7 +6980,7 @@
   function showScreen(name) {
     var ids, i, el;
     state.screen = name;
-    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn'];
+    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'doolhoflevel', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn'];
     for (i = 0; i < ids.length; i++) {
       el = $('screen-' + ids[i]);
       if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
@@ -6989,6 +7052,11 @@
     state.towardsReward = 0;
     updateStarsUI();
     s = state.screen;
+    if (s === 'doolhof') {
+      leavePlay();
+      showPuzzlesMenu();
+      return;
+    }
     if (s === 'memoryplay' || s === 'weg' || s === 'simon' || s === 'rij' || s === 'cups' || s === 'veranderd') {
       leavePlay();
       showMemoryMenu();
@@ -10159,33 +10227,149 @@
 
   var doolhofDrag = { on: false };
 
-  function doolhofMazes() {
-    return [
-      { pts: [[80, 300], [520, 300], [520, 140], [920, 140]], wide: 96 },
-      { pts: [[80, 480], [80, 140], [400, 140], [400, 440], [920, 440]], wide: 90 },
-      { pts: [[80, 100], [80, 500], [360, 500], [360, 220], [660, 220], [660, 500], [920, 500]], wide: 84 },
-      { pts: [[80, 300], [260, 300], [260, 120], [520, 120], [520, 500], [760, 500], [760, 220], [920, 220]], wide: 78 }
+  function doolhofKidSvg() {
+    return '<svg width="64" height="64" viewBox="0 0 64 64" focusable="false" aria-hidden="true">' +
+      '<circle cx="32" cy="18" r="12" fill="#F8D7B0" stroke="#C48A6A" stroke-width="2"/>' +
+      '<path d="M20 16 Q32 4 44 16" fill="#6D4C41" stroke="#5D4037" stroke-width="2"/>' +
+      '<circle cx="28" cy="17" r="2" fill="#3E2723"/>' +
+      '<circle cx="36" cy="17" r="2" fill="#3E2723"/>' +
+      '<path d="M28 23 Q32 26 36 23" fill="none" stroke="#C48A6A" stroke-width="2" stroke-linecap="round"/>' +
+      '<path d="M20 32 Q32 28 44 32 L42 54 Q32 58 22 54 Z" fill="#2FB3F0" stroke="#1A7FB3" stroke-width="2"/>' +
+      '<path d="M22 54 L20 62 M42 54 L44 62" stroke="#1A4A6A" stroke-width="3" stroke-linecap="round"/>' +
+      '</svg>';
+  }
+
+  function doolhofHouseSvg() {
+    return '<svg width="64" height="64" viewBox="0 0 64 64" focusable="false" aria-hidden="true">' +
+      '<polygon points="8,30 32,8 56,30" fill="#E53935" stroke="#B71C1C" stroke-width="3" stroke-linejoin="round"/>' +
+      '<rect x="14" y="30" width="36" height="26" rx="2" fill="#FFE0B2" stroke="#C48A6A" stroke-width="3"/>' +
+      '<rect x="27" y="38" width="10" height="18" fill="#8D6E63" stroke="#5D4037" stroke-width="2"/>' +
+      '<rect x="18" y="36" width="8" height="8" fill="#90CAF9" stroke="#1565C0" stroke-width="2"/>' +
+      '<rect x="38" y="36" width="8" height="8" fill="#90CAF9" stroke="#1565C0" stroke-width="2"/>' +
+      '</svg>';
+  }
+
+  function makePerfectMaze(n) {
+    var grid, r, c, stack, dirs, i, cur, list, nr, nc, d, pick;
+    grid = [];
+    for (r = 0; r < n; r++) {
+      grid[r] = [];
+      for (c = 0; c < n; c++) {
+        grid[r][c] = { n: 1, e: 1, s: 1, w: 1, vis: 0 };
+      }
+    }
+    dirs = [
+      { r: -1, c: 0, w: 'n', o: 's' },
+      { r: 0, c: 1, w: 'e', o: 'w' },
+      { r: 1, c: 0, w: 's', o: 'n' },
+      { r: 0, c: -1, w: 'w', o: 'e' }
     ];
+    stack = [{ r: 0, c: 0 }];
+    grid[0][0].vis = 1;
+    while (stack.length) {
+      cur = stack[stack.length - 1];
+      list = [];
+      for (i = 0; i < 4; i++) {
+        d = dirs[i];
+        nr = cur.r + d.r;
+        nc = cur.c + d.c;
+        if (nr >= 0 && nr < n && nc >= 0 && nc < n && !grid[nr][nc].vis) {
+          list.push({ r: nr, c: nc, w: d.w, o: d.o });
+        }
+      }
+      if (!list.length) {
+        stack.pop();
+        continue;
+      }
+      pick = list[Math.floor(Math.random() * list.length)];
+      grid[cur.r][cur.c][pick.w] = 0;
+      grid[pick.r][pick.c][pick.o] = 0;
+      grid[pick.r][pick.c].vis = 1;
+      stack.push({ r: pick.r, c: pick.c });
+    }
+    grid[0][0].n = 0;
+    grid[n - 1][n - 1].s = 0;
+    return grid;
   }
 
-  function doolhofMouseSvg() {
-    return '<svg class="doolhof-icon" width="64" height="64" viewBox="0 0 64 64" focusable="false">' +
-      '<circle cx="28" cy="30" r="16" fill="#B0BEC5" stroke="#546E7A" stroke-width="3"/>' +
-      '<circle cx="18" cy="16" r="8" fill="#B0BEC5" stroke="#546E7A" stroke-width="3"/>' +
-      '<circle cx="18" cy="16" r="3" fill="#ECEFF1"/>' +
-      '<circle cx="34" cy="26" r="2.4" fill="#263238"/>' +
-      '<ellipse cx="38" cy="32" rx="5" ry="3" fill="#90A4AE"/>' +
-      '<path d="M42 36 Q58 28 56 50" fill="none" stroke="#546E7A" stroke-width="3" stroke-linecap="round"/>' +
-      '</svg>';
+  function mazeKey(grid) {
+    var r, c, s, cell, bits;
+    s = String(grid.length) + ':';
+    for (r = 0; r < grid.length; r++) {
+      for (c = 0; c < grid.length; c++) {
+        cell = grid[r][c];
+        bits = (cell.n ? 8 : 0) + (cell.e ? 4 : 0) + (cell.s ? 2 : 0) + (cell.w ? 1 : 0);
+        s += bits.toString(16);
+      }
+    }
+    return s;
   }
 
-  function doolhofCheeseSvg() {
-    return '<svg class="doolhof-icon" width="58" height="58" viewBox="0 0 58 58" focusable="false">' +
-      '<polygon points="6,48 50,48 28,8" fill="#FFD54F" stroke="#F9A825" stroke-width="3" stroke-linejoin="round"/>' +
-      '<circle cx="24" cy="34" r="3.2" fill="#F9A825"/>' +
-      '<circle cx="34" cy="38" r="2.4" fill="#F9A825"/>' +
-      '<circle cx="28" cy="26" r="2.2" fill="#F9A825"/>' +
-      '</svg>';
+  function mazeSolve(grid) {
+    var n, q, seen, prev, r, c, i, d, nr, nc, cell, key, cur, path, pr, pc, dirs;
+    n = grid.length;
+    q = [{ r: 0, c: 0 }];
+    seen = { '0,0': 1 };
+    prev = {};
+    dirs = [
+      { r: -1, c: 0, w: 'n' },
+      { r: 0, c: 1, w: 'e' },
+      { r: 1, c: 0, w: 's' },
+      { r: 0, c: -1, w: 'w' }
+    ];
+    while (q.length) {
+      cur = q.shift();
+      if (cur.r === n - 1 && cur.c === n - 1) break;
+      cell = grid[cur.r][cur.c];
+      for (i = 0; i < 4; i++) {
+        d = dirs[i];
+        if (cell[d.w]) continue;
+        nr = cur.r + d.r;
+        nc = cur.c + d.c;
+        if (nr < 0 || nr >= n || nc < 0 || nc >= n) continue;
+        key = nr + ',' + nc;
+        if (seen[key]) continue;
+        seen[key] = 1;
+        prev[key] = cur.r + ',' + cur.c;
+        q.push({ r: nr, c: nc });
+      }
+    }
+    path = [];
+    key = (n - 1) + ',' + (n - 1);
+    if (!seen[key]) return [{ r: 0, c: 0 }];
+    while (key) {
+      pr = parseInt(key.split(',')[0], 10);
+      pc = parseInt(key.split(',')[1], 10);
+      path.push({ r: pr, c: pc });
+      key = prev[key];
+    }
+    path.reverse();
+    return path;
+  }
+
+  function pickDoolhofGrid(n) {
+    var grid, key, tries, hist, id;
+    id = currentGameId();
+    hist = (state.recentByGame && state.recentByGame[id]) ? state.recentByGame[id] : [];
+    tries = 0;
+    grid = makePerfectMaze(n);
+    key = mazeKey(grid);
+    while (tries < 20 && ((state.roundKeys && contains(state.roundKeys, key)) || contains(hist, key))) {
+      grid = makePerfectMaze(n);
+      key = mazeKey(grid);
+      tries += 1;
+    }
+    rememberRoundKey(key);
+    return grid;
+  }
+
+  function showDoolhofLevel() {
+    state.level = 'doolhof';
+    state.locked = false;
+    state.question = null;
+    hideReward();
+    showScreen('doolhoflevel');
+    updateStarsUI();
   }
 
   function doolhofDist(ax, ay, bx, by) {
@@ -10193,127 +10377,221 @@
     return Math.sqrt(dx * dx + dy * dy);
   }
 
-  function doolhofSegDist(px, py, ax, ay, bx, by) {
-    var dx, dy, l2, t, qx, qy;
-    dx = bx - ax;
-    dy = by - ay;
-    l2 = dx * dx + dy * dy;
-    if (l2 < 1) return doolhofDist(px, py, ax, ay);
-    t = ((px - ax) * dx + (py - ay) * dy) / l2;
-    if (t < 0) t = 0;
-    if (t > 1) t = 1;
-    qx = ax + t * dx;
-    qy = ay + t * dy;
-    return doolhofDist(px, py, qx, qy);
-  }
-
-  function doolhofOnPath(x, y) {
-    var i, d, best, pts, lim;
-    if (!state.doolhof) return false;
-    pts = state.doolhof.spts;
-    lim = state.doolhof.swide * 0.56;
-    best = 9999;
-    for (i = 0; i < pts.length - 1; i++) {
-      d = doolhofSegDist(x, y, pts[i].x, pts[i].y, pts[i + 1].x, pts[i + 1].y);
-      if (d < best) best = d;
+  function startDoolhof(n, fresh) {
+    var grid, sol, i, parts;
+    if (typeof n === 'boolean') {
+      fresh = n;
+      n = 0;
     }
-    return best <= lim;
-  }
-
-  function startDoolhof(fresh) {
-    var mazes, idx;
+    if (n) state.doolhofN = n;
+    n = state.doolhofN || 5;
+    if (n !== 7 && n !== 9) n = 5;
+    state.doolhofN = n;
+    state.level = 'doolhof';
     if (fresh) {
-      state.level = 'doolhof';
       state.sessionCorrect = 0;
       state.towardsReward = 0;
       resetVoiceCycle();
     }
-    mazes = doolhofMazes();
-    idx = state.sessionCorrect;
-    if (idx > mazes.length - 1) idx = mazes.length - 1;
-    rememberRoundKey(String(idx));
+    grid = pickDoolhofGrid(n);
+    sol = mazeSolve(grid);
+    parts = [];
+    for (i = 0; i < sol.length; i++) parts.push(sol[i].r + ',' + sol[i].c);
     state.doolhof = {
-      maze: mazes[idx],
-      trail: [],
+      n: n,
+      grid: grid,
+      path: [{ r: 0, c: 0 }],
       done: false,
-      started: false
+      cell: 0,
+      ox: 0,
+      oy: 0,
+      wall: 0
     };
+    state.doolhof.sol = parts.join(';');
     doolhofDrag.on = false;
     hideReward();
+    hideToast();
     showScreen('doolhof');
+    if ($('doolhof-prompt')) $('doolhof-prompt').innerHTML = 'Breng het kind naar huis';
     updateStarsUI();
     window.setTimeout(function () {
       layoutDoolhof();
       beginQuestionVoice();
-      speak('doolhof');
+      speak('doolhof-huis');
     }, 40);
   }
 
+  function doolhofCellCenter(r, c) {
+    var d = state.doolhof;
+    if (!d) return { x: 0, y: 0 };
+    return { x: d.ox + (c + 0.5) * d.cell, y: d.oy + (r + 0.5) * d.cell };
+  }
+
+  function doolhofCellAt(x, y) {
+    var d, c, r;
+    d = state.doolhof;
+    if (!d || !d.cell) return null;
+    c = Math.floor((x - d.ox) / d.cell);
+    r = Math.floor((y - d.oy) / d.cell);
+    if (r < 0 || c < 0 || r >= d.n || c >= d.n) return null;
+    return { r: r, c: c };
+  }
+
+  function doolhofCanStep(a, b) {
+    var cell, dr, dc;
+    if (!a || !b || !state.doolhof) return false;
+    dr = b.r - a.r;
+    dc = b.c - a.c;
+    if (Math.abs(dr) + Math.abs(dc) !== 1) return false;
+    cell = state.doolhof.grid[a.r][a.c];
+    if (dr === -1) return !cell.n;
+    if (dr === 1) return !cell.s;
+    if (dc === -1) return !cell.w;
+    if (dc === 1) return !cell.e;
+    return false;
+  }
+
   function layoutDoolhof() {
-    var wrap, W, H, maze, scale, ox, oy, i, pts, spts, html, p1, p2, sw, wall, a, canvas;
+    var wrap, W, H, d, n, pad, size, wall, html, canvas;
     wrap = $('doolhof-wrap');
     if (!wrap || !state.doolhof) return;
+    d = state.doolhof;
+    n = d.n;
     W = wrap.clientWidth || 700;
     H = wrap.clientHeight || 500;
-    maze = state.doolhof.maze;
-    scale = Math.min((W - 24) / 1000, (H - 24) / 600);
-    ox = Math.floor((W - 1000 * scale) / 2);
-    oy = Math.floor((H - 600 * scale) / 2);
-    spts = [];
-    pts = maze.pts;
-    for (i = 0; i < pts.length; i++) {
-      spts.push({ x: ox + pts[i][0] * scale, y: oy + pts[i][1] * scale });
-    }
-    sw = maze.wide * scale;
-    state.doolhof.spts = spts;
-    state.doolhof.swide = sw;
-    state.doolhof.scale = scale;
-    wall = sw + 16;
-    a = '';
-    for (i = 0; i < spts.length; i++) {
-      if (i) a += ' ';
-      a += Math.round(spts[i].x) + ',' + Math.round(spts[i].y);
-    }
-    html = '<svg id="doolhof-svg" width="' + W + '" height="' + H + '">';
-    html += '<polyline points="' + a + '" fill="none" stroke="#8D6E63" stroke-width="' + wall +
-      '" stroke-linecap="round" stroke-linejoin="round"/>';
-    html += '<polyline points="' + a + '" fill="none" stroke="#FFF8E7" stroke-width="' + sw +
-      '" stroke-linecap="round" stroke-linejoin="round"/>';
-    html += '</svg>';
+    pad = 16;
+    size = Math.floor(Math.min((W - pad * 2) / n, (H - pad * 2) / n));
+    if (size < 28) size = 28;
+    wall = Math.max(10, Math.round(size * 0.18));
+    if (wall > 16) wall = 16;
+    d.cell = size;
+    d.wall = wall;
+    d.ox = Math.floor((W - size * n) / 2);
+    d.oy = Math.floor((H - size * n) / 2);
+    html = '<canvas id="doolhof-grid" width="' + W + '" height="' + H + '"></canvas>';
     html += '<canvas id="doolhof-trail" width="' + W + '" height="' + H + '"></canvas>';
-    p1 = spts[0];
-    p2 = spts[spts.length - 1];
-    html += '<div id="doolhof-mouse" class="doolhof-icon" style="left:' + Math.round(p1.x - 32) +
-      'px;top:' + Math.round(p1.y - 32) + 'px;">' + doolhofMouseSvg() + '</div>';
-    html += '<div id="doolhof-cheese" class="doolhof-icon" style="left:' + Math.round(p2.x - 29) +
-      'px;top:' + Math.round(p2.y - 29) + 'px;">' + doolhofCheeseSvg() + '</div>';
+    html += '<div id="doolhof-kid" class="doolhof-icon"></div>';
+    html += '<div id="doolhof-house" class="doolhof-icon"></div>';
     wrap.innerHTML = html;
+    wrap.setAttribute('data-n', String(n));
+    wrap.setAttribute('data-key', mazeKey(d.grid));
+    wrap.setAttribute('data-sol', d.sol || '');
+    wrap.setAttribute('data-cell', String(size));
+    wrap.setAttribute('data-ox', String(d.ox));
+    wrap.setAttribute('data-oy', String(d.oy));
+    wrap.setAttribute('data-done', d.done ? '1' : '0');
+    canvas = $('doolhof-grid');
+    if (canvas) {
+      canvas.style.width = W + 'px';
+      canvas.style.height = H + 'px';
+    }
     canvas = $('doolhof-trail');
     if (canvas) {
       canvas.style.width = W + 'px';
       canvas.style.height = H + 'px';
     }
+    if ($('doolhof-kid')) $('doolhof-kid').innerHTML = doolhofKidSvg();
+    if ($('doolhof-house')) $('doolhof-house').innerHTML = doolhofHouseSvg();
+    doolhofDrawGrid();
     doolhofDrawTrail();
+    doolhofPlaceIcons();
+  }
+
+  function doolhofDrawGrid() {
+    var c, ctx, d, n, r, col, x, y, s, w, i, cell;
+    c = $('doolhof-grid');
+    d = state.doolhof;
+    if (!c || !d) return;
+    ctx = c.getContext('2d');
+    if (!ctx) return;
+    n = d.n;
+    s = d.cell;
+    w = d.wall;
+    ctx.clearRect(0, 0, c.width, c.height);
+    ctx.fillStyle = '#FFF8E7';
+    ctx.fillRect(d.ox, d.oy, s * n, s * n);
+    ctx.strokeStyle = '#6D4C41';
+    ctx.fillStyle = '#6D4C41';
+    ctx.lineCap = 'square';
+    ctx.lineWidth = w;
+    function wallLine(x1, y1, x2, y2) {
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+    }
+    for (r = 0; r < n; r++) {
+      for (col = 0; col < n; col++) {
+        cell = d.grid[r][col];
+        x = d.ox + col * s;
+        y = d.oy + r * s;
+        if (cell.n) wallLine(x, y, x + s, y);
+        if (cell.w) wallLine(x, y, x, y + s);
+        if (cell.s) wallLine(x, y + s, x + s, y + s);
+        if (cell.e) wallLine(x + s, y, x + s, y + s);
+      }
+    }
   }
 
   function doolhofDrawTrail() {
-    var c, ctx, i, pts, w;
+    var c, ctx, d, i, p, pts, w;
     c = $('doolhof-trail');
-    if (!c || !state.doolhof) return;
+    d = state.doolhof;
+    if (!c || !d) return;
     ctx = c.getContext('2d');
     if (!ctx) return;
     ctx.clearRect(0, 0, c.width, c.height);
-    pts = state.doolhof.trail;
-    if (pts.length < 2) return;
-    w = Math.max(10, state.doolhof.swide * 0.34);
+    pts = d.path || [];
+    if (!pts.length) return;
+    w = Math.max(10, d.cell * 0.28);
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
     ctx.strokeStyle = '#2FB3F0';
+    ctx.fillStyle = '#2FB3F0';
     ctx.lineWidth = w;
     ctx.beginPath();
-    ctx.moveTo(pts[0].x, pts[0].y);
-    for (i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+    p = doolhofCellCenter(pts[0].r, pts[0].c);
+    ctx.moveTo(p.x, p.y);
+    for (i = 1; i < pts.length; i++) {
+      p = doolhofCellCenter(pts[i].r, pts[i].c);
+      ctx.lineTo(p.x, p.y);
+    }
     ctx.stroke();
+    p = doolhofCellCenter(pts[pts.length - 1].r, pts[pts.length - 1].c);
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, w * 0.55, 0, Math.PI * 2, false);
+    ctx.fill();
+  }
+
+  function doolhofPlaceIcons() {
+    var d, p, el, half, end;
+    d = state.doolhof;
+    if (!d) return;
+    half = Math.round(Math.max(28, d.cell * 0.72) / 2);
+    p = doolhofCellCenter(d.path[d.path.length - 1].r, d.path[d.path.length - 1].c);
+    el = $('doolhof-kid');
+    if (el) {
+      el.style.left = Math.round(p.x - half) + 'px';
+      el.style.top = Math.round(p.y - half) + 'px';
+      el.style.width = (half * 2) + 'px';
+      el.style.height = (half * 2) + 'px';
+    }
+    if (el && el.firstChild && el.firstChild.setAttribute) {
+      el.firstChild.setAttribute('width', String(half * 2));
+      el.firstChild.setAttribute('height', String(half * 2));
+    }
+    end = doolhofCellCenter(d.n - 1, d.n - 1);
+    el = $('doolhof-house');
+    if (el) {
+      el.style.left = Math.round(end.x - half) + 'px';
+      el.style.top = Math.round(end.y - half) + 'px';
+      el.style.width = (half * 2) + 'px';
+      el.style.height = (half * 2) + 'px';
+    }
+    if (el && el.firstChild && el.firstChild.setAttribute) {
+      el.firstChild.setAttribute('width', String(half * 2));
+      el.firstChild.setAttribute('height', String(half * 2));
+    }
   }
 
   function doolhofEvent(e) {
@@ -10327,59 +10605,75 @@
     return { x: src.clientX - wr.left, y: src.clientY - wr.top };
   }
 
-  function doolhofResetTrail() {
-    if (!state.doolhof) return;
-    state.doolhof.trail = [];
-    state.doolhof.started = false;
+  function doolhofPathIndex(cell) {
+    var i, p;
+    if (!state.doolhof) return -1;
+    for (i = 0; i < state.doolhof.path.length; i++) {
+      p = state.doolhof.path[i];
+      if (p.r === cell.r && p.c === cell.c) return i;
+    }
+    return -1;
+  }
+
+  function doolhofStepTo(cell) {
+    var head, idx, d;
+    d = state.doolhof;
+    if (!d || d.done || !cell) return;
+    head = d.path[d.path.length - 1];
+    if (head.r === cell.r && head.c === cell.c) return;
+    idx = doolhofPathIndex(cell);
+    if (idx >= 0) {
+      d.path = d.path.slice(0, idx + 1);
+    } else if (doolhofCanStep(head, cell)) {
+      d.path.push({ r: cell.r, c: cell.c });
+    } else {
+      return;
+    }
     doolhofDrawTrail();
+    doolhofPlaceIcons();
+    head = d.path[d.path.length - 1];
+    if (head.r === d.n - 1 && head.c === d.n - 1) {
+      d.done = true;
+      doolhofDrag.on = false;
+      if ($('doolhof-wrap')) $('doolhof-wrap').setAttribute('data-done', '1');
+      awardCorrect();
+    }
   }
 
   function doolhofDragStart(e) {
-    var pt, start, lim;
+    var pt, cell, d, head, ctr;
     if (state.locked || !state.doolhof || state.doolhof.done) return false;
     pt = doolhofEvent(e);
     if (!pt) return false;
-    start = state.doolhof.spts[0];
-    lim = state.doolhof.swide * 0.75;
-    if (doolhofDist(pt.x, pt.y, start.x, start.y) > lim) return false;
+    d = state.doolhof;
+    cell = doolhofCellAt(pt.x, pt.y);
+    head = d.path[d.path.length - 1];
+    ctr = doolhofCellCenter(head.r, head.c);
+    if (cell && (cell.r !== head.r || cell.c !== head.c)) {
+      if (doolhofPathIndex(cell) < 0 && !doolhofCanStep(head, cell)) {
+        if (doolhofDist(pt.x, pt.y, ctr.x, ctr.y) > d.cell * 0.85) return false;
+      }
+    } else if (!cell) {
+      if (doolhofDist(pt.x, pt.y, ctr.x, ctr.y) > d.cell * 0.85) return false;
+    }
     doolhofDrag.on = true;
-    state.doolhof.started = true;
-    state.doolhof.trail = [{ x: pt.x, y: pt.y }];
-    doolhofDrawTrail();
+    if (cell) doolhofStepTo(cell);
     return true;
   }
 
   function doolhofDragMove(e) {
-    var pt, last, end;
+    var pt, cell;
     if (!doolhofDrag.on || !state.doolhof || state.doolhof.done) return false;
     pt = doolhofEvent(e);
     if (!pt) return true;
-    if (!doolhofOnPath(pt.x, pt.y)) {
-      doolhofDrag.on = false;
-      doolhofResetTrail();
-      speak('retry');
-      return true;
-    }
-    last = state.doolhof.trail[state.doolhof.trail.length - 1];
-    if (!last || doolhofDist(pt.x, pt.y, last.x, last.y) >= 4) {
-      state.doolhof.trail.push({ x: pt.x, y: pt.y });
-      doolhofDrawTrail();
-    }
-    end = state.doolhof.spts[state.doolhof.spts.length - 1];
-    if (doolhofDist(pt.x, pt.y, end.x, end.y) <= state.doolhof.swide * 0.55) {
-      doolhofDrag.on = false;
-      state.doolhof.done = true;
-      awardCorrect();
-    }
+    cell = doolhofCellAt(pt.x, pt.y);
+    if (cell) doolhofStepTo(cell);
     return true;
   }
 
   function doolhofDragEnd(e) {
     if (!doolhofDrag.on) return false;
     doolhofDrag.on = false;
-    if (state.doolhof && !state.doolhof.done) {
-      doolhofResetTrail();
-    }
     return true;
   }
 
@@ -10880,8 +11174,10 @@
     } else if (s === 'puzzle') {
       showPuzzleLevel();
     } else if (s === 'puzzlelevel' || s === 'vormen' || s === 'spiegel' || s === 'nateken' ||
-               s === 'tangram' || s === 'waar' || s === 'doolhof') {
+               s === 'tangram' || s === 'waar' || s === 'doolhoflevel') {
       showPuzzlesMenu();
+    } else if (s === 'doolhof') {
+      showDoolhofLevel();
     } else if (s === 'memoryplay') {
       showMemoryLevel();
     } else if (s === 'memorylevel' || s === 'weg' || s === 'simon' || s === 'rij' || s === 'cups' || s === 'veranderd') {
@@ -11144,7 +11440,7 @@
       else if (el.getAttribute('data-game') === 'nateken') startNateken(true);
       else if (el.getAttribute('data-game') === 'tangram') startTangram(true);
       else if (el.getAttribute('data-game') === 'waar') startWaar(true);
-      else if (el.getAttribute('data-game') === 'doolhof') startDoolhof(true);
+      else if (el.getAttribute('data-game') === 'doolhof') showDoolhofLevel();
       else showPuzzleLevel();
       return;
     }
@@ -11201,6 +11497,10 @@
       state.allLetters = el.getAttribute('data-set') === 'all';
       saveLetterSet();
       updateLetterSetUI();
+      return;
+    }
+    if (act === 'doolhof-size') {
+      startDoolhof(parseInt(el.getAttribute('data-n'), 10), true);
       return;
     }
     if (act === 'lijn-max') {
@@ -11423,6 +11723,7 @@
     elSet('tangram-home-icon', homeIconHtml());
     elSet('waar-home-icon', homeIconHtml());
     elSet('doolhof-home-icon', homeIconHtml());
+    elSet('doolhoflevel-home-icon', homeIconHtml());
     elSet('memory-home-icon', homeIconHtml());
     elSet('memorylevel-home-icon', homeIconHtml());
     elSet('memoryplay-home-icon', homeIconHtml());
@@ -11450,6 +11751,7 @@
     elSet('tangram-back-icon', backIconHtml());
     elSet('waar-back-icon', backIconHtml());
     elSet('doolhof-back-icon', backIconHtml());
+    elSet('doolhoflevel-back-icon', backIconHtml());
     elSet('memorylevel-back-icon', backIconHtml());
     elSet('memoryplay-back-icon', backIconHtml());
     elSet('weg-back-icon', backIconHtml());
@@ -11476,6 +11778,7 @@
     elSet('tangram-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('waar-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('doolhof-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('doolhoflevel-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('memory-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('memorylevel-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('memoryplay-star-icon', starSvg('#FFD54F', '#F9A825'));

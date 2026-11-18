@@ -26,7 +26,7 @@ Op het startscherm kies je **Getallen**, **Letters**, **Puzzels**, **Geheugen** 
 11. **Natekenen** — kijk naar het figuur op de stippen en teken de lijnen na op het lege raster.
 12. **Tangram** — sleep 3 of 4 grote stukken in de silhouet (huis, boot, boom). Later kun je tikken om te draaien.
 13. **Wat hoort waar?** — kies het plaatje waarop de beer op, onder, naast, achter, voor of in de tafel of doos zit.
-14. **Doolhofje** — volg met je vinger het pad van de muis naar de kaas. Er zijn meerdere doolhoven die steeds een stukje moeilijker worden.
+14. **Doolhofje** — zoek met je vinger de weg van het kind naar het huis. Je kiest klein (5×5), middel (7×7) of groot (9×9). Een ronde is vijf nieuwe doolhoven, daarna ga je terug naar Puzzels. Teruglopen wist het pad; muren houden je tegen.
 
 **Tekenen**
 15. **Vrij tekenen** — teken zelf met dikke kleuren, drie lijndiktes, een spuitbus en een gum. Wissen vraagt eerst even of het echt mag. Geen sterren, je tekent zo lang je wilt.
