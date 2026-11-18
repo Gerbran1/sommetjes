@@ -190,7 +190,7 @@
       line-height: 1;
     }
 
-    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar {
+    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -1746,6 +1746,47 @@
       .waar-card svg { height: 200px; }
       .waar-card { margin: 0 6px; }
     }
+    .lvl-doolhof {
+      background: #FF7043;
+      -webkit-box-shadow: 0 8px 0 #E64A19, 0 12px 16px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 0 #E64A19, 0 12px 16px rgba(0,0,0,0.15);
+    }
+    .lvl-doolhof.pressed, .lvl-doolhof:active {
+      -webkit-box-shadow: 0 2px 0 #E64A19, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #E64A19, 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .doolhof-mini {
+      position: relative;
+      width: 52px;
+      height: 36px;
+    }
+    .doolhof-mini span {
+      position: absolute;
+      background: #fff;
+      border-radius: 3px;
+    }
+    #doolhof-wrap {
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      position: relative;
+      width: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+    #doolhof-svg, #doolhof-trail {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
+    #doolhof-svg { z-index: 1; }
+    #doolhof-trail { z-index: 2; pointer-events: none; }
+    .doolhof-icon {
+      position: absolute;
+      z-index: 3;
+      pointer-events: none;
+    }
     #nateken-clear {
       position: absolute;
       right: 10px;
@@ -2263,6 +2304,18 @@
           </div>
           <div class="level-label">Wat hoort waar?</div>
         </button>
+        <button type="button" class="tap level-btn lvl-doolhof" data-act="puzzle-game" data-game="doolhof">
+          <div class="act-icon">
+            <div class="doolhof-mini" id="icon-doolhof">
+              <span style="left:2px;top:4px;width:20px;height:6px;"></span>
+              <span style="left:16px;top:4px;width:6px;height:20px;"></span>
+              <span style="left:16px;top:18px;width:22px;height:6px;"></span>
+              <span style="left:32px;top:18px;width:6px;height:14px;"></span>
+              <span style="left:38px;top:26px;width:12px;height:6px;"></span>
+            </div>
+          </div>
+          <div class="level-label">Doolhofje</div>
+        </button>
       </div>
     </div>
 
@@ -2438,6 +2491,27 @@
       <div id="waar-wrap">
         <div id="waar-choices"></div>
       </div>
+    </div>
+
+    <div id="screen-doolhof" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-doolhof-home" data-act="home" title="Terug">
+            <span id="doolhof-home-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-sound-doolhof" data-act="sound" title="Geluid" style="margin-left:8px;">
+            <span id="sound-icon-doolhof"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="doolhof-star-icon"></span>
+            <span class="star-count" id="doolhof-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt" id="doolhof-prompt">Breng de muis naar de kaas</div>
+      <div id="doolhof-wrap"></div>
     </div>
 
     <div id="screen-trace" class="is-hidden">
@@ -3261,6 +3335,10 @@
     }
     else if (state.level === 'waar') {
       startWaar(false);
+      return;
+    }
+    else if (state.level === 'doolhof') {
+      startDoolhof(false);
       return;
     }
     else {
@@ -4212,7 +4290,7 @@
   /* ---------- UI ---------- */
   function updateStarsUI() {
     var i, row, html, filled, el, rows;
-    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars'], String(state.stars));
+    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars'], String(state.stars));
     filled = state.towardsReward;
     if (filled > 5) filled = 5;
     html = '';
@@ -4252,6 +4330,7 @@
     elSet('sound-icon-nateken', html);
     elSet('sound-icon-tangram', html);
     elSet('sound-icon-waar', html);
+    elSet('sound-icon-doolhof', html);
   }
 
   function elSet(id, html) {
@@ -4262,7 +4341,7 @@
   function showScreen(name) {
     var ids, i, el;
     state.screen = name;
-    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar'];
+    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof'];
     for (i = 0; i < ids.length; i++) {
       el = $('screen-' + ids[i]);
       if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
@@ -4622,6 +4701,10 @@
       if (tangramDragStart(e)) {
         if (e.preventDefault) e.preventDefault();
       }
+    } else if (state.screen === 'doolhof') {
+      if (doolhofDragStart(e)) {
+        if (e.preventDefault) e.preventDefault();
+      }
     }
   }
 
@@ -4641,6 +4724,11 @@
         tangramDragMove(e);
         if (e.preventDefault) e.preventDefault();
       }
+    } else if (state.screen === 'doolhof') {
+      if (doolhofDrag.on) {
+        doolhofDragMove(e);
+        if (e.preventDefault) e.preventDefault();
+      }
     }
   }
 
@@ -4658,6 +4746,11 @@
     } else if (state.screen === 'tangram') {
       if (tangramDrag.on) {
         tangramDragEnd(e);
+        if (e.preventDefault) e.preventDefault();
+      }
+    } else if (state.screen === 'doolhof') {
+      if (doolhofDrag.on) {
+        doolhofDragEnd(e);
         if (e.preventDefault) e.preventDefault();
       }
     }
@@ -5643,6 +5736,231 @@
     }
   }
 
+  var doolhofDrag = { on: false };
+
+  function doolhofMazes() {
+    return [
+      { pts: [[80, 300], [520, 300], [520, 140], [920, 140]], wide: 96 },
+      { pts: [[80, 480], [80, 140], [400, 140], [400, 440], [920, 440]], wide: 90 },
+      { pts: [[80, 100], [80, 500], [360, 500], [360, 220], [660, 220], [660, 500], [920, 500]], wide: 84 },
+      { pts: [[80, 300], [260, 300], [260, 120], [520, 120], [520, 500], [760, 500], [760, 220], [920, 220]], wide: 78 }
+    ];
+  }
+
+  function doolhofMouseSvg() {
+    return '<svg class="doolhof-icon" width="64" height="64" viewBox="0 0 64 64" focusable="false">' +
+      '<circle cx="28" cy="30" r="16" fill="#B0BEC5" stroke="#546E7A" stroke-width="3"/>' +
+      '<circle cx="18" cy="16" r="8" fill="#B0BEC5" stroke="#546E7A" stroke-width="3"/>' +
+      '<circle cx="18" cy="16" r="3" fill="#ECEFF1"/>' +
+      '<circle cx="34" cy="26" r="2.4" fill="#263238"/>' +
+      '<ellipse cx="38" cy="32" rx="5" ry="3" fill="#90A4AE"/>' +
+      '<path d="M42 36 Q58 28 56 50" fill="none" stroke="#546E7A" stroke-width="3" stroke-linecap="round"/>' +
+      '</svg>';
+  }
+
+  function doolhofCheeseSvg() {
+    return '<svg class="doolhof-icon" width="58" height="58" viewBox="0 0 58 58" focusable="false">' +
+      '<polygon points="6,48 50,48 28,8" fill="#FFD54F" stroke="#F9A825" stroke-width="3" stroke-linejoin="round"/>' +
+      '<circle cx="24" cy="34" r="3.2" fill="#F9A825"/>' +
+      '<circle cx="34" cy="38" r="2.4" fill="#F9A825"/>' +
+      '<circle cx="28" cy="26" r="2.2" fill="#F9A825"/>' +
+      '</svg>';
+  }
+
+  function doolhofDist(ax, ay, bx, by) {
+    var dx = ax - bx, dy = ay - by;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  function doolhofSegDist(px, py, ax, ay, bx, by) {
+    var dx, dy, l2, t, qx, qy;
+    dx = bx - ax;
+    dy = by - ay;
+    l2 = dx * dx + dy * dy;
+    if (l2 < 1) return doolhofDist(px, py, ax, ay);
+    t = ((px - ax) * dx + (py - ay) * dy) / l2;
+    if (t < 0) t = 0;
+    if (t > 1) t = 1;
+    qx = ax + t * dx;
+    qy = ay + t * dy;
+    return doolhofDist(px, py, qx, qy);
+  }
+
+  function doolhofOnPath(x, y) {
+    var i, d, best, pts, lim;
+    if (!state.doolhof) return false;
+    pts = state.doolhof.spts;
+    lim = state.doolhof.swide * 0.56;
+    best = 9999;
+    for (i = 0; i < pts.length - 1; i++) {
+      d = doolhofSegDist(x, y, pts[i].x, pts[i].y, pts[i + 1].x, pts[i + 1].y);
+      if (d < best) best = d;
+    }
+    return best <= lim;
+  }
+
+  function startDoolhof(fresh) {
+    var mazes, idx;
+    if (fresh) {
+      state.level = 'doolhof';
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+      resetVoiceCycle();
+    }
+    mazes = doolhofMazes();
+    idx = state.sessionCorrect;
+    if (idx > mazes.length - 1) idx = mazes.length - 1;
+    state.doolhof = {
+      maze: mazes[idx],
+      trail: [],
+      done: false,
+      started: false
+    };
+    doolhofDrag.on = false;
+    hideReward();
+    showScreen('doolhof');
+    updateStarsUI();
+    window.setTimeout(function () {
+      layoutDoolhof();
+      beginQuestionVoice();
+      speak('doolhof');
+    }, 40);
+  }
+
+  function layoutDoolhof() {
+    var wrap, W, H, maze, scale, ox, oy, i, pts, spts, html, p1, p2, sw, wall, a, canvas;
+    wrap = $('doolhof-wrap');
+    if (!wrap || !state.doolhof) return;
+    W = wrap.clientWidth || 700;
+    H = wrap.clientHeight || 500;
+    maze = state.doolhof.maze;
+    scale = Math.min((W - 24) / 1000, (H - 24) / 600);
+    ox = Math.floor((W - 1000 * scale) / 2);
+    oy = Math.floor((H - 600 * scale) / 2);
+    spts = [];
+    pts = maze.pts;
+    for (i = 0; i < pts.length; i++) {
+      spts.push({ x: ox + pts[i][0] * scale, y: oy + pts[i][1] * scale });
+    }
+    sw = maze.wide * scale;
+    state.doolhof.spts = spts;
+    state.doolhof.swide = sw;
+    state.doolhof.scale = scale;
+    wall = sw + 16;
+    a = '';
+    for (i = 0; i < spts.length; i++) {
+      if (i) a += ' ';
+      a += Math.round(spts[i].x) + ',' + Math.round(spts[i].y);
+    }
+    html = '<svg id="doolhof-svg" width="' + W + '" height="' + H + '">';
+    html += '<polyline points="' + a + '" fill="none" stroke="#8D6E63" stroke-width="' + wall +
+      '" stroke-linecap="round" stroke-linejoin="round"/>';
+    html += '<polyline points="' + a + '" fill="none" stroke="#FFF8E7" stroke-width="' + sw +
+      '" stroke-linecap="round" stroke-linejoin="round"/>';
+    html += '</svg>';
+    html += '<canvas id="doolhof-trail" width="' + W + '" height="' + H + '"></canvas>';
+    p1 = spts[0];
+    p2 = spts[spts.length - 1];
+    html += '<div id="doolhof-mouse" class="doolhof-icon" style="left:' + Math.round(p1.x - 32) +
+      'px;top:' + Math.round(p1.y - 32) + 'px;">' + doolhofMouseSvg() + '</div>';
+    html += '<div id="doolhof-cheese" class="doolhof-icon" style="left:' + Math.round(p2.x - 29) +
+      'px;top:' + Math.round(p2.y - 29) + 'px;">' + doolhofCheeseSvg() + '</div>';
+    wrap.innerHTML = html;
+    canvas = $('doolhof-trail');
+    if (canvas) {
+      canvas.style.width = W + 'px';
+      canvas.style.height = H + 'px';
+    }
+    doolhofDrawTrail();
+  }
+
+  function doolhofDrawTrail() {
+    var c, ctx, i, pts, w;
+    c = $('doolhof-trail');
+    if (!c || !state.doolhof) return;
+    ctx = c.getContext('2d');
+    if (!ctx) return;
+    ctx.clearRect(0, 0, c.width, c.height);
+    pts = state.doolhof.trail;
+    if (pts.length < 2) return;
+    w = Math.max(10, state.doolhof.swide * 0.34);
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = '#2FB3F0';
+    ctx.lineWidth = w;
+    ctx.beginPath();
+    ctx.moveTo(pts[0].x, pts[0].y);
+    for (i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+    ctx.stroke();
+  }
+
+  function doolhofEvent(e) {
+    var src, wrap, wr;
+    if (e.touches && e.touches.length) src = e.touches[0];
+    else if (e.changedTouches && e.changedTouches.length) src = e.changedTouches[0];
+    else src = e;
+    wrap = $('doolhof-wrap');
+    if (!wrap) return null;
+    wr = wrap.getBoundingClientRect();
+    return { x: src.clientX - wr.left, y: src.clientY - wr.top };
+  }
+
+  function doolhofResetTrail() {
+    if (!state.doolhof) return;
+    state.doolhof.trail = [];
+    state.doolhof.started = false;
+    doolhofDrawTrail();
+  }
+
+  function doolhofDragStart(e) {
+    var pt, start, lim;
+    if (state.locked || !state.doolhof || state.doolhof.done) return false;
+    pt = doolhofEvent(e);
+    if (!pt) return false;
+    start = state.doolhof.spts[0];
+    lim = state.doolhof.swide * 0.75;
+    if (doolhofDist(pt.x, pt.y, start.x, start.y) > lim) return false;
+    doolhofDrag.on = true;
+    state.doolhof.started = true;
+    state.doolhof.trail = [{ x: pt.x, y: pt.y }];
+    doolhofDrawTrail();
+    return true;
+  }
+
+  function doolhofDragMove(e) {
+    var pt, last, end;
+    if (!doolhofDrag.on || !state.doolhof || state.doolhof.done) return false;
+    pt = doolhofEvent(e);
+    if (!pt) return true;
+    if (!doolhofOnPath(pt.x, pt.y)) {
+      doolhofDrag.on = false;
+      doolhofResetTrail();
+      speak('retry');
+      return true;
+    }
+    last = state.doolhof.trail[state.doolhof.trail.length - 1];
+    if (!last || doolhofDist(pt.x, pt.y, last.x, last.y) >= 4) {
+      state.doolhof.trail.push({ x: pt.x, y: pt.y });
+      doolhofDrawTrail();
+    }
+    end = state.doolhof.spts[state.doolhof.spts.length - 1];
+    if (doolhofDist(pt.x, pt.y, end.x, end.y) <= state.doolhof.swide * 0.55) {
+      doolhofDrag.on = false;
+      state.doolhof.done = true;
+      awardCorrect();
+    }
+    return true;
+  }
+
+  function doolhofDragEnd(e) {
+    if (!doolhofDrag.on) return false;
+    doolhofDrag.on = false;
+    if (state.doolhof && !state.doolhof.done) {
+      doolhofResetTrail();
+    }
+    return true;
+  }
+
   function showPuzzlesMenu() {
     state.level = null;
     state.locked = false;
@@ -6209,7 +6527,7 @@
         goHome();
       } else if (state.screen === 'puzzle') {
         showPuzzleLevel();
-      } else if (state.screen === 'vormen' || state.screen === 'spiegel' || state.screen === 'nateken' || state.screen === 'tangram' || state.screen === 'waar') {
+      } else if (state.screen === 'vormen' || state.screen === 'spiegel' || state.screen === 'nateken' || state.screen === 'tangram' || state.screen === 'waar' || state.screen === 'doolhof') {
         showPuzzlesMenu();
       } else if (state.screen === 'puzzlelevel') {
         showPuzzlesMenu();
@@ -6248,6 +6566,7 @@
       else if (el.getAttribute('data-game') === 'nateken') startNateken(true);
       else if (el.getAttribute('data-game') === 'tangram') startTangram(true);
       else if (el.getAttribute('data-game') === 'waar') startWaar(true);
+      else if (el.getAttribute('data-game') === 'doolhof') startDoolhof(true);
       else showPuzzleLevel();
       return;
     }
@@ -6348,6 +6667,8 @@
       e.preventDefault();
     } else if (state.screen === 'tangram' && tangramDragStart(e)) {
       e.preventDefault();
+    } else if (state.screen === 'doolhof' && doolhofDragStart(e)) {
+      e.preventDefault();
     }
   }
 
@@ -6371,6 +6692,10 @@
       e.preventDefault();
       return;
     }
+    if (state.screen === 'doolhof' && doolhofDragMove(e)) {
+      e.preventDefault();
+      return;
+    }
     e.preventDefault();
   }
 
@@ -6389,6 +6714,11 @@
       return;
     }
     if (state.screen === 'tangram' && tangramDragEnd(e)) {
+      clearPressed();
+      e.preventDefault();
+      return;
+    }
+    if (state.screen === 'doolhof' && doolhofDragEnd(e)) {
       clearPressed();
       e.preventDefault();
       return;
@@ -6446,6 +6776,7 @@
     elSet('nateken-home-icon', homeIconHtml());
     elSet('tangram-home-icon', homeIconHtml());
     elSet('waar-home-icon', homeIconHtml());
+    elSet('doolhof-home-icon', homeIconHtml());
     elSet('letters-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('trace-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('names-star-icon', starSvg('#FFD54F', '#F9A825'));
@@ -6458,6 +6789,7 @@
     elSet('nateken-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('tangram-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('waar-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('doolhof-star-icon', starSvg('#FFD54F', '#F9A825'));
     if ($('icon-vormen')) {
       $('icon-vormen').innerHTML =
         vormSvg('circle', '#2FB3F0', '#1A7FB3', 0) +
@@ -6524,6 +6856,7 @@
         if (state.screen === 'spiegel') layoutSpiegel();
         if (state.screen === 'nateken') layoutNateken();
         if (state.screen === 'tangram') layoutTangram();
+        if (state.screen === 'doolhof') layoutDoolhof();
       }, 250);
     }, false);
 
