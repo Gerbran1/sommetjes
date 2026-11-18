@@ -190,7 +190,7 @@
       line-height: 1;
     }
 
-    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram {
+    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -1635,6 +1635,117 @@
       display: block;
       pointer-events: none;
     }
+    .lvl-waar {
+      background: #26A69A;
+      -webkit-box-shadow: 0 8px 0 #00897B, 0 12px 16px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 0 #00897B, 0 12px 16px rgba(0,0,0,0.15);
+    }
+    .lvl-waar.pressed, .lvl-waar:active {
+      -webkit-box-shadow: 0 2px 0 #00897B, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #00897B, 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .waar-mini {
+      position: relative;
+      width: 54px;
+      height: 40px;
+    }
+    .waar-mini .wm-table {
+      position: absolute;
+      left: 6px;
+      top: 10px;
+      width: 42px;
+      height: 8px;
+      background: #fff;
+      border-radius: 2px;
+    }
+    .waar-mini .wm-leg {
+      position: absolute;
+      width: 5px;
+      height: 18px;
+      background: #fff;
+      top: 18px;
+      border-radius: 1px;
+    }
+    .waar-mini .wm-bear {
+      position: absolute;
+      left: 18px;
+      top: 22px;
+      width: 16px;
+      height: 14px;
+      background: #C47A44;
+      border-radius: 8px;
+    }
+    #waar-wrap {
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      min-height: 0;
+      overflow: hidden;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+    }
+    #waar-choices {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: stretch;
+      align-items: stretch;
+      width: 100%;
+      max-width: 980px;
+      padding: 0 12px 8px 12px;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    .waar-card {
+      -webkit-flex: 1 1 30%;
+      flex: 1 1 30%;
+      max-width: 300px;
+      margin: 0 10px;
+      padding: 8px 8px 10px 8px;
+      border: 0;
+      border-radius: 24px;
+      background: #FFFDF7;
+      -webkit-box-shadow: 0 8px 0 #E2D3A8, 0 12px 16px rgba(0,0,0,0.12);
+      box-shadow: 0 8px 0 #E2D3A8, 0 12px 16px rgba(0,0,0,0.12);
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .waar-card.pressed, .waar-card:active {
+      -webkit-transform: translateY(5px);
+      transform: translateY(5px);
+    }
+    .waar-card.is-correct {
+      -webkit-box-shadow: 0 8px 0 #2E9A4F, 0 12px 16px rgba(0,0,0,0.12);
+      box-shadow: 0 8px 0 #2E9A4F, 0 12px 16px rgba(0,0,0,0.12);
+      background: #E8F8EC;
+    }
+    .waar-card.is-wrong {
+      -webkit-box-shadow: 0 8px 0 #C62828, 0 12px 16px rgba(0,0,0,0.12);
+      box-shadow: 0 8px 0 #C62828, 0 12px 16px rgba(0,0,0,0.12);
+    }
+    .waar-card svg {
+      width: 100%;
+      height: 240px;
+      display: block;
+    }
+    .waar-prep {
+      color: #C44545;
+    }
+    @media screen and (max-height: 800px) {
+      .waar-card svg { height: 220px; }
+      .waar-card { margin: 0 6px; padding: 6px; border-radius: 20px; }
+    }
+    @media screen and (max-width: 800px) {
+      .waar-card svg { height: 200px; }
+      .waar-card { margin: 0 6px; }
+    }
     #nateken-clear {
       position: absolute;
       right: 10px;
@@ -2141,6 +2252,17 @@
           </div>
           <div class="level-label">Tangram</div>
         </button>
+        <button type="button" class="tap level-btn lvl-waar" data-act="puzzle-game" data-game="waar">
+          <div class="act-icon">
+            <div class="waar-mini" id="icon-waar">
+              <div class="wm-table"></div>
+              <div class="wm-leg" style="left:10px;"></div>
+              <div class="wm-leg" style="left:39px;"></div>
+              <div class="wm-bear"></div>
+            </div>
+          </div>
+          <div class="level-label">Wat hoort waar?</div>
+        </button>
       </div>
     </div>
 
@@ -2293,6 +2415,29 @@
       </div>
       <div class="prompt" id="tangram-prompt">Leg de stukken in de vorm</div>
       <div id="tangram-wrap"></div>
+    </div>
+
+    <div id="screen-waar" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-waar-home" data-act="home" title="Terug">
+            <span id="waar-home-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-sound-waar" data-act="sound" title="Geluid" style="margin-left:8px;">
+            <span id="sound-icon-waar"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="waar-star-icon"></span>
+            <span class="star-count" id="waar-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt" id="waar-prompt">Waar is de beer?</div>
+      <div id="waar-wrap">
+        <div id="waar-choices"></div>
+      </div>
     </div>
 
     <div id="screen-trace" class="is-hidden">
@@ -3112,6 +3257,10 @@
     }
     else if (state.level === 'tangram') {
       startTangram(false);
+      return;
+    }
+    else if (state.level === 'waar') {
+      startWaar(false);
       return;
     }
     else {
@@ -4063,7 +4212,7 @@
   /* ---------- UI ---------- */
   function updateStarsUI() {
     var i, row, html, filled, el, rows;
-    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars'], String(state.stars));
+    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars'], String(state.stars));
     filled = state.towardsReward;
     if (filled > 5) filled = 5;
     html = '';
@@ -4102,6 +4251,7 @@
     elSet('sound-icon-spiegel', html);
     elSet('sound-icon-nateken', html);
     elSet('sound-icon-tangram', html);
+    elSet('sound-icon-waar', html);
   }
 
   function elSet(id, html) {
@@ -4112,7 +4262,7 @@
   function showScreen(name) {
     var ids, i, el;
     state.screen = name;
-    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram'];
+    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar'];
     for (i = 0; i < ids.length; i++) {
       el = $('screen-' + ids[i]);
       if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
@@ -5338,6 +5488,161 @@
     return true;
   }
 
+  function waarBear(x, y, s) {
+    return '<g transform="translate(' + x + ',' + y + ') scale(' + s + ')">' +
+      '<circle cx="-11" cy="-17" r="7" fill="#A0673A" stroke="#5D4037" stroke-width="2"/>' +
+      '<circle cx="11" cy="-17" r="7" fill="#A0673A" stroke="#5D4037" stroke-width="2"/>' +
+      '<ellipse cx="0" cy="12" rx="16" ry="14" fill="#C47A44" stroke="#5D4037" stroke-width="2"/>' +
+      '<circle cx="0" cy="-8" r="14" fill="#C47A44" stroke="#5D4037" stroke-width="2"/>' +
+      '<ellipse cx="0" cy="-3" rx="7" ry="5" fill="#E8C39A"/>' +
+      '<circle cx="-5" cy="-10" r="2" fill="#3E2723"/>' +
+      '<circle cx="5" cy="-10" r="2" fill="#3E2723"/>' +
+      '<ellipse cx="0" cy="-1" rx="2.2" ry="1.6" fill="#3E2723"/>' +
+      '</g>';
+  }
+
+  function waarTable() {
+    return '<g>' +
+      '<rect x="40" y="78" width="120" height="14" rx="4" fill="#BCAAA4" stroke="#6D4C41" stroke-width="3"/>' +
+      '<rect x="52" y="92" width="10" height="46" rx="2" fill="#8D6E63" stroke="#5D4037" stroke-width="2"/>' +
+      '<rect x="138" y="92" width="10" height="46" rx="2" fill="#8D6E63" stroke="#5D4037" stroke-width="2"/>' +
+      '</g>';
+  }
+
+  function waarBox() {
+    return '<g>' +
+      '<rect x="62" y="88" width="76" height="52" rx="6" fill="#D7A15E" stroke="#6D4C41" stroke-width="3"/>' +
+      '<path d="M62 88 L100 62 L138 88" fill="#E8C39A" stroke="#6D4C41" stroke-width="3" stroke-linejoin="round"/>' +
+      '</g>';
+  }
+
+  function waarFloor() {
+    return '<line x1="16" y1="148" x2="184" y2="148" stroke="#A5D6A7" stroke-width="6" stroke-linecap="round"/>';
+  }
+
+  function waarScene(prep, obj) {
+    var html, bear;
+    html = '<svg viewBox="0 0 200 160" focusable="false">' + waarFloor();
+    if (obj === 'tafel') {
+      if (prep === 'achter') {
+        html += waarBear(100, 58, 1.0);
+        html += waarTable();
+      } else if (prep === 'voor') {
+        html += waarTable();
+        html += waarBear(100, 118, 1.25);
+      } else if (prep === 'op') {
+        html += waarTable();
+        html += waarBear(100, 52, 1.0);
+      } else if (prep === 'onder') {
+        html += waarTable();
+        html += waarBear(100, 120, 0.9);
+      } else {
+        html += waarTable();
+        html += waarBear(168, 112, 1.05);
+      }
+    } else {
+      if (prep === 'achter') {
+        html += waarBear(100, 58, 1.0);
+        html += waarBox();
+      } else if (prep === 'voor') {
+        html += waarBox();
+        html += waarBear(100, 122, 1.2);
+      } else if (prep === 'op') {
+        html += waarBox();
+        html += waarBear(100, 62, 1.0);
+      } else if (prep === 'in') {
+        html += waarBear(100, 108, 0.9);
+        html += waarBox();
+      } else if (prep === 'onder') {
+        html += waarBox();
+        html += waarBear(100, 132, 0.8);
+      } else {
+        html += waarBox();
+        html += waarBear(168, 112, 1.05);
+      }
+    }
+    html += '</svg>';
+    return html;
+  }
+
+  function waarItems() {
+    return [
+      { prep: 'op', obj: 'tafel', word: 'OP', speech: 'waar-beer-op-tafel' },
+      { prep: 'onder', obj: 'tafel', word: 'ONDER', speech: 'waar-beer-onder-tafel' },
+      { prep: 'naast', obj: 'tafel', word: 'NAAST', speech: 'waar-beer-naast-tafel' },
+      { prep: 'achter', obj: 'tafel', word: 'ACHTER', speech: 'waar-beer-achter-tafel' },
+      { prep: 'voor', obj: 'tafel', word: 'VOOR', speech: 'waar-beer-voor-tafel' },
+      { prep: 'in', obj: 'doos', word: 'IN', speech: 'waar-beer-in-doos' },
+      { prep: 'op', obj: 'doos', word: 'OP', speech: 'waar-beer-op-doos' },
+      { prep: 'naast', obj: 'doos', word: 'NAAST', speech: 'waar-beer-naast-doos' },
+      { prep: 'achter', obj: 'doos', word: 'ACHTER', speech: 'waar-beer-achter-doos' },
+      { prep: 'voor', obj: 'doos', word: 'VOOR', speech: 'waar-beer-voor-doos' },
+      { prep: 'onder', obj: 'doos', word: 'ONDER', speech: 'waar-beer-onder-doos' }
+    ];
+  }
+
+  function startWaar(fresh) {
+    var items, item, pool, choices, i, html, objName, prompt;
+    if (fresh) {
+      state.level = 'waar';
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+      resetVoiceCycle();
+    }
+    items = waarItems();
+    do {
+      item = items[randInt(0, items.length - 1)];
+    } while (item.speech === state.lastWaar && items.length > 1);
+    state.lastWaar = item.speech;
+    pool = [];
+    for (i = 0; i < items.length; i++) {
+      if (items[i].obj === item.obj && items[i].prep !== item.prep) pool.push(items[i]);
+    }
+    shuffle(pool);
+    choices = [item, pool[0], pool[1]];
+    shuffle(choices);
+    objName = (item.obj === 'tafel') ? 'tafel' : 'doos';
+    prompt = 'Waar is de beer <span class="waar-prep">' + item.word + '</span> de ' + objName + '?';
+    state.waar = { item: item, choices: choices, done: false };
+    html = '';
+    for (i = 0; i < choices.length; i++) {
+      html += '<button type="button" class="tap waar-card" data-act="waar-choice" data-i="' + i + '">' +
+        waarScene(choices[i].prep, choices[i].obj) + '</button>';
+    }
+    hideReward();
+    showScreen('waar');
+    $('waar-prompt').innerHTML = prompt;
+    $('waar-choices').innerHTML = html;
+    updateStarsUI();
+    window.setTimeout(function () {
+      beginQuestionVoice();
+      speak(item.speech);
+    }, 40);
+  }
+
+  function onWaarChoice(el) {
+    var i, choice;
+    if (state.locked || !state.waar || state.waar.done) return;
+    i = parseInt(el.getAttribute('data-i'), 10);
+    choice = state.waar.choices[i];
+    if (!choice) return;
+    if (choice.prep === state.waar.item.prep) {
+      state.waar.done = true;
+      el.className = 'tap waar-card is-correct';
+      awardCorrect();
+    } else {
+      playWrong();
+      el.className = 'tap waar-card is-wrong shake';
+      showToast('Probeer nog eens', false);
+      speak('retry');
+      window.setTimeout(function () {
+        if (el && el.className.indexOf('is-correct') === -1) {
+          el.className = 'tap waar-card is-wrong';
+        }
+      }, 450);
+    }
+  }
+
   function showPuzzlesMenu() {
     state.level = null;
     state.locked = false;
@@ -5904,7 +6209,7 @@
         goHome();
       } else if (state.screen === 'puzzle') {
         showPuzzleLevel();
-      } else if (state.screen === 'vormen' || state.screen === 'spiegel' || state.screen === 'nateken' || state.screen === 'tangram') {
+      } else if (state.screen === 'vormen' || state.screen === 'spiegel' || state.screen === 'nateken' || state.screen === 'tangram' || state.screen === 'waar') {
         showPuzzlesMenu();
       } else if (state.screen === 'puzzlelevel') {
         showPuzzlesMenu();
@@ -5942,6 +6247,7 @@
       else if (el.getAttribute('data-game') === 'spiegel') startSpiegel(true);
       else if (el.getAttribute('data-game') === 'nateken') startNateken(true);
       else if (el.getAttribute('data-game') === 'tangram') startTangram(true);
+      else if (el.getAttribute('data-game') === 'waar') startWaar(true);
       else showPuzzleLevel();
       return;
     }
@@ -5959,6 +6265,10 @@
     }
     if (act === 'nateken-clear') {
       natekenClear();
+      return;
+    }
+    if (act === 'waar-choice') {
+      onWaarChoice(el);
       return;
     }
     if (act === 'verder') {
@@ -6135,6 +6445,7 @@
     elSet('spiegel-home-icon', homeIconHtml());
     elSet('nateken-home-icon', homeIconHtml());
     elSet('tangram-home-icon', homeIconHtml());
+    elSet('waar-home-icon', homeIconHtml());
     elSet('letters-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('trace-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('names-star-icon', starSvg('#FFD54F', '#F9A825'));
@@ -6146,6 +6457,7 @@
     elSet('spiegel-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('nateken-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('tangram-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('waar-star-icon', starSvg('#FFD54F', '#F9A825'));
     if ($('icon-vormen')) {
       $('icon-vormen').innerHTML =
         vormSvg('circle', '#2FB3F0', '#1A7FB3', 0) +
