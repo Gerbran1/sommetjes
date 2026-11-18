@@ -305,6 +305,15 @@
       -webkit-box-shadow: 0 2px 0 #D49A12, 0 4px 8px rgba(0,0,0,0.15);
       box-shadow: 0 2px 0 #D49A12, 0 4px 8px rgba(0,0,0,0.15);
     }
+    .lvl-plus30 {
+      background: #FF8A4C;
+      -webkit-box-shadow: 0 8px 0 #E05620, 0 12px 18px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 0 #E05620, 0 12px 18px rgba(0,0,0,0.15);
+    }
+    .lvl-plus30.pressed, .lvl-plus30:active {
+      -webkit-box-shadow: 0 2px 0 #E05620, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #E05620, 0 4px 8px rgba(0,0,0,0.15);
+    }
     .lvl-minus {
       background: #FF7EB3;
       -webkit-box-shadow: 0 8px 0 #D44E86, 0 12px 18px rgba(0,0,0,0.15);
@@ -721,6 +730,81 @@
     .dots-lg .tdot { width: 28px; height: 28px; margin: 6px; }
     .dots-md .tdot { width: 20px; height: 20px; margin: 5px; }
     .dots-sm .tdot { width: 14px; height: 14px; margin: 3px; -webkit-box-shadow: 0 2px 0 #C85A00; box-shadow: 0 2px 0 #C85A00; }
+
+    .tens-tray {
+      -webkit-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+      padding: 12px 16px;
+      max-width: 960px;
+    }
+    .tens-side {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      margin: 0 6px;
+    }
+    .ten-bar {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+      background: rgba(26, 79, 179, 0.12);
+      border-radius: 14px;
+      padding: 4px 6px;
+      margin: 3px 0;
+    }
+    .ten-loose {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      margin-top: 4px;
+      max-width: 260px;
+    }
+    .tens-dot {
+      width: 18px;
+      height: 18px;
+      margin: 3px;
+      border-radius: 50%;
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+    }
+    .tens-dot.dot-a {
+      background: #2FB3F0;
+      -webkit-box-shadow: 0 3px 0 #1A7FB3;
+      box-shadow: 0 3px 0 #1A7FB3;
+    }
+    .tens-dot.dot-b {
+      background: #FFC93A;
+      -webkit-box-shadow: 0 3px 0 #D49A12;
+      box-shadow: 0 3px 0 #D49A12;
+    }
+    .mini-tenbar {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+      background: rgba(26, 79, 179, 0.16);
+      border-radius: 8px;
+      padding: 3px 4px;
+      margin: 0 2px;
+    }
+    .mini-tenbar .tens-dot { width: 8px; height: 8px; margin: 1px; -webkit-box-shadow: none; box-shadow: none; }
 
     /* PLAY */
     .prompt, .prompt-xl, .trace-prompt {
@@ -1993,6 +2077,11 @@
       #toast { bottom: 150px; font-size: 24px; }
       .table-btn { height: 100px; font-size: 52px; margin: 6px 1%; }
       .table-all { height: 72px; font-size: 26px; margin-top: 10px; }
+      .tens-tray { padding: 8px 10px; }
+      .tens-dot { width: 14px; height: 14px; margin: 2px; }
+      .ten-bar { padding: 3px 4px; margin: 2px 0; border-radius: 10px; }
+      .ten-loose { max-width: 200px; margin-top: 2px; }
+      #level-grid .level-btn { min-height: 108px; }
       .big-letter { font-size: 110px; }
       .word-box .word-svg { width: 130px; height: 130px; }
       .word-label { font-size: 22px; }
@@ -2102,6 +2191,11 @@
         <button type="button" class="tap level-btn lvl-plus10" id="btn-plus10" data-act="level" data-level="plus10">
           <div class="level-icon" id="icon-plus10"></div>
           <div class="level-label">Plus 10</div>
+          <div class="level-sub">Optellen</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-plus30" id="btn-plus30" data-act="level" data-level="plus30">
+          <div class="level-icon" id="icon-plus30"></div>
+          <div class="level-label">Plus tot 30</div>
           <div class="level-sub">Optellen</div>
         </button>
         <button type="button" class="tap level-btn lvl-minus" id="btn-minus" data-act="level" data-level="minus">
@@ -3317,6 +3411,56 @@
     return q;
   }
 
+  function makePlus30Choices(sum) {
+    var near, ten, i, n, choices, extra;
+    near = [];
+    ten = [];
+    if (sum - 1 >= 1) near.push(sum - 1);
+    if (sum + 1 <= 40) near.push(sum + 1);
+    if (sum - 10 >= 1) ten.push(sum - 10);
+    if (sum + 10 <= 40) ten.push(sum + 10);
+    shuffle(near);
+    shuffle(ten);
+    choices = [sum];
+    if (near.length) choices.push(near[0]);
+    if (ten.length && choices.length < 3) choices.push(ten[0]);
+    extra = 2;
+    while (choices.length < 3) {
+      n = sum - extra;
+      if (n >= 1 && !contains(choices, n)) choices.push(n);
+      if (choices.length < 3) {
+        n = sum + extra;
+        if (n <= 40 && !contains(choices, n)) choices.push(n);
+      }
+      extra += 1;
+    }
+    return shuffle(choices);
+  }
+
+  function makePlus30Q() {
+    var a, b, sum, q, keys, key, parts, aa, bb;
+    keys = [];
+    for (aa = 10; aa <= 20; aa++) {
+      for (bb = 1; bb <= 10; bb++) keys.push(aa + '+' + bb);
+    }
+    key = pickAvoiding(keys) || '11+8';
+    rememberRoundKey(key);
+    parts = key.split('+');
+    a = parseInt(parts[0], 10);
+    b = parseInt(parts[1], 10);
+    sum = a + b;
+    q = {
+      mode: 'plus30',
+      a: a,
+      b: b,
+      answer: sum,
+      prompt: a + ' + ' + b + ' = ?',
+      speech: 'plus-' + a + '-' + b,
+      choices: makePlus30Choices(sum)
+    };
+    return q;
+  }
+
   function makeMinusQ(maxN) {
     var total, take, left, kind, q, keys, key, parts;
     keys = [];
@@ -3346,8 +3490,13 @@
   }
 
   function dutchNum(n) {
-    var words = ['nul', 'één', 'twee', 'drie', 'vier', 'vijf', 'zes', 'zeven', 'acht', 'negen', 'tien'];
-    if (n >= 0 && n <= 10) return words[n];
+    var words = [
+      'nul', 'één', 'twee', 'drie', 'vier', 'vijf', 'zes', 'zeven', 'acht', 'negen', 'tien',
+      'elf', 'twaalf', 'dertien', 'veertien', 'vijftien', 'zestien', 'zeventien', 'achttien', 'negentien', 'twintig',
+      'éénentwintig', 'tweeëntwintig', 'drieëntwintig', 'vierentwintig', 'vijfentwintig',
+      'zesentwintig', 'zevenentwintig', 'achtentwintig', 'negenentwintig', 'dertig'
+    ];
+    if (n >= 0 && n <= 30) return words[n];
     return String(n);
   }
 
@@ -3438,6 +3587,33 @@
     return html;
   }
 
+  function tensDotsHtml(n, cls) {
+    var tens, ones, i, j, html;
+    tens = Math.floor(n / 10);
+    ones = n - tens * 10;
+    html = '<div class="tens-side">';
+    for (i = 0; i < tens; i++) {
+      html += '<div class="ten-bar">';
+      for (j = 0; j < 10; j++) html += '<span class="tens-dot ' + cls + '"></span>';
+      html += '</div>';
+    }
+    if (ones > 0) {
+      html += '<div class="ten-loose">';
+      for (j = 0; j < ones; j++) html += '<span class="tens-dot ' + cls + '"></span>';
+      html += '</div>';
+    }
+    html += '</div>';
+    return html;
+  }
+
+  function visualTensPlusHtml(a, b) {
+    return '<div class="tray tens-tray">' +
+      tensDotsHtml(a, 'dot-a') +
+      plusSignHtml() +
+      tensDotsHtml(b, 'dot-b') +
+      '</div>';
+  }
+
   function nextQuestion() {
     var q, maxN;
     state.locked = false;
@@ -3446,6 +3622,7 @@
     if (state.level === 'count') q = makeCountQ();
     else if (state.level === 'plus5') q = makePlusQ(5);
     else if (state.level === 'plus10') q = makePlusQ(10);
+    else if (state.level === 'plus30') q = makePlus30Q();
     else if (state.level === 'tables') q = makeTableQ();
     else if (state.level === 'letters') {
       nextLetterItem();
@@ -3516,29 +3693,34 @@
       speak(q.speech);
       return;
     }
-    $('prompt').className = (q.mode === 'plus' || q.mode === 'minus') ? 'prompt prompt-sum' : 'prompt';
-    if (q.mode === 'count') {
-      html = '<div class="group">';
-      for (i = 0; i < q.answer; i++) html += objectHtml(q.kind, false);
-      html += '</div>';
-    } else if (q.mode === 'plus') {
-      html = '<div class="group group-eq">';
-      for (i = 0; i < q.a; i++) html += objectHtml(q.kind, false);
-      html += '</div>';
-      html += plusSignHtml();
-      html += '<div class="group group-eq">';
-      for (i = 0; i < q.b; i++) html += objectHtml(q.kind, false);
-      html += '</div>';
+    if (q.mode === 'plus30') {
+      $('prompt').className = 'prompt prompt-sum';
+      box.innerHTML = visualTensPlusHtml(q.a, q.b);
     } else {
-      html = '<div class="group">';
-      for (i = 0; i < q.total; i++) {
-        html += objectHtml(q.kind, i >= (q.total - q.take));
+      $('prompt').className = (q.mode === 'plus' || q.mode === 'minus') ? 'prompt prompt-sum' : 'prompt';
+      if (q.mode === 'count') {
+        html = '<div class="group">';
+        for (i = 0; i < q.answer; i++) html += objectHtml(q.kind, false);
+        html += '</div>';
+      } else if (q.mode === 'plus') {
+        html = '<div class="group group-eq">';
+        for (i = 0; i < q.a; i++) html += objectHtml(q.kind, false);
+        html += '</div>';
+        html += plusSignHtml();
+        html += '<div class="group group-eq">';
+        for (i = 0; i < q.b; i++) html += objectHtml(q.kind, false);
+        html += '</div>';
+      } else {
+        html = '<div class="group">';
+        for (i = 0; i < q.total; i++) {
+          html += objectHtml(q.kind, i >= (q.total - q.take));
+        }
+        html += '</div>';
       }
-      html += '</div>';
+      n = (q.mode === 'count') ? q.answer : (q.mode === 'plus' ? (q.a + q.b) : q.total);
+      sizeCls = (n <= 4) ? 'size-lg' : (n <= 7 ? 'size-md' : 'size-sm');
+      box.innerHTML = '<div class="tray ' + sizeCls + '">' + html + '</div>';
     }
-    n = (q.mode === 'count') ? q.answer : (q.mode === 'plus' ? (q.a + q.b) : q.total);
-    sizeCls = (n <= 4) ? 'size-lg' : (n <= 7 ? 'size-md' : 'size-sm');
-    box.innerHTML = '<div class="tray ' + sizeCls + '">' + html + '</div>';
 
     buttons = $('answers').getElementsByTagName('button');
     for (i = 0; i < 3; i++) {
@@ -7075,6 +7257,16 @@
       '<span class="mini">' + ballSvg() + '</span>' +
       plusSignHtml() +
       '<span class="mini">' + ballSvg() + '</span>';
+    if ($('icon-plus30')) {
+      $('icon-plus30').innerHTML =
+        '<div class="mini-tenbar">' +
+        '<span class="tens-dot dot-a"></span><span class="tens-dot dot-a"></span>' +
+        '<span class="tens-dot dot-a"></span><span class="tens-dot dot-a"></span>' +
+        '<span class="tens-dot dot-a"></span></div>' +
+        plusSignHtml() +
+        '<span class="tens-dot dot-b"></span><span class="tens-dot dot-b"></span>' +
+        '<span class="tens-dot dot-b"></span>';
+    }
     $('icon-minus').innerHTML =
       '<span class="mini">' + objectHtml('apple', false).replace('class="obj"', 'class="obj" style="width:44px;height:44px;margin:0 2px;"') + '</span>' +
       '<span class="mini">' + objectHtml('apple', true).replace('class="obj obj-gone"', 'class="obj obj-gone" style="width:44px;height:44px;margin:0 2px;"') + '</span>';

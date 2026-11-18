@@ -154,6 +154,32 @@ function intersection(a, b) {
     if (overlap.length) throw new Error('plus5 r2 herhaalde vorige ronde: ' + overlap.join(','));
     ok('Plus 5 ronde 2 uniek en niet uit ronde 1: ' + p2.join(', '));
 
+    // Plus tot 30: 110 sommen, twee rondes zonder overlap
+    await fresh(page);
+    await page.click('#btn-goto-games');
+    await wait(280);
+    await page.click('[data-level="plus30"]');
+    await wait(280);
+    var p30a = await playRound(page, 'plus', 5);
+    assertUnique(p30a, 'plus30 r1');
+    for (var pi = 0; pi < p30a.length; pi++) {
+      var bits = p30a[pi].split('+');
+      var aa = parseInt(bits[0], 10), bb = parseInt(bits[1], 10);
+      if (!(aa >= 10 && aa <= 20 && bb >= 1 && bb <= 10)) {
+        throw new Error('plus30 buiten bereik: ' + p30a[pi]);
+      }
+    }
+    ok('Plus tot 30 ronde 1 uniek: ' + p30a.join(', '));
+    await page.click('#btn-verder');
+    await wait(300);
+    await page.click('[data-level="plus30"]');
+    await wait(280);
+    var p30b = await playRound(page, 'plus', 5);
+    assertUnique(p30b, 'plus30 r2');
+    overlap = intersection(p30a, p30b);
+    if (overlap.length) throw new Error('plus30 r2 herhaalde vorige ronde: ' + overlap.join(','));
+    ok('Plus tot 30 ronde 2 uniek en niet uit ronde 1: ' + p30b.join(', '));
+
     // Min (tot 5): 10 combos
     await fresh(page);
     await page.click('#btn-goto-games');
