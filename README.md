@@ -4,7 +4,7 @@ Een eenvoudige oefenapp voor kinderen van 4 tot 6 jaar, met getallen, letters, p
 
 ## Wat kun je oefenen?
 
-Op het startscherm kies je **Getallen**, **Letters**, **Puzzels** of **Geheugen**.
+Op het startscherm kies je **Getallen**, **Letters**, **Puzzels**, **Geheugen** of **Tekenen**.
 
 **Getallen**
 1. **Tellen** — tel 1 tot 10 plaatjes en tik het goede getal
@@ -26,6 +26,10 @@ Op het startscherm kies je **Getallen**, **Letters**, **Puzzels** of **Geheugen*
 12. **Tangram** — sleep 3 of 4 grote stukken in de silhouet (huis, boot, boom). Later kun je tikken om te draaien.
 13. **Wat hoort waar?** — kies het plaatje waarop de beer op, onder, naast, achter, voor of in de tafel of doos zit.
 14. **Doolhofje** — volg met je vinger het pad van de muis naar de kaas. Er zijn meerdere doolhoven die steeds een stukje moeilijker worden.
+
+**Tekenen**
+15. **Vrij tekenen** — teken zelf met dikke kleuren, drie lijndiktes, een spuitbus en een gum. Wissen vraagt eerst even of het echt mag. Geen sterren, je tekent zo lang je wilt.
+16. **Kleurplaten** — kies een plaat (kat, hond, olifant, vis, dino, vlinder, bloem, huis, auto, raket, kasteel of eenhoorn) en tik in de vlakken om ze te kleuren. Je kunt ook zelf bijtekenen.
 
 **Geheugen**
 15. **Memory** — draai de kaartjes om en zoek twee dezelfde. Je kiest 6, 12 of 16 kaartjes (3×2, 4×3 of 4×4). Een heel bord is één ster; daarna ga je terug naar het Geheugen-menu.

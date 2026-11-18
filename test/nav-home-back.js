@@ -13,7 +13,7 @@ const wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms)
 const SCREENS = [
   'start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay',
   'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken',
-  'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd'
+  'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken'
 ];
 
 async function visibleScreen(page) {
@@ -176,6 +176,39 @@ async function waitSpiegelNext(page) {
     await tap(page, '#btn-memory-home');
     await expectScreen(page, 'start', 'geheugen home');
     ok('Geheugen menu home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-tekenen');
+    await expectScreen(page, 'tekenmenu', 'tekenen menu');
+    await tap(page, '#btn-tekenmenu-back');
+    await expectScreen(page, 'start', 'tekenen menu back');
+    await tap(page, '#btn-goto-tekenen');
+    await tap(page, '#btn-tekenmenu-home');
+    await expectScreen(page, 'start', 'tekenen menu home');
+    ok('Tekenen-menu terug/home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-tekenen');
+    await tap(page, '[data-act="teken-vrij"]');
+    await expectScreen(page, 'teken', 'vrij tekenen');
+    await tap(page, '#btn-teken-back');
+    await expectScreen(page, 'tekenmenu', 'vrij back');
+    await tap(page, '[data-act="teken-vrij"]');
+    await tap(page, '#btn-teken-home');
+    await expectScreen(page, 'start', 'vrij home');
+    ok('Vrij tekenen terug → menu, home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-tekenen');
+    await tap(page, '[data-act="teken-kleur"]');
+    await expectScreen(page, 'kleurkies', 'kleurplaten kiezer');
+    await tap(page, '[data-page="kat"]');
+    await expectScreen(page, 'teken', 'kleurplaat kat');
+    await tap(page, '#btn-teken-back');
+    await expectScreen(page, 'kleurkies', 'kleurplaat back');
+    await tap(page, '#btn-kleurkies-back');
+    await expectScreen(page, 'tekenmenu', 'kiezer back');
+    ok('Kleurplaten kiezer en plaat terug naar het menu');
 
     await fresh(page);
     await tap(page, '#btn-goto-games');
