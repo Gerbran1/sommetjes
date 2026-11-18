@@ -172,7 +172,7 @@
       line-height: 1;
     }
 
-    #screen-home, #screen-play, #screen-picker {
+    #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -297,6 +297,15 @@
     .lvl-tables.pressed, .lvl-tables:active {
       -webkit-box-shadow: 0 2px 0 #5E4ED1, 0 4px 8px rgba(0,0,0,0.15);
       box-shadow: 0 2px 0 #5E4ED1, 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .lvl-letters {
+      background: #2EC4B6;
+      -webkit-box-shadow: 0 8px 0 #1A9A8E, 0 12px 18px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 0 #1A9A8E, 0 12px 18px rgba(0,0,0,0.15);
+    }
+    .lvl-letters.pressed, .lvl-letters:active {
+      -webkit-box-shadow: 0 2px 0 #1A9A8E, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #1A9A8E, 0 4px 8px rgba(0,0,0,0.15);
     }
     .level-icon {
       height: 70px;
@@ -832,6 +841,248 @@
       box-shadow: 0 2px 0 #2E9A4F;
     }
 
+    .glyph-m {
+      font-size: 58px;
+      font-weight: 800;
+      line-height: 1;
+      color: #fff;
+    }
+    #letters-grid {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: stretch;
+      align-items: stretch;
+      -webkit-align-content: center;
+      align-content: center;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    #letters-grid .level-btn {
+      -webkit-flex: 0 0 44%;
+      flex: 0 0 44%;
+      max-width: 340px;
+      margin: 1.5%;
+    }
+    .act-icon {
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1;
+      height: 56px;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+    }
+    .act-icon .mini-pic { width: 54px; height: 54px; }
+    .letter-prompt-box, .word-box {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      padding: 12px 24px 16px 24px;
+    }
+    .big-letter {
+      font-size: 150px;
+      font-weight: 800;
+      color: #1A4A6A;
+      line-height: 0.95;
+    }
+    .word-box .word-svg { width: 180px; height: 180px; }
+    .mini-pic, .mini-pic .word-svg, .act-icon svg {
+      width: 54px;
+      height: 54px;
+    }
+    .act-icon { overflow: hidden; }
+    .word-label {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1A4A6A;
+      margin-top: 4px;
+    }
+    .repeat-btn {
+      margin-top: 8px;
+      background: #2EC4B6;
+      color: #fff;
+      font-size: 22px;
+      font-weight: 800;
+      padding: 10px 22px;
+      border-radius: 22px;
+      -webkit-box-shadow: 0 5px 0 #1A9A8E;
+      box-shadow: 0 5px 0 #1A9A8E;
+    }
+    .repeat-btn.pressed, .repeat-btn:active {
+      -webkit-transform: translateY(4px);
+      transform: translateY(4px);
+      -webkit-box-shadow: 0 1px 0 #1A9A8E;
+      box-shadow: 0 1px 0 #1A9A8E;
+    }
+    .letter-ans { text-transform: none; }
+
+    #trace-wrap {
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      max-width: 720px;
+      margin: 4px auto;
+      min-height: 200px;
+      background: rgba(255,253,247,0.9);
+      border-radius: 28px;
+      -webkit-box-shadow: 0 6px 0 rgba(0,0,0,0.06);
+      box-shadow: 0 6px 0 rgba(0,0,0,0.06);
+      overflow: hidden;
+      position: relative;
+    }
+    #trace-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .trace-prompt {
+      font-size: 36px;
+      font-weight: 800;
+      color: #1A4A6A;
+      text-align: center;
+      margin: 2px 0 4px 0;
+    }
+    .trace-clear {
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+      margin: 10px auto 8px auto;
+      background: #FFFDF7;
+      color: #1A4A6A;
+      font-size: 26px;
+      font-weight: 800;
+      padding: 12px 36px;
+      border-radius: 24px;
+      -webkit-box-shadow: 0 6px 0 #E2D3A8;
+      box-shadow: 0 6px 0 #E2D3A8;
+    }
+    .trace-clear.pressed, .trace-clear:active {
+      -webkit-transform: translateY(5px);
+      transform: translateY(5px);
+      -webkit-box-shadow: 0 2px 0 #E2D3A8;
+      box-shadow: 0 2px 0 #E2D3A8;
+    }
+
+    #names-list {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+    }
+    .name-pick {
+      width: 80%;
+      max-width: 460px;
+      height: 92px;
+      margin: 10px 0;
+      border-radius: 28px;
+      color: #fff;
+      font-size: 40px;
+      font-weight: 800;
+    }
+    .name-pick.np-jasper {
+      background: #2FB3F0;
+      -webkit-box-shadow: 0 8px 0 #1A7FB3;
+      box-shadow: 0 8px 0 #1A7FB3;
+    }
+    .name-pick.np-laurens {
+      background: #4CC86E;
+      -webkit-box-shadow: 0 8px 0 #2E9A4F;
+      box-shadow: 0 8px 0 #2E9A4F;
+    }
+    .name-pick.np-mirthe {
+      background: #FF7EB3;
+      -webkit-box-shadow: 0 8px 0 #D44E86;
+      box-shadow: 0 8px 0 #D44E86;
+    }
+    .name-pick.pressed, .name-pick:active {
+      -webkit-transform: translateY(6px);
+      transform: translateY(6px);
+    }
+    .np-jasper.pressed, .np-jasper:active { -webkit-box-shadow: 0 2px 0 #1A7FB3; box-shadow: 0 2px 0 #1A7FB3; }
+    .np-laurens.pressed, .np-laurens:active { -webkit-box-shadow: 0 2px 0 #2E9A4F; box-shadow: 0 2px 0 #2E9A4F; }
+    .np-mirthe.pressed, .np-mirthe:active { -webkit-box-shadow: 0 2px 0 #D44E86; box-shadow: 0 2px 0 #D44E86; }
+
+    #name-boxes, #name-tiles {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      width: 100%;
+    }
+    #name-boxes { margin: 12px 0 8px 0; }
+    #name-tiles { -webkit-flex: 1 1 auto; flex: 1 1 auto; -webkit-align-content: center; align-content: center; }
+    .name-box {
+      width: 68px;
+      height: 80px;
+      margin: 6px;
+      border-radius: 16px;
+      background: rgba(255,253,247,0.85);
+      border: 3px solid #E2D3A8;
+      font-size: 44px;
+      font-weight: 800;
+      color: #243044;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+    }
+    .name-box.empty { color: transparent; }
+    .name-box.filled { background: #FFFDF7; }
+    .name-tile {
+      width: 70px;
+      height: 70px;
+      margin: 8px;
+      border-radius: 18px;
+      background: #8B7CFF;
+      color: #fff;
+      font-size: 38px;
+      font-weight: 800;
+      -webkit-box-shadow: 0 6px 0 #5E4ED1;
+      box-shadow: 0 6px 0 #5E4ED1;
+    }
+    .name-tile.pressed, .name-tile:active {
+      -webkit-transform: translateY(5px);
+      transform: translateY(5px);
+      -webkit-box-shadow: 0 2px 0 #5E4ED1;
+      box-shadow: 0 2px 0 #5E4ED1;
+    }
+    .name-tile.used {
+      opacity: 0.3;
+      -webkit-box-shadow: 0 2px 0 #5E4ED1;
+      box-shadow: 0 2px 0 #5E4ED1;
+    }
+    .name-tile.shake {
+      -webkit-animation: shake 0.45s ease-in-out;
+      animation: shake 0.45s ease-in-out;
+    }
+
     /* Portrait tweaks */
     @media screen and (max-width: 800px) {
       .title { font-size: 54px; }
@@ -846,6 +1097,10 @@
       #toast { bottom: 170px; }
       .table-btn { height: 110px; font-size: 44px; }
       .table-all { height: 88px; font-size: 30px; }
+      .big-letter { font-size: 140px; }
+      .word-box .word-svg { width: 200px; height: 200px; }
+      .name-box { width: 72px; height: 86px; font-size: 48px; }
+      .name-pick { height: 100px; font-size: 42px; }
     }
     @media screen and (max-height: 800px) {
       .sun { width: 72px; height: 72px; }
@@ -862,6 +1117,16 @@
       #toast { bottom: 130px; font-size: 24px; }
       .table-btn { height: 84px; font-size: 36px; margin: 6px 1%; }
       .table-all { height: 68px; font-size: 26px; margin-top: 10px; }
+      .big-letter { font-size: 110px; }
+      .word-box .word-svg { width: 130px; height: 130px; }
+      .word-label { font-size: 22px; }
+      .repeat-btn { font-size: 20px; padding: 8px 18px; }
+      .name-box { width: 58px; height: 70px; font-size: 36px; margin: 4px; }
+      .name-tile { width: 60px; height: 60px; font-size: 32px; margin: 6px; }
+      .name-pick { height: 76px; font-size: 32px; margin: 8px 0; }
+      .trace-prompt { font-size: 28px; }
+      #letters-grid .level-label { font-size: 22px; }
+      #letters-grid .level-btn { min-height: 110px; }
     }
     @media screen and (max-height: 700px) {
       .home-hero { margin-top: 0; }
@@ -922,6 +1187,11 @@
           <div class="level-icon" id="icon-tables"></div>
           <div class="level-label">Tafels</div>
           <div class="level-sub">1 tot 10</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-letters" id="btn-letters" data-act="level" data-level="letters">
+          <div class="level-icon" id="icon-letters"></div>
+          <div class="level-label">Letters</div>
+          <div class="level-sub">m r s …</div>
         </button>
       </div>
       <div class="home-hint" id="home-hint"></div>
@@ -986,6 +1256,116 @@
         <button type="button" class="tap answer-btn" data-act="answer" data-value="0">0</button>
       </div>
     </div>
+
+    <div id="screen-letters" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-letters-home" data-act="home" title="Terug">
+            <span id="letters-home-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-sound-letters" data-act="sound" title="Geluid" style="margin-left:8px;">
+            <span id="sound-icon-letters"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="letters-star-icon"></span>
+            <span class="star-count" id="letters-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt">Letters</div>
+      <div id="letters-grid">
+        <button type="button" class="tap level-btn lvl-count" data-act="letter-mode" data-mode="zoeken">
+          <div class="act-icon">m</div>
+          <div class="level-label">Letter zoeken</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-plus5" data-act="letter-mode" data-mode="begint">
+          <div class="act-icon" id="icon-begint"></div>
+          <div class="level-label">Begint met</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-plus10" data-act="letter-mode" data-mode="trace">
+          <div class="act-icon" id="icon-trace-act"></div>
+          <div class="level-label">Overtrekken</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-minus" data-act="letter-mode" data-mode="naam">
+          <div class="act-icon">Aa</div>
+          <div class="level-label">Mijn naam</div>
+        </button>
+      </div>
+    </div>
+
+    <div id="screen-trace" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-trace-home" data-act="home" title="Terug">
+            <span id="trace-home-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-sound-trace" data-act="sound" title="Geluid" style="margin-left:8px;">
+            <span id="sound-icon-trace"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="trace-star-icon"></span>
+            <span class="star-count" id="trace-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="progress-row"></div>
+      <div class="trace-prompt" id="trace-prompt">m</div>
+      <div id="trace-wrap">
+        <canvas id="trace-canvas"></canvas>
+      </div>
+      <button type="button" class="tap trace-clear" data-act="trace-clear">Opnieuw</button>
+    </div>
+
+    <div id="screen-names" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-names-home" data-act="home" title="Terug">
+            <span id="names-home-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-sound-names" data-act="sound" title="Geluid" style="margin-left:8px;">
+            <span id="sound-icon-names"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="names-star-icon"></span>
+            <span class="star-count" id="names-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt">Kies een naam</div>
+      <div id="names-list">
+        <button type="button" class="tap name-pick np-jasper" data-act="pick-name" data-name="Jasper">Jasper</button>
+        <button type="button" class="tap name-pick np-laurens" data-act="pick-name" data-name="Laurens">Laurens</button>
+        <button type="button" class="tap name-pick np-mirthe" data-act="pick-name" data-name="Mirthe">Mirthe</button>
+      </div>
+    </div>
+
+    <div id="screen-nameplay" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-nameplay-home" data-act="home" title="Terug">
+            <span id="nameplay-home-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-sound-nameplay" data-act="sound" title="Geluid" style="margin-left:8px;">
+            <span id="sound-icon-nameplay"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="nameplay-star-icon"></span>
+            <span class="star-count" id="nameplay-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="progress-row"></div>
+      <div id="name-boxes"></div>
+      <div id="name-tiles"></div>
+    </div>
   </div>
 
   <div id="burst" class="is-hidden"></div>
@@ -1020,7 +1400,15 @@
     towardsReward: 0,
     tableN: 0,
     lastA: -1,
-    lastB: -1
+    lastB: -1,
+    letterMode: null,
+    lastLetter: '',
+    lastWord: '',
+    currentSpeech: '',
+    childName: '',
+    nameChars: null,
+    nameIndex: 0,
+    nameTiles: null
   };
 
   var toastTimer = null;
@@ -1279,7 +1667,7 @@
     playTone(1046, 0.32, 'sine', 0.13, 0.36);
   }
 
-  function speak(text) {
+  function speak(text, rate) {
     var u, voices, i, chosen;
     if (!state.soundOn) return;
     if (!text) return;
@@ -1290,7 +1678,7 @@
       window.speechSynthesis.cancel();
       u = new window.SpeechSynthesisUtterance(text);
       u.lang = 'nl-NL';
-      u.rate = 0.9;
+      u.rate = rate ? rate : 0.9;
       u.pitch = 1.05;
       u.volume = 1;
       try {
@@ -1496,6 +1884,10 @@
     else if (state.level === 'plus5') q = makePlusQ(5);
     else if (state.level === 'plus10') q = makePlusQ(10);
     else if (state.level === 'tables') q = makeTableQ();
+    else if (state.level === 'letters') {
+      nextLetterItem();
+      return;
+    }
     else {
       if (state.sessionCorrect >= 5) state.minusHard = true;
       maxN = state.minusHard ? 10 : 5;
@@ -1571,25 +1963,656 @@
     speak(q.speech);
   }
 
+
+  /* ---------- Letters ---------- */
+  var LETTER_SET = ['m', 'r', 's', 'p', 'i', 'k', 'a', 'n'];
+  var LETTER_SOUND = {
+    m: 'mmm',
+    r: 'rrr',
+    s: 'sss',
+    p: 'puh',
+    i: 'i',
+    k: 'kuh',
+    a: 'a',
+    n: 'nnn'
+  };
+  var BEGIN_WORDS = [
+    { word: 'maan', letter: 'm', pic: 'maan' },
+    { word: 'roos', letter: 'r', pic: 'roos' },
+    { word: 'sok', letter: 's', pic: 'sok' },
+    { word: 'pen', letter: 'p', pic: 'pen' },
+    { word: 'ijs', letter: 'i', pic: 'ijs' },
+    { word: 'kat', letter: 'k', pic: 'kat' },
+    { word: 'aap', letter: 'a', pic: 'aap' },
+    { word: 'noot', letter: 'n', pic: 'noot' }
+  ];
+  var CHILDREN = [
+    { name: 'Jasper', color: '#2FB3F0', dark: '#1A7FB3' },
+    { name: 'Laurens', color: '#4CC86E', dark: '#2E9A4F' },
+    { name: 'Mirthe', color: '#FF7EB3', dark: '#D44E86' }
+  ];
+
+  var traceState = {
+    letter: 'm',
+    guide: [],
+    strokes: [],
+    current: null,
+    drawing: false,
+    done: false,
+    bound: false
+  };
+
+  function letterSound(ch) {
+    return LETTER_SOUND[ch] ? LETTER_SOUND[ch] : ch;
+  }
+
+  function makeLetterChoices(target) {
+    var others, i, choices;
+    others = [];
+    for (i = 0; i < LETTER_SET.length; i++) {
+      if (LETTER_SET[i] !== target) others.push(LETTER_SET[i]);
+    }
+    shuffle(others);
+    choices = [target, others[0], others[1]];
+    return shuffle(choices);
+  }
+
+  function wordSvg(pic) {
+    if (pic === 'maan') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<path d="M62 18 A34 34 0 1 0 62 82 A26 26 0 1 1 62 18 Z" fill="#FFE566" stroke="#F9A825" stroke-width="2"/>' +
+        '<polygon points="78,22 80,28 86,28 81,32 83,38 78,34 73,38 75,32 70,28 76,28" fill="#FFD54F"/>' +
+        '<polygon points="84,40 85,43 88,43 86,45 87,48 84,46 81,48 82,45 80,43 83,43" fill="#FFD54F"/>' +
+        '</svg>';
+    }
+    if (pic === 'roos') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<rect x="47" y="58" width="6" height="30" rx="3" fill="#43A047"/>' +
+        '<ellipse cx="62" cy="74" rx="12" ry="7" fill="#43A047" transform="rotate(20 62 74)"/>' +
+        '<circle cx="38" cy="40" r="13" fill="#E53975"/>' +
+        '<circle cx="62" cy="40" r="13" fill="#EC407A"/>' +
+        '<circle cx="50" cy="26" r="13" fill="#F06292"/>' +
+        '<circle cx="50" cy="50" r="13" fill="#D81B60"/>' +
+        '<circle cx="50" cy="38" r="9" fill="#F8BBD0"/>' +
+        '<circle cx="50" cy="38" r="4" fill="#F9A825"/>' +
+        '</svg>';
+    }
+    if (pic === 'sok') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<path d="M36 16 H64 Q70 16 70 24 V52 Q70 62 62 66 L78 70 Q92 74 90 86 Q88 96 74 96 H48 Q28 96 26 80 Q24 64 36 58 Z" fill="#E53935"/>' +
+        '<rect x="36" y="16" width="34" height="12" fill="#FFFDE7"/>' +
+        '<rect x="36" y="36" width="34" height="7" fill="#FFFDE7"/>' +
+        '</svg>';
+    }
+    if (pic === 'pen') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<g transform="rotate(-35 50 50)">' +
+        '<rect x="16" y="44" width="12" height="14" rx="3" fill="#E53935"/>' +
+        '<rect x="26" y="45" width="46" height="12" rx="2" fill="#1E88E5"/>' +
+        '<polygon points="72,45 86,51 72,57" fill="#FFD54F"/>' +
+        '<polygon points="84,49 94,51 84,53" fill="#6D4C41"/>' +
+        '</g>' +
+        '</svg>';
+    }
+    if (pic === 'ijs') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<circle cx="50" cy="32" r="16" fill="#FF7EB3"/>' +
+        '<circle cx="38" cy="42" r="14" fill="#81C784"/>' +
+        '<circle cx="62" cy="42" r="14" fill="#FFF176"/>' +
+        '<polygon points="32,52 68,52 50,94" fill="#E2A86A"/>' +
+        '<path d="M38 60 L62 60 M41 70 L59 70 M45 80 L55 80" stroke="#C9894A" stroke-width="2" fill="none"/>' +
+        '<circle cx="46" cy="26" r="3" fill="#FFF" opacity="0.7"/>' +
+        '</svg>';
+    }
+    if (pic === 'kat') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<polygon points="20,48 30,16 50,40" fill="#FFB74D"/>' +
+        '<polygon points="80,48 70,16 50,40" fill="#FFB74D"/>' +
+        '<polygon points="28,40 32,26 42,38" fill="#FFCC80"/>' +
+        '<polygon points="72,40 68,26 58,38" fill="#FFCC80"/>' +
+        '<circle cx="50" cy="58" r="28" fill="#FFB74D"/>' +
+        '<circle cx="40" cy="54" r="4" fill="#5D4037"/>' +
+        '<circle cx="60" cy="54" r="4" fill="#5D4037"/>' +
+        '<polygon points="50,62 45,70 55,70" fill="#E53975"/>' +
+        '<path d="M22 62 L40 66 M22 70 L40 68 M78 62 L60 66 M78 70 L60 68" stroke="#5D4037" stroke-width="2" stroke-linecap="round"/>' +
+        '</svg>';
+    }
+    if (pic === 'aap') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<circle cx="24" cy="44" r="14" fill="#8D6E63"/>' +
+        '<circle cx="76" cy="44" r="14" fill="#8D6E63"/>' +
+        '<circle cx="24" cy="44" r="8" fill="#D7CCC8"/>' +
+        '<circle cx="76" cy="44" r="8" fill="#D7CCC8"/>' +
+        '<circle cx="50" cy="54" r="28" fill="#6D4C41"/>' +
+        '<ellipse cx="50" cy="64" rx="18" ry="16" fill="#E8C7A0"/>' +
+        '<circle cx="40" cy="48" r="4" fill="#3E2723"/>' +
+        '<circle cx="60" cy="48" r="4" fill="#3E2723"/>' +
+        '<ellipse cx="50" cy="66" rx="6" ry="4" fill="#5D4037"/>' +
+        '</svg>';
+    }
+    if (pic === 'noot') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<rect x="47" y="14" width="6" height="16" rx="3" fill="#5D4037"/>' +
+        '<path d="M26 44 Q50 22 74 44 Q50 56 26 44 Z" fill="#6D4C41"/>' +
+        '<path d="M26 44 Q50 50 74 44 Q78 52 74 58 L70 52 L62 60 L56 52 L50 62 L44 52 L38 60 L30 52 L26 58 Q22 52 26 44 Z" fill="#8D6E63"/>' +
+        '<ellipse cx="50" cy="70" rx="20" ry="22" fill="#C9883A"/>' +
+        '<path d="M50 52 Q58 70 50 90" fill="none" stroke="#A66B28" stroke-width="2"/>' +
+        '</svg>';
+    }
+    return '';
+  }
+
+  function makeZoekQ() {
+    var ch, tries;
+    tries = 0;
+    do {
+      ch = LETTER_SET[randInt(0, LETTER_SET.length - 1)];
+      tries += 1;
+    } while (ch === state.lastLetter && tries < 8);
+    state.lastLetter = ch;
+    return {
+      mode: 'zoeken',
+      answer: ch,
+      prompt: '',
+      speech: 'Waar is de ' + letterSound(ch) + '?',
+      choices: makeLetterChoices(ch)
+    };
+  }
+
+  function makeBegintQ() {
+    var w, tries;
+    tries = 0;
+    do {
+      w = BEGIN_WORDS[randInt(0, BEGIN_WORDS.length - 1)];
+      tries += 1;
+    } while (w.word === state.lastWord && tries < 8);
+    state.lastWord = w.word;
+    return {
+      mode: 'begint',
+      answer: w.letter,
+      prompt: '',
+      speech: 'Waar begint ' + w.word + ' mee?',
+      choices: makeLetterChoices(w.letter),
+      word: w
+    };
+  }
+
+  function renderLetterQuestion(q) {
+    var box, html, i, buttons, btn, val;
+    box = $('objects');
+    $('prompt').className = 'prompt';
+    if (q.mode === 'zoeken') {
+      $('prompt').innerHTML = 'Waar is de letter?';
+      html = '<div class="tray letter-prompt-box">' +
+        '<div class="big-letter">' + q.answer + '</div>' +
+        '<button type="button" class="tap repeat-btn" data-act="repeat">Nog eens</button>' +
+        '</div>';
+      box.innerHTML = html;
+    } else {
+      $('prompt').innerHTML = 'Begint met';
+      html = '<div class="tray word-box">' +
+        wordSvg(q.word.pic) +
+        '<div class="word-label">' + q.word.word + '</div>' +
+        '<button type="button" class="tap repeat-btn" data-act="repeat">Nog eens</button>' +
+        '</div>';
+      box.innerHTML = html;
+    }
+    buttons = $('answers').getElementsByTagName('button');
+    for (i = 0; i < 3; i++) {
+      btn = buttons[i];
+      val = q.choices[i];
+      btn.innerHTML = String(val);
+      btn.setAttribute('data-value', String(val));
+      btn.setAttribute('data-act', 'answer');
+      if (String(val) === String(q.answer)) btn.setAttribute('data-ok', '1');
+      else btn.removeAttribute('data-ok');
+      btn.className = 'tap answer-btn letter-ans';
+    }
+    state.currentSpeech = q.speech;
+    showRepeatBtn(false);
+    updateStarsUI();
+    speak(q.speech, 0.8);
+  }
+
+  function showRepeatBtn(inTopbar) {
+    var el = $('btn-repeat');
+    if (el) el.className = 'tap icon-btn is-hidden';
+  }
+
+  function hideRepeatBtn() {
+    var el = $('btn-repeat');
+    if (el) el.className = 'tap icon-btn is-hidden';
+  }
+
+  function showLettersMenu() {
+    state.level = 'letters';
+    state.letterMode = null;
+    state.locked = false;
+    state.question = null;
+    hideReward();
+    hideRepeatBtn();
+    showScreen('letters');
+    updateStarsUI();
+  }
+
+  function startLetterMode(mode) {
+    state.level = 'letters';
+    state.letterMode = mode;
+    state.sessionCorrect = 0;
+    state.towardsReward = 0;
+    state.locked = false;
+    state.lastLetter = '';
+    state.lastWord = '';
+    hideReward();
+    if (mode === 'trace') {
+      showScreen('trace');
+      updateStarsUI();
+      window.setTimeout(function () { startTraceLetter(); }, 60);
+    } else if (mode === 'naam') {
+      showScreen('names');
+      updateStarsUI();
+    } else {
+      showScreen('play');
+      nextQuestion();
+    }
+  }
+
+  function nextLetterItem() {
+    var q;
+    state.locked = false;
+    hideToast();
+    hideBurst();
+    if (state.letterMode === 'zoeken') {
+      q = makeZoekQ();
+      state.question = q;
+      renderLetterQuestion(q);
+    } else if (state.letterMode === 'begint') {
+      q = makeBegintQ();
+      state.question = q;
+      renderLetterQuestion(q);
+    } else if (state.letterMode === 'trace') {
+      showScreen('trace');
+      updateStarsUI();
+      window.setTimeout(function () { startTraceLetter(); }, 60);
+    } else if (state.letterMode === 'naam') {
+      showScreen('names');
+      updateStarsUI();
+    }
+  }
+
+  function awardCorrect() {
+    state.locked = true;
+    state.stars += 1;
+    state.sessionCorrect += 1;
+    state.towardsReward += 1;
+    saveStars();
+    playSuccess();
+    showBurst();
+    showToast(pick(PRAISE), true);
+    speak(pick(PRAISE));
+    updateStarsUI();
+    window.setTimeout(function () {
+      if (state.towardsReward >= 5) {
+        showReward();
+      } else {
+        nextQuestion();
+      }
+    }, 1100);
+  }
+
+  /* canvas tracing */
+  function bindTraceCanvas() {
+    var c = $('trace-canvas');
+    if (!c || traceState.bound) return;
+    traceState.bound = true;
+    c.addEventListener('touchstart', onTraceStart, false);
+    c.addEventListener('touchmove', onTraceMove, false);
+    c.addEventListener('touchend', onTraceEnd, false);
+    c.addEventListener('touchcancel', onTraceEnd, false);
+    c.addEventListener('mousedown', onTraceStart, false);
+    document.addEventListener('mousemove', onTraceMove, false);
+    document.addEventListener('mouseup', onTraceEnd, false);
+  }
+
+  function eventPoint(e, canvas) {
+    var rect, src, x, y, w, h;
+    rect = canvas.getBoundingClientRect();
+    if (e.touches && e.touches.length) src = e.touches[0];
+    else if (e.changedTouches && e.changedTouches.length) src = e.changedTouches[0];
+    else src = e;
+    w = rect.width || 1;
+    h = rect.height || 1;
+    x = src.clientX - rect.left;
+    y = src.clientY - rect.top;
+    return { x: x * (canvas.width / w), y: y * (canvas.height / h) };
+  }
+
+  function sampleLetterPoints(letter, width, height) {
+    var c, ctx, data, points, x, y, i, step, size;
+    c = document.createElement('canvas');
+    c.width = width;
+    c.height = height;
+    ctx = c.getContext('2d');
+    size = Math.floor(Math.min(width, height) * 0.72);
+    ctx.fillStyle = '#000';
+    ctx.font = 'bold ' + size + 'px "Helvetica Neue", Helvetica, Arial, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(letter, width / 2, height / 2 + size * 0.04);
+    data = ctx.getImageData(0, 0, width, height).data;
+    points = [];
+    step = Math.max(8, Math.round(Math.min(width, height) / 36));
+    for (y = 0; y < height; y += step) {
+      for (x = 0; x < width; x += step) {
+        i = (y * width + x) * 4;
+        if (data[i + 3] > 90) points.push({ x: x, y: y });
+      }
+    }
+    return points;
+  }
+
+  function startTraceLetter() {
+    var ch, tries, canvas, prompt;
+    tries = 0;
+    do {
+      ch = LETTER_SET[randInt(0, LETTER_SET.length - 1)];
+      tries += 1;
+    } while (ch === state.lastLetter && tries < 8);
+    state.lastLetter = ch;
+    state.currentSpeech = letterSound(ch);
+    traceState.letter = ch;
+    traceState.strokes = [];
+    traceState.current = null;
+    traceState.drawing = false;
+    traceState.done = false;
+    state.locked = false;
+    prompt = $('trace-prompt');
+    if (prompt) prompt.innerHTML = ch;
+    bindTraceCanvas();
+    sizeAndDrawTrace();
+    speak('Overtrek de ' + letterSound(ch), 0.8);
+  }
+
+  function sizeAndDrawTrace() {
+    var canvas, wrap, w, h;
+    canvas = $('trace-canvas');
+    wrap = $('trace-wrap');
+    if (!canvas || !wrap) return;
+    w = wrap.clientWidth;
+    h = wrap.clientHeight;
+    if (w < 60) w = 620;
+    if (h < 60) h = 340;
+    canvas.width = w;
+    canvas.height = h;
+    traceState.guide = sampleLetterPoints(traceState.letter, w, h);
+    drawTrace();
+  }
+
+  function drawTrace() {
+    var canvas, ctx, i, j, s, p, size, w, h;
+    canvas = $('trace-canvas');
+    if (!canvas) return;
+    ctx = canvas.getContext('2d');
+    w = canvas.width;
+    h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    size = Math.floor(Math.min(w, h) * 0.72);
+    ctx.save();
+    ctx.globalAlpha = 0.16;
+    ctx.fillStyle = '#1A4A6A';
+    ctx.font = 'bold ' + size + 'px "Helvetica Neue", Helvetica, Arial, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(traceState.letter, w / 2, h / 2 + size * 0.04);
+    ctx.restore();
+    ctx.fillStyle = '#F9A825';
+    for (i = 0; i < traceState.guide.length; i++) {
+      p = traceState.guide[i];
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, Math.max(3, Math.round(Math.min(w, h) * 0.012)), 0, Math.PI * 2, false);
+      ctx.fill();
+    }
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = '#2EC4B6';
+    ctx.lineWidth = Math.max(16, Math.round(Math.min(w, h) * 0.055));
+    for (i = 0; i < traceState.strokes.length; i++) {
+      s = traceState.strokes[i];
+      if (!s.length) continue;
+      ctx.beginPath();
+      ctx.moveTo(s[0].x, s[0].y);
+      for (j = 1; j < s.length; j++) ctx.lineTo(s[j].x, s[j].y);
+      ctx.stroke();
+    }
+    if (traceState.current && traceState.current.length) {
+      s = traceState.current;
+      ctx.beginPath();
+      ctx.moveTo(s[0].x, s[0].y);
+      for (j = 1; j < s.length; j++) ctx.lineTo(s[j].x, s[j].y);
+      ctx.stroke();
+    }
+  }
+
+  function onTraceStart(e) {
+    var canvas, p;
+    if (state.screen !== 'trace' || traceState.done || state.locked) return;
+    canvas = $('trace-canvas');
+    if (!canvas) return;
+    if (e.target && e.target !== canvas && e.type.indexOf('mouse') === 0) return;
+    if (e.preventDefault) e.preventDefault();
+    p = eventPoint(e, canvas);
+    traceState.drawing = true;
+    traceState.current = [p];
+    drawTrace();
+  }
+
+  function onTraceMove(e) {
+    var canvas, p, last, dx, dy;
+    if (!traceState.drawing || state.screen !== 'trace') return;
+    canvas = $('trace-canvas');
+    if (!canvas) return;
+    if (e.preventDefault) e.preventDefault();
+    p = eventPoint(e, canvas);
+    last = traceState.current[traceState.current.length - 1];
+    if (last) {
+      dx = p.x - last.x;
+      dy = p.y - last.y;
+      if (dx * dx + dy * dy < 9) return;
+    }
+    traceState.current.push(p);
+    drawTrace();
+  }
+
+  function onTraceEnd(e) {
+    if (!traceState.drawing) return;
+    if (e && e.preventDefault) e.preventDefault();
+    traceState.drawing = false;
+    if (traceState.current && traceState.current.length) {
+      traceState.strokes.push(traceState.current);
+    }
+    traceState.current = null;
+    drawTrace();
+    if (traceCoverage() >= 0.7) {
+      finishTrace();
+    }
+  }
+
+  function allStrokePoints() {
+    var out, i, j, s;
+    out = [];
+    for (i = 0; i < traceState.strokes.length; i++) {
+      s = traceState.strokes[i];
+      for (j = 0; j < s.length; j++) out.push(s[j]);
+    }
+    if (traceState.current) {
+      for (j = 0; j < traceState.current.length; j++) out.push(traceState.current[j]);
+    }
+    return out;
+  }
+
+  function traceCoverage() {
+    var ink, pts, i, j, p, q, dx, dy, rad, rad2, hit, covered, canvas;
+    canvas = $('trace-canvas');
+    ink = traceState.guide;
+    if (!ink.length) return 0;
+    pts = allStrokePoints();
+    if (!pts.length) return 0;
+    rad = canvas ? Math.max(26, Math.round(Math.min(canvas.width, canvas.height) * 0.07)) : 30;
+    rad2 = rad * rad;
+    covered = 0;
+    for (i = 0; i < ink.length; i++) {
+      p = ink[i];
+      hit = false;
+      for (j = 0; j < pts.length; j++) {
+        q = pts[j];
+        dx = p.x - q.x;
+        dy = p.y - q.y;
+        if (dx * dx + dy * dy <= rad2) {
+          hit = true;
+          break;
+        }
+      }
+      if (hit) covered += 1;
+    }
+    return covered / ink.length;
+  }
+
+  function finishTrace() {
+    if (traceState.done || state.locked) return;
+    traceState.done = true;
+    awardCorrect();
+  }
+
+  function clearTrace() {
+    if (state.locked) return;
+    traceState.strokes = [];
+    traceState.current = null;
+    traceState.drawing = false;
+    traceState.done = false;
+    drawTrace();
+  }
+
+  /* mijn naam */
+  function nameCharsOf(name) {
+    var out, i;
+    out = [];
+    for (i = 0; i < name.length; i++) {
+      out.push(i === 0 ? name.charAt(i) : name.charAt(i).toLowerCase());
+    }
+    return out;
+  }
+
+  function startName(name) {
+    var chars, tiles, used, pool, i, ch, lower, extra;
+    chars = nameCharsOf(name);
+    used = {};
+    for (i = 0; i < chars.length; i++) used[chars[i].toLowerCase()] = true;
+    tiles = chars.slice(0);
+    pool = LETTER_SET.concat(['e', 'l', 'u', 't', 'h', 'o', 'd', 'b']);
+    extra = 0;
+    for (i = 0; i < pool.length && extra < 2; i++) {
+      ch = pool[i];
+      lower = ch.toLowerCase();
+      if (!used[lower]) {
+        tiles.push(ch);
+        used[lower] = true;
+        extra += 1;
+      }
+    }
+    shuffle(tiles);
+    state.childName = name;
+    state.nameChars = chars;
+    state.nameIndex = 0;
+    state.nameTiles = tiles;
+    state.locked = false;
+    showScreen('nameplay');
+    renderNamePlay();
+    speak(name);
+  }
+
+  function renderNamePlay() {
+    var boxes, tiles, html, i, ch, filled, cls, child, color;
+    boxes = $('name-boxes');
+    tiles = $('name-tiles');
+    child = null;
+    for (i = 0; i < CHILDREN.length; i++) {
+      if (CHILDREN[i].name === state.childName) child = CHILDREN[i];
+    }
+    color = child ? child.color : '#8B7CFF';
+    html = '';
+    for (i = 0; i < state.nameChars.length; i++) {
+      filled = i < state.nameIndex;
+      ch = state.nameChars[i];
+      cls = 'name-box' + (filled ? ' filled' : ' empty');
+      html += '<div class="' + cls + '"' + (filled ? ' style="border-color:' + color + ';"' : '') + '>' +
+        (filled ? ch : '') + '</div>';
+    }
+    boxes.innerHTML = html;
+    html = '';
+    for (i = 0; i < state.nameTiles.length; i++) {
+      ch = state.nameTiles[i];
+      if (ch === '') {
+        html += '<button type="button" class="name-tile used" disabled="disabled"></button>';
+      } else {
+        html += '<button type="button" class="tap name-tile" data-act="name-tile" data-ch="' + ch + '" data-idx="' + i + '">' + ch + '</button>';
+      }
+    }
+    tiles.innerHTML = html;
+    updateStarsUI();
+  }
+
+  function onNameTile(el) {
+    var ch, need, idx;
+    if (state.locked) return;
+    if (!state.nameChars) return;
+    ch = el.getAttribute('data-ch');
+    need = state.nameChars[state.nameIndex];
+    idx = parseInt(el.getAttribute('data-idx'), 10);
+    if (ch === need) {
+      state.nameTiles[idx] = '';
+      state.nameIndex += 1;
+      playTone(523, 0.1, 'sine', 0.09, 0);
+      renderNamePlay();
+      if (state.nameIndex >= state.nameChars.length) {
+        awardCorrect();
+      }
+    } else {
+      playWrong();
+      el.className = 'tap name-tile shake';
+      showToast('Probeer nog eens', false);
+      speak('Probeer nog eens');
+      window.setTimeout(function () {
+        if (el && el.className.indexOf('used') === -1) {
+          el.className = 'tap name-tile';
+        }
+      }, 450);
+    }
+  }
+
+
   /* ---------- UI ---------- */
   function updateStarsUI() {
-    var i, row, html, filled, el;
-    if ($('home-stars')) $('home-stars').innerHTML = String(state.stars);
-    if ($('play-stars')) $('play-stars').innerHTML = String(state.stars);
-    if ($('picker-stars')) $('picker-stars').innerHTML = String(state.stars);
-    row = $('progress-row');
-    if (row) {
-      filled = state.towardsReward;
-      if (filled > 5) filled = 5;
-      html = '';
-      for (i = 0; i < 5; i++) {
-        html += '<span class="prog-star' + (i < filled ? ' on' : '') + '">' +
-          starSvg(i < filled ? '#FFD54F' : '#FFFFFF', i < filled ? '#F9A825' : '#CFC8B8') +
-          '</span>';
-      }
-      row.innerHTML = html;
+    var i, row, html, filled, el, rows;
+    fillCounts(['home-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars'], String(state.stars));
+    filled = state.towardsReward;
+    if (filled > 5) filled = 5;
+    html = '';
+    for (i = 0; i < 5; i++) {
+      html += '<span class="prog-star' + (i < filled ? ' on' : '') + '">' +
+        starSvg(i < filled ? '#FFD54F' : '#FFFFFF', i < filled ? '#F9A825' : '#CFC8B8') +
+        '</span>';
     }
+    rows = document.getElementsByClassName('progress-row');
+    for (i = 0; i < rows.length; i++) rows[i].innerHTML = html;
     updateSoundIcons();
+  }
+
+  function fillCounts(ids, text) {
+    var i, el;
+    for (i = 0; i < ids.length; i++) {
+      el = $(ids[i]);
+      if (el) el.innerHTML = text;
+    }
   }
 
   function updateSoundIcons() {
@@ -1597,6 +2620,10 @@
     elSet('sound-icon', html);
     elSet('sound-icon-play', html);
     elSet('sound-icon-picker', html);
+    elSet('sound-icon-letters', html);
+    elSet('sound-icon-trace', html);
+    elSet('sound-icon-names', html);
+    elSet('sound-icon-nameplay', html);
   }
 
   function elSet(id, html) {
@@ -1605,10 +2632,13 @@
   }
 
   function showScreen(name) {
+    var ids, i, el;
     state.screen = name;
-    $('screen-home').className = (name === 'home') ? '' : 'is-hidden';
-    $('screen-picker').className = (name === 'picker') ? '' : 'is-hidden';
-    $('screen-play').className = (name === 'play') ? '' : 'is-hidden';
+    ids = ['home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay'];
+    for (i = 0; i < ids.length; i++) {
+      el = $('screen-' + ids[i]);
+      if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
+    }
     hideReward();
     hideToast();
     hideBurst();
@@ -1696,6 +2726,7 @@
     state.lastA = -1;
     state.lastB = -1;
     state.minusHard = false;
+    hideRepeatBtn();
     showScreen('play');
     nextQuestion();
   }
@@ -1704,9 +2735,9 @@
     var val, correct;
     if (state.locked) return;
     if (!state.question) return;
-    val = parseInt(btn.getAttribute('data-value'), 10);
-    correct = state.question.answer;
-    if (val === correct) {
+    val = btn.getAttribute('data-value');
+    correct = String(state.question.answer);
+    if (String(val) === correct) {
       state.locked = true;
       state.stars += 1;
       state.sessionCorrect += 1;
@@ -1789,6 +2820,13 @@
     if (act === 'home') {
       if (state.screen === 'play' && state.level === 'tables') {
         showPicker();
+      } else if ((state.screen === 'play' || state.screen === 'trace') && state.level === 'letters') {
+        showLettersMenu();
+      } else if (state.screen === 'nameplay') {
+        showScreen('names');
+        updateStarsUI();
+      } else if (state.screen === 'names' || state.screen === 'letters') {
+        goHome();
       } else {
         goHome();
       }
@@ -1807,6 +2845,10 @@
         showPicker();
         return;
       }
+      if (level === 'letters') {
+        showLettersMenu();
+        return;
+      }
       if (level) startLevel(level);
       return;
     }
@@ -1815,6 +2857,26 @@
       if (isNaN(t)) return;
       state.tableN = t;
       startLevel('tables');
+      return;
+    }
+    if (act === 'letter-mode') {
+      startLetterMode(el.getAttribute('data-mode'));
+      return;
+    }
+    if (act === 'repeat') {
+      if (state.currentSpeech) speak(state.currentSpeech, 0.8);
+      return;
+    }
+    if (act === 'trace-clear') {
+      clearTrace();
+      return;
+    }
+    if (act === 'pick-name') {
+      startName(el.getAttribute('data-name'));
+      return;
+    }
+    if (act === 'name-tile') {
+      onNameTile(el);
       return;
     }
     if (act === 'answer') {
@@ -1887,6 +2949,14 @@
     $('picker-star-icon').innerHTML = starSvg('#FFD54F', '#F9A825');
     $('home-icon').innerHTML = homeIconHtml();
     $('picker-home-icon').innerHTML = homeIconHtml();
+    elSet('letters-home-icon', homeIconHtml());
+    elSet('trace-home-icon', homeIconHtml());
+    elSet('names-home-icon', homeIconHtml());
+    elSet('nameplay-home-icon', homeIconHtml());
+    elSet('letters-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('trace-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('names-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('nameplay-star-icon', starSvg('#FFD54F', '#F9A825'));
     $('icon-count').innerHTML =
       '<span class="mini">' + appleSvg() + '</span>' +
       '<span class="mini">' + appleSvg() + '</span>' +
@@ -1908,6 +2978,9 @@
       '<div class="trow"><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span></div>' +
       '<div class="trow"><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span></div>' +
       '</div>';
+    $('icon-letters').innerHTML = '<div class="glyph-m">m</div>';
+    if ($('icon-begint')) $('icon-begint').innerHTML = '<span class="mini-pic">' + wordSvg('maan') + '</span>';
+    if ($('icon-trace-act')) $('icon-trace-act').innerHTML = '<span style="font-size:44px;letter-spacing:2px;border-bottom:3px dotted #6A3E00;">a</span>';
 
     if (window.navigator && window.navigator.standalone) {
       document.body.className = 'standalone';
@@ -1932,7 +3005,10 @@
 
     window.addEventListener('orientationchange', function () {
       window.scrollTo(0, 0);
-      window.setTimeout(function () { window.scrollTo(0, 0); }, 250);
+      window.setTimeout(function () {
+        window.scrollTo(0, 0);
+        if (state.screen === 'trace') sizeAndDrawTrace();
+      }, 250);
     }, false);
 
     document.addEventListener('touchstart', function () {

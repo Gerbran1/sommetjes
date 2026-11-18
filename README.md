@@ -9,6 +9,7 @@ Een eenvoudige rekenapp voor kinderen van 4 tot 6 jaar. Werkt op een oude iPad 2
 3. **Plus 10** — optellen tot 10 met plaatjes
 4. **Min** — aftrekken met doorgestreepte plaatjes (eerst tot 5, later tot 10)
 5. **Tafels** — de tafels van 1 tot 10, of alle tafels door elkaar
+6. **Letters** — letter zoeken, begint met, overtrekken, en de namen van Jasper, Laurens en Mirthe
 
 Elke vraag heeft drie grote antwoordknoppen. Bij een goed antwoord krijg je een ster. Na vijf goede antwoorden volgt een klein feestje. Een fout antwoord is niet erg: je mag het gewoon nog eens proberen.
 
