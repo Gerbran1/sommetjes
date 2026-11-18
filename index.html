@@ -190,7 +190,7 @@
       line-height: 1;
     }
 
-    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle {
+    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -1360,6 +1360,66 @@
       -webkit-box-shadow: 0 2px 0 #D4692C, 0 4px 8px rgba(0,0,0,0.15);
       box-shadow: 0 2px 0 #D4692C, 0 4px 8px rgba(0,0,0,0.15);
     }
+    .lvl-vormen {
+      background: #8B7CFF;
+      -webkit-box-shadow: 0 8px 0 #6A5CD6, 0 12px 16px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 0 #6A5CD6, 0 12px 16px rgba(0,0,0,0.15);
+    }
+    .lvl-vormen.pressed, .lvl-vormen:active {
+      -webkit-box-shadow: 0 2px 0 #6A5CD6, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #6A5CD6, 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .vorm-mini {
+      width: 56px;
+      height: 36px;
+      position: relative;
+    }
+    .vorm-mini svg {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+    }
+    .vorm-mini svg:first-child { left: 0; top: 6px; }
+    .vorm-mini svg:nth-child(2) { left: 14px; top: 0; }
+    .vorm-mini svg:nth-child(3) { left: 28px; top: 8px; }
+    #vormen-wrap {
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      position: relative;
+      width: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .vorm-hole, .vorm-piece {
+      position: absolute;
+      padding: 0;
+      margin: 0;
+      border: 0;
+      background: transparent;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .vorm-hole {
+      pointer-events: none;
+    }
+    .vorm-piece {
+      z-index: 3;
+    }
+    .vorm-piece.dragging {
+      z-index: 6;
+    }
+    .vorm-piece.placed {
+      z-index: 4;
+    }
+    .vorm-hole svg, .vorm-piece svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      pointer-events: none;
+    }
+    @media screen and (max-height: 800px) {
+      .puzzle-hint { font-size: 18px; }
+    }
     .mini-grid {
       display: -webkit-flex;
       display: flex;
@@ -1785,6 +1845,12 @@
           </div>
           <div class="level-label">Schuifpuzzel</div>
         </button>
+        <button type="button" class="tap level-btn lvl-vormen" data-act="puzzle-game" data-game="vormen">
+          <div class="act-icon">
+            <div class="vorm-mini" id="icon-vormen"></div>
+          </div>
+          <div class="level-label">Vormen passen</div>
+        </button>
       </div>
     </div>
 
@@ -1853,6 +1919,27 @@
         </div>
         <div id="puzzle-board"></div>
       </div>
+    </div>
+
+    <div id="screen-vormen" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-vormen-home" data-act="home" title="Terug">
+            <span id="vormen-home-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-sound-vormen" data-act="sound" title="Geluid" style="margin-left:8px;">
+            <span id="sound-icon-vormen"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="vormen-star-icon"></span>
+            <span class="star-count" id="vormen-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt" id="vormen-prompt">Leg de vormen</div>
+      <div id="vormen-wrap"></div>
     </div>
 
     <div id="screen-trace" class="is-hidden">
@@ -2565,6 +2652,10 @@
     }
     else if (state.level === 'puzzle') {
       startPuzzle(state.puzzleN, false);
+      return;
+    }
+    else if (state.level === 'vormen') {
+      startVormen(false);
       return;
     }
     else {
@@ -3516,7 +3607,7 @@
   /* ---------- UI ---------- */
   function updateStarsUI() {
     var i, row, html, filled, el, rows;
-    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars'], String(state.stars));
+    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars'], String(state.stars));
     filled = state.towardsReward;
     if (filled > 5) filled = 5;
     html = '';
@@ -3551,6 +3642,7 @@
     elSet('sound-icon-puzzles', html);
     elSet('sound-icon-puzzlelevel', html);
     elSet('sound-icon-puzzle', html);
+    elSet('sound-icon-vormen', html);
   }
 
   function elSet(id, html) {
@@ -3561,7 +3653,7 @@
   function showScreen(name) {
     var ids, i, el;
     state.screen = name;
-    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle'];
+    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen'];
     for (i = 0; i < ids.length; i++) {
       el = $('screen-' + ids[i]);
       if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
@@ -3631,6 +3723,305 @@
   var PUZZLE_PICS = ['huis', 'boot', 'kat'];
   var puzzleSrc = null;
   var puzzleSel = -1;
+
+
+  /* ---------- Puzzels: vormen passen ---------- */
+  var VORM_KINDS = [
+    { id: 'circle', color: '#2FB3F0', dark: '#1A7FB3' },
+    { id: 'square', color: '#4CC86E', dark: '#2E9A4F' },
+    { id: 'triangle', color: '#FF8A4C', dark: '#D4692C' },
+    { id: 'star', color: '#FFD54F', dark: '#F9A825' },
+    { id: 'heart', color: '#FF7EB3', dark: '#D44E86' },
+    { id: 'diamond', color: '#8B7CFF', dark: '#6A5CD6' }
+  ];
+  var vormenDrag = {
+    on: false,
+    piece: null,
+    grabbed: false,
+    ox: 0,
+    oy: 0,
+    startX: 0,
+    startY: 0
+  };
+
+  function vormSvg(kind, color, dark, rot) {
+    var inner, style;
+    color = color || '#2FB3F0';
+    dark = dark || '#1A7FB3';
+    if (kind === 'square') {
+      inner = '<rect x="14" y="14" width="72" height="72" rx="8" fill="' + color + '" stroke="' + dark + '" stroke-width="4"/>';
+    } else if (kind === 'triangle') {
+      inner = '<polygon points="50,12 90,86 10,86" fill="' + color + '" stroke="' + dark + '" stroke-width="4" stroke-linejoin="round"/>';
+    } else if (kind === 'star') {
+      inner = '<polygon points="50,8 61,36 92,38 68,58 76,88 50,72 24,88 32,58 8,38 39,36" fill="' + color + '" stroke="' + dark + '" stroke-width="3" stroke-linejoin="round"/>';
+    } else if (kind === 'heart') {
+      inner = '<path d="M50 86 L16 48 A20 20 0 0 1 50 28 A20 20 0 0 1 84 48 Z" fill="' + color + '" stroke="' + dark + '" stroke-width="4" stroke-linejoin="round"/>';
+    } else if (kind === 'diamond') {
+      inner = '<polygon points="50,10 90,50 50,90 10,50" fill="' + color + '" stroke="' + dark + '" stroke-width="4" stroke-linejoin="round"/>';
+    } else {
+      inner = '<circle cx="50" cy="50" r="36" fill="' + color + '" stroke="' + dark + '" stroke-width="4"/>';
+    }
+    style = rot ? (' style="-webkit-transform:rotate(' + rot + 'deg);transform:rotate(' + rot + 'deg);"') : '';
+    return '<svg viewBox="0 0 100 100" focusable="false"' + style + '>' + inner + '</svg>';
+  }
+
+  function vormHoleSvg(kind, rot) {
+    var inner, style;
+    if (kind === 'square') {
+      inner = '<rect x="14" y="14" width="72" height="72" rx="8" fill="rgba(33,80,120,0.08)" stroke="#215078" stroke-width="4" stroke-dasharray="7 6"/>';
+    } else if (kind === 'triangle') {
+      inner = '<polygon points="50,12 90,86 10,86" fill="rgba(33,80,120,0.08)" stroke="#215078" stroke-width="4" stroke-dasharray="7 6" stroke-linejoin="round"/>';
+    } else if (kind === 'star') {
+      inner = '<polygon points="50,8 61,36 92,38 68,58 76,88 50,72 24,88 32,58 8,38 39,36" fill="rgba(33,80,120,0.08)" stroke="#215078" stroke-width="3" stroke-dasharray="6 5" stroke-linejoin="round"/>';
+    } else if (kind === 'heart') {
+      inner = '<path d="M50 86 L16 48 A20 20 0 0 1 50 28 A20 20 0 0 1 84 48 Z" fill="rgba(33,80,120,0.08)" stroke="#215078" stroke-width="4" stroke-dasharray="7 6" stroke-linejoin="round"/>';
+    } else if (kind === 'diamond') {
+      inner = '<polygon points="50,10 90,50 50,90 10,50" fill="rgba(33,80,120,0.08)" stroke="#215078" stroke-width="4" stroke-dasharray="7 6" stroke-linejoin="round"/>';
+    } else {
+      inner = '<circle cx="50" cy="50" r="36" fill="rgba(33,80,120,0.08)" stroke="#215078" stroke-width="4" stroke-dasharray="7 6"/>';
+    }
+    style = rot ? (' style="-webkit-transform:rotate(' + rot + 'deg);transform:rotate(' + rot + 'deg);"') : '';
+    return '<svg viewBox="0 0 100 100" focusable="false"' + style + '>' + inner + '</svg>';
+  }
+
+  function startVormen(fresh) {
+    var pool, n, i, rot, item;
+    state.level = 'vormen';
+    state.locked = false;
+    if (fresh) {
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+      state.lastWasPersonal = false;
+      resetVoiceCycle();
+    }
+    n = 3;
+    rot = false;
+    if (state.sessionCorrect >= 2) n = 4;
+    if (state.sessionCorrect >= 4) rot = true;
+    if (state.sessionCorrect >= 6) n = 5;
+    if (n > VORM_KINDS.length) n = VORM_KINDS.length;
+    pool = VORM_KINDS.slice(0);
+    shuffle(pool);
+    state.vormenItems = [];
+    for (i = 0; i < n; i++) {
+      item = { id: pool[i].id, color: pool[i].color, dark: pool[i].dark, rot: 0, placed: false };
+      if (rot && item.id !== 'circle') {
+        if (item.id === 'square' || item.id === 'diamond') item.rot = (Math.random() < 0.5) ? 0 : 45;
+        else if (item.id === 'triangle') item.rot = (Math.random() < 0.5) ? 0 : 180;
+        else item.rot = (Math.random() < 0.5) ? 0 : 30;
+      }
+      state.vormenItems.push(item);
+    }
+    hideReward();
+    showScreen('vormen');
+    updateStarsUI();
+    window.setTimeout(function () {
+      layoutVormen();
+      beginQuestionVoice();
+      speak('vormen');
+    }, 40);
+  }
+
+  function layoutVormen() {
+    var wrap, html, i, n, item, W, H, size, gap, boardTop, trayTop, totalW, startX, el, holes, pieces;
+    wrap = $('vormen-wrap');
+    if (!wrap || !state.vormenItems) return;
+    n = state.vormenItems.length;
+    W = wrap.clientWidth || 700;
+    H = wrap.clientHeight || 500;
+    if (W < 80) W = 700;
+    if (H < 80) H = 500;
+    size = Math.floor(Math.min((W - 24) / n - 10, H * 0.30, 150));
+    if (size < 70) size = 70;
+    gap = Math.floor(size * 0.18);
+    totalW = n * size + (n - 1) * gap;
+    if (totalW > W - 16) {
+      size = Math.floor((W - 16 - (n - 1) * 8) / n);
+      gap = 8;
+      totalW = n * size + (n - 1) * gap;
+    }
+    startX = Math.floor((W - totalW) / 2);
+    boardTop = Math.floor(H * 0.10);
+    trayTop = H - size - Math.floor(H * 0.08);
+    if (trayTop < boardTop + size + 16) trayTop = boardTop + size + 16;
+    html = '';
+    for (i = 0; i < n; i++) {
+      item = state.vormenItems[i];
+      item.holeX = startX + i * (size + gap);
+      item.holeY = boardTop;
+      item.homeX = startX + i * (size + gap);
+      item.homeY = trayTop;
+      item.size = size;
+      if (typeof item.x !== 'number' || item.placed) {
+        item.x = item.placed ? item.holeX : item.homeX;
+        item.y = item.placed ? item.holeY : item.homeY;
+      }
+      html += '<div class="vorm-hole" data-vorm="' + item.id + '" style="left:' + item.holeX + 'px;top:' + item.holeY + 'px;width:' + size + 'px;height:' + size + 'px;">' +
+        vormHoleSvg(item.id, item.rot) + '</div>';
+    }
+    holes = shuffle(state.vormenItems.slice(0));
+    /* rebuild hole positions already assigned in order; shuffle only tray homes */
+    for (i = 0; i < n; i++) {
+      holes[i].homeX = startX + i * (size + gap);
+      holes[i].homeY = trayTop;
+      if (!holes[i].placed) {
+        holes[i].x = holes[i].homeX;
+        holes[i].y = holes[i].homeY;
+      }
+    }
+    for (i = 0; i < n; i++) {
+      item = state.vormenItems[i];
+      html += '<div class="vorm-piece' + (item.placed ? ' placed' : '') + '" data-vorm="' + item.id + '" style="left:' + item.x + 'px;top:' + item.y + 'px;width:' + size + 'px;height:' + size + 'px;">' +
+        vormSvg(item.id, item.color, item.dark, item.rot) + '</div>';
+    }
+    wrap.innerHTML = html;
+  }
+
+  function vormenFindPiece(el) {
+    while (el && el !== document.body) {
+      if (el.getAttribute && el.getAttribute('data-vorm') && el.className && (' ' + el.className + ' ').indexOf(' vorm-piece ') !== -1) {
+        return el;
+      }
+      el = el.parentNode;
+    }
+    return null;
+  }
+
+  function vormenEvent(e) {
+    if (e.touches && e.touches.length) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    if (e.changedTouches && e.changedTouches.length) return { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
+    return { x: e.clientX, y: e.clientY };
+  }
+
+  function vormenItemById(id) {
+    var i;
+    for (i = 0; i < state.vormenItems.length; i++) {
+      if (state.vormenItems[i].id === id) return state.vormenItems[i];
+    }
+    return null;
+  }
+
+  function vormenDragStart(e) {
+    var el, item, pt, wrap, wr;
+    if (state.locked) return false;
+    el = vormenFindPiece(e.target);
+    if (!el) return false;
+    item = vormenItemById(el.getAttribute('data-vorm'));
+    if (!item) return false;
+    pt = vormenEvent(e);
+    wrap = $('vormen-wrap');
+    wr = wrap.getBoundingClientRect();
+    vormenDrag.on = true;
+    vormenDrag.grabbed = false;
+    vormenDrag.piece = el;
+    vormenDrag.item = item;
+    vormenDrag.startX = pt.x;
+    vormenDrag.startY = pt.y;
+    vormenDrag.ox = pt.x - wr.left - item.x;
+    vormenDrag.oy = pt.y - wr.top - item.y;
+    item.placed = false;
+    el.className = 'vorm-piece dragging';
+    return true;
+  }
+
+  function vormenDragMove(e) {
+    var pt, wrap, wr, x, y, size;
+    if (!vormenDrag.on || !vormenDrag.piece) return false;
+    pt = vormenEvent(e);
+    if (!vormenDrag.grabbed) {
+      if (Math.abs(pt.x - vormenDrag.startX) < 8 && Math.abs(pt.y - vormenDrag.startY) < 8) return true;
+      vormenDrag.grabbed = true;
+    }
+    wrap = $('vormen-wrap');
+    wr = wrap.getBoundingClientRect();
+    size = vormenDrag.item.size;
+    x = pt.x - wr.left - vormenDrag.ox;
+    y = pt.y - wr.top - vormenDrag.oy;
+    if (x < 0) x = 0;
+    if (y < 0) y = 0;
+    if (x > wr.width - size) x = wr.width - size;
+    if (y > wr.height - size) y = wr.height - size;
+    vormenDrag.item.x = x;
+    vormenDrag.item.y = y;
+    vormenDrag.piece.style.left = x + 'px';
+    vormenDrag.piece.style.top = y + 'px';
+    return true;
+  }
+
+  function vormenDragEnd(e) {
+    var item, best, bi, i, other, dx, dy, d, lim, all, el;
+    if (!vormenDrag.on) return false;
+    item = vormenDrag.item;
+    el = vormenDrag.piece;
+    vormenDrag.on = false;
+    if (!item || !el) return true;
+    best = null;
+    bi = 1e9;
+    lim = item.size * 0.48;
+    lim = lim * lim;
+    for (i = 0; i < state.vormenItems.length; i++) {
+      other = state.vormenItems[i];
+      dx = (item.x + item.size / 2) - (other.holeX + other.size / 2);
+      dy = (item.y + item.size / 2) - (other.holeY + other.size / 2);
+      d = dx * dx + dy * dy;
+      if (d < bi) {
+        bi = d;
+        best = other;
+      }
+    }
+    if (best && bi <= lim && best.id === item.id) {
+      item.x = item.holeX;
+      item.y = item.holeY;
+      item.placed = true;
+      el.style.left = item.x + 'px';
+      el.style.top = item.y + 'px';
+      el.className = 'vorm-piece placed';
+      playTone(523, 0.1, 'sine', 0.09, 0);
+      all = true;
+      for (i = 0; i < state.vormenItems.length; i++) {
+        if (!state.vormenItems[i].placed) all = false;
+      }
+      if (all) awardCorrect();
+    } else {
+      if (best && bi <= lim && best.id !== item.id) {
+        playWrong();
+        showToast('Probeer nog eens', false);
+        speak('retry');
+      }
+      item.x = item.homeX;
+      item.y = item.homeY;
+      item.placed = false;
+      el.style.left = item.x + 'px';
+      el.style.top = item.y + 'px';
+      el.className = 'vorm-piece';
+    }
+    vormenDrag.piece = null;
+    vormenDrag.item = null;
+    return true;
+  }
+
+  function onMouseDown(e) {
+    if (state.screen !== 'vormen') return;
+    if (vormenDragStart(e)) {
+      if (e.preventDefault) e.preventDefault();
+    }
+  }
+
+  function onMouseMove(e) {
+    if (state.screen !== 'vormen') return;
+    if (vormenDrag.on) {
+      vormenDragMove(e);
+      if (e.preventDefault) e.preventDefault();
+    }
+  }
+
+  function onMouseUp(e) {
+    if (state.screen !== 'vormen') return;
+    if (vormenDrag.on) {
+      vormenDragEnd(e);
+      if (e.preventDefault) e.preventDefault();
+    }
+  }
 
   function showPuzzlesMenu() {
     state.level = null;
@@ -4214,6 +4605,8 @@
         goHome();
       } else if (state.screen === 'puzzle') {
         showPuzzleLevel();
+      } else if (state.screen === 'vormen') {
+        showPuzzlesMenu();
       } else if (state.screen === 'puzzlelevel') {
         showPuzzlesMenu();
       } else if (state.screen === 'puzzles') {
@@ -4243,7 +4636,8 @@
       return;
     }
     if (act === 'puzzle-game') {
-      showPuzzleLevel();
+      if (el.getAttribute('data-game') === 'vormen') startVormen(true);
+      else showPuzzleLevel();
       return;
     }
     if (act === 'puzzle-size') {
@@ -4323,6 +4717,9 @@
     touchMoved = false;
     el = findClickable(e.target);
     if (el) setPressed(el);
+    if (state.screen === 'vormen' && vormenDragStart(e)) {
+      e.preventDefault();
+    }
   }
 
   function onTouchMove(e) {
@@ -4333,6 +4730,10 @@
       touchMoved = true;
       clearPressed();
     }
+    if (state.screen === 'vormen' && vormenDragMove(e)) {
+      e.preventDefault();
+      return;
+    }
     e.preventDefault();
   }
 
@@ -4340,6 +4741,11 @@
     var el, now;
     now = new Date().getTime();
     lastTouchEnd = now;
+    if (state.screen === 'vormen' && vormenDragEnd(e)) {
+      clearPressed();
+      e.preventDefault();
+      return;
+    }
     el = findClickable(e.target);
     clearPressed();
     if (!touchMoved && el && (now - touchStartTime) < 700) {
@@ -4388,6 +4794,7 @@
     elSet('puzzles-home-icon', homeIconHtml());
     elSet('puzzlelevel-home-icon', homeIconHtml());
     elSet('puzzle-home-icon', homeIconHtml());
+    elSet('vormen-home-icon', homeIconHtml());
     elSet('letters-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('trace-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('names-star-icon', starSvg('#FFD54F', '#F9A825'));
@@ -4395,6 +4802,13 @@
     elSet('puzzles-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('puzzlelevel-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('puzzle-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('vormen-star-icon', starSvg('#FFD54F', '#F9A825'));
+    if ($('icon-vormen')) {
+      $('icon-vormen').innerHTML =
+        vormSvg('circle', '#2FB3F0', '#1A7FB3', 0) +
+        vormSvg('square', '#4CC86E', '#2E9A4F', 0) +
+        vormSvg('triangle', '#FF8A4C', '#D4692C', 0);
+    }
     $('icon-count').innerHTML =
       '<span class="mini">' + appleSvg() + '</span>' +
       '<span class="mini">' + appleSvg() + '</span>' +
@@ -4440,6 +4854,9 @@
     document.addEventListener('touchend', onTouchEnd, false);
     document.addEventListener('touchcancel', onTouchCancel, false);
     document.addEventListener('click', onClick, false);
+    document.addEventListener('mousedown', onMouseDown, false);
+    document.addEventListener('mousemove', onMouseMove, false);
+    document.addEventListener('mouseup', onMouseUp, false);
     document.addEventListener('gesturestart', onGestureStart, false);
 
     window.addEventListener('orientationchange', function () {
@@ -4448,6 +4865,7 @@
         window.scrollTo(0, 0);
         if (state.screen === 'trace') sizeAndDrawTrace();
         if (state.screen === 'puzzle') layoutAndDrawPuzzle();
+        if (state.screen === 'vormen') layoutVormen();
       }, 250);
     }, false);
 

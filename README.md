@@ -18,6 +18,7 @@ Op het startscherm kies je **Getallen**, **Letters** of **Puzzels**.
 
 **Puzzels**
 7. **Schuifpuzzel** — een plaatje in 4 (2×2) of 9 (3×3) stukken; tik op twee stukjes om ze te wisselen. Er is een vaag voorbeeldplaatje zichtbaar.
+8. **Vormen passen** — sleep cirkel, vierkant, driehoek en andere vormen in het juiste gaatje (later ook gedraaid).
 
 Bij de getallen- en letterspellen heeft elke vraag drie grote antwoordknoppen. Bij een goed antwoord of een voltooide puzzel krijg je een ster. Na vijf sterren volgt een klein feestje. Een fout antwoord is niet erg: je mag het gewoon nog eens proberen.
 
