@@ -2216,7 +2216,7 @@
         </button>
         <button type="button" class="tap level-btn lvl-plus10" data-act="letter-mode" data-mode="trace">
           <div class="act-icon" id="icon-trace-act"></div>
-          <div class="level-label">Overtrekken</div>
+          <div class="level-label">Tekenen</div>
         </button>
         <button type="button" class="tap level-btn lvl-minus" data-act="letter-mode" data-mode="naam">
           <div class="act-icon">Aa</div>
@@ -2689,6 +2689,8 @@
     letterMode: null,
     lastLetter: '',
     lastWord: '',
+    roundKeys: [],
+    recentByGame: {},
     currentSpeech: '',
     childName: '',
     nameChars: null,
@@ -2741,6 +2743,74 @@
 
   function pick(arr) {
     return arr[randInt(0, arr.length - 1)];
+  }
+
+  function currentGameId() {
+    var level;
+    level = state.level || '';
+    if (level === 'letters') return 'letters-' + (state.letterMode || '');
+    if (level === 'tables') return 'tables-' + String(state.tableN);
+    return level || 'game';
+  }
+
+  function closeRoundHistory() {
+    var id, hist, i;
+    if (!state.roundKeys || !state.roundKeys.length) return;
+    id = currentGameId();
+    if (!state.recentByGame) state.recentByGame = {};
+    hist = state.recentByGame[id] ? state.recentByGame[id].slice(0) : [];
+    for (i = 0; i < state.roundKeys.length; i++) {
+      hist.push(state.roundKeys[i]);
+    }
+    while (hist.length > 5) hist.shift();
+    state.recentByGame[id] = hist;
+    state.roundKeys = [];
+  }
+
+  function rememberRoundKey(key) {
+    if (!state.roundKeys) state.roundKeys = [];
+    state.roundKeys.push(key);
+  }
+
+  function keyRecentScore(key, seen, hist) {
+    var i, score;
+    score = 0;
+    if (seen.length && seen[seen.length - 1] === key) score -= 100;
+    for (i = 0; i < seen.length; i++) {
+      if (seen[i] === key) score -= (i + 1) * 10;
+    }
+    for (i = 0; i < hist.length; i++) {
+      if (hist[i] === key) score -= (i + 1);
+    }
+    return score;
+  }
+
+  function pickAvoiding(keys) {
+    var i, key, fresh, unused, hist, id, seen, best, bestScore, score, pool;
+    if (!keys || !keys.length) return null;
+    id = currentGameId();
+    hist = (state.recentByGame && state.recentByGame[id]) ? state.recentByGame[id] : [];
+    seen = state.roundKeys || [];
+    fresh = [];
+    unused = [];
+    for (i = 0; i < keys.length; i++) {
+      key = keys[i];
+      if (contains(seen, key)) continue;
+      unused.push(key);
+      if (!contains(hist, key)) fresh.push(key);
+    }
+    pool = fresh.length ? fresh : (unused.length ? unused : null);
+    if (pool) return pick(pool);
+    best = null;
+    bestScore = -99999;
+    for (i = 0; i < keys.length; i++) {
+      score = keyRecentScore(keys[i], seen, hist);
+      if (best === null || score > bestScore) {
+        best = keys[i];
+        bestScore = score;
+      }
+    }
+    return best;
   }
 
   function loadState() {
@@ -3199,34 +3269,40 @@
   }
 
   function makeCountQ() {
-    var n, tries, kind, q;
-    tries = 0;
-    do {
-      n = randInt(1, 10);
-      tries += 1;
-    } while (n === state.lastAnswer && tries < 8);
+    var n, kind, q, keys, i, key;
+    keys = [];
+    for (i = 1; i <= 10; i++) keys.push(String(i));
+    key = pickAvoiding(keys) || '1';
+    n = parseInt(key, 10);
+    rememberRoundKey(key);
     kind = pick(KINDS);
     q = {
       mode: 'count',
       kind: kind,
       answer: n,
       prompt: 'Hoeveel?',
-      speech: 'count',
+      speech: (n === 1) ? 'count-1' : 'count',
       choices: makeChoices(n, 1, 10)
     };
     return q;
   }
 
   function makePlusQ(maxSum) {
-    var a, b, sum, tries, kind, minSum, q;
-    tries = 0;
+    var a, b, sum, kind, minSum, q, keys, key, parts;
+    keys = [];
     minSum = (maxSum <= 5) ? 2 : 5;
-    do {
-      sum = randInt(minSum, maxSum);
-      a = randInt(1, sum - 1);
-      b = sum - a;
-      tries += 1;
-    } while (sum === state.lastAnswer && tries < 8);
+    for (sum = minSum; sum <= maxSum; sum++) {
+      for (a = 1; a <= sum - 1; a++) {
+        b = sum - a;
+        keys.push(a + '+' + b);
+      }
+    }
+    key = pickAvoiding(keys) || '1+1';
+    rememberRoundKey(key);
+    parts = key.split('+');
+    a = parseInt(parts[0], 10);
+    b = parseInt(parts[1], 10);
+    sum = a + b;
     kind = pick(KINDS);
     q = {
       mode: 'plus',
@@ -3242,14 +3318,19 @@
   }
 
   function makeMinusQ(maxN) {
-    var total, take, left, tries, kind, q;
-    tries = 0;
-    do {
-      total = randInt(2, maxN);
-      take = (total <= 2) ? 1 : randInt(1, total - 1);
-      left = total - take;
-      tries += 1;
-    } while (left === state.lastAnswer && tries < 8);
+    var total, take, left, kind, q, keys, key, parts;
+    keys = [];
+    for (total = 2; total <= maxN; total++) {
+      for (take = 1; take <= total - 1; take++) {
+        keys.push(total + '-' + take);
+      }
+    }
+    key = pickAvoiding(keys) || '2-1';
+    rememberRoundKey(key);
+    parts = key.split('-');
+    total = parseInt(parts[0], 10);
+    take = parseInt(parts[1], 10);
+    left = total - take;
     kind = pick(KINDS);
     q = {
       mode: 'minus',
@@ -3312,19 +3393,22 @@
   }
 
   function makeTableQ() {
-    var a, b, product, tries, q;
-    tries = 0;
-    do {
-      if (state.tableN === 0) {
-        a = randInt(1, 10);
-        b = randInt(1, 10);
-      } else {
-        a = state.tableN;
-        b = randInt(1, 10);
+    var a, b, product, q, keys, key, parts, aa, bb;
+    keys = [];
+    if (state.tableN === 0) {
+      for (aa = 1; aa <= 10; aa++) {
+        for (bb = 1; bb <= 10; bb++) keys.push(aa + 'x' + bb);
       }
-      product = a * b;
-      tries += 1;
-    } while (a === state.lastA && b === state.lastB && tries < 8);
+    } else {
+      a = state.tableN;
+      for (bb = 1; bb <= 10; bb++) keys.push(a + 'x' + bb);
+    }
+    key = pickAvoiding(keys) || '1x1';
+    rememberRoundKey(key);
+    parts = key.split('x');
+    a = parseInt(parts[0], 10);
+    b = parseInt(parts[1], 10);
+    product = a * b;
     q = {
       mode: 'tables',
       a: a,
@@ -3836,13 +3920,10 @@
   }
 
   function makeZoekQ() {
-    var ch, tries;
-    tries = 0;
-    do {
-      ch = activeLetters();
-      ch = ch[randInt(0, ch.length - 1)];
-      tries += 1;
-    } while (ch === state.lastLetter && tries < 8);
+    var ch, letters;
+    letters = activeLetters();
+    ch = pickAvoiding(letters) || letters[0];
+    rememberRoundKey(ch);
     state.lastLetter = ch;
     return {
       mode: 'zoeken',
@@ -3854,13 +3935,17 @@
   }
 
   function makeBegintQ() {
-    var w, tries;
-    tries = 0;
-    do {
-      w = activeWords();
-      w = w[randInt(0, w.length - 1)];
-      tries += 1;
-    } while (w.word === state.lastWord && tries < 8);
+    var w, words, keys, i, key, found;
+    words = activeWords();
+    keys = [];
+    for (i = 0; i < words.length; i++) keys.push(words[i].word);
+    key = pickAvoiding(keys) || (keys[0] || '');
+    rememberRoundKey(key);
+    found = words[0];
+    for (i = 0; i < words.length; i++) {
+      if (words[i].word === key) found = words[i];
+    }
+    w = found;
     state.lastWord = w.word;
     return {
       mode: 'begint',
@@ -3995,7 +4080,14 @@
     saveStars();
     playSuccess();
     showBurst();
-    praise = choosePraise();
+    if (state.question && state.question.mode === 'begint' && state.question.word) {
+      praise = {
+        id: 'de-' + state.question.word.letter + '-van-' + state.question.word.word,
+        text: 'De ' + state.question.word.letter + ' van ' + state.question.word.word + '!'
+      };
+    } else {
+      praise = choosePraise();
+    }
     showToast(praise.text, true);
     speak(praise.id);
     updateStarsUI();
@@ -4060,13 +4152,10 @@
   }
 
   function startTraceLetter() {
-    var ch, tries, canvas, prompt;
-    tries = 0;
-    do {
-      ch = activeLetters();
-      ch = ch[randInt(0, ch.length - 1)];
-      tries += 1;
-    } while (ch === state.lastLetter && tries < 8);
+    var ch, letters, canvas, prompt;
+    letters = activeLetters();
+    ch = pickAvoiding(letters) || letters[0];
+    rememberRoundKey(ch);
     state.lastLetter = ch;
     state.currentSpeech = 'overtrek-' + ch;
     traceState.letter = ch;
@@ -4554,18 +4643,32 @@
     if (state.sessionCorrect >= 4) rot = true;
     if (state.sessionCorrect >= 6) n = 5;
     if (n > VORM_KINDS.length) n = VORM_KINDS.length;
-    pool = VORM_KINDS.slice(0);
-    shuffle(pool);
-    state.vormenItems = [];
-    for (i = 0; i < n; i++) {
-      item = { id: pool[i].id, color: pool[i].color, dark: pool[i].dark, rot: 0, placed: false };
-      if (rot && item.id !== 'circle') {
-        if (item.id === 'square' || item.id === 'diamond') item.rot = (Math.random() < 0.5) ? 0 : 45;
-        else if (item.id === 'triangle') item.rot = (Math.random() < 0.5) ? 0 : 180;
-        else item.rot = (Math.random() < 0.5) ? 0 : 30;
-      }
-      state.vormenItems.push(item);
-    }
+    (function buildVormen() {
+      var tries, key, parts, j;
+      tries = 0;
+      do {
+        pool = VORM_KINDS.slice(0);
+        shuffle(pool);
+        state.vormenItems = [];
+        for (i = 0; i < n; i++) {
+          item = { id: pool[i].id, color: pool[i].color, dark: pool[i].dark, rot: 0, placed: false };
+          if (rot && item.id !== 'circle') {
+            if (item.id === 'square' || item.id === 'diamond') item.rot = (Math.random() < 0.5) ? 0 : 45;
+            else if (item.id === 'triangle') item.rot = (Math.random() < 0.5) ? 0 : 180;
+            else item.rot = (Math.random() < 0.5) ? 0 : 30;
+          }
+          state.vormenItems.push(item);
+        }
+        parts = [];
+        for (j = 0; j < state.vormenItems.length; j++) {
+          parts.push(state.vormenItems[j].id + ':' + state.vormenItems[j].rot);
+        }
+        parts.sort();
+        key = parts.join(',');
+        tries += 1;
+      } while (contains(state.roundKeys || [], key) && tries < 16);
+      rememberRoundKey(key);
+    })();
     hideReward();
     showScreen('vormen');
     updateStarsUI();
@@ -4906,7 +5009,22 @@
       rows = 4;
       cols = 2;
     }
-    left = makeSpiegelLeft(rows, cols);
+    (function pickSpiegel() {
+      var tries, key, r2, c2, row, parts;
+      tries = 0;
+      do {
+        left = makeSpiegelLeft(rows, cols);
+        parts = [];
+        for (r2 = 0; r2 < left.length; r2++) {
+          row = '';
+          for (c2 = 0; c2 < left[r2].length; c2++) row += left[r2][c2] ? '1' : '0';
+          parts.push(row);
+        }
+        key = parts.join(',');
+        tries += 1;
+      } while (contains(state.roundKeys || [], key) && tries < 20);
+      rememberRoundKey(key);
+    })();
     right = [];
     for (r = 0; r < rows; r++) {
       right[r] = [];
@@ -5069,11 +5187,17 @@
     }
     n = (state.sessionCorrect >= 5) ? 4 : 3;
     figs = natekenFigList(n);
-    tries = 0;
-    do {
-      fig = figs[randInt(0, figs.length - 1)];
-      tries += 1;
-    } while (fig.id === state.lastNateken && tries < 8);
+    (function pickNateken() {
+      var keys, i, key;
+      keys = [];
+      for (i = 0; i < figs.length; i++) keys.push(figs[i].id);
+      key = pickAvoiding(keys) || figs[0].id;
+      rememberRoundKey(key);
+      fig = figs[0];
+      for (i = 0; i < figs.length; i++) {
+        if (figs[i].id === key) fig = figs[i];
+      }
+    })();
     state.lastNateken = fig.id;
     map = natekenEdgesMap(fig.edges);
     state.nateken = { n: n, target: map, drawn: {}, done: false, fig: fig.id };
@@ -5390,11 +5514,17 @@
       resetVoiceCycle();
     }
     set = tangramPuzzles();
-    if (state.sessionCorrect >= 6) i = randInt(0, set.length - 1);
-    else if (state.sessionCorrect >= 3) i = randInt(0, Math.min(3, set.length) - 1);
-    else i = state.sessionCorrect % 3;
-    if (set[i].id === state.lastTangram && set.length > 1) i = (i + 1) % set.length;
-    puzzle = set[i];
+    (function pickTangram() {
+      var keys, k, key;
+      keys = [];
+      for (k = 0; k < set.length; k++) keys.push(set[k].id);
+      key = pickAvoiding(keys) || set[0].id;
+      rememberRoundKey(key);
+      puzzle = set[0];
+      for (k = 0; k < set.length; k++) {
+        if (set[k].id === key) puzzle = set[k];
+      }
+    })();
     state.lastTangram = puzzle.id;
     allowRot = state.sessionCorrect >= 3;
     state.tangramItems = [];
@@ -5749,9 +5879,17 @@
       resetVoiceCycle();
     }
     items = waarItems();
-    do {
-      item = items[randInt(0, items.length - 1)];
-    } while (item.speech === state.lastWaar && items.length > 1);
+    (function pickWaar() {
+      var keys, k, key;
+      keys = [];
+      for (k = 0; k < items.length; k++) keys.push(items[k].speech);
+      key = pickAvoiding(keys) || items[0].speech;
+      rememberRoundKey(key);
+      item = items[0];
+      for (k = 0; k < items.length; k++) {
+        if (items[k].speech === key) item = items[k];
+      }
+    })();
     state.lastWaar = item.speech;
     pool = [];
     for (i = 0; i < items.length; i++) {
@@ -5876,6 +6014,7 @@
     mazes = doolhofMazes();
     idx = state.sessionCorrect;
     if (idx > mazes.length - 1) idx = mazes.length - 1;
+    rememberRoundKey(String(idx));
     state.doolhof = {
       maze: mazes[idx],
       trail: [],
@@ -6055,8 +6194,15 @@
       state.sessionCorrect = 0;
       state.towardsReward = 0;
     }
-    state.puzzlePic = (typeof state.puzzlePic === 'number' ? state.puzzlePic : -1) + 1;
-    if (state.puzzlePic >= PUZZLE_PICS.length) state.puzzlePic = 0;
+    (function pickPuzzlePic() {
+      var key, i;
+      key = pickAvoiding(PUZZLE_PICS) || PUZZLE_PICS[0];
+      rememberRoundKey(key);
+      state.puzzlePic = 0;
+      for (i = 0; i < PUZZLE_PICS.length; i++) {
+        if (PUZZLE_PICS[i] === key) state.puzzlePic = i;
+      }
+    })();
     state.puzzleOrder = shufflePuzzle(n);
     hideReward();
     showScreen('puzzle');
@@ -6465,6 +6611,7 @@
   }
 
   function leavePlay() {
+    closeRoundHistory();
     cancelAdvanceWait();
     stopSpeak();
     state.locked = false;

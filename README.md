@@ -14,7 +14,7 @@ Op het startscherm kies je **Getallen**, **Letters** of **Puzzels**.
 5. **Tafels** — de tafels van 1 tot 10, of alle tafels door elkaar
 
 **Letters**
-6. **Letter zoeken**, **Begint met**, **Overtrekken** (eerst 8 kernletters, of alle 26 letters), en **Mijn naam** (Jasper, Laurens en Mirthe). Elk heeft een Nederlands woord dat echt met die letter begint (bij i: iglo, niet ijs).
+6. **Letter zoeken**, **Begint met**, **Tekenen** (eerst 8 kernletters, of alle 26 letters), en **Mijn naam** (Jasper, Laurens en Mirthe). Elk heeft een Nederlands woord dat echt met die letter begint (bij i: iglo, niet ijs). Bij **Begint met** hoor je na een goed antwoord bijvoorbeeld "De f van fiets!".
 
 **Puzzels**
 7. **Schuifpuzzel** — een plaatje in 4 (2×2) of 9 (3×3) stukken; tik op twee stukjes om ze te wisselen. Er is een vaag voorbeeldplaatje zichtbaar.
