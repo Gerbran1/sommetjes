@@ -223,6 +223,17 @@ async function waitSpiegelNext(page) {
 
     await fresh(page);
     await tap(page, '#btn-goto-games');
+    await tap(page, '[data-level="minus30"]');
+    await expectScreen(page, 'play', 'minus30');
+    await tap(page, '#btn-play-back');
+    await expectScreen(page, 'home', 'minus30 back');
+    await tap(page, '[data-level="minus30"]');
+    await tap(page, '#btn-home');
+    await expectScreen(page, 'start', 'minus30 home');
+    ok('Min tot 30 home/terug');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-games');
     await tap(page, '[data-level="tables"]');
     await expectScreen(page, 'picker', 'tafels');
     await tap(page, '#btn-picker-back');

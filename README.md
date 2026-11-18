@@ -12,7 +12,8 @@ Op het startscherm kies je **Getallen**, **Letters**, **Puzzels** of **Geheugen*
 3. **Plus 10** — optellen tot 10 met plaatjes
 4. **Plus tot 30** — grotere sommen zoals 11+8 of 19+6, met tientallen als staven van 10 en losse stippen
 5. **Min** — aftrekken met doorgestreepte plaatjes (eerst tot 5, later tot 10)
-6. **Tafels** — de tafels van 1 tot 10, of alle tafels door elkaar
+6. **Min tot 30** — grotere aftreksommen zoals 21−5 of 15−8, over het tiental, met tientallenstaven en doorgestreepte stippen
+7. **Tafels** — de tafels van 1 tot 10, of alle tafels door elkaar
 
 **Letters**
 7. **Letter zoeken**, **Begint met**, **Tekenen** (eerst 8 kernletters, of alle 26 letters), en **Mijn naam** (Jasper, Laurens en Mirthe). Elk heeft een Nederlands woord dat echt met die letter begint (bij i: iglo, niet ijs). Bij **Begint met** hoor je na een goed antwoord bijvoorbeeld "De f van fiets!".

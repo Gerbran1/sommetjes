@@ -323,6 +323,15 @@
       -webkit-box-shadow: 0 2px 0 #D44E86, 0 4px 8px rgba(0,0,0,0.15);
       box-shadow: 0 2px 0 #D44E86, 0 4px 8px rgba(0,0,0,0.15);
     }
+    .lvl-minus30 {
+      background: #E0568A;
+      -webkit-box-shadow: 0 8px 0 #B83A68, 0 12px 18px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 0 #B83A68, 0 12px 18px rgba(0,0,0,0.15);
+    }
+    .lvl-minus30.pressed, .lvl-minus30:active {
+      -webkit-box-shadow: 0 2px 0 #B83A68, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #B83A68, 0 4px 8px rgba(0,0,0,0.15);
+    }
     .lvl-tables {
       background: #8B7CFF;
       -webkit-box-shadow: 0 8px 0 #5E4ED1, 0 12px 18px rgba(0,0,0,0.15);
@@ -828,6 +837,33 @@
       background: #FFC93A;
       -webkit-box-shadow: 0 3px 0 #D49A12;
       box-shadow: 0 3px 0 #D49A12;
+    }
+    .tens-dot.dot-gone {
+      position: relative;
+      overflow: hidden;
+      background: #C5CCD4;
+      -webkit-box-shadow: 0 3px 0 #9AA3AD;
+      box-shadow: 0 3px 0 #9AA3AD;
+    }
+    .tens-dot.dot-gone:before, .tens-dot.dot-gone:after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 2px;
+      height: 14px;
+      margin-left: -1px;
+      margin-top: -7px;
+      background: #E53935;
+      border-radius: 2px;
+    }
+    .tens-dot.dot-gone:before {
+      -webkit-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+    .tens-dot.dot-gone:after {
+      -webkit-transform: rotate(-45deg);
+      transform: rotate(-45deg);
     }
     .mini-tenbar {
       display: -webkit-flex;
@@ -2615,6 +2651,11 @@
           <div class="level-label">Min</div>
           <div class="level-sub">Aftrekken</div>
         </button>
+        <button type="button" class="tap level-btn lvl-minus30" id="btn-minus30" data-act="level" data-level="minus30">
+          <div class="level-icon" id="icon-minus30"></div>
+          <div class="level-label">Min tot 30</div>
+          <div class="level-sub">Aftrekken</div>
+        </button>
         <button type="button" class="tap level-btn lvl-tables" id="btn-tables" data-act="level" data-level="tables">
           <div class="level-icon" id="icon-tables"></div>
           <div class="level-label">Tafels</div>
@@ -4097,6 +4138,60 @@
     return q;
   }
 
+  function makeMinus30Choices(left) {
+    var near, ten, n, choices, extra;
+    near = [];
+    ten = [];
+    if (left - 1 >= 0) near.push(left - 1);
+    if (left + 1 <= 30) near.push(left + 1);
+    if (left - 10 >= 0) ten.push(left - 10);
+    if (left + 10 <= 30) ten.push(left + 10);
+    shuffle(near);
+    shuffle(ten);
+    choices = [left];
+    if (near.length) choices.push(near[0]);
+    if (ten.length && choices.length < 3) choices.push(ten[0]);
+    extra = 2;
+    while (choices.length < 3) {
+      n = left - extra;
+      if (n >= 0 && !contains(choices, n)) choices.push(n);
+      if (choices.length < 3) {
+        n = left + extra;
+        if (n <= 30 && !contains(choices, n)) choices.push(n);
+      }
+      extra += 1;
+    }
+    return shuffle(choices);
+  }
+
+  function makeMinus30Q() {
+    var total, take, left, q, keys, key, parts, aa, bb;
+    keys = [];
+    for (aa = 11; aa <= 30; aa++) {
+      for (bb = 1; bb <= 10; bb++) {
+        if (aa - bb < 0) continue;
+        if (Math.floor((aa - bb) / 10) === Math.floor(aa / 10)) continue;
+        keys.push(aa + '-' + bb);
+      }
+    }
+    key = pickAvoiding(keys) || '15-8';
+    rememberRoundKey(key);
+    parts = key.split('-');
+    total = parseInt(parts[0], 10);
+    take = parseInt(parts[1], 10);
+    left = total - take;
+    q = {
+      mode: 'minus30',
+      total: total,
+      take: take,
+      answer: left,
+      prompt: total + ' − ' + take + ' = ?',
+      speech: 'minus-' + total + '-' + take,
+      choices: makeMinus30Choices(left)
+    };
+    return q;
+  }
+
   function dutchNum(n) {
     var words = [
       'nul', 'één', 'twee', 'drie', 'vier', 'vijf', 'zes', 'zeven', 'acht', 'negen', 'tien',
@@ -4222,6 +4317,38 @@
       '</div>';
   }
 
+  function tensDotsMinusHtml(total, take) {
+    var html, i, j, tens, ones, idx, gone;
+    tens = Math.floor(total / 10);
+    ones = total - tens * 10;
+    html = '<div class="tens-side">';
+    idx = 0;
+    for (i = 0; i < tens; i++) {
+      html += '<div class="ten-bar">';
+      for (j = 0; j < 10; j++) {
+        gone = (idx >= total - take);
+        html += '<span class="tens-dot dot-a' + (gone ? ' dot-gone' : '') + '"></span>';
+        idx += 1;
+      }
+      html += '</div>';
+    }
+    if (ones > 0) {
+      html += '<div class="ten-loose">';
+      for (j = 0; j < ones; j++) {
+        gone = (idx >= total - take);
+        html += '<span class="tens-dot dot-a' + (gone ? ' dot-gone' : '') + '"></span>';
+        idx += 1;
+      }
+      html += '</div>';
+    }
+    html += '</div>';
+    return html;
+  }
+
+  function visualTensMinusHtml(total, take) {
+    return '<div class="tray tens-tray">' + tensDotsMinusHtml(total, take) + '</div>';
+  }
+
   function nextQuestion() {
     var q, maxN;
     state.locked = false;
@@ -4231,6 +4358,7 @@
     else if (state.level === 'plus5') q = makePlusQ(5);
     else if (state.level === 'plus10') q = makePlusQ(10);
     else if (state.level === 'plus30') q = makePlus30Q();
+    else if (state.level === 'minus30') q = makeMinus30Q();
     else if (state.level === 'tables') q = makeTableQ();
     else if (state.level === 'letters') {
       nextLetterItem();
@@ -4324,6 +4452,9 @@
     if (q.mode === 'plus30') {
       $('prompt').className = 'prompt prompt-sum';
       box.innerHTML = visualTensPlusHtml(q.a, q.b);
+    } else if (q.mode === 'minus30') {
+      $('prompt').className = 'prompt prompt-sum';
+      box.innerHTML = visualTensMinusHtml(q.total, q.take);
     } else {
       $('prompt').className = (q.mode === 'plus' || q.mode === 'minus') ? 'prompt prompt-sum' : 'prompt';
       if (q.mode === 'count') {
@@ -9049,6 +9180,13 @@
     $('icon-minus').innerHTML =
       '<span class="mini">' + objectHtml('apple', false).replace('class="obj"', 'class="obj" style="width:44px;height:44px;margin:0 2px;"') + '</span>' +
       '<span class="mini">' + objectHtml('apple', true).replace('class="obj obj-gone"', 'class="obj obj-gone" style="width:44px;height:44px;margin:0 2px;"') + '</span>';
+    if ($('icon-minus30')) {
+      $('icon-minus30').innerHTML =
+        '<div class="mini-tenbar">' +
+        '<span class="tens-dot dot-a"></span><span class="tens-dot dot-a"></span>' +
+        '<span class="tens-dot dot-a"></span><span class="tens-dot dot-gone"></span>' +
+        '<span class="tens-dot dot-gone"></span></div>';
+    }
     $('icon-tables').innerHTML =
       '<div class="tbl-icon">' +
       '<div class="trow"><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span></div>' +

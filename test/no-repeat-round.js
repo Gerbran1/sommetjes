@@ -198,6 +198,35 @@ function intersection(a, b) {
     if (overlap.length) throw new Error('min r2 herhaalde vorige ronde: ' + overlap.join(','));
     ok('Min ronde 2 uniek en niet uit ronde 1: ' + m2.join(', '));
 
+    // Min tot 30: 110 sommen over het tiental, twee rondes zonder overlap
+    await fresh(page);
+    await page.click('#btn-goto-games');
+    await wait(280);
+    await page.click('[data-level="minus30"]');
+    await wait(280);
+    var m30a = await playRound(page, 'minus', 5);
+    assertUnique(m30a, 'minus30 r1');
+    for (var mi = 0; mi < m30a.length; mi++) {
+      var mbits = m30a[mi].split('-');
+      var mt = parseInt(mbits[0], 10), mk = parseInt(mbits[1], 10);
+      if (!(mt >= 11 && mt <= 30 && mk >= 1 && mk <= 10 && mt - mk >= 0)) {
+        throw new Error('minus30 buiten bereik: ' + m30a[mi]);
+      }
+      if (Math.floor((mt - mk) / 10) === Math.floor(mt / 10)) {
+        throw new Error('minus30 kruist geen tiental: ' + m30a[mi]);
+      }
+    }
+    ok('Min tot 30 ronde 1 uniek: ' + m30a.join(', '));
+    await page.click('#btn-verder');
+    await wait(300);
+    await page.click('[data-level="minus30"]');
+    await wait(280);
+    var m30b = await playRound(page, 'minus', 5);
+    assertUnique(m30b, 'minus30 r2');
+    var m30over = intersection(m30a, m30b);
+    if (m30over.length) throw new Error('minus30 r2 herhaalde vorige ronde: ' + m30over.join(','));
+    ok('Min tot 30 ronde 2 uniek en niet uit ronde 1: ' + m30b.join(', '));
+
     // Tafel van 1: 10 sommen
     await fresh(page);
     await page.click('#btn-goto-games');
