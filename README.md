@@ -21,6 +21,7 @@ Op het startscherm kies je **Getallen**, **Letters** of **Puzzels**.
 8. **Vormen passen** — sleep cirkel, vierkant, driehoek en andere vormen in het juiste gaatje (later ook gedraaid).
 9. **Spiegelen** — tik de lege vakjes aan om de andere helft van het figuur hetzelfde te maken.
 10. **Natekenen** — kijk naar het figuur op de stippen en teken de lijnen na op het lege raster.
+11. **Tangram** — sleep 3 of 4 grote stukken in de silhouet (huis, boot, boom). Later kun je tikken om te draaien.
 
 Bij de getallen- en letterspellen heeft elke vraag drie grote antwoordknoppen. Bij een goed antwoord of een voltooide puzzel krijg je een ster. Na vijf sterren volgt een klein feestje. Een fout antwoord is niet erg: je mag het gewoon nog eens proberen.
 

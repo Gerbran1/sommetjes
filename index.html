@@ -190,7 +190,7 @@
       line-height: 1;
     }
 
-    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken {
+    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -1349,7 +1349,13 @@
       max-width: 780px;
       margin: 0 auto;
     }
-    #puzzles-grid .level-btn, #puzzlelevel-grid .level-btn {
+    #puzzles-grid .level-btn {
+      -webkit-flex: 0 0 30%;
+      flex: 0 0 30%;
+      max-width: 260px;
+      margin: 1%;
+    }
+    #puzzlelevel-grid .level-btn {
       -webkit-flex: 0 0 44%;
       flex: 0 0 44%;
       max-width: 340px;
@@ -1579,6 +1585,56 @@
       background: #5C6BC0;
       border-color: #3F51B5;
     }
+        .lvl-tangram {
+      background: #8D6E63;
+      -webkit-box-shadow: 0 8px 0 #6D4C41, 0 12px 16px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 0 #6D4C41, 0 12px 16px rgba(0,0,0,0.15);
+    }
+    .lvl-tangram.pressed, .lvl-tangram:active {
+      -webkit-box-shadow: 0 2px 0 #6D4C41, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #6D4C41, 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .tangram-mini {
+      position: relative;
+      width: 48px;
+      height: 44px;
+    }
+    .tangram-mini span {
+      position: absolute;
+      background: #FFFFFF;
+    }
+    #tangram-wrap {
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      position: relative;
+      width: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .tangram-slot, .tangram-piece {
+      position: absolute;
+      padding: 0;
+      margin: 0;
+      border: 0;
+      background: transparent;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .tangram-slot {
+      pointer-events: none;
+      z-index: 1;
+    }
+    .tangram-piece {
+      z-index: 3;
+    }
+    .tangram-piece.dragging { z-index: 6; }
+    .tangram-piece.placed { z-index: 4; }
+    .tangram-slot svg, .tangram-piece svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      pointer-events: none;
+    }
     #nateken-clear {
       position: absolute;
       right: 10px;
@@ -1785,6 +1841,9 @@
       .name-pick { height: 76px; font-size: 32px; margin: 8px 0; }
       #letters-grid .level-label { font-size: 22px; }
       #letters-grid .level-btn { min-height: 110px; }
+      #puzzles-grid .level-btn { min-height: 100px; }
+      #puzzles-grid .level-label { font-size: 22px; }
+      #puzzles-grid .level-icon { height: 40px; }
       .letter-set-btn { min-height: 40px; font-size: 18px; }
     }
     @media screen and (max-height: 700px) {
@@ -2072,6 +2131,16 @@
           </div>
           <div class="level-label">Natekenen</div>
         </button>
+        <button type="button" class="tap level-btn lvl-tangram" data-act="puzzle-game" data-game="tangram">
+          <div class="act-icon">
+            <div class="tangram-mini" id="icon-tangram">
+              <span style="left:8px;top:2px;width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;border-bottom:16px solid #fff;background:transparent;"></span>
+              <span style="left:10px;top:18px;width:28px;height:22px;border-radius:3px;"></span>
+              <span style="left:30px;top:8px;width:8px;height:12px;border-radius:2px;"></span>
+            </div>
+          </div>
+          <div class="level-label">Tangram</div>
+        </button>
       </div>
     </div>
 
@@ -2203,6 +2272,27 @@
       </div>
       <div class="prompt" id="nateken-prompt">Teken het na</div>
       <div id="nateken-wrap"></div>
+    </div>
+
+    <div id="screen-tangram" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-tangram-home" data-act="home" title="Terug">
+            <span id="tangram-home-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-sound-tangram" data-act="sound" title="Geluid" style="margin-left:8px;">
+            <span id="sound-icon-tangram"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="tangram-star-icon"></span>
+            <span class="star-count" id="tangram-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt" id="tangram-prompt">Leg de stukken in de vorm</div>
+      <div id="tangram-wrap"></div>
     </div>
 
     <div id="screen-trace" class="is-hidden">
@@ -3018,6 +3108,10 @@
     }
     else if (state.level === 'nateken') {
       startNateken(false);
+      return;
+    }
+    else if (state.level === 'tangram') {
+      startTangram(false);
       return;
     }
     else {
@@ -3969,7 +4063,7 @@
   /* ---------- UI ---------- */
   function updateStarsUI() {
     var i, row, html, filled, el, rows;
-    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars'], String(state.stars));
+    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars'], String(state.stars));
     filled = state.towardsReward;
     if (filled > 5) filled = 5;
     html = '';
@@ -4007,6 +4101,7 @@
     elSet('sound-icon-vormen', html);
     elSet('sound-icon-spiegel', html);
     elSet('sound-icon-nateken', html);
+    elSet('sound-icon-tangram', html);
   }
 
   function elSet(id, html) {
@@ -4017,7 +4112,7 @@
   function showScreen(name) {
     var ids, i, el;
     state.screen = name;
-    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken'];
+    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram'];
     for (i = 0; i < ids.length; i++) {
       el = $('screen-' + ids[i]);
       if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
@@ -4373,6 +4468,10 @@
       if (natekenDragStart(e)) {
         if (e.preventDefault) e.preventDefault();
       }
+    } else if (state.screen === 'tangram') {
+      if (tangramDragStart(e)) {
+        if (e.preventDefault) e.preventDefault();
+      }
     }
   }
 
@@ -4387,6 +4486,11 @@
         natekenDragMove(e);
         if (e.preventDefault) e.preventDefault();
       }
+    } else if (state.screen === 'tangram') {
+      if (tangramDrag.on) {
+        tangramDragMove(e);
+        if (e.preventDefault) e.preventDefault();
+      }
     }
   }
 
@@ -4399,6 +4503,11 @@
     } else if (state.screen === 'nateken') {
       if (natekenDrag.on) {
         natekenDragEnd(e);
+        if (e.preventDefault) e.preventDefault();
+      }
+    } else if (state.screen === 'tangram') {
+      if (tangramDrag.on) {
+        tangramDragEnd(e);
         if (e.preventDefault) e.preventDefault();
       }
     }
@@ -4901,6 +5010,332 @@
     state.nateken.drawn = {};
     natekenDrag.preview = null;
     natekenRedrawPlay();
+  }
+
+  var tangramDrag = { on: false, piece: null, item: null, grabbed: false, ox: 0, oy: 0, startX: 0, startY: 0 };
+
+  function tangramPath(kind, fill, stroke) {
+    var p;
+    if (kind === 'square') {
+      p = '<rect x="2" y="2" width="96" height="96" rx="8"/>';
+    } else if (kind === 'tri') {
+      p = '<polygon points="50,2 98,98 2,98"/>';
+    } else if (kind === 'rect') {
+      p = '<rect x="4" y="2" width="92" height="96" rx="7"/>';
+    } else if (kind === 'hull') {
+      p = '<polygon points="14,4 86,4 98,96 2,96"/>';
+    } else {
+      p = '<polygon points="4,4 96,50 4,96"/>';
+    }
+    return '<svg viewBox="0 0 100 100" focusable="false">' +
+      '<g fill="' + fill + '" stroke="' + stroke + '" stroke-width="5" stroke-linejoin="round">' + p + '</g></svg>';
+  }
+
+  function tangramPuzzles() {
+    return [
+      { id: 'huis', dw: 400, dh: 300, pieces: [
+        { kind: 'square', color: '#4CC86E', dark: '#2E9A4F', w: 150, h: 150, tx: 200, ty: 205, rot: 0, sym: 90 },
+        { kind: 'tri', color: '#E57373', dark: '#C44545', w: 186, h: 110, tx: 200, ty: 75, rot: 0, sym: 0 },
+        { kind: 'rect', color: '#FFB74D', dark: '#F57C00', w: 40, h: 58, tx: 258, ty: 86, rot: 0, sym: 180 }
+      ]},
+      { id: 'boot', dw: 420, dh: 300, pieces: [
+        { kind: 'hull', color: '#8D6E63', dark: '#6D4C41', w: 260, h: 80, tx: 210, ty: 230, rot: 0, sym: 0 },
+        { kind: 'tri', color: '#42A5F5', dark: '#1E88E5', w: 130, h: 160, tx: 230, ty: 120, rot: 0, sym: 0 },
+        { kind: 'square', color: '#FFB74D', dark: '#F57C00', w: 70, h: 54, tx: 120, ty: 178, rot: 0, sym: 180 }
+      ]},
+      { id: 'boom', dw: 400, dh: 320, pieces: [
+        { kind: 'tri', color: '#43A047', dark: '#2E7D32', w: 160, h: 110, tx: 200, ty: 70, rot: 0, sym: 0 },
+        { kind: 'tri', color: '#66BB6A', dark: '#388E3C', w: 200, h: 120, tx: 200, ty: 150, rot: 0, sym: 0 },
+        { kind: 'rect', color: '#8D6E63', dark: '#6D4C41', w: 46, h: 84, tx: 200, ty: 240, rot: 0, sym: 180 }
+      ]},
+      { id: 'ijs', dw: 360, dh: 320, pieces: [
+        { kind: 'tri', color: '#FFB74D', dark: '#F57C00', w: 150, h: 160, tx: 180, ty: 220, rot: 180, sym: 0 },
+        { kind: 'square', color: '#FF7EB3', dark: '#D44E86', w: 110, h: 90, tx: 180, ty: 110, rot: 0, sym: 180 },
+        { kind: 'tri', color: '#42A5F5', dark: '#1E88E5', w: 70, h: 50, tx: 180, ty: 48, rot: 0, sym: 0 }
+      ]}
+    ];
+  }
+
+  function tangramNormRot(r) {
+    r = r % 360;
+    if (r < 0) r += 360;
+    return r;
+  }
+
+  function tangramRotOk(item) {
+    var a, b, s;
+    a = tangramNormRot(item.rot);
+    b = tangramNormRot(item.trot);
+    s = item.sym;
+    if (s === 90) return true;
+    if (s === 180) return (a % 180) === (b % 180);
+    return a === b;
+  }
+
+  function startTangram(fresh) {
+    var set, puzzle, i, item, src, rotOff, allowRot;
+    if (fresh) {
+      state.level = 'tangram';
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+      resetVoiceCycle();
+    }
+    set = tangramPuzzles();
+    if (state.sessionCorrect >= 6) i = randInt(0, set.length - 1);
+    else if (state.sessionCorrect >= 3) i = randInt(0, Math.min(3, set.length) - 1);
+    else i = state.sessionCorrect % 3;
+    if (set[i].id === state.lastTangram && set.length > 1) i = (i + 1) % set.length;
+    puzzle = set[i];
+    state.lastTangram = puzzle.id;
+    allowRot = state.sessionCorrect >= 3;
+    state.tangramItems = [];
+    for (i = 0; i < puzzle.pieces.length; i++) {
+      src = puzzle.pieces[i];
+      rotOff = 0;
+      if (allowRot && src.sym !== 90 && Math.random() < 0.7) {
+        rotOff = (randInt(1, 3) * 90);
+        if (src.kind === 'tri') rotOff = 180;
+      }
+      item = {
+        id: puzzle.id + '-' + i,
+        kind: src.kind,
+        color: src.color,
+        dark: src.dark,
+        dw: src.w,
+        dh: src.h,
+        tx: src.tx,
+        ty: src.ty,
+        trot: src.rot,
+        rot: tangramNormRot(src.rot + rotOff),
+        sym: src.sym,
+        placed: false,
+        x: 0,
+        y: 0,
+        homeX: 0,
+        homeY: 0,
+        pw: 0,
+        ph: 0
+      };
+      state.tangramItems.push(item);
+    }
+    state.tangram = { dw: puzzle.dw, dh: puzzle.dh, done: false, allowRot: allowRot };
+    tangramDrag.on = false;
+    hideReward();
+    showScreen('tangram');
+    updateStarsUI();
+    window.setTimeout(function () {
+      layoutTangram();
+      beginQuestionVoice();
+      speak('tangram');
+    }, 40);
+  }
+
+  function tangramStyle(item, el) {
+    el.style.left = item.x + 'px';
+    el.style.top = item.y + 'px';
+    el.style.width = item.pw + 'px';
+    el.style.height = item.ph + 'px';
+    el.style.webkitTransformOrigin = '50% 50%';
+    el.style.transformOrigin = '50% 50%';
+    el.style.webkitTransform = 'rotate(' + item.rot + 'deg)';
+    el.style.transform = 'rotate(' + item.rot + 'deg)';
+  }
+
+  function layoutTangram() {
+    var wrap, html, i, n, item, W, H, scale, boardH, trayH, boardW, ox, oy, trayY, gap, totalW, startX, el, slots, pieces;
+    wrap = $('tangram-wrap');
+    if (!wrap || !state.tangramItems) return;
+    n = state.tangramItems.length;
+    W = wrap.clientWidth || 700;
+    H = wrap.clientHeight || 500;
+    trayH = Math.max(130, Math.floor(H * 0.32));
+    boardH = H - trayH - 8;
+    scale = Math.min((W - 40) / state.tangram.dw, (boardH - 16) / state.tangram.dh);
+    (function () {
+      var j, need, ph;
+      need = 0;
+      for (j = 0; j < n; j++) {
+        ph = state.tangramItems[j].dh * scale;
+        if (ph > need) need = ph;
+      }
+      need = Math.ceil(need + 20);
+      if (need > trayH) {
+        trayH = need;
+        if (trayH > Math.floor(H * 0.42)) trayH = Math.floor(H * 0.42);
+        boardH = H - trayH - 8;
+        scale = Math.min((W - 40) / state.tangram.dw, (boardH - 16) / state.tangram.dh);
+      }
+    }());
+    boardW = state.tangram.dw * scale;
+    ox = Math.floor((W - boardW) / 2);
+    oy = Math.floor((boardH - state.tangram.dh * scale) / 2);
+    if (oy < 6) oy = 6;
+    state.tangram.scale = scale;
+    state.tangram.ox = ox;
+    state.tangram.oy = oy;
+    html = '';
+    for (i = 0; i < n; i++) {
+      item = state.tangramItems[i];
+      item.pw = Math.round(item.dw * scale);
+      item.ph = Math.round(item.dh * scale);
+      item.tcx = ox + item.tx * scale;
+      item.tcy = oy + item.ty * scale;
+      html += '<div class="tangram-slot" data-id="' + item.id + '" style="left:' +
+        Math.round(item.tcx - item.pw / 2) + 'px;top:' + Math.round(item.tcy - item.ph / 2) +
+        'px;width:' + item.pw + 'px;height:' + item.ph + 'px;-webkit-transform:rotate(' + item.trot +
+        'deg);transform:rotate(' + item.trot + 'deg);-webkit-transform-origin:50% 50%;transform-origin:50% 50%;">' +
+        tangramPath(item.kind, '#C5CDD6', '#9AA6B2') + '</div>';
+    }
+    gap = 16;
+    totalW = 0;
+    for (i = 0; i < n; i++) totalW += state.tangramItems[i].pw + gap;
+    totalW -= gap;
+    startX = Math.floor((W - totalW) / 2);
+    trayY = boardH + Math.floor((trayH - 20) / 2);
+    for (i = 0; i < n; i++) {
+      item = state.tangramItems[i];
+      item.homeX = startX;
+      item.homeY = Math.round(trayY - item.ph / 2);
+      if (item.homeY < boardH) item.homeY = boardH;
+      if (item.homeY + item.ph > H - 6) item.homeY = H - item.ph - 6;
+      if (item.homeY < 0) item.homeY = 0;
+      if (!item.placed) {
+        item.x = item.homeX;
+        item.y = item.homeY;
+      } else {
+        item.x = Math.round(item.tcx - item.pw / 2);
+        item.y = Math.round(item.tcy - item.ph / 2);
+      }
+      startX += item.pw + gap;
+      html += '<div class="tangram-piece' + (item.placed ? ' placed' : '') + '" data-id="' + item.id + '">' +
+        tangramPath(item.kind, item.color, item.dark) + '</div>';
+    }
+    wrap.innerHTML = html;
+    pieces = wrap.getElementsByClassName('tangram-piece');
+    for (i = 0; i < pieces.length; i++) {
+      item = state.tangramItems[i];
+      tangramStyle(item, pieces[i]);
+    }
+  }
+
+  function tangramFindPiece(el) {
+    while (el && el !== document.body) {
+      if (el.className && (' ' + el.className + ' ').indexOf(' tangram-piece ') !== -1) return el;
+      el = el.parentNode;
+    }
+    return null;
+  }
+
+  function tangramById(id) {
+    var i;
+    if (!state.tangramItems) return null;
+    for (i = 0; i < state.tangramItems.length; i++) {
+      if (state.tangramItems[i].id === id) return state.tangramItems[i];
+    }
+    return null;
+  }
+
+  function tangramEvent(e) {
+    var src;
+    if (e.touches && e.touches.length) src = e.touches[0];
+    else if (e.changedTouches && e.changedTouches.length) src = e.changedTouches[0];
+    else src = e;
+    return { x: src.clientX, y: src.clientY };
+  }
+
+  function tangramDragStart(e) {
+    var el, item, pt, wrap, wr;
+    if (state.locked || !state.tangram || state.tangram.done) return false;
+    el = tangramFindPiece(e.target);
+    if (!el) return false;
+    item = tangramById(el.getAttribute('data-id'));
+    if (!item) return false;
+    pt = tangramEvent(e);
+    wrap = $('tangram-wrap');
+    wr = wrap.getBoundingClientRect();
+    tangramDrag.on = true;
+    tangramDrag.grabbed = false;
+    tangramDrag.piece = el;
+    tangramDrag.item = item;
+    tangramDrag.startX = pt.x;
+    tangramDrag.startY = pt.y;
+    tangramDrag.ox = pt.x - wr.left - item.x;
+    tangramDrag.oy = pt.y - wr.top - item.y;
+    item.placed = false;
+    el.className = 'tangram-piece dragging';
+    return true;
+  }
+
+  function tangramDragMove(e) {
+    var pt, wrap, wr, x, y;
+    if (!tangramDrag.on || !tangramDrag.piece) return false;
+    pt = tangramEvent(e);
+    if (!tangramDrag.grabbed) {
+      if (Math.abs(pt.x - tangramDrag.startX) < 8 && Math.abs(pt.y - tangramDrag.startY) < 8) return true;
+      tangramDrag.grabbed = true;
+    }
+    wrap = $('tangram-wrap');
+    wr = wrap.getBoundingClientRect();
+    x = pt.x - wr.left - tangramDrag.ox;
+    y = pt.y - wr.top - tangramDrag.oy;
+    if (x < 0) x = 0;
+    if (y < 0) y = 0;
+    if (x > wr.width - tangramDrag.item.pw) x = wr.width - tangramDrag.item.pw;
+    if (y > wr.height - tangramDrag.item.ph) y = wr.height - tangramDrag.item.ph;
+    tangramDrag.item.x = x;
+    tangramDrag.item.y = y;
+    tangramStyle(tangramDrag.item, tangramDrag.piece);
+    return true;
+  }
+
+  function tangramDragEnd(e) {
+    var item, el, cx, cy, dx, dy, lim, all, i, moved;
+    if (!tangramDrag.on) return false;
+    item = tangramDrag.item;
+    el = tangramDrag.piece;
+    moved = tangramDrag.grabbed;
+    tangramDrag.on = false;
+    if (!item || !el) return true;
+    if (!moved && state.tangram && state.tangram.allowRot) {
+      item.rot = tangramNormRot(item.rot + 90);
+      if (item.kind === 'tri' && item.rot % 180 !== 0 && item.trot % 180 === 0) {
+        item.rot = tangramNormRot(item.rot + 90);
+      }
+    }
+    cx = item.x + item.pw / 2;
+    cy = item.y + item.ph / 2;
+    dx = cx - item.tcx;
+    dy = cy - item.tcy;
+    lim = Math.min(item.pw, item.ph) * 0.42;
+    if (lim < 28) lim = 28;
+    if (dx * dx + dy * dy <= lim * lim && tangramRotOk(item)) {
+      item.placed = true;
+      item.x = Math.round(item.tcx - item.pw / 2);
+      item.y = Math.round(item.tcy - item.ph / 2);
+      item.rot = item.trot;
+      el.className = 'tangram-piece placed';
+      playTone(720, 0.09, 'sine', 0.1, 0);
+    } else {
+      item.placed = false;
+      if (dx * dx + dy * dy <= lim * lim && !tangramRotOk(item)) {
+        speak('retry');
+      }
+      item.x = item.homeX;
+      item.y = item.homeY;
+      el.className = 'tangram-piece';
+    }
+    tangramStyle(item, el);
+    tangramDrag.piece = null;
+    tangramDrag.item = null;
+    all = true;
+    for (i = 0; i < state.tangramItems.length; i++) {
+      if (!state.tangramItems[i].placed) all = false;
+    }
+    if (all && state.tangram && !state.tangram.done) {
+      state.tangram.done = true;
+      awardCorrect();
+    }
+    return true;
   }
 
   function showPuzzlesMenu() {
@@ -5469,7 +5904,7 @@
         goHome();
       } else if (state.screen === 'puzzle') {
         showPuzzleLevel();
-      } else if (state.screen === 'vormen' || state.screen === 'spiegel' || state.screen === 'nateken') {
+      } else if (state.screen === 'vormen' || state.screen === 'spiegel' || state.screen === 'nateken' || state.screen === 'tangram') {
         showPuzzlesMenu();
       } else if (state.screen === 'puzzlelevel') {
         showPuzzlesMenu();
@@ -5506,6 +5941,7 @@
       if (el.getAttribute('data-game') === 'vormen') startVormen(true);
       else if (el.getAttribute('data-game') === 'spiegel') startSpiegel(true);
       else if (el.getAttribute('data-game') === 'nateken') startNateken(true);
+      else if (el.getAttribute('data-game') === 'tangram') startTangram(true);
       else showPuzzleLevel();
       return;
     }
@@ -5600,6 +6036,8 @@
       e.preventDefault();
     } else if (state.screen === 'nateken' && natekenDragStart(e)) {
       e.preventDefault();
+    } else if (state.screen === 'tangram' && tangramDragStart(e)) {
+      e.preventDefault();
     }
   }
 
@@ -5619,6 +6057,10 @@
       e.preventDefault();
       return;
     }
+    if (state.screen === 'tangram' && tangramDragMove(e)) {
+      e.preventDefault();
+      return;
+    }
     e.preventDefault();
   }
 
@@ -5632,6 +6074,11 @@
       return;
     }
     if (state.screen === 'nateken' && natekenDragEnd(e)) {
+      clearPressed();
+      e.preventDefault();
+      return;
+    }
+    if (state.screen === 'tangram' && tangramDragEnd(e)) {
       clearPressed();
       e.preventDefault();
       return;
@@ -5687,6 +6134,7 @@
     elSet('vormen-home-icon', homeIconHtml());
     elSet('spiegel-home-icon', homeIconHtml());
     elSet('nateken-home-icon', homeIconHtml());
+    elSet('tangram-home-icon', homeIconHtml());
     elSet('letters-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('trace-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('names-star-icon', starSvg('#FFD54F', '#F9A825'));
@@ -5697,6 +6145,7 @@
     elSet('vormen-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('spiegel-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('nateken-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('tangram-star-icon', starSvg('#FFD54F', '#F9A825'));
     if ($('icon-vormen')) {
       $('icon-vormen').innerHTML =
         vormSvg('circle', '#2FB3F0', '#1A7FB3', 0) +
@@ -5762,6 +6211,7 @@
         if (state.screen === 'vormen') layoutVormen();
         if (state.screen === 'spiegel') layoutSpiegel();
         if (state.screen === 'nateken') layoutNateken();
+        if (state.screen === 'tangram') layoutTangram();
       }, 250);
     }, false);
 
