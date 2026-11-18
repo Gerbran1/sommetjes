@@ -1075,6 +1075,49 @@
       max-width: 340px;
       margin: 1.5%;
     }
+    #letter-set-bar {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: stretch;
+      align-items: stretch;
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto 8px auto;
+    }
+    .letter-set-btn {
+      -webkit-flex: 1 1 0;
+      flex: 1 1 0;
+      min-height: 48px;
+      margin: 0 6px;
+      border-radius: 22px;
+      background: #FFFFFF;
+      color: #215078;
+      font-size: 20px;
+      font-weight: 800;
+      padding: 6px 10px;
+      -webkit-box-shadow: 0 5px 0 #C5D4E0, 0 6px 10px rgba(0,0,0,0.08);
+      box-shadow: 0 5px 0 #C5D4E0, 0 6px 10px rgba(0,0,0,0.08);
+    }
+    .letter-set-btn.pressed, .letter-set-btn:active {
+      -webkit-transform: translateY(3px);
+      transform: translateY(3px);
+      -webkit-box-shadow: 0 2px 0 #C5D4E0;
+      box-shadow: 0 2px 0 #C5D4E0;
+    }
+    .letter-set-btn.selected {
+      background: #2EC4B6;
+      color: #fff;
+      -webkit-box-shadow: 0 0 0 4px #FFD54F, 0 5px 0 #1A9A8E;
+      box-shadow: 0 0 0 4px #FFD54F, 0 5px 0 #1A9A8E;
+    }
+    .letter-set-btn.selected.pressed, .letter-set-btn.selected:active {
+      -webkit-box-shadow: 0 0 0 4px #FFD54F, 0 2px 0 #1A9A8E;
+      box-shadow: 0 0 0 4px #FFD54F, 0 2px 0 #1A9A8E;
+    }
     .act-icon {
       font-size: 48px;
       font-weight: 800;
@@ -1499,6 +1542,7 @@
       .name-pick { height: 76px; font-size: 32px; margin: 8px 0; }
       #letters-grid .level-label { font-size: 22px; }
       #letters-grid .level-btn { min-height: 110px; }
+      .letter-set-btn { min-height: 40px; font-size: 18px; }
     }
     @media screen and (max-height: 700px) {
       .home-hero { margin-top: 0; }
@@ -1688,6 +1732,10 @@
         </div>
       </div>
       <div class="prompt">Letters</div>
+      <div id="letter-set-bar">
+        <button type="button" class="tap letter-set-btn" id="btn-letters-kern" data-act="letter-set" data-set="kern">Kernletters</button>
+        <button type="button" class="tap letter-set-btn" id="btn-letters-all" data-act="letter-set" data-set="all">Alle letters</button>
+      </div>
       <div id="letters-grid">
         <button type="button" class="tap level-btn lvl-count" data-act="letter-mode" data-mode="zoeken">
           <div class="act-icon">m</div>
@@ -1944,7 +1992,8 @@
     puzzleOrder: null,
     playerName: '',
     voiceName: null,
-    lastWasPersonal: false
+    lastWasPersonal: false,
+    allLetters: false
   };
 
   var toastTimer = null;
@@ -1998,6 +2047,7 @@
       if (so === '0') state.soundOn = false;
       var pl = window.localStorage.getItem('sommetjes-player');
       if (pl === 'Jasper' || pl === 'Laurens' || pl === 'Mirthe') state.playerName = pl;
+      if (window.localStorage.getItem('sommetjes-all-letters') === '1') state.allLetters = true;
     } catch (e) {}
   }
 
@@ -2017,6 +2067,20 @@
     try {
       if (state.playerName) window.localStorage.setItem('sommetjes-player', state.playerName);
     } catch (e) {}
+  }
+
+  function saveLetterSet() {
+    try {
+      window.localStorage.setItem('sommetjes-all-letters', state.allLetters ? '1' : '0');
+    } catch (e) {}
+  }
+
+  function updateLetterSetUI() {
+    var kern, all;
+    kern = $('btn-letters-kern');
+    all = $('btn-letters-all');
+    if (kern) kern.className = 'tap letter-set-btn' + (state.allLetters ? '' : ' selected');
+    if (all) all.className = 'tap letter-set-btn' + (state.allLetters ? ' selected' : '');
   }
 
   function setPlayer(name) {
@@ -2582,26 +2646,35 @@
 
 
   /* ---------- Letters ---------- */
-  var LETTER_SET = ['m', 'r', 's', 'p', 'i', 'k', 'a', 'n'];
-  var LETTER_SOUND = {
-    m: 'mmm',
-    r: 'rrr',
-    s: 'sss',
-    p: 'puh',
-    i: 'i',
-    k: 'kuh',
-    a: 'a',
-    n: 'nnn'
-  };
+  var KERN_LETTERS = ['m', 'r', 's', 'p', 'i', 'k', 'a', 'n'];
+  var ALL_LETTERS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
   var BEGIN_WORDS = [
+    { word: 'aap', letter: 'a', pic: 'aap' },
+    { word: 'boot', letter: 'b', pic: 'boot' },
+    { word: 'cactus', letter: 'c', pic: 'cactus' },
+    { word: 'doos', letter: 'd', pic: 'doos' },
+    { word: 'eend', letter: 'e', pic: 'eend' },
+    { word: 'fiets', letter: 'f', pic: 'fiets' },
+    { word: 'geit', letter: 'g', pic: 'geit' },
+    { word: 'huis', letter: 'h', pic: 'huis' },
+    { word: 'iglo', letter: 'i', pic: 'iglo' },
+    { word: 'jas', letter: 'j', pic: 'jas' },
+    { word: 'kat', letter: 'k', pic: 'kat' },
+    { word: 'leeuw', letter: 'l', pic: 'leeuw' },
     { word: 'maan', letter: 'm', pic: 'maan' },
+    { word: 'neus', letter: 'n', pic: 'neus' },
+    { word: 'olifant', letter: 'o', pic: 'olifant' },
+    { word: 'pen', letter: 'p', pic: 'pen' },
+    { word: 'quiz', letter: 'q', pic: 'quiz' },
     { word: 'roos', letter: 'r', pic: 'roos' },
     { word: 'sok', letter: 's', pic: 'sok' },
-    { word: 'pen', letter: 'p', pic: 'pen' },
-    { word: 'ijs', letter: 'i', pic: 'ijs' },
-    { word: 'kat', letter: 'k', pic: 'kat' },
-    { word: 'aap', letter: 'a', pic: 'aap' },
-    { word: 'noot', letter: 'n', pic: 'noot' }
+    { word: 'tomaat', letter: 't', pic: 'tomaat' },
+    { word: 'uil', letter: 'u', pic: 'uil' },
+    { word: 'vis', letter: 'v', pic: 'vis' },
+    { word: 'wolk', letter: 'w', pic: 'wolk' },
+    { word: 'xylofoon', letter: 'x', pic: 'xylofoon' },
+    { word: 'yoghurt', letter: 'y', pic: 'yoghurt' },
+    { word: 'zon', letter: 'z', pic: 'zon' }
   ];
   var CHILDREN = [
     { name: 'Jasper', color: '#2FB3F0', dark: '#1A7FB3' },
@@ -2619,18 +2692,33 @@
     bound: false
   };
 
-  function letterSound(ch) {
-    return LETTER_SOUND[ch] ? LETTER_SOUND[ch] : ch;
+  function activeLetters() {
+    return state.allLetters ? ALL_LETTERS : KERN_LETTERS;
+  }
+
+  function activeWords() {
+    var set, out, i, letters;
+    set = {};
+    out = [];
+    letters = activeLetters();
+    for (i = 0; i < letters.length; i++) set[letters[i]] = true;
+    for (i = 0; i < BEGIN_WORDS.length; i++) {
+      if (set[BEGIN_WORDS[i].letter]) out.push(BEGIN_WORDS[i]);
+    }
+    return out;
   }
 
   function makeLetterChoices(target) {
-    var others, i, choices;
+    var others, i, choices, letters;
+    letters = activeLetters();
     others = [];
-    for (i = 0; i < LETTER_SET.length; i++) {
-      if (LETTER_SET[i] !== target) others.push(LETTER_SET[i]);
+    for (i = 0; i < letters.length; i++) {
+      if (letters[i] !== target) others.push(letters[i]);
     }
     shuffle(others);
-    choices = [target, others[0], others[1]];
+    choices = [target];
+    if (others.length) choices.push(others[0]);
+    if (others.length > 1) choices.push(others[1]);
     return shuffle(choices);
   }
 
@@ -2716,6 +2804,206 @@
         '<path d="M50 52 Q58 70 50 90" fill="none" stroke="#A66B28" stroke-width="2"/>' +
         '</svg>';
     }
+
+    if (pic === 'boot') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<rect x="0" y="0" width="100" height="62" fill="#81D4FA"/>' +
+        '<circle cx="80" cy="18" r="10" fill="#FFE566"/>' +
+        '<rect x="0" y="62" width="100" height="38" fill="#29B6F6"/>' +
+        '<path d="M16 64 L84 64 L74 82 L26 82 Z" fill="#E53935"/>' +
+        '<rect x="47" y="22" width="4" height="42" fill="#6D4C41"/>' +
+        '<polygon points="51,24 51,60 78,60" fill="#FFF8E1"/>' +
+        '<polygon points="47,30 47,60 24,60" fill="#EF5350"/>' +
+        '</svg>';
+    }
+    if (pic === 'cactus') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<rect x="0" y="70" width="100" height="30" fill="#E8D5A3"/>' +
+        '<rect x="30" y="74" width="40" height="18" rx="3" fill="#C62828"/>' +
+        '<rect x="43" y="28" width="14" height="50" rx="7" fill="#43A047"/>' +
+        '<rect x="22" y="38" width="24" height="10" rx="5" fill="#43A047"/>' +
+        '<rect x="54" y="44" width="22" height="10" rx="5" fill="#43A047"/>' +
+        '<circle cx="48" cy="36" r="1.6" fill="#2E7D32"/>' +
+        '<circle cx="54" cy="50" r="1.6" fill="#2E7D32"/>' +
+        '<circle cx="46" cy="62" r="1.6" fill="#2E7D32"/>' +
+        '</svg>';
+    }
+    if (pic === 'doos') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<polygon points="20,38 50,24 80,38 50,52" fill="#F6C16B"/>' +
+        '<polygon points="20,38 50,52 50,86 20,70" fill="#E0A44A"/>' +
+        '<polygon points="80,38 50,52 50,86 80,70" fill="#C98A32"/>' +
+        '<polygon points="50,24 80,38 86,30 56,18" fill="#FFE0A3"/>' +
+        '</svg>';
+    }
+    if (pic === 'eend') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<rect x="0" y="70" width="100" height="30" fill="#4FC3F7"/>' +
+        '<ellipse cx="52" cy="62" rx="26" ry="16" fill="#FFD54F"/>' +
+        '<circle cx="70" cy="40" r="14" fill="#FFD54F"/>' +
+        '<polygon points="82,40 98,44 82,50" fill="#FB8C00"/>' +
+        '<circle cx="74" cy="37" r="2.4" fill="#5D4037"/>' +
+        '<ellipse cx="32" cy="58" rx="8" ry="5" fill="#FBC02D"/>' +
+        '</svg>';
+    }
+    if (pic === 'fiets') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<circle cx="28" cy="68" r="16" fill="none" stroke="#37474F" stroke-width="4"/>' +
+        '<circle cx="76" cy="68" r="16" fill="none" stroke="#37474F" stroke-width="4"/>' +
+        '<path d="M28 68 L46 44 L66 44 L76 68 M46 44 L40 68 M52 32 L46 44" fill="none" stroke="#1E88E5" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>' +
+        '<path d="M40 32 H58" stroke="#1E88E5" stroke-width="4" stroke-linecap="round"/>' +
+        '<circle cx="40" cy="68" r="4" fill="#90A4AE"/>' +
+        '</svg>';
+    }
+    if (pic === 'geit') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<ellipse cx="54" cy="62" rx="24" ry="16" fill="#EEEEEE"/>' +
+        '<circle cx="30" cy="48" r="14" fill="#F5F5F5"/>' +
+        '<path d="M20 40 L16 22 L26 38" fill="#BDBDBD"/>' +
+        '<path d="M32 38 L36 20 L40 38" fill="#BDBDBD"/>' +
+        '<path d="M28 58 Q22 70 30 72" fill="none" stroke="#BDBDBD" stroke-width="3"/>' +
+        '<circle cx="24" cy="46" r="2" fill="#5D4037"/>' +
+        '<ellipse cx="16" cy="50" rx="5" ry="3" fill="#FFCCBC"/>' +
+        '<rect x="46" y="74" width="5" height="14" rx="2" fill="#BDBDBD"/>' +
+        '<rect x="62" y="74" width="5" height="14" rx="2" fill="#BDBDBD"/>' +
+        '</svg>';
+    }
+    if (pic === 'huis') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<rect x="0" y="70" width="100" height="30" fill="#81C784"/>' +
+        '<rect x="22" y="46" width="56" height="40" fill="#FFF4D1"/>' +
+        '<polygon points="16,48 50,18 84,48" fill="#E53935"/>' +
+        '<rect x="44" y="62" width="14" height="24" fill="#8D4A2B"/>' +
+        '<rect x="28" y="54" width="12" height="12" fill="#81D4FA"/>' +
+        '<rect x="62" y="54" width="12" height="12" fill="#81D4FA"/>' +
+        '</svg>';
+    }
+    if (pic === 'iglo') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<rect x="0" y="0" width="100" height="100" fill="#B3E5FC"/>' +
+        '<path d="M14 78 A36 36 0 0 1 86 78 Z" fill="#E3F2FD" stroke="#90CAF9" stroke-width="2"/>' +
+        '<path d="M38 78 A12 14 0 0 1 62 78 Z" fill="#4FC3F7"/>' +
+        '<path d="M20 60 Q50 52 80 60" fill="none" stroke="#BBDEFB" stroke-width="2"/>' +
+        '<path d="M24 48 Q50 40 76 48" fill="none" stroke="#BBDEFB" stroke-width="2"/>' +
+        '</svg>';
+    }
+    if (pic === 'jas') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<path d="M32 18 L40 18 L50 30 L60 18 L68 18 L78 34 L72 86 L28 86 L22 34 Z" fill="#1E88E5"/>' +
+        '<path d="M40 18 L50 32 L60 18 L54 40 L50 34 L46 40 Z" fill="#BBDEFB"/>' +
+        '<circle cx="50" cy="48" r="3" fill="#FFD54F"/>' +
+        '<circle cx="50" cy="60" r="3" fill="#FFD54F"/>' +
+        '<circle cx="50" cy="72" r="3" fill="#FFD54F"/>' +
+        '</svg>';
+    }
+    if (pic === 'leeuw') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<circle cx="50" cy="52" r="30" fill="#EF6C00"/>' +
+        '<circle cx="50" cy="54" r="20" fill="#FFB74D"/>' +
+        '<circle cx="42" cy="50" r="3.2" fill="#5D4037"/>' +
+        '<circle cx="58" cy="50" r="3.2" fill="#5D4037"/>' +
+        '<polygon points="50,56 46,64 54,64" fill="#E53935"/>' +
+        '<path d="M42 68 Q50 74 58 68" fill="none" stroke="#6D4C41" stroke-width="2"/>' +
+        '</svg>';
+    }
+    if (pic === 'neus') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<circle cx="50" cy="52" r="36" fill="#FFCC80"/>' +
+        '<ellipse cx="50" cy="58" rx="14" ry="16" fill="#FFB74D"/>' +
+        '<circle cx="44" cy="64" r="3" fill="#EF9A9A"/>' +
+        '<circle cx="56" cy="64" r="3" fill="#EF9A9A"/>' +
+        '<circle cx="36" cy="40" r="5" fill="#5D4037"/>' +
+        '<circle cx="64" cy="40" r="5" fill="#5D4037"/>' +
+        '<path d="M36 76 Q50 84 64 76" fill="none" stroke="#6D4C41" stroke-width="3" stroke-linecap="round"/>' +
+        '</svg>';
+    }
+    if (pic === 'olifant') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<ellipse cx="56" cy="58" rx="26" ry="18" fill="#B0BEC5"/>' +
+        '<circle cx="32" cy="46" r="16" fill="#B0BEC5"/>' +
+        '<path d="M20 50 Q10 78 28 82" fill="none" stroke="#90A4AE" stroke-width="8" stroke-linecap="round"/>' +
+        '<path d="M22 36 Q18 16 36 28" fill="#90A4AE"/>' +
+        '<circle cx="28" cy="44" r="2.4" fill="#37474F"/>' +
+        '<rect x="46" y="72" width="6" height="16" rx="2" fill="#90A4AE"/>' +
+        '<rect x="64" y="72" width="6" height="16" rx="2" fill="#90A4AE"/>' +
+        '</svg>';
+    }
+    if (pic === 'quiz') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<rect x="18" y="28" width="40" height="52" rx="4" fill="#FFF59D" stroke="#F9A825" stroke-width="2"/>' +
+        '<rect x="42" y="18" width="40" height="52" rx="4" fill="#E3F2FD" stroke="#1E88E5" stroke-width="2"/>' +
+        '<path d="M54 30 Q70 30 70 42 Q70 52 62 54 L62 62" fill="none" stroke="#1565C0" stroke-width="6" stroke-linecap="round"/>' +
+        '<circle cx="62" cy="72" r="4.5" fill="#1565C0"/>' +
+        '</svg>';
+    }
+    if (pic === 'tomaat') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<circle cx="50" cy="58" r="26" fill="#E53935"/>' +
+        '<ellipse cx="40" cy="50" rx="8" ry="6" fill="#FF8A80" opacity="0.6"/>' +
+        '<path d="M50 34 L50 22" stroke="#2E7D32" stroke-width="4" stroke-linecap="round"/>' +
+        '<ellipse cx="40" cy="28" rx="10" ry="5" fill="#43A047" transform="rotate(-20 40 28)"/>' +
+        '<ellipse cx="60" cy="28" rx="10" ry="5" fill="#43A047" transform="rotate(20 60 28)"/>' +
+        '</svg>';
+    }
+    if (pic === 'uil') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<ellipse cx="50" cy="62" rx="26" ry="28" fill="#8D6E63"/>' +
+        '<polygon points="24,40 30,16 44,36" fill="#6D4C41"/>' +
+        '<polygon points="76,40 70,16 56,36" fill="#6D4C41"/>' +
+        '<circle cx="38" cy="50" r="10" fill="#FFF8E1"/>' +
+        '<circle cx="62" cy="50" r="10" fill="#FFF8E1"/>' +
+        '<circle cx="38" cy="50" r="4" fill="#5D4037"/>' +
+        '<circle cx="62" cy="50" r="4" fill="#5D4037"/>' +
+        '<polygon points="50,58 44,68 56,68" fill="#FFB74D"/>' +
+        '</svg>';
+    }
+    if (pic === 'vis') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<ellipse cx="48" cy="50" rx="28" ry="18" fill="#29B6F6"/>' +
+        '<polygon points="74,50 94,34 94,66" fill="#0288D1"/>' +
+        '<polygon points="48,32 58,24 56,36" fill="#0288D1"/>' +
+        '<circle cx="34" cy="46" r="3.2" fill="#FFF"/>' +
+        '<circle cx="33" cy="46" r="1.6" fill="#37474F"/>' +
+        '</svg>';
+    }
+    if (pic === 'wolk') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<rect x="0" y="0" width="100" height="100" fill="#81D4FA"/>' +
+        '<circle cx="36" cy="50" r="16" fill="#FFF"/>' +
+        '<circle cx="52" cy="44" r="20" fill="#FFF"/>' +
+        '<circle cx="68" cy="52" r="16" fill="#FFF"/>' +
+        '<rect x="28" y="50" width="48" height="20" fill="#FFF"/>' +
+        '</svg>';
+    }
+    if (pic === 'xylofoon') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<rect x="12" y="30" width="18" height="12" rx="2" fill="#E53935"/>' +
+        '<rect x="18" y="44" width="20" height="12" rx="2" fill="#FB8C00"/>' +
+        '<rect x="24" y="58" width="22" height="12" rx="2" fill="#FDD835"/>' +
+        '<rect x="30" y="72" width="24" height="12" rx="2" fill="#43A047"/>' +
+        '<rect x="70" y="22" width="5" height="36" rx="2" fill="#8D6E63"/>' +
+        '<circle cx="72.5" cy="18" r="7" fill="#7E57C2"/>' +
+        '<rect x="82" y="34" width="5" height="36" rx="2" fill="#8D6E63"/>' +
+        '<circle cx="84.5" cy="30" r="7" fill="#26C6DA"/>' +
+        '</svg>';
+    }
+    if (pic === 'yoghurt') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<path d="M30 34 H70 L66 86 H34 Z" fill="#FFF8E1" stroke="#E0C58A" stroke-width="2"/>' +
+        '<ellipse cx="50" cy="34" rx="20" ry="8" fill="#FFF"/>' +
+        '<ellipse cx="50" cy="34" rx="16" ry="6" fill="#FFF59D"/>' +
+        '<path d="M68 18 L80 48" stroke="#90A4AE" stroke-width="4" stroke-linecap="round"/>' +
+        '<circle cx="80" cy="54" r="7" fill="#90A4AE"/>' +
+        '</svg>';
+    }
+    if (pic === 'zon') {
+      return '<svg viewBox="0 0 100 100" class="word-svg" focusable="false">' +
+        '<circle cx="50" cy="50" r="22" fill="#FFE566" stroke="#F9A825" stroke-width="2"/>' +
+        '<g stroke="#FFD54F" stroke-width="4" stroke-linecap="round">' +
+        '<path d="M50 10 L50 22 M50 78 L50 90 M10 50 L22 50 M78 50 L90 50 M22 22 L30 30 M70 70 L78 78 M22 78 L30 70 M70 30 L78 22"/>' +
+        '</g>' +
+        '</svg>';
+    }
     return '';
   }
 
@@ -2723,7 +3011,8 @@
     var ch, tries;
     tries = 0;
     do {
-      ch = LETTER_SET[randInt(0, LETTER_SET.length - 1)];
+      ch = activeLetters();
+      ch = ch[randInt(0, ch.length - 1)];
       tries += 1;
     } while (ch === state.lastLetter && tries < 8);
     state.lastLetter = ch;
@@ -2740,7 +3029,8 @@
     var w, tries;
     tries = 0;
     do {
-      w = BEGIN_WORDS[randInt(0, BEGIN_WORDS.length - 1)];
+      w = activeWords();
+      w = w[randInt(0, w.length - 1)];
       tries += 1;
     } while (w.word === state.lastWord && tries < 8);
     state.lastWord = w.word;
@@ -2923,12 +3213,12 @@
     c.width = width;
     c.height = height;
     ctx = c.getContext('2d');
-    size = Math.floor(Math.min(width, height) * 0.72);
+    size = Math.floor(Math.min(width, height) * 0.68);
     ctx.fillStyle = '#000';
     ctx.font = 'bold ' + size + 'px "Helvetica Neue", Helvetica, Arial, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(letter, width / 2, height / 2 + size * 0.04);
+    ctx.fillText(letter, width / 2, height / 2 + (('gjpqy'.indexOf(letter) !== -1) ? -size * 0.06 : size * 0.04));
     data = ctx.getImageData(0, 0, width, height).data;
     points = [];
     step = Math.max(8, Math.round(Math.min(width, height) / 36));
@@ -2945,7 +3235,8 @@
     var ch, tries, canvas, prompt;
     tries = 0;
     do {
-      ch = LETTER_SET[randInt(0, LETTER_SET.length - 1)];
+      ch = activeLetters();
+      ch = ch[randInt(0, ch.length - 1)];
       tries += 1;
     } while (ch === state.lastLetter && tries < 8);
     state.lastLetter = ch;
@@ -2987,14 +3278,14 @@
     w = canvas.width;
     h = canvas.height;
     ctx.clearRect(0, 0, w, h);
-    size = Math.floor(Math.min(w, h) * 0.72);
+    size = Math.floor(Math.min(w, h) * 0.68);
     ctx.save();
     ctx.globalAlpha = 0.16;
     ctx.fillStyle = '#1A4A6A';
     ctx.font = 'bold ' + size + 'px "Helvetica Neue", Helvetica, Arial, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(traceState.letter, w / 2, h / 2 + size * 0.04);
+    ctx.fillText(traceState.letter, w / 2, h / 2 + (('gjpqy'.indexOf(traceState.letter) !== -1) ? -size * 0.06 : size * 0.04));
     ctx.restore();
     ctx.fillStyle = '#F9A825';
     for (i = 0; i < traceState.guide.length; i++) {
@@ -3139,7 +3430,7 @@
     used = {};
     for (i = 0; i < chars.length; i++) used[chars[i].toLowerCase()] = true;
     tiles = chars.slice(0);
-    pool = LETTER_SET.concat(['e', 'l', 'u', 't', 'h', 'o', 'd', 'b']);
+    pool = KERN_LETTERS.concat(['e', 'l', 'u', 't', 'h', 'o', 'd', 'b']);
     extra = 0;
     for (i = 0; i < pool.length && extra < 2; i++) {
       ch = pool[i];
@@ -3990,6 +4281,12 @@
       startLevel('tables');
       return;
     }
+    if (act === 'letter-set') {
+      state.allLetters = el.getAttribute('data-set') === 'all';
+      saveLetterSet();
+      updateLetterSetUI();
+      return;
+    }
     if (act === 'letter-mode') {
       startLetterMode(el.getAttribute('data-mode'));
       return;
@@ -4134,6 +4431,7 @@
     loadState();
     decorateStatic();
     updatePlayerUI();
+    updateLetterSetUI();
     updateStarsUI();
     showScreen('start');
 
