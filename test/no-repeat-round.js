@@ -358,6 +358,129 @@ function intersection(a, b) {
     if (kOverlap.length) throw new Error('klinkers r2 herhaalt r1: ' + kOverlap.join(','));
     ok('Klinkers ronde 2 uniek en niet uit ronde 1: ' + k2.join(', '));
 
+    async function waitLijnReady(page, ms) {
+      var deadline = Date.now() + (ms || 10000);
+      while (Date.now() < deadline) {
+        const ready = await page.evaluate(() => {
+          var st = document.getElementById('lijn-stage');
+          var cards = document.querySelectorAll('#lijn-cards .lijn-card');
+          return !!(st && st.getAttribute('data-busy') !== '1' && cards.length === 4 &&
+            document.getElementById('screen-lijn') &&
+            document.getElementById('screen-lijn').className.indexOf('is-hidden') === -1);
+        });
+        if (ready) return true;
+        await wait(120);
+      }
+      return false;
+    }
+    async function playLijnScreen(page) {
+      if (!(await waitLijnReady(page, 10000))) throw new Error('lijn screen not ready');
+      const info = await page.evaluate(() => {
+        var st = document.getElementById('lijn-stage');
+        return {
+          key: st ? st.getAttribute('data-key') : '',
+          nums: Array.prototype.map.call(document.querySelectorAll('#lijn-cards .lijn-card'), function (b) {
+            return b.getAttribute('data-n');
+          })
+        };
+      });
+      var i, n;
+      for (i = 0; i < info.nums.length; i++) {
+        n = info.nums[i];
+        await page.evaluate((n) => {
+          var b = document.querySelector('.lijn-card[data-n="' + n + '"]');
+          if (b) b.click();
+        }, n);
+        await wait(80);
+        await page.evaluate((n) => {
+          var h = document.querySelector('.lijn-hit[data-n="' + n + '"]');
+          if (h) h.click();
+        }, n);
+        if (i < info.nums.length - 1) {
+          var deadline = Date.now() + 10000;
+          var okp = false;
+          while (Date.now() < deadline) {
+            okp = await page.evaluate((prev) => {
+              var st = document.getElementById('lijn-stage');
+              var placed = st ? parseInt(st.getAttribute('data-placed') || '0', 10) : 0;
+              var busy = st && st.getAttribute('data-busy') === '1';
+              return placed >= prev && !busy;
+            }, i + 1);
+            if (okp) break;
+            await wait(150);
+          }
+          if (!okp) throw new Error('lijn card ' + n + ' did not place, key=' + info.key);
+        }
+      }
+      return info.key;
+    }
+    async function playLijnRound(page, n) {
+      var keys = [], i, key, st;
+      for (i = 0; i < n; i++) {
+        key = await playLijnScreen(page);
+        keys.push(key);
+        if (i < n - 1) {
+          var deadline = Date.now() + 12000;
+          var moved = false;
+          while (Date.now() < deadline) {
+            moved = await page.evaluate((prev) => {
+              var st = document.getElementById('lijn-stage');
+              var k = st ? st.getAttribute('data-key') : '';
+              var busy = st && st.getAttribute('data-busy') === '1';
+              var placed = st ? st.getAttribute('data-placed') : '';
+              return !!(k && k !== prev && placed === '0' && !busy);
+            }, key);
+            if (moved) break;
+            await wait(150);
+          }
+          if (!moved) throw new Error('lijn next screen did not appear after ' + key);
+        }
+      }
+      var rewDeadline = Date.now() + 14000;
+      var rewarded = false;
+      while (Date.now() < rewDeadline) {
+        rewarded = await page.evaluate(() => {
+          var rew = document.getElementById('overlay-reward');
+          return !!(rew && rew.className.indexOf('is-hidden') === -1);
+        });
+        if (rewarded) break;
+        await wait(150);
+      }
+      if (!rewarded) throw new Error('lijn expected reward after 5, keys=' + keys.join('|'));
+      return keys;
+    }
+
+    await fresh(page);
+    await page.click('#btn-goto-games');
+    await wait(280);
+    await page.click('[data-level="lijn"]');
+    await wait(280);
+    await page.click('[data-max="10"]');
+    await wait(280);
+    var l1 = await playLijnRound(page, 5);
+    assertUnique(l1, 'lijn r1');
+    ok('Getallenlijn tot 10 ronde 1 uniek: ' + l1.join(' | '));
+
+    var lMenu = Date.now() + 15000;
+    var onLevel = false;
+    while (Date.now() < lMenu) {
+      onLevel = await page.evaluate(() => {
+        var el = document.getElementById('screen-lijnlevel');
+        return !!(el && el.className.indexOf('is-hidden') === -1);
+      });
+      if (onLevel) break;
+      await wait(150);
+    }
+    if (!onLevel) throw new Error('lijn did not return to level menu after reward');
+    await page.click('[data-max="10"]');
+    await wait(280);
+    var l2 = await playLijnRound(page, 5);
+    assertUnique(l2, 'lijn r2');
+    var lOverlap = intersection(l1, l2);
+    if (lOverlap.length) throw new Error('lijn r2 herhaalt r1: ' + lOverlap.join(','));
+    ok('Getallenlijn tot 10 ronde 2 uniek en niet uit ronde 1: ' + l2.join(' | '));
+
+
     async function waitWegReady(page, ms) {
       var deadline = Date.now() + (ms || 6000);
       while (Date.now() < deadline) {

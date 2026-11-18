@@ -14,6 +14,7 @@ Op het startscherm kies je **Getallen**, **Letters**, **Puzzels**, **Geheugen** 
 5. **Min** — aftrekken met doorgestreepte plaatjes (eerst tot 5, later tot 10)
 6. **Min tot 30** — grotere aftreksommen zoals 21−5 of 15−8, over het tiental, met tientallenstaven en doorgestreepte stippen
 7. **Tafels** — de tafels van 1 tot 10, of alle tafels door elkaar
+8. **Getallenlijn** — sleep een lijn van vier getalkaarten naar de juiste plek op de lijn (tot 10, tot 20 of tot 100). Bij 100 mag je er ongeveer 2 naast zitten. Een goed getal kleurt groen en je hoort "Ja, 34!".
 
 **Letters**
 7. **Letter zoeken**, **Begint met**, **Tekenen** (eerst 8 kernletters, of alle 26 letters), **Klinkers** en **Mijn naam** (Jasper, Laurens en Mirthe). Elk heeft een Nederlands woord dat echt met die letter begint (bij i: iglo, niet ijs). Bij **Begint met** hoor je na een goed antwoord bijvoorbeeld "De f van fiets!". Bij **Klinkers** sleep je de ontbrekende klank in een kort woord ("Welke klank mist er in maan?") en hoor je daarna "Ja, maan!".
@@ -29,7 +30,7 @@ Op het startscherm kies je **Getallen**, **Letters**, **Puzzels**, **Geheugen** 
 
 **Tekenen**
 15. **Vrij tekenen** — teken zelf met dikke kleuren, drie lijndiktes, een spuitbus en een gum. Wissen vraagt eerst even of het echt mag. Geen sterren, je tekent zo lang je wilt.
-16. **Kleurplaten** — kies een plaat (kat, hond, olifant, vis, dino, vlinder, bloem, huis, auto, raket, kasteel of eenhoorn) en tik in de vlakken om ze te kleuren. Je kunt ook zelf bijtekenen.
+16. **Kleurplaten** — kies een plaat (monstertruck, dino, raket, draak, eenhoorn, brandweerauto, piratenschip, boerderijdieren, kasteel, vliegtuig, prinses of onderwater) en tik in de vlakken om ze te kleuren. Je kunt ook zelf bijtekenen.
 
 **Geheugen**
 15. **Memory** — draai de kaartjes om en zoek twee dezelfde. Je kiest 6, 12 of 16 kaartjes (3×2, 4×3 of 4×4). Een heel bord is één ster; daarna ga je terug naar het Geheugen-menu.

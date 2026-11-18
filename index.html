@@ -197,7 +197,7 @@
       line-height: 1;
     }
 
-    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij, #screen-cups, #screen-veranderd, #screen-tekenmenu, #screen-kleurkies, #screen-teken, #screen-klinkers {
+    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij, #screen-cups, #screen-veranderd, #screen-tekenmenu, #screen-kleurkies, #screen-teken, #screen-klinkers, #screen-lijnlevel, #screen-lijn {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -1533,6 +1533,22 @@
       max-width: 260px;
       margin: 1%;
     }
+    #memory-grid .level-icon {
+      height: 56px;
+      margin-bottom: 4px;
+    }
+    #memory-grid .level-icon svg {
+      width: 76px;
+      height: 52px;
+      display: block;
+    }
+    img.kleur-thumb {
+      width: 86%;
+      height: 78px;
+      display: block;
+      border-radius: 12px;
+      background: #FFFDF7;
+    }
     #memorylevel-grid .level-btn, #puzzlelevel-grid .level-btn {
       -webkit-flex: 0 0 44%;
       flex: 0 0 44%;
@@ -2865,6 +2881,156 @@
     @media screen and (max-width: 800px) {
       #klink-pic { width: 140px; height: 140px; }
     }
+    .lvl-lijn {
+      background: #26C6DA;
+      -webkit-box-shadow: 0 8px 0 #00ACC1, 0 12px 18px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 0 #00ACC1, 0 12px 18px rgba(0,0,0,0.15);
+    }
+    .lvl-lijn.pressed, .lvl-lijn:active {
+      -webkit-box-shadow: 0 2px 0 #00ACC1, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #00ACC1, 0 4px 8px rgba(0,0,0,0.15);
+    }
+    #lijnlevel-grid {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: stretch;
+      align-items: stretch;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      max-width: 860px;
+      margin: 8px auto 0 auto;
+      -webkit-align-content: center;
+      align-content: center;
+    }
+    #lijnlevel-grid .level-btn {
+      -webkit-flex: 0 0 30%;
+      flex: 0 0 30%;
+      max-width: 280px;
+      margin: 1.5%;
+      min-height: 160px;
+    }
+    #lijn-stage {
+      position: relative;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      min-height: 0;
+      width: 100%;
+    }
+    #lijn-canvas {
+      position: absolute;
+      left: 0; top: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 4;
+    }
+    #lijn-board {
+      position: relative;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      min-height: 0;
+      width: 100%;
+    }
+    #lijn-rail {
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      top: 44%;
+      height: 72px;
+      margin-top: -36px;
+    }
+    #lijn-bar {
+      position: absolute;
+      left: 0; right: 0;
+      top: 30px;
+      height: 8px;
+      background: #1A4A6A;
+      border-radius: 4px;
+    }
+    #lijn-ticks, #lijn-hits {
+      position: absolute;
+      left: 0; right: 0;
+      top: 0; bottom: 0;
+    }
+    #lijn-ticks { pointer-events: none; z-index: 1; }
+    #lijn-hits { z-index: 2; }
+    .lijn-hit {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      min-width: 8px;
+    }
+    .lijn-tick {
+      position: absolute;
+      width: 3px;
+      height: 14px;
+      margin-left: -1px;
+      background: #1A4A6A;
+      top: 22px;
+    }
+    .lijn-tick.major { height: 22px; top: 18px; width: 4px; margin-left: -2px; }
+    .lijn-lab {
+      position: absolute;
+      top: 28px;
+      left: 50%;
+      width: 48px;
+      margin-left: -24px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: #1A4A6A;
+    }
+    #lijn-cards {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+      width: 100%;
+      padding: 8px 10px 16px 10px;
+      z-index: 5;
+    }
+    .lijn-card {
+      min-width: 88px;
+      height: 88px;
+      margin: 0 10px;
+      padding: 0 12px;
+      border: 0;
+      border-radius: 22px;
+      color: #fff;
+      font-size: 36px;
+      font-weight: 800;
+    }
+    .lijn-card.on {
+      -webkit-box-shadow: 0 0 0 5px #1A4A6A, 0 6px 0 rgba(0,0,0,0.2);
+      box-shadow: 0 0 0 5px #1A4A6A, 0 6px 0 rgba(0,0,0,0.2);
+    }
+    .lijn-card.placed {
+      -webkit-box-shadow: 0 0 0 5px #4CC86E, 0 6px 0 rgba(0,0,0,0.15);
+      box-shadow: 0 0 0 5px #4CC86E, 0 6px 0 rgba(0,0,0,0.15);
+    }
+    @media screen and (max-height: 800px) {
+      #lijnlevel-grid .level-btn { min-height: 120px; }
+      .lijn-card { min-width: 70px; height: 64px; font-size: 28px; margin: 0 7px; }
+      #lijn-rail { height: 60px; }
+      .lijn-lab { font-size: 15px; }
+    }
+
 
   </style>
 </head>
@@ -2981,6 +3147,11 @@
           <div class="level-icon" id="icon-tables"></div>
           <div class="level-label">Tafels</div>
           <div class="level-sub">1 tot 10</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-lijn" id="btn-lijn" data-act="level" data-level="lijn">
+          <div class="level-icon" id="icon-lijn"></div>
+          <div class="level-label">Getallenlijn</div>
+          <div class="level-sub">Tot 10, 20 of 100</div>
         </button>
       </div>
     </div>
@@ -3112,6 +3283,74 @@
         <div id="klink-pic"></div>
         <div id="klink-word" data-word=""></div>
         <div id="klink-tiles"></div>
+      </div>
+    </div>
+
+
+    <div id="screen-lijnlevel" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-lijnlevel-back" data-act="back" title="Terug">
+            <span id="lijnlevel-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-lijnlevel-home" data-act="home" title="Start">
+            <span id="lijnlevel-home-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="lijnlevel-star-icon"></span>
+            <span class="star-count" id="lijnlevel-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt">Getallenlijn</div>
+      <div id="lijnlevel-grid">
+        <button type="button" class="tap level-btn lvl-count" data-act="lijn-max" data-max="10">
+          <div class="level-label">Tot 10</div>
+          <div class="level-sub">0 tot 10</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-plus10" data-act="lijn-max" data-max="20">
+          <div class="level-label">Tot 20</div>
+          <div class="level-sub">0 tot 20</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-plus30" data-act="lijn-max" data-max="100">
+          <div class="level-label">Tot 100</div>
+          <div class="level-sub">0 tot 100</div>
+        </button>
+      </div>
+    </div>
+
+
+    <div id="screen-lijn" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-lijn-back" data-act="back" title="Terug">
+            <span id="lijn-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-lijn-home" data-act="home" title="Start">
+            <span id="lijn-home-icon"></span>
+          </button>
+        </div>
+        <div class="progress-row" id="lijn-progress"></div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="lijn-star-icon"></span>
+            <span class="star-count" id="lijn-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt" id="lijn-prompt">Zet de getallen op de lijn</div>
+      <div id="lijn-stage" data-key="" data-max="10" data-placed="0" data-busy="0">
+        <canvas id="lijn-canvas"></canvas>
+        <div id="lijn-board">
+          <div id="lijn-rail">
+            <div id="lijn-bar"></div>
+            <div id="lijn-ticks"></div>
+            <div id="lijn-hits"></div>
+          </div>
+        </div>
+        <div id="lijn-cards"></div>
       </div>
     </div>
 
@@ -3506,25 +3745,78 @@
       <div id="memory-grid">
         <button type="button" class="tap level-btn lvl-memory" data-act="memory-game" data-game="memory">
           <div class="level-icon">
-            <div class="mem-glyph" style="width:70px;height:46px;">
-              <span class="mg1"></span><span class="mg2"></span>
-            </div>
+            <svg viewBox="0 0 76 52" width="76" height="52" aria-hidden="true">
+              <rect x="4" y="4" width="34" height="40" rx="6" fill="#FFE566" stroke="#F9A825" stroke-width="2.5"/>
+              <circle cx="21" cy="24" r="8" fill="#FF8A65"/>
+              <rect x="38" y="8" width="34" height="40" rx="6" fill="#81D4FA" stroke="#0288D1" stroke-width="2.5"/>
+              <circle cx="55" cy="28" r="8" fill="#FFF59D"/>
+            </svg>
           </div>
           <div class="level-label">Memory</div>
         </button>
         <button type="button" class="tap level-btn lvl-plus5" data-act="memory-game" data-game="weg">
+          <div class="level-icon">
+            <svg viewBox="0 0 76 52" width="76" height="52" aria-hidden="true">
+              <rect x="6" y="6" width="40" height="40" rx="8" fill="#FFFDF7"/>
+              <circle cx="26" cy="24" r="11" fill="#FFD54F" stroke="#F9A825" stroke-width="2"/>
+              <circle cx="22" cy="20" r="3" fill="#FFF8E1"/>
+              <circle cx="54" cy="28" r="16" fill="#1A4A6A"/>
+              <text x="54" y="35" text-anchor="middle" font-size="22" font-weight="800" fill="#FFFDF7" font-family="sans-serif">?</text>
+            </svg>
+          </div>
           <div class="level-label">Wat is er weg?</div>
         </button>
         <button type="button" class="tap level-btn lvl-plus10" data-act="memory-game" data-game="simon">
+          <div class="level-icon">
+            <svg viewBox="0 0 76 52" width="76" height="52" aria-hidden="true">
+              <g transform="translate(14,2)">
+                <path d="M24 24 L24 2 A22 22 0 0 1 46 24 Z" fill="#E53935" stroke="#B71C1C" stroke-width="2"/>
+                <path d="M24 24 L46 24 A22 22 0 0 1 24 46 Z" fill="#FDD835" stroke="#F9A825" stroke-width="2"/>
+                <path d="M24 24 L24 46 A22 22 0 0 1 2 24 Z" fill="#43A047" stroke="#2E7D32" stroke-width="2"/>
+                <path d="M24 24 L2 24 A22 22 0 0 1 24 2 Z" fill="#1E88E5" stroke="#1565C0" stroke-width="2"/>
+                <circle cx="24" cy="24" r="5" fill="#FFFDF7"/>
+              </g>
+            </svg>
+          </div>
           <div class="level-label">Simon zegt</div>
         </button>
         <button type="button" class="tap level-btn lvl-plus30" data-act="memory-game" data-game="rij">
+          <div class="level-icon">
+            <svg viewBox="0 0 76 52" width="76" height="52" aria-hidden="true">
+              <rect x="2" y="10" width="22" height="32" rx="6" fill="#FFFDF7"/>
+              <rect x="27" y="10" width="22" height="32" rx="6" fill="#FFFDF7"/>
+              <rect x="52" y="10" width="22" height="32" rx="6" fill="#FFFDF7"/>
+              <text x="13" y="33" text-anchor="middle" font-size="18" font-weight="800" fill="#1A4A6A" font-family="sans-serif">1</text>
+              <text x="38" y="33" text-anchor="middle" font-size="18" font-weight="800" fill="#1A4A6A" font-family="sans-serif">2</text>
+              <text x="63" y="33" text-anchor="middle" font-size="18" font-weight="800" fill="#1A4A6A" font-family="sans-serif">3</text>
+            </svg>
+          </div>
           <div class="level-label">Onthoud de rij</div>
         </button>
         <button type="button" class="tap level-btn lvl-minus" data-act="memory-game" data-game="cups">
+          <div class="level-icon">
+            <svg viewBox="0 0 76 52" width="76" height="52" aria-hidden="true">
+              <path d="M8 8 Q18 4 28 8 L33 40 Q18 48 3 40 Z" fill="#E53935" stroke="#B71C1C" stroke-width="2"/>
+              <ellipse cx="18" cy="40" rx="15" ry="5" fill="#C62828" stroke="#B71C1C" stroke-width="2"/>
+              <path d="M28 4 Q38 0 48 4 L53 36 Q38 44 23 36 Z" fill="#E53935" stroke="#B71C1C" stroke-width="2"/>
+              <ellipse cx="38" cy="36" rx="15" ry="5" fill="#C62828" stroke="#B71C1C" stroke-width="2"/>
+              <path d="M48 8 Q58 4 68 8 L73 40 Q58 48 43 40 Z" fill="#E53935" stroke="#B71C1C" stroke-width="2"/>
+              <ellipse cx="58" cy="40" rx="15" ry="5" fill="#C62828" stroke="#B71C1C" stroke-width="2"/>
+            </svg>
+          </div>
           <div class="level-label">Waar zat het?</div>
         </button>
         <button type="button" class="tap level-btn lvl-tables" data-act="memory-game" data-game="veranderd">
+          <div class="level-icon">
+            <svg viewBox="0 0 76 52" width="76" height="52" aria-hidden="true">
+              <rect x="4" y="8" width="38" height="36" rx="7" fill="#FFFDF7"/>
+              <circle cx="18" cy="22" r="8" fill="#81D4FA"/>
+              <rect x="10" y="34" width="16" height="5" rx="2" fill="#A5D6A7"/>
+              <circle cx="48" cy="22" r="14" fill="none" stroke="#FFF59D" stroke-width="4"/>
+              <line x1="58" y1="32" x2="70" y2="44" stroke="#FFF59D" stroke-width="5" stroke-linecap="round"/>
+              <polygon points="62,8 65,14 72,14 66,18 68,25 62,21 56,25 58,18 52,14 59,14" fill="#FFE566"/>
+            </svg>
+          </div>
           <div class="level-label">Wat is er veranderd?</div>
         </button>
       </div>
@@ -3888,6 +4180,7 @@
     if (level === 'letters') return 'letters-' + (state.letterMode || '');
     if (level === 'tables') return 'tables-' + String(state.tableN);
     if (level === 'memory') return 'memory-' + String(state.memoryN || 0);
+    if (level === 'lijn') return 'lijn-' + String(state.lijnMax || lijnState.max || 0);
     return level || 'game';
   }
 
@@ -4615,15 +4908,469 @@
     return q;
   }
 
+
+  function dutchTensWord(t) {
+    var tens = ['', '', 'twintig', 'dertig', 'veertig', 'vijftig', 'zestig', 'zeventig', 'tachtig', 'negentig'];
+    return tens[t] || '';
+  }
+
   function dutchNum(n) {
-    var words = [
-      'nul', 'één', 'twee', 'drie', 'vier', 'vijf', 'zes', 'zeven', 'acht', 'negen', 'tien',
-      'elf', 'twaalf', 'dertien', 'veertien', 'vijftien', 'zestien', 'zeventien', 'achttien', 'negentien', 'twintig',
-      'éénentwintig', 'tweeëntwintig', 'drieëntwintig', 'vierentwintig', 'vijfentwintig',
-      'zesentwintig', 'zevenentwintig', 'achtentwintig', 'negenentwintig', 'dertig'
-    ];
-    if (n >= 0 && n <= 30) return words[n];
-    return String(n);
+    var ones, teens, t, u, unit;
+    n = parseInt(n, 10);
+    ones = ['nul', 'één', 'twee', 'drie', 'vier', 'vijf', 'zes', 'zeven', 'acht', 'negen'];
+    teens = ['tien', 'elf', 'twaalf', 'dertien', 'veertien', 'vijftien', 'zestien', 'zeventien', 'achttien', 'negentien'];
+    if (isNaN(n) || n < 0) return String(n);
+    if (n === 100) return 'honderd';
+    if (n < 10) return ones[n];
+    if (n < 20) return teens[n - 10];
+    if (n > 100) return String(n);
+    t = Math.floor(n / 10);
+    u = n % 10;
+    if (u === 0) return dutchTensWord(t);
+    unit = ones[u];
+    if (u === 2 || u === 3) return unit + 'ën' + dutchTensWord(t);
+    return unit + 'en' + dutchTensWord(t);
+  }
+
+  var lijnDrag = { on: false, num: null, moved: false, x: 0, y: 0 };
+  var lijnState = { max: 10, nums: [], placed: {}, selected: null, hint: -1, hintTimer: null, busy: false };
+  var LIJN_CARD_COLORS = ['#2FB3F0', '#FF7EB3', '#4CC86E', '#FFB300'];
+  var LIJN_CARD_DARK = ['#1A7FB3', '#D44E86', '#2E9A4F', '#D68E00'];
+
+  function showLijnLevel() {
+    state.level = 'lijn';
+    state.locked = false;
+    state.question = null;
+    hideReward();
+    hideToast();
+    stopLijnDrag();
+    showScreen('lijnlevel');
+    updateStarsUI();
+  }
+
+  function lijnMinGap(max) {
+    if (max >= 100) return 8;
+    if (max >= 20) return 2;
+    return 1;
+  }
+
+  function pickLijnNums(max) {
+    var pool, out, i, j, ok, tries, gap, key, hist, id;
+    gap = lijnMinGap(max);
+    pool = [];
+    for (i = 0; i <= max; i++) pool.push(i);
+    id = currentGameId();
+    hist = (state.recentByGame && state.recentByGame[id]) ? state.recentByGame[id] : [];
+    tries = 0;
+    out = [0, 1, 2, 3];
+    while (tries < 80) {
+      tries += 1;
+      shuffle(pool);
+      out = pool.slice(0, 4);
+      out.sort(function (a, b) { return a - b; });
+      ok = true;
+      for (j = 1; j < out.length; j++) {
+        if (out[j] - out[j - 1] < gap) ok = false;
+      }
+      if (!ok) continue;
+      key = out.join(',');
+      if (state.roundKeys && contains(state.roundKeys, key)) continue;
+      if (contains(hist, key) && tries < 60) continue;
+      return out;
+    }
+    return out;
+  }
+
+  function startLijn(max, fresh) {
+    var nums, shown, i;
+    if (max) lijnState.max = max;
+    state.level = 'lijn';
+    state.lijnMax = lijnState.max;
+    if (fresh) {
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+      resetVoiceCycle();
+    }
+    state.locked = false;
+    hideReward();
+    hideToast();
+    hideBurst();
+    stopLijnDrag();
+    clearLijnHint();
+    nums = pickLijnNums(lijnState.max);
+    rememberRoundKey(nums.join(','));
+    shown = nums.slice(0);
+    shuffle(shown);
+    lijnState.nums = shown;
+    lijnState.placed = {};
+    lijnState.selected = null;
+    lijnState.busy = false;
+    state.question = { mode: 'lijn', key: nums.join(','), nums: shown };
+    state.currentSpeech = 'lijn-kies';
+    showScreen('lijn');
+    renderLijn();
+    updateStarsUI();
+    beginQuestionVoice();
+    speak('lijn-kies');
+  }
+
+  function clearLijnHint() {
+    if (lijnState.hintTimer) {
+      window.clearTimeout(lijnState.hintTimer);
+      lijnState.hintTimer = null;
+    }
+    lijnState.hint = -1;
+  }
+
+  function lijnTrackRect() {
+    var el = $('lijn-rail');
+    if (!el) return null;
+    return el.getBoundingClientRect();
+  }
+
+  function lijnXForValue(n, rect) {
+    var max;
+    if (!rect) return 0;
+    max = lijnState.max || 10;
+    if (max < 1) max = 1;
+    return rect.left + (n / max) * rect.width;
+  }
+
+  function lijnValueForX(x, rect) {
+    var max, t, v;
+    if (!rect || rect.width < 1) return 0;
+    max = lijnState.max || 10;
+    t = (x - rect.left) / rect.width;
+    if (t < 0) t = 0;
+    if (t > 1) t = 1;
+    v = t * max;
+    return Math.round(v);
+  }
+
+  function lijnTolerance() {
+    return (lijnState.max >= 100) ? 2 : 0;
+  }
+
+  function renderLijn() {
+    var i, n, html, max, labels, step, rail, hits, v, cls, placed, col, dark, labelEvery;
+    max = lijnState.max;
+    if ($('lijn-prompt')) {
+      $('lijn-prompt').innerHTML = 'Zet de getallen op de lijn';
+    }
+    if ($('lijn-stage')) {
+      $('lijn-stage').setAttribute('data-key', (state.question && state.question.key) || '');
+      $('lijn-stage').setAttribute('data-max', String(max));
+      $('lijn-stage').setAttribute('data-placed', '0');
+      $('lijn-stage').setAttribute('data-busy', '0');
+    }
+    html = '';
+    for (i = 0; i <= max; i++) {
+      html += '<button type="button" class="tap lijn-hit" data-act="lijn-hit" data-n="' + i +
+        '" style="left:' + (((i - 0.5) * 100) / max) + '%;width:' + (100 / max) + '%"></button>';
+    }
+    $('lijn-hits').innerHTML = html;
+    html = '';
+    if (max <= 10) {
+      labelEvery = 1;
+      step = 1;
+    } else if (max <= 20) {
+      labelEvery = 5;
+      step = 1;
+    } else {
+      labelEvery = 10;
+      step = 5;
+    }
+    for (i = 0; i <= max; i += step) {
+      cls = 'lijn-tick';
+      if (i % labelEvery === 0) cls += ' major';
+      html += '<div class="' + cls + '" style="left:' + ((i / max) * 100) + '%">';
+      if (i % labelEvery === 0) html += '<span class="lijn-lab">' + i + '</span>';
+      html += '</div>';
+    }
+    $('lijn-ticks').innerHTML = html;
+    html = '';
+    for (i = 0; i < lijnState.nums.length; i++) {
+      n = lijnState.nums[i];
+      col = LIJN_CARD_COLORS[i % 4];
+      dark = LIJN_CARD_DARK[i % 4];
+      html += '<button type="button" class="tap lijn-card" data-act="lijn-card" data-n="' + n +
+        '" data-idx="' + i + '" style="background:' + col + ';box-shadow:0 6px 0 ' + dark +
+        ';-webkit-box-shadow:0 6px 0 ' + dark + '">' + n + '</button>';
+    }
+    $('lijn-cards').innerHTML = html;
+    window.setTimeout(function () { layoutLijn(); }, 30);
+  }
+
+  function layoutLijn() {
+    var c, stage, dpr, w, h, ctx;
+    stage = $('lijn-stage');
+    c = $('lijn-canvas');
+    if (!stage || !c) return;
+    w = stage.clientWidth || 0;
+    h = stage.clientHeight || 0;
+    if (w < 10 || h < 10) return;
+    dpr = window.devicePixelRatio || 1;
+    if (dpr > 1.5) dpr = 1.5;
+    if (w * h * dpr * dpr > 900000) dpr = 1;
+    c.width = Math.round(w * dpr);
+    c.height = Math.round(h * dpr);
+    c.style.width = w + 'px';
+    c.style.height = h + 'px';
+    ctx = c.getContext('2d');
+    if (ctx && ctx.setTransform) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    drawLijnLines();
+  }
+
+  function lijnCardEl(n) {
+    return document.querySelector('.lijn-card[data-n="' + n + '"]');
+  }
+
+  function drawLijnLines() {
+    var c, ctx, stage, rail, i, n, card, cr, x1, y1, x2, y2, col, sr, hr;
+    c = $('lijn-canvas');
+    stage = $('lijn-stage');
+    if (!c || !stage) return;
+    ctx = c.getContext('2d');
+    if (!ctx) return;
+    ctx.clearRect(0, 0, c.width, c.height);
+    sr = stage.getBoundingClientRect();
+    rail = lijnTrackRect();
+    function lineToTick(num, color, width, fromX, fromY) {
+      if (!rail) return;
+      x2 = lijnXForValue(num, rail) - sr.left;
+      y2 = ((rail.top + rail.bottom) / 2) - sr.top;
+      ctx.strokeStyle = color;
+      ctx.lineWidth = width || 6;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(fromX, fromY);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(x2, y2, 8, 0, Math.PI * 2, false);
+      ctx.fill();
+    }
+    for (i = 0; i < lijnState.nums.length; i++) {
+      n = lijnState.nums[i];
+      if (!lijnState.placed[n]) continue;
+      card = lijnCardEl(n);
+      if (!card) continue;
+      cr = card.getBoundingClientRect();
+      col = LIJN_CARD_COLORS[i % 4];
+      lineToTick(n, col, 6, (cr.left + cr.right) / 2 - sr.left, cr.top - sr.top);
+    }
+    if (lijnDrag.on && lijnDrag.num != null) {
+      card = lijnCardEl(lijnDrag.num);
+      if (card) {
+        cr = card.getBoundingClientRect();
+        col = '#1A4A6A';
+        x1 = (cr.left + cr.right) / 2 - sr.left;
+        y1 = cr.top - sr.top;
+        ctx.strokeStyle = col;
+        ctx.lineWidth = 5;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(lijnDrag.x - sr.left, lijnDrag.y - sr.top);
+        ctx.stroke();
+      }
+    }
+    if (lijnState.hint >= 0 && rail) {
+      x2 = lijnXForValue(lijnState.hint, rail) - sr.left;
+      y2 = ((rail.top + rail.bottom) / 2) - sr.top;
+      ctx.fillStyle = 'rgba(76,200,110,0.35)';
+      ctx.beginPath();
+      ctx.arc(x2, y2, 22, 0, Math.PI * 2, false);
+      ctx.fill();
+      ctx.strokeStyle = '#4CC86E';
+      ctx.lineWidth = 5;
+      ctx.beginPath();
+      ctx.arc(x2, y2, 16, 0, Math.PI * 2, false);
+      ctx.stroke();
+    }
+  }
+
+  function lijnSelectCard(n) {
+    var els, i, el;
+    if (lijnState.busy || state.locked) return;
+    if (lijnState.placed[n]) return;
+    lijnState.selected = n;
+    els = document.getElementsByClassName('lijn-card');
+    for (i = 0; i < els.length; i++) {
+      el = els[i];
+      if (parseInt(el.getAttribute('data-n'), 10) === n) {
+        if ((' ' + el.className + ' ').indexOf(' on ') === -1) el.className += ' on';
+      } else {
+        el.className = el.className.replace(/\s*on/g, '');
+      }
+    }
+  }
+
+  function showLijnHint(n) {
+    clearLijnHint();
+    lijnState.hint = n;
+    drawLijnLines();
+    lijnState.hintTimer = window.setTimeout(function () {
+      lijnState.hint = -1;
+      lijnState.hintTimer = null;
+      drawLijnLines();
+    }, 900);
+  }
+
+  function lijnTryDrop(val) {
+    var want, tol, n;
+    if (lijnState.busy || state.locked) return false;
+    want = lijnState.selected;
+    if (want == null && lijnDrag.num != null) want = lijnDrag.num;
+    if (want == null || lijnState.placed[want]) return false;
+    tol = lijnTolerance();
+    if (Math.abs(val - want) <= tol) {
+      lijnPlace(want);
+      return true;
+    }
+    showLijnHint(want);
+    if (typeof playWrong === 'function') playWrong();
+    return false;
+  }
+
+  function lijnPlace(n) {
+    var card, left, i, done;
+    if (lijnState.placed[n]) return;
+    lijnState.placed[n] = true;
+    lijnState.selected = null;
+    card = lijnCardEl(n);
+    if (card) {
+      if ((' ' + card.className + ' ').indexOf(' placed ') === -1) card.className += ' placed';
+      card.className = card.className.replace(/\s*on/g, '');
+    }
+    left = 0;
+    for (i = 0; i < lijnState.nums.length; i++) {
+      if (!lijnState.placed[lijnState.nums[i]]) left += 1;
+    }
+    if ($('lijn-stage')) {
+      $('lijn-stage').setAttribute('data-placed', String(4 - left));
+    }
+    drawLijnLines();
+    done = (left === 0);
+    lijnPraise(n, done);
+  }
+
+  function lijnSetBusy(on) {
+    lijnState.busy = !!on;
+    if ($('lijn-stage')) $('lijn-stage').setAttribute('data-busy', on ? '1' : '0');
+  }
+
+  function lijnPraise(n, done) {
+    lijnSetBusy(true);
+    state.locked = true;
+    if (praiseLeadTimer) {
+      window.clearTimeout(praiseLeadTimer);
+      praiseLeadTimer = null;
+    }
+    showToast('Ja, ' + n + '!', true);
+    playGoedChime();
+    praiseLeadTimer = window.setTimeout(function () {
+      praiseLeadTimer = null;
+      speak('lijn-ja-' + n);
+      scheduleAfterPraise(function () {
+        if (done) {
+          state.stars += 1;
+          state.sessionCorrect += 1;
+          state.towardsReward += 1;
+          saveStars();
+          showBurst();
+          updateStarsUI();
+          lijnSetBusy(false);
+          if (state.towardsReward >= 5) {
+            showReward();
+          } else {
+            state.locked = false;
+            startLijn(null, false);
+          }
+        } else {
+          state.locked = false;
+          lijnSetBusy(false);
+        }
+      });
+    }, 280);
+  }
+
+  function lijnEventPoint(e) {
+    if (e.touches && e.touches.length) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    if (e.changedTouches && e.changedTouches.length) {
+      return { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
+    }
+    return { x: e.clientX, y: e.clientY };
+  }
+
+  function lijnFindCard(e) {
+    var el;
+    el = e.target;
+    while (el && el !== document.body && el !== document) {
+      if (el.getAttribute && el.getAttribute('data-act') === 'lijn-card') return el;
+      el = el.parentNode;
+    }
+    return null;
+  }
+
+  function lijnDragStart(e) {
+    var card, p, n;
+    if (state.screen !== 'lijn' || lijnState.busy || state.locked) return false;
+    card = lijnFindCard(e);
+    if (!card) return false;
+    n = parseInt(card.getAttribute('data-n'), 10);
+    if (isNaN(n) || lijnState.placed[n]) return false;
+    p = lijnEventPoint(e);
+    lijnSelectCard(n);
+    lijnDrag.on = true;
+    lijnDrag.num = n;
+    lijnDrag.moved = false;
+    lijnDrag.x = p.x;
+    lijnDrag.y = p.y;
+    lijnDrag.startX = p.x;
+    lijnDrag.startY = p.y;
+    return true;
+  }
+
+  function lijnDragMove(e) {
+    var p;
+    if (!lijnDrag.on) return false;
+    p = lijnEventPoint(e);
+    if (Math.abs(p.x - lijnDrag.startX) > 8 || Math.abs(p.y - lijnDrag.startY) > 8) lijnDrag.moved = true;
+    lijnDrag.x = p.x;
+    lijnDrag.y = p.y;
+    if (lijnDrag.moved) drawLijnLines();
+    return true;
+  }
+
+  function lijnDragEnd(e) {
+    var p, rect, val, onTrack;
+    if (!lijnDrag.on) return false;
+    p = lijnEventPoint(e);
+    lijnDrag.x = p.x;
+    lijnDrag.y = p.y;
+    rect = lijnTrackRect();
+    onTrack = false;
+    if (rect) {
+      onTrack = p.x >= (rect.left - 12) && p.x <= (rect.right + 12) &&
+        p.y >= (rect.top - 28) && p.y <= (rect.bottom + 28);
+    }
+    if (lijnDrag.moved && onTrack) {
+      val = lijnValueForX(p.x, rect);
+      lijnTryDrop(val);
+    }
+    lijnDrag.on = false;
+    lijnDrag.num = null;
+    lijnDrag.moved = false;
+    drawLijnLines();
+    return true;
+  }
+
+  function stopLijnDrag() {
+    lijnDrag.on = false;
+    lijnDrag.num = null;
+    lijnDrag.moved = false;
   }
 
   function makeTableChoices(a, b) {
@@ -6137,7 +6884,7 @@
   /* ---------- UI ---------- */
   function updateStarsUI() {
     var i, row, html, filled, el, rows;
-    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars', 'cups-stars', 'veranderd-stars', 'klinkers-stars'], String(state.stars));
+    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars', 'cups-stars', 'veranderd-stars', 'klinkers-stars', 'lijnlevel-stars', 'lijn-stars'], String(state.stars));
     filled = state.towardsReward;
     if (filled > 5) filled = 5;
     html = '';
@@ -6170,7 +6917,7 @@
   function showScreen(name) {
     var ids, i, el;
     state.screen = name;
-    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers'];
+    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn'];
     for (i = 0; i < ids.length; i++) {
       el = $('screen-' + ids[i]);
       if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
@@ -7300,18 +8047,18 @@
     '#8B7CFF', '#FF7EB3', '#A1673D', '#222222', '#FFFFFF'
   ];
   var TEKEN_PAGES = [
-    { id: 'kat', label: 'Kat' },
-    { id: 'hond', label: 'Hond' },
-    { id: 'olifant', label: 'Olifant' },
-    { id: 'vis', label: 'Vis' },
-    { id: 'dino', label: 'Dino' },
-    { id: 'vlinder', label: 'Vlinder' },
-    { id: 'bloem', label: 'Bloem' },
-    { id: 'huis', label: 'Huis' },
-    { id: 'auto', label: 'Auto' },
-    { id: 'raket', label: 'Raket' },
-    { id: 'kasteel', label: 'Kasteel' },
-    { id: 'eenhoorn', label: 'Eenhoorn' }
+    { id: 'monstertruck', label: 'Monstertruck', src: 'img/kleurplaten/monstertruck.png' },
+    { id: 'dino', label: 'Dino', src: 'img/kleurplaten/dino.png' },
+    { id: 'raket', label: 'Raket', src: 'img/kleurplaten/raket.png' },
+    { id: 'draak', label: 'Draak', src: 'img/kleurplaten/draak.png' },
+    { id: 'eenhoorn', label: 'Eenhoorn', src: 'img/kleurplaten/eenhoorn.png' },
+    { id: 'brandweerauto', label: 'Brandweerauto', src: 'img/kleurplaten/brandweerauto.png' },
+    { id: 'piratenschip', label: 'Piratenschip', src: 'img/kleurplaten/piratenschip.png' },
+    { id: 'boerderijdieren', label: 'Boerderijdieren', src: 'img/kleurplaten/boerderijdieren.png' },
+    { id: 'kasteel', label: 'Kasteel', src: 'img/kleurplaten/kasteel.png' },
+    { id: 'vliegtuig', label: 'Vliegtuig', src: 'img/kleurplaten/vliegtuig.png' },
+    { id: 'prinses', label: 'Prinses', src: 'img/kleurplaten/prinses.png' },
+    { id: 'onderwater', label: 'Onderwater', src: 'img/kleurplaten/onderwater.png' }
   ];
   var tekenState = {
     mode: 'vrij',
@@ -7324,7 +8071,9 @@
     lastY: 0,
     moved: false,
     paper: null,
-    outline: null
+    outline: null,
+    rasterImg: null,
+    rasterSrc: null
   };
 
   function tekenThickPx() {
@@ -7353,6 +8102,108 @@
     speak('kleur-kies');
   }
 
+  function kleurPageById(id) {
+    var i;
+    for (i = 0; i < TEKEN_PAGES.length; i++) {
+      if (TEKEN_PAGES[i].id === id) return TEKEN_PAGES[i];
+    }
+    return null;
+  }
+
+  function drawImageContained(ctx, img, w, h, pad) {
+    var iw, ih, s, dw, dh, dx, dy;
+    if (!ctx || !img) return;
+    pad = pad || 0;
+    iw = img.width || 1;
+    ih = img.height || 1;
+    s = Math.min((w - pad * 2) / iw, (h - pad * 2) / ih);
+    if (s <= 0) return;
+    dw = iw * s;
+    dh = ih * s;
+    dx = (w - dw) / 2;
+    dy = (h - dh) / 2;
+    ctx.drawImage(img, dx, dy, dw, dh);
+  }
+
+  function stampRasterOutline(ctx, w, h, img) {
+    var tmp, tctx, imgd, data, i, n, r, g, b, a, lum, ink;
+    if (!ctx || !img) return;
+    tmp = document.createElement('canvas');
+    tmp.width = w;
+    tmp.height = h;
+    tctx = tmp.getContext('2d');
+    if (!tctx) return;
+    tctx.clearRect(0, 0, w, h);
+    drawImageContained(tctx, img, w, h, Math.round(Math.min(w, h) * 0.03));
+    imgd = tctx.getImageData(0, 0, w, h);
+    data = imgd.data;
+    n = data.length;
+    for (i = 0; i < n; i += 4) {
+      r = data[i];
+      g = data[i + 1];
+      b = data[i + 2];
+      a = data[i + 3];
+      lum = 0.299 * r + 0.587 * g + 0.114 * b;
+      ink = (255 - lum) * (a / 255);
+      if (ink < 16) {
+        data[i] = 0;
+        data[i + 1] = 0;
+        data[i + 2] = 0;
+        data[i + 3] = 0;
+      } else {
+        /* Keep ink; boost faint anti-aliased edges so flood-fill treats them as walls. */
+        if (a < 90) a = 90;
+        data[i] = r;
+        data[i + 1] = g;
+        data[i + 2] = b;
+        data[i + 3] = (a > 255) ? 255 : a;
+      }
+    }
+    ctx.clearRect(0, 0, w, h);
+    ctx.putImageData(imgd, 0, 0);
+  }
+
+  function ensureKleurRaster(page, done) {
+    var img;
+    if (!page || !page.src) {
+      if (done) done(null);
+      return;
+    }
+    if (tekenState.rasterImg && tekenState.rasterSrc === page.src && tekenState.rasterImg.width) {
+      if (done) done(tekenState.rasterImg);
+      return;
+    }
+    img = new Image();
+    img.onload = function () {
+      tekenState.rasterImg = img;
+      tekenState.rasterSrc = page.src;
+      if (done) done(img);
+    };
+    img.onerror = function () {
+      if (tekenState.rasterSrc === page.src) {
+        tekenState.rasterImg = null;
+        tekenState.rasterSrc = null;
+      }
+      if (done) done(null);
+    };
+    img.src = page.src;
+  }
+
+  function paintKleurOutline(w, h, pageId) {
+    var page;
+    if (!tekenState.outline) return;
+    page = kleurPageById(pageId);
+    if (page && page.src) {
+      ensureKleurRaster(page, function (img) {
+        if (tekenState.page !== pageId || !tekenState.outline) return;
+        if (img) stampRasterOutline(tekenState.outline, w, h, img);
+        else drawKleurPage(tekenState.outline, w, h, pageId);
+      });
+      return;
+    }
+    drawKleurPage(tekenState.outline, w, h, pageId);
+  }
+
   function renderKleurKies() {
     var box, i, page, html, c, ctx;
     box = $('kleur-grid');
@@ -7360,18 +8211,37 @@
     html = '';
     for (i = 0; i < TEKEN_PAGES.length; i++) {
       page = TEKEN_PAGES[i];
-      html += '<button type="button" class="tap kleur-pick" data-act="teken-page" data-page="' + page.id + '">' +
-        '<canvas class="kleur-thumb" width="160" height="120" data-thumb="' + page.id + '"></canvas>' +
-        '<span class="kleur-pick-label">' + page.label + '</span></button>';
+      html += '<button type="button" class="tap kleur-pick" data-act="teken-page" data-page="' + page.id + '">';
+      if (page.src) {
+        html += '<canvas class="kleur-thumb" width="160" height="120" data-thumb="' + page.id + '"></canvas>';
+      } else {
+        html += '<canvas class="kleur-thumb" width="160" height="120" data-thumb="' + page.id + '"></canvas>';
+      }
+      html += '<span class="kleur-pick-label">' + page.label + '</span></button>';
     }
     box.innerHTML = html;
     for (i = 0; i < TEKEN_PAGES.length; i++) {
-      c = box.querySelector('canvas[data-thumb="' + TEKEN_PAGES[i].id + '"]');
+      page = TEKEN_PAGES[i];
+      c = box.querySelector('canvas[data-thumb="' + page.id + '"]');
       if (!c) continue;
       ctx = c.getContext('2d');
       ctx.fillStyle = '#FFFDF7';
       ctx.fillRect(0, 0, 160, 120);
-      drawKleurPage(ctx, 160, 120, TEKEN_PAGES[i].id);
+      if (page.src) {
+        (function (canvas, src) {
+          var im = new Image();
+          im.onload = function () {
+            var cctx = canvas.getContext('2d');
+            if (!cctx) return;
+            cctx.fillStyle = '#FFFDF7';
+            cctx.fillRect(0, 0, 160, 120);
+            drawImageContained(cctx, im, 160, 120, 4);
+          };
+          im.src = src;
+        }(c, page.src));
+      } else {
+        drawKleurPage(ctx, 160, 120, page.id);
+      }
     }
   }
 
@@ -7408,7 +8278,7 @@
     tekenState.paper.fillRect(0, 0, w, h);
     tekenState.outline.clearRect(0, 0, w, h);
     if (tekenState.mode === 'kleur' && tekenState.page) {
-      drawKleurPage(tekenState.outline, w, h, tekenState.page);
+      paintKleurOutline(w, h, tekenState.page);
     }
   }
 
@@ -7579,10 +8449,11 @@
     }
     idx = (y * w + x) * 4;
     sr = data[idx]; sg = data[idx + 1]; sb = data[idx + 2]; sa = data[idx + 3];
-    if (odata && odata[idx + 3] > 80) return;
+    if (odata && odata[idx + 3] > 40) return;
+    if ((0.299 * sr + 0.587 * sg + 0.114 * sb) < 140 && sa > 40) return;
     fill = hexRgb(tekenState.color);
     if (sr === fill.r && sg === fill.g && sb === fill.b && sa >= 250) return;
-    tol = 36;
+    tol = 48;
     seen = new Uint8Array(w * h);
     stack = [x, y];
     while (stack.length) {
@@ -7593,8 +8464,9 @@
       if (seen[pos]) continue;
       seen[pos] = 1;
       idx = pos * 4;
-      if (odata && odata[idx + 3] > 80) continue;
+      if (odata && odata[idx + 3] > 40) continue;
       cr = data[idx]; cg = data[idx + 1]; cb = data[idx + 2]; ca = data[idx + 3];
+      if ((0.299 * cr + 0.587 * cg + 0.114 * cb) < 140 && ca > 40) continue;
       if (Math.abs(cr - sr) > tol || Math.abs(cg - sg) > tol || Math.abs(cb - sb) > tol || Math.abs(ca - sa) > tol) continue;
       data[idx] = fill.r;
       data[idx + 1] = fill.g;
@@ -8195,6 +9067,10 @@
       if (klinkDragStart(e)) {
         if (e.preventDefault) e.preventDefault();
       }
+    } else if (state.screen === 'lijn') {
+      if (lijnDragStart(e)) {
+        if (e.preventDefault) e.preventDefault();
+      }
     }
   }
 
@@ -8224,6 +9100,11 @@
         klinkDragMove(e);
         if (e.preventDefault) e.preventDefault();
       }
+    } else if (state.screen === 'lijn') {
+      if (lijnDrag.on) {
+        lijnDragMove(e);
+        if (e.preventDefault) e.preventDefault();
+      }
     }
   }
 
@@ -8251,6 +9132,11 @@
     } else if (state.screen === 'klinkers') {
       if (klinkDrag.on) {
         klinkDragEnd(e);
+        if (e.preventDefault) e.preventDefault();
+      }
+    } else if (state.screen === 'lijn') {
+      if (lijnDrag.on) {
+        lijnDragEnd(e);
         if (e.preventDefault) e.preventDefault();
       }
     }
@@ -9953,6 +10839,7 @@
     if (typeof traceState !== 'undefined') traceState.drawing = false;
     if (typeof stopTekenDrag === 'function') stopTekenDrag();
     if (typeof stopKlinkDrag === 'function') stopKlinkDrag();
+    if (typeof stopLijnDrag === 'function') stopLijnDrag();
     clearMemoryTimer();
     clearGeheugenTimer();
     clearSimonFlash();
@@ -9986,6 +10873,10 @@
       showGamesMenu();
     } else if (s === 'trace' || s === 'names' || s === 'nameplay' || s === 'klinkers') {
       showLettersMenu();
+    } else if (s === 'lijn') {
+      showLijnLevel();
+    } else if (s === 'lijnlevel') {
+      showGamesMenu();
     } else if (s === 'puzzle') {
       showPuzzleLevel();
     } else if (s === 'puzzlelevel' || s === 'vormen' || s === 'spiegel' || s === 'nateken' ||
@@ -10288,6 +11179,10 @@
         showPicker();
         return;
       }
+      if (level === 'lijn') {
+        showLijnLevel();
+        return;
+      }
       if (level === 'letters') {
         showLettersMenu();
         return;
@@ -10306,6 +11201,18 @@
       state.allLetters = el.getAttribute('data-set') === 'all';
       saveLetterSet();
       updateLetterSetUI();
+      return;
+    }
+    if (act === 'lijn-max') {
+      startLijn(parseInt(el.getAttribute('data-max'), 10), true);
+      return;
+    }
+    if (act === 'lijn-card') {
+      lijnSelectCard(parseInt(el.getAttribute('data-n'), 10));
+      return;
+    }
+    if (act === 'lijn-hit') {
+      lijnTryDrop(parseInt(el.getAttribute('data-n'), 10));
       return;
     }
     if (act === 'klink-tile') {
@@ -10360,6 +11267,8 @@
       e.preventDefault();
     } else if (state.screen === 'klinkers' && klinkDragStart(e)) {
       e.preventDefault();
+    } else if (state.screen === 'lijn' && lijnDragStart(e)) {
+      e.preventDefault();
     }
   }
 
@@ -10395,6 +11304,10 @@
       e.preventDefault();
       return;
     }
+    if (state.screen === 'lijn' && lijnDragMove(e)) {
+      e.preventDefault();
+      return;
+    }
     e.preventDefault();
   }
 
@@ -10426,6 +11339,12 @@
       lastTouchEnd = now;
       return;
     }
+    if (state.screen === 'lijn' && lijnDragEnd(e)) {
+      clearPressed();
+      e.preventDefault();
+      lastTouchEnd = now;
+      return;
+    }
     if (state.screen === 'klinkers' && klinkDragEnd(e)) {
       clearPressed();
       e.preventDefault();
@@ -10452,6 +11371,7 @@
     touchMoved = true;
     clearPressed();
     if (state.screen === 'klinkers') stopKlinkDrag();
+    if (state.screen === 'lijn') stopLijnDrag();
   }
 
   function onClick(e) {
@@ -10515,6 +11435,8 @@
     elSet('kleurkies-home-icon', homeIconHtml());
     elSet('teken-home-icon', homeIconHtml());
     elSet('klinkers-home-icon', homeIconHtml());
+    elSet('lijnlevel-home-icon', homeIconHtml());
+    elSet('lijn-home-icon', homeIconHtml());
     elSet('play-back-icon', backIconHtml());
     elSet('picker-back-icon', backIconHtml());
     elSet('trace-back-icon', backIconHtml());
@@ -10539,6 +11461,8 @@
     elSet('kleurkies-back-icon', backIconHtml());
     elSet('teken-back-icon', backIconHtml());
     elSet('klinkers-back-icon', backIconHtml());
+    elSet('lijnlevel-back-icon', backIconHtml());
+    elSet('lijn-back-icon', backIconHtml());
     elSet('letters-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('trace-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('names-star-icon', starSvg('#FFD54F', '#F9A825'));
@@ -10561,6 +11485,8 @@
     elSet('cups-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('veranderd-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('klinkers-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('lijnlevel-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('lijn-star-icon', starSvg('#FFD54F', '#F9A825'));
     if ($('icon-vormen')) {
       $('icon-vormen').innerHTML =
         vormSvg('circle', '#2FB3F0', '#1A7FB3', 0) +
@@ -10605,6 +11531,16 @@
       '<div class="trow"><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span></div>' +
       '<div class="trow"><span class="tdot"></span><span class="tdot"></span><span class="tdot"></span></div>' +
       '</div>';
+    if ($('icon-lijn')) {
+      $('icon-lijn').innerHTML =
+        '<svg viewBox="0 0 88 44" width="88" height="44" aria-hidden="true">' +
+        '<line x1="4" y1="22" x2="84" y2="22" stroke="#fff" stroke-width="5" stroke-linecap="round"/>' +
+        '<line x1="8" y1="12" x2="8" y2="32" stroke="#fff" stroke-width="3"/>' +
+        '<line x1="44" y1="14" x2="44" y2="30" stroke="#fff" stroke-width="3"/>' +
+        '<line x1="80" y1="12" x2="80" y2="32" stroke="#fff" stroke-width="3"/>' +
+        '<circle cx="62" cy="22" r="8" fill="#FFD54F" stroke="#F9A825" stroke-width="2"/>' +
+        '</svg>';
+    }
     if ($('icon-begint')) $('icon-begint').innerHTML = '<span class="mini-pic">' + wordSvg('maan') + '</span>';
     if ($('icon-klinkers')) $('icon-klinkers').innerHTML = '<span style="font-size:34px;font-weight:800;letter-spacing:1px">aa</span>';
     if ($('icon-trace-act')) $('icon-trace-act').innerHTML = '<span style="font-size:44px;letter-spacing:2px;border-bottom:3px dotted #6A3E00;">a</span>';
@@ -10646,6 +11582,7 @@
     }, false);
     window.addEventListener('resize', function () {
       if (state.screen === 'teken') sizeTekenCanvas();
+      if (state.screen === 'lijn') layoutLijn();
     }, false);
     document.addEventListener('click', onClick, false);
     document.addEventListener('mousedown', onMouseDown, false);
@@ -10664,6 +11601,7 @@
         if (state.screen === 'nateken') layoutNateken();
         if (state.screen === 'tangram') layoutTangram();
         if (state.screen === 'doolhof') layoutDoolhof();
+        if (state.screen === 'lijn') layoutLijn();
         if (state.screen === 'memoryplay') layoutMemory();
       }, 250);
     }, false);

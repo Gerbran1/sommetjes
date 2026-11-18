@@ -13,7 +13,7 @@ const wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms)
 const SCREENS = [
   'start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay',
   'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken',
-  'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers'
+  'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn'
 ];
 
 async function visibleScreen(page) {
@@ -291,6 +291,30 @@ async function waitSpiegelNext(page) {
     await tap(page, '#btn-home');
     await expectScreen(page, 'start', 'tafel play home');
     ok('Tafel-som terug → kiezer, home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-games');
+    await tap(page, '[data-level="lijn"]');
+    await expectScreen(page, 'lijnlevel', 'lijnlevel');
+    await tap(page, '#btn-lijnlevel-back');
+    await expectScreen(page, 'home', 'lijnlevel back');
+    await tap(page, '[data-level="lijn"]');
+    await tap(page, '#btn-lijnlevel-home');
+    await expectScreen(page, 'start', 'lijnlevel home');
+    ok('Getallenlijn-kiezer terug → Getallen, home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-games');
+    await tap(page, '[data-level="lijn"]');
+    await tap(page, '[data-max="10"]');
+    await expectScreen(page, 'lijn', 'lijn 10');
+    await tap(page, '#btn-lijn-back');
+    await expectScreen(page, 'lijnlevel', 'lijn play back');
+    await tap(page, '[data-max="10"]');
+    await tap(page, '#btn-lijn-home');
+    await expectScreen(page, 'start', 'lijn play home');
+    ok('Getallenlijn tot 10 terug → kiezer, home → start');
+
 
     const letterModes = [
       { mode: 'zoeken', screen: 'play', back: '#btn-play-back', home: '#btn-home' },
