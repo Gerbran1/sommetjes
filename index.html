@@ -190,7 +190,7 @@
       line-height: 1;
     }
 
-    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel {
+    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -1501,6 +1501,99 @@
     .spiegel-cell.locked {
       pointer-events: none;
     }
+    .lvl-nateken {
+      background: #5C6BC0;
+      -webkit-box-shadow: 0 8px 0 #3F51B5, 0 12px 16px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 0 #3F51B5, 0 12px 16px rgba(0,0,0,0.15);
+    }
+    .lvl-nateken.pressed, .lvl-nateken:active {
+      -webkit-box-shadow: 0 2px 0 #3F51B5, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #3F51B5, 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .nateken-mini {
+      position: relative;
+      width: 56px;
+      height: 40px;
+    }
+    .nateken-mini span {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.85);
+    }
+    .nateken-mini i {
+      position: absolute;
+      height: 3px;
+      background: #FFFFFF;
+      border-radius: 2px;
+    }
+    #nateken-wrap {
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      position: relative;
+      width: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .nateken-panel {
+      position: absolute;
+      background: rgba(255,253,247,0.82);
+      border-radius: 24px;
+      -webkit-box-shadow: 0 6px 0 rgba(0,0,0,0.06);
+      box-shadow: 0 6px 0 rgba(0,0,0,0.06);
+      overflow: hidden;
+    }
+    .nateken-label {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 8px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: #1A4A6A;
+      pointer-events: none;
+    }
+    .nateken-svg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .nateken-dot {
+      position: absolute;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 4px solid #5C6BC0;
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+      -webkit-appearance: none;
+      appearance: none;
+      pointer-events: none;
+    }
+    .nateken-dot.on {
+      background: #5C6BC0;
+      border-color: #3F51B5;
+    }
+    #nateken-clear {
+      position: absolute;
+      right: 10px;
+      top: 6px;
+      height: 40px;
+      padding: 0 16px;
+      border: 0;
+      border-radius: 26px;
+      background: #FFFDF7;
+      color: #243044;
+      font-size: 22px;
+      font-weight: 800;
+      -webkit-box-shadow: 0 4px 0 #E2D3A8;
+      box-shadow: 0 4px 0 #E2D3A8;
+    }
  
     @media screen and (max-height: 800px) {
       .puzzle-hint { font-size: 18px; }
@@ -1965,6 +2058,20 @@
           </div>
           <div class="level-label">Spiegelen</div>
         </button>
+        <button type="button" class="tap level-btn lvl-nateken" data-act="puzzle-game" data-game="nateken">
+          <div class="act-icon">
+            <div class="nateken-mini" id="icon-nateken">
+              <span style="left:2px;top:4px;"></span><span style="left:16px;top:4px;"></span><span style="left:30px;top:4px;"></span>
+              <span style="left:2px;top:16px;"></span><span style="left:16px;top:16px;"></span><span style="left:30px;top:16px;"></span>
+              <span style="left:2px;top:28px;"></span><span style="left:16px;top:28px;"></span><span style="left:30px;top:28px;"></span>
+              <i style="left:5px;top:6px;width:14px;"></i>
+              <i style="left:19px;top:6px;width:14px;"></i>
+              <i style="left:31px;top:7px;width:3px;height:14px;"></i>
+              <i style="left:5px;top:18px;width:14px;"></i>
+            </div>
+          </div>
+          <div class="level-label">Natekenen</div>
+        </button>
       </div>
     </div>
 
@@ -2075,6 +2182,27 @@
       </div>
       <div class="prompt" id="spiegel-prompt">Maak de andere kant hetzelfde</div>
       <div id="spiegel-wrap"></div>
+    </div>
+
+    <div id="screen-nateken" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-nateken-home" data-act="home" title="Terug">
+            <span id="nateken-home-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-sound-nateken" data-act="sound" title="Geluid" style="margin-left:8px;">
+            <span id="sound-icon-nateken"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="nateken-star-icon"></span>
+            <span class="star-count" id="nateken-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt" id="nateken-prompt">Teken het na</div>
+      <div id="nateken-wrap"></div>
     </div>
 
     <div id="screen-trace" class="is-hidden">
@@ -2886,6 +3014,10 @@
     }
     else if (state.level === 'spiegel') {
       startSpiegel(false);
+      return;
+    }
+    else if (state.level === 'nateken') {
+      startNateken(false);
       return;
     }
     else {
@@ -3837,7 +3969,7 @@
   /* ---------- UI ---------- */
   function updateStarsUI() {
     var i, row, html, filled, el, rows;
-    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars'], String(state.stars));
+    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars'], String(state.stars));
     filled = state.towardsReward;
     if (filled > 5) filled = 5;
     html = '';
@@ -3874,6 +4006,7 @@
     elSet('sound-icon-puzzle', html);
     elSet('sound-icon-vormen', html);
     elSet('sound-icon-spiegel', html);
+    elSet('sound-icon-nateken', html);
   }
 
   function elSet(id, html) {
@@ -3884,7 +4017,7 @@
   function showScreen(name) {
     var ids, i, el;
     state.screen = name;
-    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel'];
+    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken'];
     for (i = 0; i < ids.length; i++) {
       el = $('screen-' + ids[i]);
       if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
@@ -4232,25 +4365,42 @@
   }
 
   function onMouseDown(e) {
-    if (state.screen !== 'vormen') return;
-    if (vormenDragStart(e)) {
-      if (e.preventDefault) e.preventDefault();
+    if (state.screen === 'vormen') {
+      if (vormenDragStart(e)) {
+        if (e.preventDefault) e.preventDefault();
+      }
+    } else if (state.screen === 'nateken') {
+      if (natekenDragStart(e)) {
+        if (e.preventDefault) e.preventDefault();
+      }
     }
   }
 
   function onMouseMove(e) {
-    if (state.screen !== 'vormen') return;
-    if (vormenDrag.on) {
-      vormenDragMove(e);
-      if (e.preventDefault) e.preventDefault();
+    if (state.screen === 'vormen') {
+      if (vormenDrag.on) {
+        vormenDragMove(e);
+        if (e.preventDefault) e.preventDefault();
+      }
+    } else if (state.screen === 'nateken') {
+      if (natekenDrag.on) {
+        natekenDragMove(e);
+        if (e.preventDefault) e.preventDefault();
+      }
     }
   }
 
   function onMouseUp(e) {
-    if (state.screen !== 'vormen') return;
-    if (vormenDrag.on) {
-      vormenDragEnd(e);
-      if (e.preventDefault) e.preventDefault();
+    if (state.screen === 'vormen') {
+      if (vormenDrag.on) {
+        vormenDragEnd(e);
+        if (e.preventDefault) e.preventDefault();
+      }
+    } else if (state.screen === 'nateken') {
+      if (natekenDrag.on) {
+        natekenDragEnd(e);
+        if (e.preventDefault) e.preventDefault();
+      }
     }
   }
 
@@ -4422,6 +4572,335 @@
       state.spiegel.done = true;
       awardCorrect();
     }
+  }
+
+  var natekenDrag = { on: false, start: null, preview: null };
+
+  function natekenEdgeKey(r1, c1, r2, c2) {
+    var t;
+    if (r2 < r1 || (r2 === r1 && c2 < c1)) {
+      t = r1; r1 = r2; r2 = t;
+      t = c1; c1 = c2; c2 = t;
+    }
+    return r1 + ',' + c1 + '-' + r2 + ',' + c2;
+  }
+
+  function natekenParseKey(key) {
+    var p = key.split('-');
+    var a = p[0].split(',');
+    var b = p[1].split(',');
+    return {
+      r1: parseInt(a[0], 10), c1: parseInt(a[1], 10),
+      r2: parseInt(b[0], 10), c2: parseInt(b[1], 10)
+    };
+  }
+
+  function natekenNeighbors(r1, c1, r2, c2) {
+    var dr, dc;
+    dr = r1 - r2;
+    if (dr < 0) dr = -dr;
+    dc = c1 - c2;
+    if (dc < 0) dc = -dc;
+    if (dr === 0 && dc === 0) return false;
+    return dr <= 1 && dc <= 1;
+  }
+
+  function natekenFigList(n) {
+    if (n === 3) {
+      return [
+        { id: 'sq', edges: [[1,0,1,1],[1,1,2,1],[2,1,2,0],[2,0,1,0]] },
+        { id: 'bigsq', edges: [[0,0,0,1],[0,1,0,2],[0,2,1,2],[1,2,2,2],[2,2,2,1],[2,1,2,0],[2,0,1,0],[1,0,0,0]] },
+        { id: 'L', edges: [[0,0,1,0],[1,0,2,0],[2,0,2,1],[2,1,2,2]] },
+        { id: 'plus', edges: [[1,0,1,1],[1,1,1,2],[0,1,1,1],[1,1,2,1]] },
+        { id: 'T', edges: [[0,0,0,1],[0,1,0,2],[0,1,1,1],[1,1,2,1]] },
+        { id: 'U', edges: [[0,0,1,0],[1,0,2,0],[2,0,2,1],[2,1,2,2],[2,2,1,2],[1,2,0,2]] },
+        { id: 'Z', edges: [[0,0,0,1],[0,1,0,2],[0,2,1,1],[1,1,2,0],[2,0,2,1],[2,1,2,2]] },
+        { id: 'house', edges: [[1,0,0,1],[0,1,1,2],[1,0,1,1],[1,1,1,2],[1,0,2,0],[1,2,2,2],[2,0,2,1],[2,1,2,2]] },
+        { id: 'tri', edges: [[2,0,1,0],[1,0,0,1],[0,1,1,2],[1,2,2,2],[2,2,2,1],[2,1,2,0]] },
+        { id: 'stairs', edges: [[0,0,1,0],[1,0,1,1],[1,1,2,1],[2,1,2,2]] }
+      ];
+    }
+    return [
+      { id: 'sq4', edges: [[1,1,1,2],[1,2,2,2],[2,2,2,1],[2,1,1,1]] },
+      { id: 'L4', edges: [[0,0,1,0],[1,0,2,0],[2,0,3,0],[3,0,3,1],[3,1,3,2]] },
+      { id: 'plus4', edges: [[0,1,1,1],[1,1,2,1],[2,1,3,1],[1,0,1,1],[1,1,1,2],[1,2,1,3]] },
+      { id: 'house4', edges: [[1,0,0,1],[0,1,0,2],[0,2,1,3],[1,0,1,1],[1,1,1,2],[1,2,1,3],[1,0,2,0],[1,3,2,3],[2,0,3,0],[2,3,3,3],[3,0,3,1],[3,1,3,2],[3,2,3,3]] },
+      { id: 'C4', edges: [[0,3,0,2],[0,2,0,1],[0,1,0,0],[0,0,1,0],[1,0,2,0],[2,0,3,0],[3,0,3,1],[3,1,3,2],[3,2,3,3]] },
+      { id: 'zig4', edges: [[0,0,0,1],[0,1,1,1],[1,1,1,2],[1,2,2,2],[2,2,2,3],[2,3,3,3]] }
+    ];
+  }
+
+  function natekenEdgesMap(list) {
+    var map, i, e, key;
+    map = {};
+    for (i = 0; i < list.length; i++) {
+      e = list[i];
+      key = natekenEdgeKey(e[0], e[1], e[2], e[3]);
+      map[key] = 1;
+    }
+    return map;
+  }
+
+  function startNateken(fresh) {
+    var n, figs, fig, tries, map;
+    if (fresh) {
+      state.level = 'nateken';
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+      resetVoiceCycle();
+    }
+    n = (state.sessionCorrect >= 5) ? 4 : 3;
+    figs = natekenFigList(n);
+    tries = 0;
+    do {
+      fig = figs[randInt(0, figs.length - 1)];
+      tries += 1;
+    } while (fig.id === state.lastNateken && tries < 8);
+    state.lastNateken = fig.id;
+    map = natekenEdgesMap(fig.edges);
+    state.nateken = { n: n, target: map, drawn: {}, done: false, fig: fig.id };
+    natekenDrag.on = false;
+    natekenDrag.start = null;
+    hideReward();
+    showScreen('nateken');
+    updateStarsUI();
+    window.setTimeout(function () {
+      layoutNateken();
+      beginQuestionVoice();
+      speak('natekenen');
+    }, 40);
+  }
+
+  function natekenDotXY(panel, r, c) {
+    return { x: panel.padX + c * panel.stepX, y: panel.padY + r * panel.stepY };
+  }
+
+  function natekenLinesHtml(panel, map, color, preview) {
+    var html, k, e, a, b, w;
+    w = 8;
+    html = '<svg class="nateken-svg" width="' + panel.w + '" height="' + panel.h + '">';
+    for (k in map) {
+      if (!map.hasOwnProperty(k)) continue;
+      e = natekenParseKey(k);
+      a = natekenDotXY(panel, e.r1, e.c1);
+      b = natekenDotXY(panel, e.r2, e.c2);
+      html += '<line x1="' + a.x + '" y1="' + a.y + '" x2="' + b.x + '" y2="' + b.y +
+        '" stroke="' + color + '" stroke-width="' + w + '" stroke-linecap="round"/>';
+    }
+    if (preview) {
+      html += '<line x1="' + preview.x1 + '" y1="' + preview.y1 + '" x2="' + preview.x2 +
+        '" y2="' + preview.y2 + '" stroke="' + color + '" stroke-width="' + w +
+        '" stroke-linecap="round" stroke-opacity="0.45"/>';
+    }
+    html += '</svg>';
+    return html;
+  }
+
+  function natekenDotsHtml(panel, map) {
+    var html, r, c, n, pt, used, k, e, size, half;
+    n = state.nateken.n;
+    size = panel.dot;
+    half = size / 2;
+    html = '';
+    used = {};
+    for (k in map) {
+      if (!map.hasOwnProperty(k)) continue;
+      e = natekenParseKey(k);
+      used[e.r1 + ',' + e.c1] = 1;
+      used[e.r2 + ',' + e.c2] = 1;
+    }
+    for (r = 0; r < n; r++) {
+      for (c = 0; c < n; c++) {
+        pt = natekenDotXY(panel, r, c);
+        html += '<div class="nateken-dot' + (used[r + ',' + c] ? ' on' : '') +
+          '" style="left:' + (pt.x - half) + 'px;top:' + (pt.y - half) +
+          'px;width:' + size + 'px;height:' + size + 'px;"></div>';
+      }
+    }
+    return html;
+  }
+
+  function natekenMeasure(x, y, w, h, n) {
+    var inner, step, dot, padX, padY, grid, topNeed;
+    topNeed = 34;
+    inner = Math.min(w, h - topNeed) * 0.78;
+    if (inner < 80) inner = Math.min(w, h) * 0.7;
+    step = n > 1 ? inner / (n - 1) : inner;
+    grid = step * (n - 1);
+    padX = (w - grid) / 2;
+    padY = topNeed + (h - topNeed - grid) / 2;
+    if (padY < topNeed) padY = topNeed;
+    dot = Math.round(step * 0.26);
+    if (dot < 16) dot = 16;
+    if (dot > 26) dot = 26;
+    return { x: x, y: y, w: w, h: h, padX: padX, padY: padY, stepX: step, stepY: step, n: n, dot: dot };
+  }
+
+  function layoutNateken() {
+    var wrap, W, H, portrait, gap, ex, pl, src, dst, html, n;
+    wrap = $('nateken-wrap');
+    if (!wrap || !state.nateken) return;
+    n = state.nateken.n;
+    W = wrap.clientWidth || 700;
+    H = wrap.clientHeight || 500;
+    portrait = H > W + 20;
+    gap = 14;
+    if (portrait) {
+      ex = natekenMeasure(16, 10, W - 32, Math.floor(H * 0.36) - 8, n);
+      pl = natekenMeasure(16, ex.y + ex.h + gap, W - 32, H - (ex.y + ex.h + gap) - 16, n);
+    } else {
+      ex = natekenMeasure(16, 10, Math.floor(W * 0.42) - 16, H - 20, n);
+      pl = natekenMeasure(ex.x + ex.w + gap, 10, W - (ex.x + ex.w + gap) - 16, H - 20, n);
+    }
+    state.nateken.ex = ex;
+    state.nateken.pl = pl;
+    html = '';
+    html += '<div class="nateken-panel" id="nateken-src" style="left:' + ex.x + 'px;top:' + ex.y +
+      'px;width:' + ex.w + 'px;height:' + ex.h + 'px;">';
+    html += '<div class="nateken-label">Voorbeeld</div>';
+    html += natekenLinesHtml(ex, state.nateken.target, '#5C6BC0', null);
+    html += natekenDotsHtml(ex, state.nateken.target);
+    html += '</div>';
+    html += '<div class="nateken-panel" id="nateken-dst" style="left:' + pl.x + 'px;top:' + pl.y +
+      'px;width:' + pl.w + 'px;height:' + pl.h + 'px;">';
+    html += '<div class="nateken-label">Jij tekent</div>';
+    html += natekenLinesHtml(pl, state.nateken.drawn, '#43A047', natekenDrag.preview);
+    html += natekenDotsHtml(pl, state.nateken.drawn);
+    html += '<button type="button" class="tap" id="nateken-clear" data-act="nateken-clear">Wis</button>';
+    html += '</div>';
+    wrap.innerHTML = html;
+  }
+
+  function natekenEvent(e) {
+    var src;
+    if (e.touches && e.touches.length) src = e.touches[0];
+    else if (e.changedTouches && e.changedTouches.length) src = e.changedTouches[0];
+    else src = e;
+    return { x: src.clientX, y: src.clientY };
+  }
+
+  function natekenFindDot(pt) {
+    var pl, wrap, wr, x, y, r, c, n, d, best, bi, dx, dy, lim, pos;
+    if (!state.nateken || !state.nateken.pl) return null;
+    pl = state.nateken.pl;
+    wrap = $('nateken-wrap');
+    if (!wrap) return null;
+    wr = wrap.getBoundingClientRect();
+    x = pt.x - wr.left - pl.x;
+    y = pt.y - wr.top - pl.y;
+    if (x < -20 || y < -20 || x > pl.w + 20 || y > pl.h + 20) return null;
+    n = state.nateken.n;
+    best = null;
+    bi = pl.stepX * 0.42;
+    if (bi < 28) bi = 28;
+    for (r = 0; r < n; r++) {
+      for (c = 0; c < n; c++) {
+        pos = natekenDotXY(pl, r, c);
+        dx = x - pos.x;
+        dy = y - pos.y;
+        d = Math.sqrt(dx * dx + dy * dy);
+        if (d <= bi && (!best || d < best.d)) best = { r: r, c: c, d: d, x: pos.x, y: pos.y };
+      }
+    }
+    return best;
+  }
+
+  function natekenRedrawPlay() {
+    var dst, pl;
+    if (!state.nateken) return;
+    pl = state.nateken.pl;
+    dst = $('nateken-dst');
+    if (!dst || !pl) return;
+    dst.innerHTML = '<div class="nateken-label">Jij tekent</div>' +
+      natekenLinesHtml(pl, state.nateken.drawn, '#43A047', natekenDrag.preview) +
+      natekenDotsHtml(pl, state.nateken.drawn) +
+      '<button type="button" class="tap" id="nateken-clear" data-act="nateken-clear">Wis</button>';
+  }
+
+  function natekenDragStart(e) {
+    var pt, dot;
+    if (state.locked || !state.nateken || state.nateken.done) return false;
+    pt = natekenEvent(e);
+    dot = natekenFindDot(pt);
+    if (!dot) return false;
+    natekenDrag.on = true;
+    natekenDrag.start = dot;
+    natekenDrag.preview = null;
+    return true;
+  }
+
+  function natekenDragMove(e) {
+    var pt, pl, wrap, wr, x, y;
+    if (!natekenDrag.on || !natekenDrag.start || !state.nateken) return false;
+    pt = natekenEvent(e);
+    pl = state.nateken.pl;
+    wrap = $('nateken-wrap');
+    if (!wrap || !pl) return true;
+    wr = wrap.getBoundingClientRect();
+    x = pt.x - wr.left - pl.x;
+    y = pt.y - wr.top - pl.y;
+    natekenDrag.preview = { x1: natekenDrag.start.x, y1: natekenDrag.start.y, x2: x, y2: y };
+    natekenRedrawPlay();
+    return true;
+  }
+
+  function natekenSame(a, b) {
+    var k, nT, nD;
+    nT = 0;
+    nD = 0;
+    for (k in a) { if (a.hasOwnProperty(k)) nT += 1; }
+    for (k in b) { if (b.hasOwnProperty(k)) nD += 1; }
+    if (nT !== nD) return false;
+    for (k in a) {
+      if (a.hasOwnProperty(k) && !b[k]) return false;
+    }
+    return true;
+  }
+
+  function natekenDragEnd(e) {
+    var pt, dot, key, start;
+    if (!natekenDrag.on) return false;
+    start = natekenDrag.start;
+    natekenDrag.on = false;
+    pt = natekenEvent(e);
+    dot = natekenFindDot(pt);
+    natekenDrag.preview = null;
+    if (!start || !dot || !state.nateken || state.nateken.done) {
+      natekenDrag.start = null;
+      natekenRedrawPlay();
+      return true;
+    }
+    if (start.r === dot.r && start.c === dot.c) {
+      natekenDrag.start = null;
+      natekenRedrawPlay();
+      return true;
+    }
+    if (!natekenNeighbors(start.r, start.c, dot.r, dot.c)) {
+      natekenDrag.start = null;
+      natekenRedrawPlay();
+      return true;
+    }
+    key = natekenEdgeKey(start.r, start.c, dot.r, dot.c);
+    if (state.nateken.drawn[key]) {
+      delete state.nateken.drawn[key];
+    } else {
+      state.nateken.drawn[key] = 1;
+      playTone(660, 0.08, 'sine', 0.09, 0);
+    }
+    natekenDrag.start = null;
+    natekenRedrawPlay();
+    if (natekenSame(state.nateken.target, state.nateken.drawn)) {
+      state.nateken.done = true;
+      awardCorrect();
+    }
+    return true;
+  }
+
+  function natekenClear() {
+    if (!state.nateken || state.nateken.done || state.locked) return;
+    state.nateken.drawn = {};
+    natekenDrag.preview = null;
+    natekenRedrawPlay();
   }
 
   function showPuzzlesMenu() {
@@ -4990,7 +5469,7 @@
         goHome();
       } else if (state.screen === 'puzzle') {
         showPuzzleLevel();
-      } else if (state.screen === 'vormen' || state.screen === 'spiegel') {
+      } else if (state.screen === 'vormen' || state.screen === 'spiegel' || state.screen === 'nateken') {
         showPuzzlesMenu();
       } else if (state.screen === 'puzzlelevel') {
         showPuzzlesMenu();
@@ -5026,6 +5505,7 @@
     if (act === 'puzzle-game') {
       if (el.getAttribute('data-game') === 'vormen') startVormen(true);
       else if (el.getAttribute('data-game') === 'spiegel') startSpiegel(true);
+      else if (el.getAttribute('data-game') === 'nateken') startNateken(true);
       else showPuzzleLevel();
       return;
     }
@@ -5039,6 +5519,10 @@
     }
     if (act === 'spiegel-cell') {
       onSpiegelCell(el);
+      return;
+    }
+    if (act === 'nateken-clear') {
+      natekenClear();
       return;
     }
     if (act === 'verder') {
@@ -5114,6 +5598,8 @@
     if (el) setPressed(el);
     if (state.screen === 'vormen' && vormenDragStart(e)) {
       e.preventDefault();
+    } else if (state.screen === 'nateken' && natekenDragStart(e)) {
+      e.preventDefault();
     }
   }
 
@@ -5129,6 +5615,10 @@
       e.preventDefault();
       return;
     }
+    if (state.screen === 'nateken' && natekenDragMove(e)) {
+      e.preventDefault();
+      return;
+    }
     e.preventDefault();
   }
 
@@ -5137,6 +5627,11 @@
     now = new Date().getTime();
     lastTouchEnd = now;
     if (state.screen === 'vormen' && vormenDragEnd(e)) {
+      clearPressed();
+      e.preventDefault();
+      return;
+    }
+    if (state.screen === 'nateken' && natekenDragEnd(e)) {
       clearPressed();
       e.preventDefault();
       return;
@@ -5191,6 +5686,7 @@
     elSet('puzzle-home-icon', homeIconHtml());
     elSet('vormen-home-icon', homeIconHtml());
     elSet('spiegel-home-icon', homeIconHtml());
+    elSet('nateken-home-icon', homeIconHtml());
     elSet('letters-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('trace-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('names-star-icon', starSvg('#FFD54F', '#F9A825'));
@@ -5200,6 +5696,7 @@
     elSet('puzzle-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('vormen-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('spiegel-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('nateken-star-icon', starSvg('#FFD54F', '#F9A825'));
     if ($('icon-vormen')) {
       $('icon-vormen').innerHTML =
         vormSvg('circle', '#2FB3F0', '#1A7FB3', 0) +
@@ -5264,6 +5761,7 @@
         if (state.screen === 'puzzle') layoutAndDrawPuzzle();
         if (state.screen === 'vormen') layoutVormen();
         if (state.screen === 'spiegel') layoutSpiegel();
+        if (state.screen === 'nateken') layoutNateken();
       }, 250);
     }, false);
 
