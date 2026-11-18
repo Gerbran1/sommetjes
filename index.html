@@ -105,7 +105,9 @@
 
     .topbar {
       position: relative;
-      z-index: 5;
+      z-index: 40;
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
       display: -webkit-flex;
       display: flex;
       -webkit-flex-direction: row;
@@ -123,6 +125,11 @@
       -webkit-align-items: center;
       align-items: center;
       min-width: 120px;
+    }
+    .topbar-left { min-width: 200px; }
+    .icon-btn svg {
+      display: block;
+      pointer-events: none;
     }
     .topbar-right {
       -webkit-justify-content: flex-end;
@@ -976,11 +983,12 @@
     .overlay {
       position: absolute;
       left: 0;
-      top: 0;
+      top: 76px;
       right: 0;
       bottom: 0;
       background: rgba(30, 60, 90, 0.35);
       z-index: 30;
+      pointer-events: none;
       display: -webkit-flex;
       display: flex;
       -webkit-align-items: center;
@@ -989,6 +997,7 @@
       justify-content: center;
     }
     .reward-card {
+      pointer-events: auto;
       background: #FFFDF7;
       border-radius: 36px;
       width: 86%;
@@ -2063,7 +2072,7 @@
     <div id="screen-home">
       <div class="topbar">
         <div class="topbar-left">
-          <button type="button" class="tap icon-btn" id="btn-games-home" data-act="home" title="Terug">
+          <button type="button" class="tap icon-btn" id="btn-games-home" data-act="home" title="Start">
             <span id="games-home-icon"></span>
           </button>
           <button type="button" class="tap icon-btn" id="btn-sound-games" data-act="sound" title="Geluid" style="margin-left:8px;">
@@ -2111,7 +2120,10 @@
     <div id="screen-picker" class="is-hidden">
       <div class="topbar">
         <div class="topbar-left">
-          <button type="button" class="tap icon-btn" id="btn-picker-home" data-act="home" title="Terug">
+          <button type="button" class="tap icon-btn" id="btn-picker-back" data-act="back" title="Terug">
+            <span id="picker-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-picker-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="picker-home-icon"></span>
           </button>
           <button type="button" class="tap icon-btn" id="btn-sound-picker" data-act="sound" title="Geluid" style="margin-left:8px;">
@@ -2144,7 +2156,10 @@
     <div id="screen-play" class="is-hidden">
       <div class="topbar">
         <div class="topbar-left">
-          <button type="button" class="tap icon-btn" id="btn-home" data-act="home" title="Terug">
+          <button type="button" class="tap icon-btn" id="btn-play-back" data-act="back" title="Terug">
+            <span id="play-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="home-icon"></span>
           </button>
           <button type="button" class="tap icon-btn" id="btn-sound-play" data-act="sound" title="Geluid" style="margin-left:8px;">
@@ -2171,7 +2186,7 @@
     <div id="screen-letters" class="is-hidden">
       <div class="topbar">
         <div class="topbar-left">
-          <button type="button" class="tap icon-btn" id="btn-letters-home" data-act="home" title="Terug">
+          <button type="button" class="tap icon-btn" id="btn-letters-home" data-act="home" title="Start">
             <span id="letters-home-icon"></span>
           </button>
           <button type="button" class="tap icon-btn" id="btn-sound-letters" data-act="sound" title="Geluid" style="margin-left:8px;">
@@ -2214,7 +2229,7 @@
     <div id="screen-puzzles" class="is-hidden">
       <div class="topbar">
         <div class="topbar-left">
-          <button type="button" class="tap icon-btn" id="btn-puzzles-home" data-act="home" title="Terug">
+          <button type="button" class="tap icon-btn" id="btn-puzzles-home" data-act="home" title="Start">
             <span id="puzzles-home-icon"></span>
           </button>
           <button type="button" class="tap icon-btn" id="btn-sound-puzzles" data-act="sound" title="Geluid" style="margin-left:8px;">
@@ -2322,7 +2337,10 @@
     <div id="screen-puzzlelevel" class="is-hidden">
       <div class="topbar">
         <div class="topbar-left">
-          <button type="button" class="tap icon-btn" id="btn-puzzlelevel-home" data-act="home" title="Terug">
+          <button type="button" class="tap icon-btn" id="btn-puzzlelevel-back" data-act="back" title="Terug">
+            <span id="puzzlelevel-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-puzzlelevel-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="puzzlelevel-home-icon"></span>
           </button>
           <button type="button" class="tap icon-btn" id="btn-sound-puzzlelevel" data-act="sound" title="Geluid" style="margin-left:8px;">
@@ -2363,7 +2381,10 @@
     <div id="screen-puzzle" class="is-hidden">
       <div class="topbar">
         <div class="topbar-left">
-          <button type="button" class="tap icon-btn" id="btn-puzzle-home" data-act="home" title="Terug">
+          <button type="button" class="tap icon-btn" id="btn-puzzle-back" data-act="back" title="Terug">
+            <span id="puzzle-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-puzzle-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="puzzle-home-icon"></span>
           </button>
           <button type="button" class="tap icon-btn" id="btn-sound-puzzle" data-act="sound" title="Geluid" style="margin-left:8px;">
@@ -2389,7 +2410,10 @@
     <div id="screen-vormen" class="is-hidden">
       <div class="topbar">
         <div class="topbar-left">
-          <button type="button" class="tap icon-btn" id="btn-vormen-home" data-act="home" title="Terug">
+          <button type="button" class="tap icon-btn" id="btn-vormen-back" data-act="back" title="Terug">
+            <span id="vormen-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-vormen-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="vormen-home-icon"></span>
           </button>
           <button type="button" class="tap icon-btn" id="btn-sound-vormen" data-act="sound" title="Geluid" style="margin-left:8px;">
@@ -2410,7 +2434,10 @@
     <div id="screen-spiegel" class="is-hidden">
       <div class="topbar">
         <div class="topbar-left">
-          <button type="button" class="tap icon-btn" id="btn-spiegel-home" data-act="home" title="Terug">
+          <button type="button" class="tap icon-btn" id="btn-spiegel-back" data-act="back" title="Terug">
+            <span id="spiegel-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-spiegel-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="spiegel-home-icon"></span>
           </button>
           <button type="button" class="tap icon-btn" id="btn-sound-spiegel" data-act="sound" title="Geluid" style="margin-left:8px;">
@@ -2431,7 +2458,10 @@
     <div id="screen-nateken" class="is-hidden">
       <div class="topbar">
         <div class="topbar-left">
-          <button type="button" class="tap icon-btn" id="btn-nateken-home" data-act="home" title="Terug">
+          <button type="button" class="tap icon-btn" id="btn-nateken-back" data-act="back" title="Terug">
+            <span id="nateken-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-nateken-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="nateken-home-icon"></span>
           </button>
           <button type="button" class="tap icon-btn" id="btn-sound-nateken" data-act="sound" title="Geluid" style="margin-left:8px;">
@@ -2452,7 +2482,10 @@
     <div id="screen-tangram" class="is-hidden">
       <div class="topbar">
         <div class="topbar-left">
-          <button type="button" class="tap icon-btn" id="btn-tangram-home" data-act="home" title="Terug">
+          <button type="button" class="tap icon-btn" id="btn-tangram-back" data-act="back" title="Terug">
+            <span id="tangram-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-tangram-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="tangram-home-icon"></span>
           </button>
           <button type="button" class="tap icon-btn" id="btn-sound-tangram" data-act="sound" title="Geluid" style="margin-left:8px;">
@@ -2473,7 +2506,10 @@
     <div id="screen-waar" class="is-hidden">
       <div class="topbar">
         <div class="topbar-left">
-          <button type="button" class="tap icon-btn" id="btn-waar-home" data-act="home" title="Terug">
+          <button type="button" class="tap icon-btn" id="btn-waar-back" data-act="back" title="Terug">
+            <span id="waar-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-waar-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="waar-home-icon"></span>
           </button>
           <button type="button" class="tap icon-btn" id="btn-sound-waar" data-act="sound" title="Geluid" style="margin-left:8px;">
@@ -2496,7 +2532,10 @@
     <div id="screen-doolhof" class="is-hidden">
       <div class="topbar">
         <div class="topbar-left">
-          <button type="button" class="tap icon-btn" id="btn-doolhof-home" data-act="home" title="Terug">
+          <button type="button" class="tap icon-btn" id="btn-doolhof-back" data-act="back" title="Terug">
+            <span id="doolhof-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-doolhof-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="doolhof-home-icon"></span>
           </button>
           <button type="button" class="tap icon-btn" id="btn-sound-doolhof" data-act="sound" title="Geluid" style="margin-left:8px;">
@@ -2517,7 +2556,10 @@
     <div id="screen-trace" class="is-hidden">
       <div class="topbar">
         <div class="topbar-left">
-          <button type="button" class="tap icon-btn" id="btn-trace-home" data-act="home" title="Terug">
+          <button type="button" class="tap icon-btn" id="btn-trace-back" data-act="back" title="Terug">
+            <span id="trace-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-trace-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="trace-home-icon"></span>
           </button>
           <button type="button" class="tap icon-btn" id="btn-sound-trace" data-act="sound" title="Geluid" style="margin-left:8px;">
@@ -2542,7 +2584,10 @@
     <div id="screen-names" class="is-hidden">
       <div class="topbar">
         <div class="topbar-left">
-          <button type="button" class="tap icon-btn" id="btn-names-home" data-act="home" title="Terug">
+          <button type="button" class="tap icon-btn" id="btn-names-back" data-act="back" title="Terug">
+            <span id="names-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-names-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="names-home-icon"></span>
           </button>
           <button type="button" class="tap icon-btn" id="btn-sound-names" data-act="sound" title="Geluid" style="margin-left:8px;">
@@ -2567,7 +2612,10 @@
     <div id="screen-nameplay" class="is-hidden">
       <div class="topbar">
         <div class="topbar-left">
-          <button type="button" class="tap icon-btn" id="btn-nameplay-home" data-act="home" title="Terug">
+          <button type="button" class="tap icon-btn" id="btn-nameplay-back" data-act="back" title="Terug">
+            <span id="nameplay-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-nameplay-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="nameplay-home-icon"></span>
           </button>
           <button type="button" class="tap icon-btn" id="btn-sound-nameplay" data-act="sound" title="Geluid" style="margin-left:8px;">
@@ -2589,7 +2637,7 @@
 
   <div id="burst" class="is-hidden"></div>
   <div id="toast" class="is-hidden"></div>
-  <div id="overlay-reward" class="overlay is-hidden">
+  <div id="overlay-reward" class="overlay is-hidden" data-act="verder">
     <div class="reward-card">
       <div class="reward-stars" id="reward-stars"></div>
       <div class="reward-text" id="reward-text">Wat knap!</div>
@@ -2888,6 +2936,12 @@
   function homeIconHtml() {
     return '<svg viewBox="0 0 24 24" width="30" height="30" focusable="false">' +
       '<path d="M12 3.2 L21.2 11.6 V20.8 H15.2 V14.2 H8.8 V20.8 H2.8 V11.6 Z" fill="#1A7FB3" stroke="#1A7FB3" stroke-width="1.2" stroke-linejoin="round"/>' +
+      '</svg>';
+  }
+
+  function backIconHtml() {
+    return '<svg viewBox="0 0 24 24" width="30" height="30" focusable="false">' +
+      '<path d="M15.2 4.2 L7.2 12 L15.2 19.8" fill="none" stroke="#1A7FB3" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>' +
       '</svg>';
   }
 
@@ -4398,9 +4452,21 @@
     $('reward-stars').innerHTML = html;
     reward = pick(REWARD);
     $('reward-text').innerHTML = reward.text;
-    $('overlay-reward').className = 'overlay';
+    $('overlay-reward').className = 'overlay tap';
     playReward();
     speak(reward.id);
+    scheduleAfterPraise(function () {
+      finishRound();
+    });
+  }
+
+  function finishRound() {
+    var el;
+    el = $('overlay-reward');
+    if (!el || (' ' + el.className + ' ').indexOf('is-hidden') !== -1) return;
+    state.towardsReward = 0;
+    updateStarsUI();
+    goBack();
   }
 
   function hideReward() {
@@ -6398,14 +6464,53 @@
     }
   }
 
-  function goHome() {
+  function leavePlay() {
+    cancelAdvanceWait();
+    stopSpeak();
+    state.locked = false;
+    if (typeof vormenDrag !== 'undefined') vormenDrag.on = false;
+    if (typeof natekenDrag !== 'undefined') natekenDrag.on = false;
+    if (typeof tangramDrag !== 'undefined') tangramDrag.on = false;
+    if (typeof doolhofDrag !== 'undefined') doolhofDrag.on = false;
+    if (typeof traceState !== 'undefined') traceState.drawing = false;
+    hideReward();
+    hideToast();
+    hideBurst();
+  }
+
+  function goToStart() {
+    leavePlay();
     state.level = null;
     state.letterMode = null;
-    state.locked = false;
     state.question = null;
-    hideReward();
     showScreen('start');
     updateStarsUI();
+  }
+
+  function goHome() {
+    goToStart();
+  }
+
+  function goBack() {
+    var s;
+    leavePlay();
+    s = state.screen;
+    if (s === 'play') {
+      if (state.level === 'tables') showPicker();
+      else if (state.level === 'letters') showLettersMenu();
+      else showGamesMenu();
+    } else if (s === 'picker') {
+      showGamesMenu();
+    } else if (s === 'trace' || s === 'names' || s === 'nameplay') {
+      showLettersMenu();
+    } else if (s === 'puzzle') {
+      showPuzzleLevel();
+    } else if (s === 'puzzlelevel' || s === 'vormen' || s === 'spiegel' || s === 'nateken' ||
+               s === 'tangram' || s === 'waar' || s === 'doolhof') {
+      showPuzzlesMenu();
+    } else {
+      goToStart();
+    }
   }
 
   function showGamesMenu() {
@@ -6482,12 +6587,31 @@
   function findClickable(el) {
     while (el && el !== document.body && el !== document.documentElement) {
       if (el.getAttribute && el.getAttribute('data-act') &&
-          el.className && (' ' + el.className + ' ').indexOf(' tap ') !== -1) {
+          el.className && (' ' + String(el.className) + ' ').indexOf(' tap ') !== -1) {
         return el;
       }
       el = el.parentNode;
     }
     return null;
+  }
+
+  function findClickableFromEvent(e) {
+    var el, src, node;
+    el = findClickable(e.target);
+    if (el) return el;
+    src = (e.changedTouches && e.changedTouches.length) ? e.changedTouches[0] : e;
+    if (src && document.elementFromPoint && src.clientX != null) {
+      try { node = document.elementFromPoint(src.clientX, src.clientY); } catch (err) { node = null; }
+      if (node) el = findClickable(node);
+    }
+    return el;
+  }
+
+  function isNavAct(el) {
+    var a;
+    if (!el) return false;
+    a = el.getAttribute('data-act');
+    return a === 'home' || a === 'back' || a === 'sound';
   }
 
   function clearPressed() {
@@ -6514,30 +6638,11 @@
       return;
     }
     if (act === 'home') {
-      cancelAdvanceWait();
-      if (state.screen === 'play' && state.level === 'tables') {
-        showPicker();
-      } else if (state.screen === 'play' && state.level === 'letters') {
-        showLettersMenu();
-      } else if (state.screen === 'trace') {
-        showLettersMenu();
-      } else if (state.screen === 'nameplay' || state.screen === 'names') {
-        showLettersMenu();
-      } else if (state.screen === 'letters') {
-        goHome();
-      } else if (state.screen === 'puzzle') {
-        showPuzzleLevel();
-      } else if (state.screen === 'vormen' || state.screen === 'spiegel' || state.screen === 'nateken' || state.screen === 'tangram' || state.screen === 'waar' || state.screen === 'doolhof') {
-        showPuzzlesMenu();
-      } else if (state.screen === 'puzzlelevel') {
-        showPuzzlesMenu();
-      } else if (state.screen === 'puzzles') {
-        goHome();
-      } else if (state.screen === 'play' || state.screen === 'picker' || state.screen === 'home') {
-        showGamesMenu();
-      } else {
-        goHome();
-      }
+      goToStart();
+      return;
+    }
+    if (act === 'back') {
+      goBack();
       return;
     }
     if (act === 'goto-games') {
@@ -6591,11 +6696,7 @@
       return;
     }
     if (act === 'verder') {
-      cancelAdvanceWait();
-      hideReward();
-      state.towardsReward = 0;
-      updateStarsUI();
-      nextQuestion();
+      finishRound();
       return;
     }
     if (act === 'level') {
@@ -6700,35 +6801,41 @@
   }
 
   function onTouchEnd(e) {
-    var el, now;
+    var el, now, handled;
     now = new Date().getTime();
-    lastTouchEnd = now;
+    handled = false;
     if (state.screen === 'vormen' && vormenDragEnd(e)) {
       clearPressed();
       e.preventDefault();
+      lastTouchEnd = now;
       return;
     }
     if (state.screen === 'nateken' && natekenDragEnd(e)) {
       clearPressed();
       e.preventDefault();
+      lastTouchEnd = now;
       return;
     }
     if (state.screen === 'tangram' && tangramDragEnd(e)) {
       clearPressed();
       e.preventDefault();
+      lastTouchEnd = now;
       return;
     }
     if (state.screen === 'doolhof' && doolhofDragEnd(e)) {
       clearPressed();
       e.preventDefault();
+      lastTouchEnd = now;
       return;
     }
-    el = findClickable(e.target);
+    el = findClickableFromEvent(e);
     clearPressed();
-    if (!touchMoved && el && (now - touchStartTime) < 700) {
+    if (el && (now - touchStartTime) < 700 && (!touchMoved || isNavAct(el))) {
       e.preventDefault();
       handleAct(el);
+      handled = true;
     }
+    lastTouchEnd = handled ? now : 0;
   }
 
   function onTouchCancel() {
@@ -6745,7 +6852,7 @@
       e.stopPropagation();
       return;
     }
-    el = findClickable(e.target);
+    el = findClickableFromEvent(e);
     if (el) {
       handleAct(el);
     }
@@ -6777,6 +6884,19 @@
     elSet('tangram-home-icon', homeIconHtml());
     elSet('waar-home-icon', homeIconHtml());
     elSet('doolhof-home-icon', homeIconHtml());
+    elSet('play-back-icon', backIconHtml());
+    elSet('picker-back-icon', backIconHtml());
+    elSet('trace-back-icon', backIconHtml());
+    elSet('names-back-icon', backIconHtml());
+    elSet('nameplay-back-icon', backIconHtml());
+    elSet('puzzlelevel-back-icon', backIconHtml());
+    elSet('puzzle-back-icon', backIconHtml());
+    elSet('vormen-back-icon', backIconHtml());
+    elSet('spiegel-back-icon', backIconHtml());
+    elSet('nateken-back-icon', backIconHtml());
+    elSet('tangram-back-icon', backIconHtml());
+    elSet('waar-back-icon', backIconHtml());
+    elSet('doolhof-back-icon', backIconHtml());
     elSet('letters-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('trace-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('names-star-icon', starSvg('#FFD54F', '#F9A825'));
