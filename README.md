@@ -21,6 +21,10 @@ Op het startscherm kies je **Getallen**, **Letters** of **Puzzels**.
 
 Bij de getallen- en letterspellen heeft elke vraag drie grote antwoordknoppen. Bij een goed antwoord of een voltooide puzzel krijg je een ster. Na vijf sterren volgt een klein feestje. Een fout antwoord is niet erg: je mag het gewoon nog eens proberen.
 
+
+De app praat met opgenomen stemmen van Colette en Maarten (nederlands). Ze wisselen elkaar per vraag af; de aanmoediging na een antwoord komt van dezelfde stem als de vraag. Op het startscherm kies je wie er speelt: Jasper, Laurens of Mirthe. Die keuze wordt onthouden, en het spel **Mijn naam** start dan met die speler. Af en toe hoor je een persoonlijke aanmoediging, zoals "Goed zo, Jasper!".
+
+
 ## Op de iPad zetten (aanbevolen: hetzelfde wifinetwerk)
 
 De betrouwbaarste manier voor een iPad 2 is de app vanaf een computer in huis aan te bieden, zónder internet en zónder account.

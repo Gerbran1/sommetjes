@@ -463,12 +463,100 @@
     .puzzle-glyph span.pg4 { background: #81D4FA; }
 
     .home-hint {
-      font-size: 16px;
+      font-size: 15px;
       color: #215078;
       text-align: center;
-      margin: 4px 0 6px 0;
-      min-height: 20px;
+      margin: 6px 0 0 0;
+      min-height: 18px;
       font-weight: 600;
+    }
+
+    #player-bar {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+      width: 100%;
+      max-width: 980px;
+      margin: 6px auto 8px auto;
+      text-align: center;
+    }
+    .player-label {
+      display: block;
+      width: 100%;
+      font-size: 16px;
+      font-weight: 700;
+      color: #215078;
+      margin: 0 0 8px 0;
+      line-height: 1.2;
+    }
+    #player-grid {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: stretch;
+      align-items: stretch;
+      -webkit-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+      width: 100%;
+      max-width: 760px;
+    }
+    .player-btn {
+      -webkit-flex: 1 1 0;
+      flex: 1 1 0;
+      max-width: 230px;
+      min-height: 56px;
+      margin: 0 8px;
+      border-radius: 22px;
+      color: #fff;
+      font-size: 24px;
+      font-weight: 800;
+      padding: 8px 10px;
+      line-height: 1.1;
+    }
+    .player-btn.pressed, .player-btn:active {
+      -webkit-transform: translateY(4px);
+      transform: translateY(4px);
+    }
+    .player-jasper {
+      background: #2FB3F0;
+      -webkit-box-shadow: 0 6px 0 #1A7FB3, 0 8px 12px rgba(0,0,0,0.12);
+      box-shadow: 0 6px 0 #1A7FB3, 0 8px 12px rgba(0,0,0,0.12);
+    }
+    .player-jasper.pressed, .player-jasper:active {
+      -webkit-box-shadow: 0 2px 0 #1A7FB3, 0 3px 6px rgba(0,0,0,0.12);
+      box-shadow: 0 2px 0 #1A7FB3, 0 3px 6px rgba(0,0,0,0.12);
+    }
+    .player-laurens {
+      background: #4CC86E;
+      -webkit-box-shadow: 0 6px 0 #2E9A4F, 0 8px 12px rgba(0,0,0,0.12);
+      box-shadow: 0 6px 0 #2E9A4F, 0 8px 12px rgba(0,0,0,0.12);
+    }
+    .player-laurens.pressed, .player-laurens:active {
+      -webkit-box-shadow: 0 2px 0 #2E9A4F, 0 3px 6px rgba(0,0,0,0.12);
+      box-shadow: 0 2px 0 #2E9A4F, 0 3px 6px rgba(0,0,0,0.12);
+    }
+    .player-mirthe {
+      background: #FF7EB3;
+      -webkit-box-shadow: 0 6px 0 #D44E86, 0 8px 12px rgba(0,0,0,0.12);
+      box-shadow: 0 6px 0 #D44E86, 0 8px 12px rgba(0,0,0,0.12);
+    }
+    .player-mirthe.pressed, .player-mirthe:active {
+      -webkit-box-shadow: 0 2px 0 #D44E86, 0 3px 6px rgba(0,0,0,0.12);
+      box-shadow: 0 2px 0 #D44E86, 0 3px 6px rgba(0,0,0,0.12);
+    }
+    .player-btn.selected {
+      -webkit-box-shadow: 0 0 0 4px #FFD54F, 0 6px 0 rgba(0,0,0,0.18), 0 8px 12px rgba(0,0,0,0.12);
+      box-shadow: 0 0 0 4px #FFD54F, 0 6px 0 rgba(0,0,0,0.18), 0 8px 12px rgba(0,0,0,0.12);
+    }
+    .player-btn.selected.pressed, .player-btn.selected:active {
+      -webkit-box-shadow: 0 0 0 4px #FFD54F, 0 2px 0 rgba(0,0,0,0.18);
+      box-shadow: 0 0 0 4px #FFD54F, 0 2px 0 rgba(0,0,0,0.18);
     }
 
     .tbl-icon {
@@ -1361,9 +1449,10 @@
     @media screen and (max-width: 800px) {
       .title { font-size: 54px; }
       .sun { width: 96px; height: 96px; }
-      .choice-btn { min-height: 220px; }
+      .choice-btn { min-height: 200px; }
       .choice-glyph { font-size: 52px; }
       .choice-label { font-size: 28px; }
+      .player-btn { min-height: 64px; font-size: 26px; }
       .puzzle-glyph { width: 64px; height: 64px; }
       .puzzle-glyph span { width: 26px; height: 26px; }
       .level-btn { min-height: 160px; }
@@ -1383,9 +1472,11 @@
     @media screen and (max-height: 800px) {
       .sun { width: 72px; height: 72px; }
       .title { font-size: 46px; }
-      .choice-btn { min-height: 168px; }
-      .choice-glyph { font-size: 48px; }
-      .choice-label { font-size: 26px; }
+      .choice-btn { min-height: 148px; }
+      .choice-glyph { font-size: 44px; }
+      .choice-label { font-size: 24px; }
+      .player-btn { min-height: 46px; font-size: 20px; margin: 0 6px; }
+      .player-label { font-size: 15px; margin-bottom: 8px; }
       .puzzle-glyph { width: 56px; height: 56px; }
       .puzzle-glyph span { width: 22px; height: 22px; margin: 2px; }
       .level-btn { min-height: 118px; }
@@ -1441,6 +1532,7 @@
         <div class="sun" id="sun-icon"></div>
         <h1 class="title">Sommetjes</h1>
         <div class="subtitle">Kies een spel</div>
+        <div class="home-hint" id="home-hint"></div>
       </div>
 
       <div id="choice-grid">
@@ -1460,7 +1552,14 @@
           <div class="choice-label">Puzzels</div>
         </button>
       </div>
-      <div class="home-hint" id="home-hint"></div>
+      <div id="player-bar">
+        <div class="player-label">Wie speelt?</div>
+        <div id="player-grid">
+          <button type="button" class="tap player-btn player-jasper" id="btn-player-jasper" data-act="pick-player" data-name="Jasper">Jasper</button>
+          <button type="button" class="tap player-btn player-laurens" id="btn-player-laurens" data-act="pick-player" data-name="Laurens">Laurens</button>
+          <button type="button" class="tap player-btn player-mirthe" id="btn-player-mirthe" data-act="pick-player" data-name="Mirthe">Mirthe</button>
+        </div>
+      </div>
     </div>
 
     <div id="screen-home">
@@ -1796,8 +1895,26 @@
   'use strict';
 
   var KINDS = ['apple', 'star', 'ball', 'flower', 'balloon', 'pear'];
-  var PRAISE = ['Goed zo!', 'Super!', 'Wat knap!', 'Prima!', 'Ja!', 'Goed gedaan!'];
-  var REWARD = ['Wat knap!', 'Super gedaan!', 'Vijf sterren!', 'Goed zo!'];
+  var PRAISE = [
+    { id: 'praise-goed-zo', text: 'Goed zo!' },
+    { id: 'praise-super', text: 'Super!' },
+    { id: 'praise-wat-knap', text: 'Wat knap!' },
+    { id: 'praise-prima', text: 'Prima!' },
+    { id: 'praise-ja', text: 'Ja!' },
+    { id: 'praise-goed-gedaan', text: 'Goed gedaan!' }
+  ];
+  var PERSONAL_PRAISE = [
+    { id: 'praise-goed-zo', text: 'Goed zo, {name}!' },
+    { id: 'praise-knap-gedaan', text: 'Knap gedaan, {name}!' },
+    { id: 'praise-super', text: 'Super, {name}!' },
+    { id: 'praise-wat-knap', text: 'Wat knap, {name}!' }
+  ];
+  var REWARD = [
+    { id: 'reward-wat-knap', text: 'Wat knap!' },
+    { id: 'reward-super-gedaan', text: 'Super gedaan!' },
+    { id: 'reward-vijf-sterren', text: 'Vijf sterren!' },
+    { id: 'reward-goed-zo', text: 'Goed zo!' }
+  ];
 
   var state = {
     screen: 'home',
@@ -1824,7 +1941,10 @@
     nameTiles: null,
     puzzleN: 0,
     puzzlePic: -1,
-    puzzleOrder: null
+    puzzleOrder: null,
+    playerName: '',
+    voiceName: null,
+    lastWasPersonal: false
   };
 
   var toastTimer = null;
@@ -1876,6 +1996,8 @@
       }
       var so = window.localStorage.getItem('sommetjes-sound');
       if (so === '0') state.soundOn = false;
+      var pl = window.localStorage.getItem('sommetjes-player');
+      if (pl === 'Jasper' || pl === 'Laurens' || pl === 'Mirthe') state.playerName = pl;
     } catch (e) {}
   }
 
@@ -1889,6 +2011,44 @@
     try {
       window.localStorage.setItem('sommetjes-sound', state.soundOn ? '1' : '0');
     } catch (e) {}
+  }
+
+  function savePlayer() {
+    try {
+      if (state.playerName) window.localStorage.setItem('sommetjes-player', state.playerName);
+    } catch (e) {}
+  }
+
+  function setPlayer(name) {
+    if (name !== 'Jasper' && name !== 'Laurens' && name !== 'Mirthe') return;
+    state.playerName = name;
+    savePlayer();
+    updatePlayerUI();
+  }
+
+  function updatePlayerUI() {
+    var names, i, el, on;
+    names = ['Jasper', 'Laurens', 'Mirthe'];
+    for (i = 0; i < names.length; i++) {
+      el = $('btn-player-' + names[i].toLowerCase());
+      if (!el) continue;
+      on = state.playerName === names[i];
+      el.className = 'tap player-btn player-' + names[i].toLowerCase() + (on ? ' selected' : '');
+    }
+  }
+
+  function choosePraise() {
+    var item, name, usePersonal;
+    name = state.playerName;
+    usePersonal = !!(name && !state.lastWasPersonal && Math.random() < 0.3);
+    if (usePersonal) {
+      item = pick(PERSONAL_PRAISE);
+      state.lastWasPersonal = true;
+      return { id: item.id + '-' + name.toLowerCase(), text: item.text.replace('{name}', name) };
+    }
+    state.lastWasPersonal = false;
+    item = pick(PRAISE);
+    return { id: item.id, text: item.text };
   }
 
   /* ---------- SVG ---------- */
@@ -2083,35 +2243,70 @@
     playTone(1046, 0.32, 'sine', 0.13, 0.36);
   }
 
-  function speak(text, rate) {
-    var u, voices, i, chosen;
-    if (!state.soundOn) return;
-    if (!text) return;
+  var voiceAudio = null;
+  var audioUnlocked = false;
+  var lastClipKey = '';
+  var lastClipAt = 0;
+
+  function ensureVoiceAudio() {
+    if (!voiceAudio) {
+      voiceAudio = new Audio();
+      try { voiceAudio.setAttribute('preload', 'auto'); } catch (e1) {}
+      try { voiceAudio.setAttribute('playsinline', 'playsinline'); } catch (e2) {}
+    }
+    return voiceAudio;
+  }
+
+  function unlockAudio() {
+    var a;
+    if (audioUnlocked) return;
+    a = ensureVoiceAudio();
     try {
-      if (!window.speechSynthesis || typeof window.SpeechSynthesisUtterance === 'undefined') {
-        return;
-      }
-      window.speechSynthesis.cancel();
-      u = new window.SpeechSynthesisUtterance(text);
-      u.lang = 'nl-NL';
-      u.rate = rate ? rate : 0.9;
-      u.pitch = 1.05;
-      u.volume = 1;
-      try {
-        voices = window.speechSynthesis.getVoices();
-        if (voices && voices.length) {
-          chosen = null;
-          for (i = 0; i < voices.length; i++) {
-            if (voices[i].lang && voices[i].lang.toLowerCase().indexOf('nl') === 0) {
-              chosen = voices[i];
-              break;
-            }
-          }
-          if (chosen) u.voice = chosen;
-        }
-      } catch (e1) {}
-      window.speechSynthesis.speak(u);
-    } catch (e2) {}
+      a.src = 'audio/silence.mp3';
+      a.play();
+      a.pause();
+      if (a.currentTime) a.currentTime = 0;
+    } catch (e) {}
+    audioUnlocked = true;
+  }
+
+  function stopSpeak() {
+    if (!voiceAudio) return;
+    try {
+      voiceAudio.pause();
+      if (voiceAudio.currentTime) voiceAudio.currentTime = 0;
+    } catch (e) {}
+  }
+
+  function beginQuestionVoice() {
+    state.voiceName = (state.voiceName === 'colette') ? 'maarten' : 'colette';
+    return state.voiceName;
+  }
+
+  function resetVoiceCycle() {
+    state.voiceName = null;
+  }
+
+  function speak(id, _rate) {
+    var a, src, now, key, voice;
+    if (!state.soundOn) return;
+    if (!id) return;
+    voice = state.voiceName || 'colette';
+    now = new Date().getTime();
+    key = voice + '/' + id;
+    if (key === lastClipKey && now - lastClipAt < 1000) return;
+    lastClipKey = key;
+    lastClipAt = now;
+    stopSpeak();
+    a = ensureVoiceAudio();
+    src = 'audio/' + voice + '/' + id + '.mp3';
+    a.onerror = function () {
+      try { a.pause(); } catch (e2) {}
+    };
+    try {
+      a.src = src;
+      a.play();
+    } catch (e) {}
   }
 
   /* ---------- questions ---------- */
@@ -2148,7 +2343,7 @@
       kind: kind,
       answer: n,
       prompt: 'Hoeveel?',
-      speech: 'Hoeveel zijn het?',
+      speech: 'count',
       choices: makeChoices(n, 1, 10)
     };
     return q;
@@ -2172,7 +2367,7 @@
       b: b,
       answer: sum,
       prompt: a + ' + ' + b + ' = ?',
-      speech: a + ' plus ' + b + '. Hoeveel is dat?',
+      speech: 'plus-' + a + '-' + b,
       choices: makeChoices(sum, 1, maxSum)
     };
     return q;
@@ -2195,7 +2390,7 @@
       take: take,
       answer: left,
       prompt: total + ' − ' + take + ' = ?',
-      speech: 'Er zijn ' + total + ', er gaan ' + take + ' weg. Hoeveel blijven er?',
+      speech: 'minus-' + total + '-' + take,
       choices: makeChoices(left, 0, maxN)
     };
     return q;
@@ -2268,7 +2463,7 @@
       b: b,
       answer: product,
       prompt: a + ' × ' + b + ' = ?',
-      speech: dutchNum(a) + ' keer ' + dutchNum(b),
+      speech: 'keer-' + a + '-' + b,
       choices: makeTableChoices(a, b),
       showVisual: product <= 30
     };
@@ -2341,6 +2536,7 @@
         btn.className = 'tap answer-btn';
       }
       updateStarsUI();
+      beginQuestionVoice();
       speak(q.speech);
       return;
     }
@@ -2380,6 +2576,7 @@
       btn.className = 'tap answer-btn';
     }
     updateStarsUI();
+    beginQuestionVoice();
     speak(q.speech);
   }
 
@@ -2534,7 +2731,7 @@
       mode: 'zoeken',
       answer: ch,
       prompt: '',
-      speech: 'Waar is de ' + letterSound(ch) + '?',
+      speech: 'zoek-' + ch,
       choices: makeLetterChoices(ch)
     };
   }
@@ -2551,7 +2748,7 @@
       mode: 'begint',
       answer: w.letter,
       prompt: '',
-      speech: 'Waar begint ' + w.word + ' mee?',
+      speech: 'begint-' + w.word,
       choices: makeLetterChoices(w.letter),
       word: w
     };
@@ -2591,7 +2788,8 @@
     state.currentSpeech = q.speech;
     showRepeatBtn(false);
     updateStarsUI();
-    speak(q.speech, 0.8);
+    beginQuestionVoice();
+    speak(q.speech);
   }
 
   function showRepeatBtn(inTopbar) {
@@ -2623,14 +2821,20 @@
     state.locked = false;
     state.lastLetter = '';
     state.lastWord = '';
+    state.lastWasPersonal = false;
+    resetVoiceCycle();
     hideReward();
     if (mode === 'trace') {
       showScreen('trace');
       updateStarsUI();
       window.setTimeout(function () { startTraceLetter(); }, 60);
     } else if (mode === 'naam') {
-      showScreen('names');
-      updateStarsUI();
+      if (state.playerName) {
+        startName(state.playerName);
+      } else {
+        showScreen('names');
+        updateStarsUI();
+      }
     } else {
       showScreen('play');
       nextQuestion();
@@ -2655,12 +2859,17 @@
       updateStarsUI();
       window.setTimeout(function () { startTraceLetter(); }, 60);
     } else if (state.letterMode === 'naam') {
-      showScreen('names');
-      updateStarsUI();
+      if (state.playerName) {
+        startName(state.playerName);
+      } else {
+        showScreen('names');
+        updateStarsUI();
+      }
     }
   }
 
   function awardCorrect() {
+    var praise;
     state.locked = true;
     state.stars += 1;
     state.sessionCorrect += 1;
@@ -2668,8 +2877,9 @@
     saveStars();
     playSuccess();
     showBurst();
-    showToast(pick(PRAISE), true);
-    speak(pick(PRAISE));
+    praise = choosePraise();
+    showToast(praise.text, true);
+    speak(praise.id);
     updateStarsUI();
     window.setTimeout(function () {
       if (state.towardsReward >= 5) {
@@ -2739,7 +2949,7 @@
       tries += 1;
     } while (ch === state.lastLetter && tries < 8);
     state.lastLetter = ch;
-    state.currentSpeech = letterSound(ch);
+    state.currentSpeech = 'overtrek-' + ch;
     traceState.letter = ch;
     traceState.strokes = [];
     traceState.current = null;
@@ -2750,7 +2960,8 @@
     if (prompt) prompt.innerHTML = ch;
     bindTraceCanvas();
     sizeAndDrawTrace();
-    speak('Overtrek de ' + letterSound(ch), 0.8);
+    beginQuestionVoice();
+    speak(state.currentSpeech);
   }
 
   function sizeAndDrawTrace() {
@@ -2947,7 +3158,8 @@
     state.locked = false;
     showScreen('nameplay');
     renderNamePlay();
-    speak(name);
+    beginQuestionVoice();
+    speak('name-' + name.toLowerCase());
   }
 
   function renderNamePlay() {
@@ -3000,7 +3212,7 @@
       playWrong();
       el.className = 'tap name-tile shake';
       showToast('Probeer nog eens', false);
-      speak('Probeer nog eens');
+      speak('retry');
       window.setTimeout(function () {
         if (el && el.className.indexOf('used') === -1) {
           el.className = 'tap name-tile';
@@ -3107,16 +3319,17 @@
   }
 
   function showReward() {
-    var i, html;
+    var i, html, reward;
     html = '';
     for (i = 0; i < 3; i++) {
       html += '<span class="rs">' + starSvg('#FFD54F', '#F9A825') + '</span>';
     }
     $('reward-stars').innerHTML = html;
-    $('reward-text').innerHTML = pick(REWARD);
+    reward = pick(REWARD);
+    $('reward-text').innerHTML = reward.text;
     $('overlay-reward').className = 'overlay';
     playReward();
-    speak($('reward-text').innerHTML);
+    speak(reward.id);
   }
 
   function hideReward() {
@@ -3162,9 +3375,14 @@
     hideReward();
     showScreen('puzzle');
     updateStarsUI();
+    if (fresh) {
+      resetVoiceCycle();
+      state.lastWasPersonal = false;
+    }
     window.setTimeout(function () {
       layoutAndDrawPuzzle();
-      if (fresh) speak('Leg de puzzel. Tik op twee stukjes.');
+      beginQuestionVoice();
+      speak('puzzel');
     }, 50);
   }
 
@@ -3597,13 +3815,15 @@
     state.lastA = -1;
     state.lastB = -1;
     state.minusHard = false;
+    state.lastWasPersonal = false;
+    resetVoiceCycle();
     hideRepeatBtn();
     showScreen('play');
     nextQuestion();
   }
 
   function onAnswer(btn) {
-    var val, correct;
+    var val, correct, praiseA;
     if (state.locked) return;
     if (!state.question) return;
     val = btn.getAttribute('data-value');
@@ -3618,8 +3838,9 @@
       btn.className = 'tap answer-btn is-correct';
       playSuccess();
       showBurst();
-      showToast(pick(PRAISE), true);
-      speak(btn ? pick(PRAISE) : 'Goed zo!');
+      praiseA = choosePraise();
+      showToast(praiseA.text, true);
+      speak(praiseA.id);
       updateStarsUI();
       window.setTimeout(function () {
         if (state.towardsReward >= 5) {
@@ -3632,7 +3853,7 @@
       playWrong();
       btn.className = 'tap answer-btn is-wrong shake';
       showToast('Probeer nog eens', false);
-      speak('Probeer nog eens');
+      speak('retry');
       window.setTimeout(function () {
         if (btn && btn.className.indexOf('is-correct') === -1) {
           btn.className = 'tap answer-btn is-wrong';
@@ -3647,9 +3868,10 @@
     updateSoundIcons();
     if (state.soundOn) {
       ensureAudio();
+      unlockAudio();
       playSuccess();
-    } else if (window.speechSynthesis) {
-      try { window.speechSynthesis.cancel(); } catch (e) {}
+    } else {
+      stopSpeak();
     }
   }
 
@@ -3695,10 +3917,9 @@
         showLettersMenu();
       } else if (state.screen === 'trace') {
         showLettersMenu();
-      } else if (state.screen === 'nameplay') {
-        showScreen('names');
-        updateStarsUI();
-      } else if (state.screen === 'names' || state.screen === 'letters') {
+      } else if (state.screen === 'nameplay' || state.screen === 'names') {
+        showLettersMenu();
+      } else if (state.screen === 'letters') {
         goHome();
       } else if (state.screen === 'puzzle') {
         showPuzzleLevel();
@@ -3723,6 +3944,11 @@
     }
     if (act === 'goto-puzzles') {
       showPuzzlesMenu();
+      return;
+    }
+    if (act === 'pick-player') {
+      setPlayer(el.getAttribute('data-name'));
+      speak('name-' + String(el.getAttribute('data-name') || '').toLowerCase());
       return;
     }
     if (act === 'puzzle-game') {
@@ -3791,6 +4017,7 @@
 
   function onTouchStart(e) {
     var t, el;
+    unlockAudio();
     if (!e.touches || e.touches.length !== 1) return;
     t = e.touches[0];
     touchStartX = t.clientX;
@@ -3815,11 +4042,11 @@
   function onTouchEnd(e) {
     var el, now;
     now = new Date().getTime();
+    lastTouchEnd = now;
     el = findClickable(e.target);
     clearPressed();
     if (!touchMoved && el && (now - touchStartTime) < 700) {
       e.preventDefault();
-      lastTouchEnd = now;
       handleAct(el);
     }
   }
@@ -3831,6 +4058,7 @@
 
   function onClick(e) {
     var el, now;
+    unlockAudio();
     now = new Date().getTime();
     if (now - lastTouchEnd < 600) {
       e.preventDefault();
@@ -3905,6 +4133,7 @@
   function ready() {
     loadState();
     decorateStatic();
+    updatePlayerUI();
     updateStarsUI();
     showScreen('start');
 
@@ -3926,6 +4155,7 @@
 
     document.addEventListener('touchstart', function () {
       ensureAudio();
+      unlockAudio();
     }, false);
   }
 
