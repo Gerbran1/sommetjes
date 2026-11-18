@@ -190,7 +190,7 @@
       line-height: 1;
     }
 
-    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay {
+    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -376,16 +376,16 @@
       -webkit-flex: 1 1 auto;
       flex: 1 1 auto;
       width: 100%;
-      max-width: 900px;
+      max-width: 980px;
       margin: 8px auto 0 auto;
     }
     .choice-btn {
-      -webkit-flex: 0 0 44%;
-      flex: 0 0 44%;
-      max-width: 380px;
-      min-height: 240px;
-      margin: 1.5%;
-      border-radius: 36px;
+      -webkit-flex: 0 0 30%;
+      flex: 0 0 30%;
+      max-width: 300px;
+      min-height: 200px;
+      margin: 1%;
+      border-radius: 32px;
       color: #fff;
       display: -webkit-flex;
       display: flex;
@@ -395,7 +395,7 @@
       align-items: center;
       -webkit-justify-content: center;
       justify-content: center;
-      padding: 20px 12px;
+      padding: 16px 8px;
     }
     .choice-btn.pressed, .choice-btn:active {
       -webkit-transform: translateY(8px);
@@ -419,17 +419,48 @@
       -webkit-box-shadow: 0 2px 0 #1A9A8E, 0 4px 8px rgba(0,0,0,0.15);
       box-shadow: 0 2px 0 #1A9A8E, 0 4px 8px rgba(0,0,0,0.15);
     }
+    .choice-puzzles {
+      background: #FF8A4C;
+      -webkit-box-shadow: 0 10px 0 #D4692C, 0 14px 20px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 0 #D4692C, 0 14px 20px rgba(0,0,0,0.15);
+    }
+    .choice-puzzles.pressed, .choice-puzzles:active {
+      -webkit-box-shadow: 0 2px 0 #D4692C, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #D4692C, 0 4px 8px rgba(0,0,0,0.15);
+    }
     .choice-glyph {
-      font-size: 72px;
+      font-size: 56px;
       font-weight: 800;
       line-height: 1;
       margin-bottom: 10px;
     }
     .choice-label {
-      font-size: 42px;
+      font-size: 32px;
       font-weight: 800;
       line-height: 1;
     }
+    .puzzle-glyph {
+      width: 72px;
+      height: 72px;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-content: center;
+      align-content: center;
+    }
+    .puzzle-glyph span {
+      width: 30px;
+      height: 30px;
+      margin: 3px;
+      border-radius: 6px;
+      background: #fff;
+    }
+    .puzzle-glyph span.pg2 { background: #FFE566; }
+    .puzzle-glyph span.pg3 { background: #8ED56A; }
+    .puzzle-glyph span.pg4 { background: #81D4FA; }
 
     .home-hint {
       font-size: 16px;
@@ -1165,13 +1196,176 @@
       animation: shake 0.45s ease-in-out;
     }
 
+
+    #puzzles-grid, #puzzlelevel-grid {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: stretch;
+      align-items: stretch;
+      -webkit-align-content: center;
+      align-content: center;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    #puzzles-grid .level-btn, #puzzlelevel-grid .level-btn {
+      -webkit-flex: 0 0 44%;
+      flex: 0 0 44%;
+      max-width: 340px;
+      margin: 1.5%;
+    }
+    .lvl-slide {
+      background: #FF8A4C;
+      -webkit-box-shadow: 0 8px 0 #D4692C, 0 12px 16px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 0 #D4692C, 0 12px 16px rgba(0,0,0,0.15);
+    }
+    .lvl-slide.pressed, .lvl-slide:active {
+      -webkit-box-shadow: 0 2px 0 #D4692C, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #D4692C, 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .mini-grid {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      width: 56px;
+      height: 56px;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-content: center;
+      align-content: center;
+    }
+    .mini-grid span {
+      width: 24px;
+      height: 24px;
+      margin: 2px;
+      border-radius: 5px;
+      background: #fff;
+    }
+    .mini-grid.g3 {
+      width: 64px;
+      height: 64px;
+    }
+    .mini-grid.g3 span {
+      width: 16px;
+      height: 16px;
+      margin: 2px;
+      border-radius: 3px;
+    }
+    .mini-grid span.pg2, .mini-grid.g3 span:nth-child(2) { background: #FFE566; }
+    .mini-grid span.pg3, .mini-grid.g3 span:nth-child(3) { background: #8ED56A; }
+    .mini-grid span.pg4, .mini-grid.g3 span:nth-child(4) { background: #81D4FA; }
+    .mini-grid.g3 span:nth-child(5) { background: #FF8A4C; }
+    .mini-grid.g3 span:nth-child(6) { background: #CE93D8; }
+    .mini-grid.g3 span:nth-child(7) { background: #FFF; }
+    .mini-grid.g3 span:nth-child(8) { background: #8ED56A; }
+    .mini-grid.g3 span:nth-child(9) { background: #FFE566; }
+
+    #puzzle-wrap {
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: flex-start;
+      justify-content: flex-start;
+      width: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .puzzle-preview-row {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      margin: 2px 0 8px 0;
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+    }
+    #puzzle-preview {
+      width: 88px;
+      height: 88px;
+      opacity: 0.62;
+      border: 3px solid rgba(255,255,255,0.9);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      -webkit-box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    #puzzle-preview canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .puzzle-hint {
+      font-size: 20px;
+      font-weight: 700;
+      color: #215078;
+      margin-left: 14px;
+      max-width: 220px;
+      line-height: 1.2;
+    }
+    #puzzle-board {
+      position: relative;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.28);
+      border-radius: 10px;
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+    }
+    .puzzle-tile {
+      padding: 0;
+      margin: 0;
+      border: 0;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #fff;
+      -webkit-appearance: none;
+      appearance: none;
+      -webkit-box-shadow: 0 2px 0 rgba(0,0,0,0.18);
+      box-shadow: 0 2px 0 rgba(0,0,0,0.18);
+    }
+    .puzzle-tile canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      pointer-events: none;
+    }
+    .puzzle-tile.selected {
+      z-index: 2;
+      -webkit-box-shadow: 0 0 0 4px #FFD54F, 0 4px 12px rgba(0,0,0,0.2);
+      box-shadow: 0 0 0 4px #FFD54F, 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .puzzle-tile.pressed, .puzzle-tile:active {
+      -webkit-transform: scale(0.97);
+      transform: scale(0.97);
+    }
+    @media screen and (max-height: 800px) {
+      #puzzle-preview { width: 72px; height: 72px; }
+      .puzzle-hint { font-size: 18px; max-width: 200px; }
+    }
+
     /* Portrait tweaks */
     @media screen and (max-width: 800px) {
       .title { font-size: 54px; }
       .sun { width: 96px; height: 96px; }
-      .choice-btn { min-height: 280px; }
-      .choice-glyph { font-size: 80px; }
-      .choice-label { font-size: 44px; }
+      .choice-btn { min-height: 220px; }
+      .choice-glyph { font-size: 52px; }
+      .choice-label { font-size: 28px; }
+      .puzzle-glyph { width: 64px; height: 64px; }
+      .puzzle-glyph span { width: 26px; height: 26px; }
       .level-btn { min-height: 160px; }
       .level-label { font-size: 28px; }
       .prompt, .prompt-xl, .trace-prompt { font-size: 56px; }
@@ -1189,9 +1383,11 @@
     @media screen and (max-height: 800px) {
       .sun { width: 72px; height: 72px; }
       .title { font-size: 46px; }
-      .choice-btn { min-height: 200px; }
-      .choice-glyph { font-size: 60px; }
-      .choice-label { font-size: 36px; }
+      .choice-btn { min-height: 168px; }
+      .choice-glyph { font-size: 48px; }
+      .choice-label { font-size: 26px; }
+      .puzzle-glyph { width: 56px; height: 56px; }
+      .puzzle-glyph span { width: 22px; height: 22px; margin: 2px; }
       .level-btn { min-height: 118px; }
       .level-icon { height: 48px; margin-bottom: 2px; }
       .level-icon svg, .level-icon .mini { width: 40px; height: 40px; }
@@ -1255,6 +1451,13 @@
         <button type="button" class="tap choice-btn choice-letters" id="btn-goto-letters" data-act="goto-letters">
           <div class="choice-glyph">m</div>
           <div class="choice-label">Letters</div>
+        </button>
+        <button type="button" class="tap choice-btn choice-puzzles" id="btn-goto-puzzles" data-act="goto-puzzles">
+          <div class="choice-glyph puzzle-glyph">
+            <span></span><span class="pg2"></span>
+            <span class="pg3"></span><span class="pg4"></span>
+          </div>
+          <div class="choice-label">Puzzels</div>
         </button>
       </div>
       <div class="home-hint" id="home-hint"></div>
@@ -1406,6 +1609,105 @@
       </div>
     </div>
 
+
+    <div id="screen-puzzles" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-puzzles-home" data-act="home" title="Terug">
+            <span id="puzzles-home-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-sound-puzzles" data-act="sound" title="Geluid" style="margin-left:8px;">
+            <span id="sound-icon-puzzles"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="puzzles-star-icon"></span>
+            <span class="star-count" id="puzzles-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt">Puzzels</div>
+      <div id="puzzles-grid">
+        <button type="button" class="tap level-btn lvl-slide" data-act="puzzle-game" data-game="slide">
+          <div class="act-icon">
+            <div class="mini-grid g2">
+              <span></span><span class="pg2"></span>
+              <span class="pg3"></span><span class="pg4"></span>
+            </div>
+          </div>
+          <div class="level-label">Schuifpuzzel</div>
+        </button>
+      </div>
+    </div>
+
+    <div id="screen-puzzlelevel" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-puzzlelevel-home" data-act="home" title="Terug">
+            <span id="puzzlelevel-home-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-sound-puzzlelevel" data-act="sound" title="Geluid" style="margin-left:8px;">
+            <span id="sound-icon-puzzlelevel"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="puzzlelevel-star-icon"></span>
+            <span class="star-count" id="puzzlelevel-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt">Schuifpuzzel</div>
+      <div id="puzzlelevel-grid">
+        <button type="button" class="tap level-btn lvl-count" data-act="puzzle-size" data-size="2">
+          <div class="act-icon">
+            <div class="mini-grid g2">
+              <span></span><span class="pg2"></span>
+              <span class="pg3"></span><span class="pg4"></span>
+            </div>
+          </div>
+          <div class="level-label">4 stukken</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-plus10" data-act="puzzle-size" data-size="3">
+          <div class="act-icon">
+            <div class="mini-grid g3">
+              <span></span><span></span><span></span>
+              <span></span><span></span><span></span>
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="level-label">9 stukken</div>
+        </button>
+      </div>
+    </div>
+
+    <div id="screen-puzzle" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-puzzle-home" data-act="home" title="Terug">
+            <span id="puzzle-home-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-sound-puzzle" data-act="sound" title="Geluid" style="margin-left:8px;">
+            <span id="sound-icon-puzzle"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="puzzle-star-icon"></span>
+            <span class="star-count" id="puzzle-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div id="puzzle-wrap">
+        <div class="puzzle-preview-row">
+          <div id="puzzle-preview"><canvas id="puzzle-preview-cv" width="180" height="180"></canvas></div>
+          <div class="puzzle-hint">Tik op twee stukjes</div>
+        </div>
+        <div id="puzzle-board"></div>
+      </div>
+    </div>
+
     <div id="screen-trace" class="is-hidden">
       <div class="topbar">
         <div class="topbar-left">
@@ -1519,7 +1821,10 @@
     childName: '',
     nameChars: null,
     nameIndex: 0,
-    nameTiles: null
+    nameTiles: null,
+    puzzleN: 0,
+    puzzlePic: -1,
+    puzzleOrder: null
   };
 
   var toastTimer = null;
@@ -1997,6 +2302,10 @@
     else if (state.level === 'tables') q = makeTableQ();
     else if (state.level === 'letters') {
       nextLetterItem();
+      return;
+    }
+    else if (state.level === 'puzzle') {
+      startPuzzle(state.puzzleN, false);
       return;
     }
     else {
@@ -2704,7 +3013,7 @@
   /* ---------- UI ---------- */
   function updateStarsUI() {
     var i, row, html, filled, el, rows;
-    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars'], String(state.stars));
+    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars'], String(state.stars));
     filled = state.towardsReward;
     if (filled > 5) filled = 5;
     html = '';
@@ -2736,6 +3045,9 @@
     elSet('sound-icon-trace', html);
     elSet('sound-icon-names', html);
     elSet('sound-icon-nameplay', html);
+    elSet('sound-icon-puzzles', html);
+    elSet('sound-icon-puzzlelevel', html);
+    elSet('sound-icon-puzzle', html);
   }
 
   function elSet(id, html) {
@@ -2746,7 +3058,7 @@
   function showScreen(name) {
     var ids, i, el;
     state.screen = name;
-    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay'];
+    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle'];
     for (i = 0; i < ids.length; i++) {
       el = $('screen-' + ids[i]);
       if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
@@ -2809,6 +3121,443 @@
 
   function hideReward() {
     $('overlay-reward').className = 'overlay is-hidden';
+  }
+
+  /* ---------- Puzzels: schuifpuzzel ---------- */
+  var PUZZLE_PICS = ['huis', 'boot', 'kat'];
+  var puzzleSrc = null;
+  var puzzleSel = -1;
+
+  function showPuzzlesMenu() {
+    state.level = null;
+    state.locked = false;
+    state.question = null;
+    hideReward();
+    showScreen('puzzles');
+    updateStarsUI();
+  }
+
+  function showPuzzleLevel() {
+    state.level = 'puzzle';
+    state.locked = false;
+    state.question = null;
+    hideReward();
+    showScreen('puzzlelevel');
+    updateStarsUI();
+  }
+
+  function startPuzzle(n, fresh) {
+    if (!n || n < 2) n = 2;
+    state.level = 'puzzle';
+    state.puzzleN = n;
+    state.locked = false;
+    puzzleSel = -1;
+    if (fresh) {
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+    }
+    state.puzzlePic = (typeof state.puzzlePic === 'number' ? state.puzzlePic : -1) + 1;
+    if (state.puzzlePic >= PUZZLE_PICS.length) state.puzzlePic = 0;
+    state.puzzleOrder = shufflePuzzle(n);
+    hideReward();
+    showScreen('puzzle');
+    updateStarsUI();
+    window.setTimeout(function () {
+      layoutAndDrawPuzzle();
+      if (fresh) speak('Leg de puzzel. Tik op twee stukjes.');
+    }, 50);
+  }
+
+  function shufflePuzzle(n) {
+    var arr = [], i, j, t, total;
+    total = n * n;
+    for (i = 0; i < total; i++) arr.push(i);
+    do {
+      for (i = total - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        t = arr[i];
+        arr[i] = arr[j];
+        arr[j] = t;
+      }
+    } while (puzzleSolved(arr));
+    return arr;
+  }
+
+  function puzzleSolved(arr) {
+    var i;
+    if (!arr) return false;
+    for (i = 0; i < arr.length; i++) {
+      if (arr[i] !== i) return false;
+    }
+    return true;
+  }
+
+  function fillOval(ctx, x, y, rx, ry, color) {
+    ctx.save();
+    ctx.fillStyle = color;
+    ctx.translate(x, y);
+    ctx.scale(rx / 20, ry / 20);
+    ctx.beginPath();
+    ctx.arc(0, 0, 20, 0, Math.PI * 2, false);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawSun(ctx, cx, cy, r) {
+    var i, a;
+    ctx.fillStyle = '#FFE566';
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2, false);
+    ctx.fill();
+    ctx.strokeStyle = '#FFD54F';
+    ctx.lineWidth = Math.max(3, r / 8);
+    ctx.lineCap = 'round';
+    for (i = 0; i < 8; i++) {
+      a = i * Math.PI / 4;
+      ctx.beginPath();
+      ctx.moveTo(cx + Math.cos(a) * r * 1.25, cy + Math.sin(a) * r * 1.25);
+      ctx.lineTo(cx + Math.cos(a) * r * 1.7, cy + Math.sin(a) * r * 1.7);
+      ctx.stroke();
+    }
+  }
+
+  function drawPuzzleHouse(ctx, w, h) {
+    var g, s;
+    g = ctx.createLinearGradient(0, 0, 0, h);
+    g.addColorStop(0, '#6EC6F0');
+    g.addColorStop(1, '#C7EEFF');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+    drawSun(ctx, w * 0.82, h * 0.16, w * 0.08);
+    fillOval(ctx, w * 0.22, h * 0.16, w * 0.1, h * 0.05, '#fff');
+    fillOval(ctx, w * 0.30, h * 0.14, w * 0.08, h * 0.05, '#fff');
+    fillOval(ctx, w * 0.28, h * 0.18, w * 0.09, h * 0.045, '#fff');
+    g = ctx.createLinearGradient(0, h * 0.62, 0, h);
+    g.addColorStop(0, '#8ED56A');
+    g.addColorStop(1, '#4DAA3C');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, h * 0.66, w, h * 0.34);
+    ctx.fillStyle = '#E8D5A3';
+    ctx.beginPath();
+    ctx.moveTo(w * 0.42, h * 0.80);
+    ctx.lineTo(w * 0.52, h * 0.80);
+    ctx.lineTo(w * 0.68, h);
+    ctx.lineTo(w * 0.28, h);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = '#FFF4D1';
+    ctx.fillRect(w * 0.22, h * 0.40, w * 0.48, h * 0.40);
+    ctx.fillStyle = '#F3E0A8';
+    ctx.fillRect(w * 0.58, h * 0.40, w * 0.12, h * 0.40);
+    ctx.fillStyle = '#E54B3C';
+    ctx.beginPath();
+    ctx.moveTo(w * 0.16, h * 0.42);
+    ctx.lineTo(w * 0.46, h * 0.16);
+    ctx.lineTo(w * 0.76, h * 0.42);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = '#C62828';
+    ctx.beginPath();
+    ctx.moveTo(w * 0.46, h * 0.16);
+    ctx.lineTo(w * 0.76, h * 0.42);
+    ctx.lineTo(w * 0.70, h * 0.42);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = '#C0B8B0';
+    ctx.fillRect(w * 0.56, h * 0.18, w * 0.07, h * 0.16);
+    ctx.fillStyle = '#8D6E63';
+    ctx.fillRect(w * 0.54, h * 0.16, w * 0.11, h * 0.035);
+    ctx.fillStyle = '#8D4A2B';
+    ctx.fillRect(w * 0.40, h * 0.58, w * 0.12, h * 0.22);
+    ctx.fillStyle = '#FFD54F';
+    ctx.beginPath();
+    ctx.arc(w * 0.49, h * 0.70, w * 0.012, 0, Math.PI * 2, false);
+    ctx.fill();
+    s = w * 0.10;
+    function drawWin(x, y) {
+      ctx.fillStyle = '#81D4FA';
+      ctx.fillRect(x, y, s, s);
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = Math.max(2, s / 10);
+      ctx.strokeRect(x, y, s, s);
+      ctx.beginPath();
+      ctx.moveTo(x + s / 2, y);
+      ctx.lineTo(x + s / 2, y + s);
+      ctx.moveTo(x, y + s / 2);
+      ctx.lineTo(x + s, y + s / 2);
+      ctx.stroke();
+    }
+    drawWin(w * 0.28, h * 0.50);
+    drawWin(w * 0.54, h * 0.50);
+    fillOval(ctx, w * 0.14, h * 0.70, w * 0.03, w * 0.03, '#FF6B9D');
+    fillOval(ctx, w * 0.14, h * 0.70, w * 0.012, w * 0.012, '#FFE566');
+    ctx.strokeStyle = '#3D8B37';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(w * 0.14, h * 0.73);
+    ctx.lineTo(w * 0.14, h * 0.82);
+    ctx.stroke();
+    fillOval(ctx, w * 0.86, h * 0.72, w * 0.03, w * 0.03, '#FF9F1C');
+    fillOval(ctx, w * 0.86, h * 0.72, w * 0.012, w * 0.012, '#FFE566');
+    ctx.beginPath();
+    ctx.moveTo(w * 0.86, h * 0.75);
+    ctx.lineTo(w * 0.86, h * 0.84);
+    ctx.stroke();
+  }
+
+  function drawPuzzleBoat(ctx, w, h) {
+    var g, i;
+    g = ctx.createLinearGradient(0, 0, 0, h * 0.62);
+    g.addColorStop(0, '#4FC3F7');
+    g.addColorStop(1, '#B3E5FC');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+    drawSun(ctx, w * 0.16, h * 0.16, w * 0.08);
+    fillOval(ctx, w * 0.70, h * 0.16, w * 0.1, h * 0.05, '#fff');
+    fillOval(ctx, w * 0.78, h * 0.14, w * 0.08, h * 0.05, '#fff');
+    fillOval(ctx, w * 0.76, h * 0.18, w * 0.09, h * 0.045, '#fff');
+    g = ctx.createLinearGradient(0, h * 0.55, 0, h);
+    g.addColorStop(0, '#29B6F6');
+    g.addColorStop(1, '#0277BD');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, h * 0.58, w, h * 0.42);
+    ctx.strokeStyle = 'rgba(255,255,255,0.45)';
+    ctx.lineWidth = 4;
+    for (i = 0; i < 4; i++) {
+      ctx.beginPath();
+      ctx.moveTo(0, h * (0.66 + i * 0.08));
+      ctx.quadraticCurveTo(w * 0.25, h * (0.62 + i * 0.08), w * 0.5, h * (0.66 + i * 0.08));
+      ctx.quadraticCurveTo(w * 0.75, h * (0.70 + i * 0.08), w, h * (0.66 + i * 0.08));
+      ctx.stroke();
+    }
+    ctx.fillStyle = '#D84315';
+    ctx.beginPath();
+    ctx.moveTo(w * 0.22, h * 0.62);
+    ctx.lineTo(w * 0.78, h * 0.62);
+    ctx.lineTo(w * 0.70, h * 0.76);
+    ctx.lineTo(w * 0.30, h * 0.76);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = '#FF8A65';
+    ctx.fillRect(w * 0.24, h * 0.60, w * 0.52, h * 0.03);
+    ctx.fillStyle = '#6D4C41';
+    ctx.fillRect(w * 0.48, h * 0.18, w * 0.025, h * 0.44);
+    ctx.fillStyle = '#FFF8E1';
+    ctx.beginPath();
+    ctx.moveTo(w * 0.51, h * 0.20);
+    ctx.lineTo(w * 0.51, h * 0.56);
+    ctx.lineTo(w * 0.74, h * 0.56);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = '#FFE082';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.fillStyle = '#EF5350';
+    ctx.beginPath();
+    ctx.moveTo(w * 0.47, h * 0.26);
+    ctx.lineTo(w * 0.47, h * 0.56);
+    ctx.lineTo(w * 0.28, h * 0.56);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = '#455A64';
+    ctx.lineWidth = 3;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(w * 0.30, h * 0.22);
+    ctx.quadraticCurveTo(w * 0.34, h * 0.18, w * 0.38, h * 0.22);
+    ctx.moveTo(w * 0.38, h * 0.22);
+    ctx.quadraticCurveTo(w * 0.42, h * 0.18, w * 0.46, h * 0.22);
+    ctx.stroke();
+  }
+
+  function drawPuzzleCat(ctx, w, h) {
+    var g;
+    g = ctx.createLinearGradient(0, 0, 0, h);
+    g.addColorStop(0, '#90CAF9');
+    g.addColorStop(1, '#E3F2FD');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+    drawSun(ctx, w * 0.82, h * 0.16, w * 0.08);
+    fillOval(ctx, w * 0.18, h * 0.16, w * 0.09, h * 0.045, '#fff');
+    fillOval(ctx, w * 0.25, h * 0.14, w * 0.07, h * 0.045, '#fff');
+    g = ctx.createLinearGradient(0, h * 0.62, 0, h);
+    g.addColorStop(0, '#81C784');
+    g.addColorStop(1, '#43A047');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, h * 0.68, w, h * 0.32);
+    fillOval(ctx, w * 0.50, h * 0.62, w * 0.22, h * 0.18, '#FFA726');
+    fillOval(ctx, w * 0.66, h * 0.68, w * 0.10, h * 0.12, '#FB8C00');
+    ctx.strokeStyle = '#FFA726';
+    ctx.lineWidth = w * 0.045;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(w * 0.72, h * 0.62);
+    ctx.quadraticCurveTo(w * 0.88, h * 0.48, w * 0.80, h * 0.34);
+    ctx.stroke();
+    fillOval(ctx, w * 0.38, h * 0.38, w * 0.16, w * 0.16, '#FFA726');
+    ctx.fillStyle = '#FFA726';
+    ctx.beginPath();
+    ctx.moveTo(w * 0.24, h * 0.36);
+    ctx.lineTo(w * 0.26, h * 0.18);
+    ctx.lineTo(w * 0.38, h * 0.28);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(w * 0.38, h * 0.26);
+    ctx.lineTo(w * 0.50, h * 0.16);
+    ctx.lineTo(w * 0.52, h * 0.34);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = '#FFCCBC';
+    ctx.beginPath();
+    ctx.moveTo(w * 0.27, h * 0.34);
+    ctx.lineTo(w * 0.28, h * 0.22);
+    ctx.lineTo(w * 0.36, h * 0.29);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(w * 0.40, h * 0.28);
+    ctx.lineTo(w * 0.48, h * 0.20);
+    ctx.lineTo(w * 0.50, h * 0.32);
+    ctx.closePath();
+    ctx.fill();
+    fillOval(ctx, w * 0.38, h * 0.42, w * 0.09, h * 0.06, '#FFE0B2');
+    fillOval(ctx, w * 0.32, h * 0.36, w * 0.028, h * 0.032, '#fff');
+    fillOval(ctx, w * 0.44, h * 0.36, w * 0.028, h * 0.032, '#fff');
+    fillOval(ctx, w * 0.33, h * 0.37, w * 0.014, h * 0.018, '#4E342E');
+    fillOval(ctx, w * 0.45, h * 0.37, w * 0.014, h * 0.018, '#4E342E');
+    ctx.fillStyle = '#EC407A';
+    ctx.beginPath();
+    ctx.moveTo(w * 0.38, h * 0.42);
+    ctx.lineTo(w * 0.355, h * 0.40);
+    ctx.lineTo(w * 0.405, h * 0.40);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = '#6D4C41';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(w * 0.38, h * 0.43, w * 0.04, 0.15 * Math.PI, 0.85 * Math.PI, false);
+    ctx.stroke();
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(w * 0.30, h * 0.42);
+    ctx.lineTo(w * 0.16, h * 0.40);
+    ctx.moveTo(w * 0.30, h * 0.44);
+    ctx.lineTo(w * 0.16, h * 0.46);
+    ctx.moveTo(w * 0.46, h * 0.42);
+    ctx.lineTo(w * 0.60, h * 0.40);
+    ctx.moveTo(w * 0.46, h * 0.44);
+    ctx.lineTo(w * 0.60, h * 0.46);
+    ctx.stroke();
+    fillOval(ctx, w * 0.40, h * 0.78, w * 0.06, h * 0.04, '#FFE0B2');
+    fillOval(ctx, w * 0.52, h * 0.78, w * 0.06, h * 0.04, '#FFE0B2');
+    fillOval(ctx, w * 0.16, h * 0.78, w * 0.07, w * 0.07, '#EF5350');
+  }
+
+  function makePuzzleSource(kind, size) {
+    var c, ctx;
+    c = document.createElement('canvas');
+    c.width = size;
+    c.height = size;
+    ctx = c.getContext('2d');
+    if (kind === 'boot') drawPuzzleBoat(ctx, size, size);
+    else if (kind === 'kat') drawPuzzleCat(ctx, size, size);
+    else drawPuzzleHouse(ctx, size, size);
+    return c;
+  }
+
+  function layoutAndDrawPuzzle() {
+    var wrap, board, n, availW, availH, boardSize, tile, gap, i, piece, btn, cv, srcSize, sx, sy, sw, kind, prevCv, ctx;
+    n = state.puzzleN;
+    if (!n || !state.puzzleOrder) return;
+    wrap = $('puzzle-wrap');
+    board = $('puzzle-board');
+    if (!wrap || !board) return;
+    srcSize = 480;
+    kind = PUZZLE_PICS[state.puzzlePic] || PUZZLE_PICS[0];
+    puzzleSrc = makePuzzleSource(kind, srcSize);
+    prevCv = $('puzzle-preview-cv');
+    if (prevCv) {
+      prevCv.width = 180;
+      prevCv.height = 180;
+      ctx = prevCv.getContext('2d');
+      ctx.clearRect(0, 0, 180, 180);
+      ctx.drawImage(puzzleSrc, 0, 0, 180, 180);
+    }
+    availW = wrap.clientWidth || 700;
+    availH = wrap.clientHeight || 0;
+    if (availH < 80) {
+      availH = (window.innerHeight || 700) - 200;
+    }
+    availH = availH - 110;
+    if (availW < 50) availW = 700;
+    if (availH < 160) availH = 160;
+    gap = 6;
+    boardSize = Math.min(availW - 16, availH);
+    tile = Math.floor((boardSize - gap * (n - 1)) / n);
+    if (tile < 48) tile = 48;
+    boardSize = tile * n + gap * (n - 1);
+    board.style.width = boardSize + 'px';
+    board.style.height = boardSize + 'px';
+    board.innerHTML = '';
+    sw = Math.floor(srcSize / n);
+    for (i = 0; i < n * n; i++) {
+      piece = state.puzzleOrder[i];
+      btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'tap puzzle-tile' + (puzzleSel === i ? ' selected' : '');
+      btn.setAttribute('data-act', 'puzzle-tile');
+      btn.setAttribute('data-slot', String(i));
+      btn.style.position = 'absolute';
+      btn.style.width = tile + 'px';
+      btn.style.height = tile + 'px';
+      btn.style.left = ((i % n) * (tile + gap)) + 'px';
+      btn.style.top = (Math.floor(i / n) * (tile + gap)) + 'px';
+      cv = document.createElement('canvas');
+      sx = (piece % n) * sw;
+      sy = Math.floor(piece / n) * sw;
+      cv.width = sw;
+      cv.height = sw;
+      cv.getContext('2d').drawImage(puzzleSrc, sx, sy, sw, sw, 0, 0, sw, sw);
+      btn.appendChild(cv);
+      board.appendChild(btn);
+    }
+  }
+
+  function onPuzzleTile(el) {
+    var slot, tmp;
+    if (state.locked) return;
+    slot = parseInt(el.getAttribute('data-slot'), 10);
+    if (isNaN(slot)) return;
+    if (puzzleSel < 0) {
+      puzzleSel = slot;
+      highlightPuzzleSel();
+      return;
+    }
+    if (puzzleSel === slot) {
+      puzzleSel = -1;
+      highlightPuzzleSel();
+      return;
+    }
+    tmp = state.puzzleOrder[puzzleSel];
+    state.puzzleOrder[puzzleSel] = state.puzzleOrder[slot];
+    state.puzzleOrder[slot] = tmp;
+    puzzleSel = -1;
+    layoutAndDrawPuzzle();
+    if (puzzleSolved(state.puzzleOrder)) {
+      awardCorrect();
+    }
+  }
+
+  function highlightPuzzleSel() {
+    var tiles, i, slot, cls;
+    tiles = document.getElementsByClassName('puzzle-tile');
+    for (i = 0; i < tiles.length; i++) {
+      slot = parseInt(tiles[i].getAttribute('data-slot'), 10);
+      cls = 'tap puzzle-tile';
+      if (puzzleSel === slot) cls += ' selected';
+      tiles[i].className = cls;
+    }
   }
 
   function goHome() {
@@ -2951,6 +3700,12 @@
         updateStarsUI();
       } else if (state.screen === 'names' || state.screen === 'letters') {
         goHome();
+      } else if (state.screen === 'puzzle') {
+        showPuzzleLevel();
+      } else if (state.screen === 'puzzlelevel') {
+        showPuzzlesMenu();
+      } else if (state.screen === 'puzzles') {
+        goHome();
       } else if (state.screen === 'play' || state.screen === 'picker' || state.screen === 'home') {
         showGamesMenu();
       } else {
@@ -2964,6 +3719,22 @@
     }
     if (act === 'goto-letters') {
       showLettersMenu();
+      return;
+    }
+    if (act === 'goto-puzzles') {
+      showPuzzlesMenu();
+      return;
+    }
+    if (act === 'puzzle-game') {
+      showPuzzleLevel();
+      return;
+    }
+    if (act === 'puzzle-size') {
+      startPuzzle(parseInt(el.getAttribute('data-size'), 10), true);
+      return;
+    }
+    if (act === 'puzzle-tile') {
+      onPuzzleTile(el);
       return;
     }
     if (act === 'verder') {
@@ -3089,10 +3860,16 @@
     elSet('trace-home-icon', homeIconHtml());
     elSet('names-home-icon', homeIconHtml());
     elSet('nameplay-home-icon', homeIconHtml());
+    elSet('puzzles-home-icon', homeIconHtml());
+    elSet('puzzlelevel-home-icon', homeIconHtml());
+    elSet('puzzle-home-icon', homeIconHtml());
     elSet('letters-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('trace-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('names-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('nameplay-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('puzzles-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('puzzlelevel-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('puzzle-star-icon', starSvg('#FFD54F', '#F9A825'));
     $('icon-count').innerHTML =
       '<span class="mini">' + appleSvg() + '</span>' +
       '<span class="mini">' + appleSvg() + '</span>' +
@@ -3143,6 +3920,7 @@
       window.setTimeout(function () {
         window.scrollTo(0, 0);
         if (state.screen === 'trace') sizeAndDrawTrace();
+        if (state.screen === 'puzzle') layoutAndDrawPuzzle();
       }, 250);
     }, false);
 

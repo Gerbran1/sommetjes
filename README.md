@@ -1,17 +1,25 @@
 # Sommetjes
 
-Een eenvoudige oefenapp voor kinderen van 4 tot 6 jaar, met getallen en letters. Werkt op een oude iPad 2 (iOS 9) als web-app op het beginscherm.
+Een eenvoudige oefenapp voor kinderen van 4 tot 6 jaar, met getallen, letters en puzzels. Werkt op een oude iPad 2 (iOS 9) als web-app op het beginscherm.
 
 ## Wat kun je oefenen?
 
+Op het startscherm kies je **Getallen**, **Letters** of **Puzzels**.
+
+**Getallen**
 1. **Tellen** — tel 1 tot 10 plaatjes en tik het goede getal
 2. **Plus 5** — optellen tot 5 met plaatjes
 3. **Plus 10** — optellen tot 10 met plaatjes
 4. **Min** — aftrekken met doorgestreepte plaatjes (eerst tot 5, later tot 10)
 5. **Tafels** — de tafels van 1 tot 10, of alle tafels door elkaar
-6. **Letters** — letter zoeken, begint met, overtrekken, en de namen van Jasper, Laurens en Mirthe
 
-Elke vraag heeft drie grote antwoordknoppen. Bij een goed antwoord krijg je een ster. Na vijf goede antwoorden volgt een klein feestje. Een fout antwoord is niet erg: je mag het gewoon nog eens proberen.
+**Letters**
+6. **Letter zoeken**, **Begint met**, **Overtrekken**, en **Mijn naam** (Jasper, Laurens en Mirthe)
+
+**Puzzels**
+7. **Schuifpuzzel** — een plaatje in 4 (2×2) of 9 (3×3) stukken; tik op twee stukjes om ze te wisselen. Er is een vaag voorbeeldplaatje zichtbaar.
+
+Bij de getallen- en letterspellen heeft elke vraag drie grote antwoordknoppen. Bij een goed antwoord of een voltooide puzzel krijg je een ster. Na vijf sterren volgt een klein feestje. Een fout antwoord is niet erg: je mag het gewoon nog eens proberen.
 
 ## Op de iPad zetten (aanbevolen: hetzelfde wifinetwerk)
 
