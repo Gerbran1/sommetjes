@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Sommetjes">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="#6EC9F0">
+  <title>Sommetjes</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76.png">
+  <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-152.png">
+  <link rel="icon" type="image/png" href="apple-touch-icon-152.png">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #6EC9F0;
+    }
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: #243044;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+      position: fixed;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background: #87D6F5;
+      background: -webkit-linear-gradient(top, #5EC4F0 0%, #B8E8F8 42%, #E3F6C8 72%, #B4E07A 100%);
+      background: linear-gradient(to bottom, #5EC4F0 0%, #B8E8F8 42%, #E3F6C8 72%, #B4E07A 100%);
+    }
+    * {
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    button {
+      -webkit-appearance: none;
+      appearance: none;
+      border: none;
+      font-family: inherit;
+      background: transparent;
+      margin: 0;
+      padding: 0;
+      color: inherit;
+      cursor: pointer;
+    }
+    svg {
+      display: block;
+      pointer-events: none;
+    }
+
+    #app {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      padding: 16px;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    body.standalone #app {
+      padding-top: 28px;
+    }
+
+    .is-hidden { display: none !important; }
+
+    /* decorative clouds */
+    .cloud {
+      position: absolute;
+      pointer-events: none;
+      background: #ffffff;
+      opacity: 0.55;
+      border-radius: 40px;
+    }
+    .cloud:after, .cloud:before {
+      content: "";
+      position: absolute;
+      background: #ffffff;
+      border-radius: 50%;
+    }
+    #c1 { width: 120px; height: 36px; left: 6%; top: 10%; }
+    #c1:before { width: 48px; height: 48px; left: 18px; top: -24px; }
+    #c1:after { width: 64px; height: 64px; left: 48px; top: -34px; }
+    #c2 { width: 160px; height: 40px; right: 8%; top: 16%; left: auto; }
+    #c2:before { width: 56px; height: 56px; left: 22px; top: -28px; }
+    #c2:after { width: 72px; height: 72px; left: 64px; top: -38px; }
+    #c3 { width: 100px; height: 30px; left: 30%; top: 4%; opacity: 0.4; }
+    #c3:before { width: 40px; height: 40px; left: 14px; top: -20px; }
+    #c3:after { width: 52px; height: 52px; left: 40px; top: -28px; }
+
+    .topbar {
+      position: relative;
+      z-index: 5;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: space-between;
+      justify-content: space-between;
+      min-height: 56px;
+      width: 100%;
+    }
+    .topbar-right, .topbar-left {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      min-width: 120px;
+    }
+    .topbar-right {
+      -webkit-justify-content: flex-end;
+      justify-content: flex-end;
+    }
+
+    .icon-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.85);
+      -webkit-box-shadow: 0 3px 0 rgba(0,0,0,0.12);
+      box-shadow: 0 3px 0 rgba(0,0,0,0.12);
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+    }
+    .icon-btn.pressed, .icon-btn:active {
+      -webkit-transform: translateY(2px);
+      transform: translateY(2px);
+      -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.12);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.12);
+    }
+    .icon-btn svg { width: 30px; height: 30px; }
+
+    .star-badge {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      background: rgba(255,255,255,0.9);
+      border-radius: 28px;
+      padding: 6px 16px 6px 8px;
+      -webkit-box-shadow: 0 3px 0 rgba(0,0,0,0.1);
+      box-shadow: 0 3px 0 rgba(0,0,0,0.1);
+      margin-left: 10px;
+    }
+    .star-badge .mini-star { width: 32px; height: 32px; }
+    .star-badge .star-count {
+      font-size: 28px;
+      font-weight: 700;
+      color: #E65100;
+      margin-left: 6px;
+      line-height: 1;
+    }
+
+    #screen-home, #screen-play {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+    }
+
+    .home-hero {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+      margin-top: 4px;
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+    }
+    .sun { width: 110px; height: 110px; }
+    .title {
+      font-size: 64px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 1px;
+      text-shadow: 0 4px 0 rgba(230, 120, 20, 0.35), 0 8px 16px rgba(0,0,0,0.12);
+      margin: 2px 0 0 0;
+      line-height: 1;
+    }
+    .subtitle {
+      font-size: 22px;
+      color: #215078;
+      margin-top: 6px;
+      font-weight: 600;
+    }
+
+    #level-grid {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: stretch;
+      align-items: stretch;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      max-width: 780px;
+      margin: 8px auto 0 auto;
+      -webkit-align-content: center;
+      align-content: center;
+    }
+    .level-btn {
+      -webkit-flex: 0 0 46%;
+      flex: 0 0 46%;
+      max-width: 340px;
+      margin: 1.4%;
+      border-radius: 28px;
+      color: #fff;
+      min-height: 150px;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      padding: 12px 10px 16px 10px;
+    }
+    .level-btn.pressed, .level-btn:active {
+      -webkit-transform: translateY(6px);
+      transform: translateY(6px);
+    }
+    .lvl-count {
+      background: #2FB3F0;
+      -webkit-box-shadow: 0 8px 0 #1A7FB3, 0 12px 18px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 0 #1A7FB3, 0 12px 18px rgba(0,0,0,0.15);
+    }
+    .lvl-count.pressed, .lvl-count:active {
+      -webkit-box-shadow: 0 2px 0 #1A7FB3, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #1A7FB3, 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .lvl-plus5 {
+      background: #4CC86E;
+      -webkit-box-shadow: 0 8px 0 #2E9A4F, 0 12px 18px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 0 #2E9A4F, 0 12px 18px rgba(0,0,0,0.15);
+    }
+    .lvl-plus5.pressed, .lvl-plus5:active {
+      -webkit-box-shadow: 0 2px 0 #2E9A4F, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #2E9A4F, 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .lvl-plus10 {
+      background: #FFC93A;
+      color: #6A3E00;
+      -webkit-box-shadow: 0 8px 0 #D49A12, 0 12px 18px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 0 #D49A12, 0 12px 18px rgba(0,0,0,0.15);
+    }
+    .lvl-plus10.pressed, .lvl-plus10:active {
+      -webkit-box-shadow: 0 2px 0 #D49A12, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #D49A12, 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .lvl-minus {
+      background: #FF7EB3;
+      -webkit-box-shadow: 0 8px 0 #D44E86, 0 12px 18px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 0 #D44E86, 0 12px 18px rgba(0,0,0,0.15);
+    }
+    .lvl-minus.pressed, .lvl-minus:active {
+      -webkit-box-shadow: 0 2px 0 #D44E86, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #D44E86, 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .level-icon {
+      height: 70px;
+      width: 100%;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      margin-bottom: 6px;
+    }
+    .level-icon svg, .level-icon .mini {
+      width: 52px;
+      height: 52px;
+    }
+    .level-icon .mini { width: 44px; height: 44px; margin: 0 2px; }
+    .level-icon .op-sign {
+      width: 36px;
+      height: 36px;
+      margin: 0 4px;
+      -webkit-flex: 0 0 36px;
+      flex: 0 0 36px;
+    }
+    .level-icon .obj { width: 44px; height: 44px; margin: 0 2px; }
+    .level-label {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: 0.5px;
+    }
+    .level-sub {
+      font-size: 18px;
+      font-weight: 600;
+      margin-top: 4px;
+      opacity: 0.9;
+    }
+
+    .home-hint {
+      font-size: 16px;
+      color: #215078;
+      text-align: center;
+      margin: 4px 0 6px 0;
+      min-height: 20px;
+      font-weight: 600;
+    }
+
+    /* PLAY */
+    .prompt {
+      font-size: 40px;
+      font-weight: 800;
+      color: #1A4A6A;
+      text-align: center;
+      margin: 4px 0 8px 0;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.7);
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+    }
+    .progress-row {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      margin: 2px 0 6px 0;
+      height: 28px;
+    }
+    .prog-star {
+      width: 26px;
+      height: 26px;
+      margin: 0 4px;
+      opacity: 0.3;
+    }
+    .prog-star.on { opacity: 1; }
+
+    #objects {
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .tray {
+      background: rgba(255,253,247,0.78);
+      -webkit-box-shadow: 0 6px 0 rgba(0,0,0,0.06);
+      box-shadow: 0 6px 0 rgba(0,0,0,0.06);
+      border-radius: 32px;
+      padding: 18px 24px;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      max-width: 920px;
+    }
+    .group {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      max-width: 540px;
+    }
+    .group-eq { max-width: 420px; }
+    .tray.size-sm .group { max-width: 400px; }
+    .tray.size-lg .group { max-width: 560px; }
+    .obj {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      margin: 6px;
+    }
+    .tray.size-lg .obj { width: 104px; height: 104px; margin: 8px; }
+    .tray.size-md .obj { width: 88px; height: 88px; margin: 6px; }
+    .tray.size-sm .obj { width: 66px; height: 66px; margin: 4px; }
+    .obj-svg { width: 100%; height: 100%; }
+    .obj-cross {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .obj-gone .obj-svg { opacity: 0.8; }
+
+    .op-sign {
+      width: 70px;
+      height: 70px;
+      margin: 8px 12px;
+      -webkit-flex: 0 0 70px;
+      flex: 0 0 70px;
+    }
+
+    #answers {
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+      width: 100%;
+      max-width: 920px;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: stretch;
+      align-items: stretch;
+      padding: 8px 0 10px 0;
+    }
+    .answer-btn {
+      -webkit-flex: 1 1 28%;
+      flex: 1 1 28%;
+      max-width: 260px;
+      margin: 0 10px;
+      height: 110px;
+      border-radius: 28px;
+      background: #FFFDF7;
+      color: #243044;
+      font-size: 64px;
+      font-weight: 800;
+      line-height: 1;
+      -webkit-box-shadow: 0 8px 0 #E2D3A8, 0 12px 16px rgba(0,0,0,0.12);
+      box-shadow: 0 8px 0 #E2D3A8, 0 12px 16px rgba(0,0,0,0.12);
+    }
+    .answer-btn.pressed, .answer-btn:active {
+      -webkit-transform: translateY(6px);
+      transform: translateY(6px);
+      -webkit-box-shadow: 0 2px 0 #E2D3A8, 0 4px 8px rgba(0,0,0,0.12);
+      box-shadow: 0 2px 0 #E2D3A8, 0 4px 8px rgba(0,0,0,0.12);
+    }
+    .answer-btn.is-correct {
+      background: #7BE07B;
+      color: #145214;
+      -webkit-box-shadow: 0 8px 0 #3DA03D, 0 12px 16px rgba(0,0,0,0.12);
+      box-shadow: 0 8px 0 #3DA03D, 0 12px 16px rgba(0,0,0,0.12);
+    }
+    .answer-btn.is-wrong {
+      background: #FFE8E0;
+    }
+    .answer-btn.shake {
+      -webkit-animation: shake 0.45s ease-in-out;
+      animation: shake 0.45s ease-in-out;
+    }
+
+    @-webkit-keyframes shake {
+      0%, 100% { -webkit-transform: translateX(0); }
+      20% { -webkit-transform: translateX(-14px); }
+      40% { -webkit-transform: translateX(14px); }
+      60% { -webkit-transform: translateX(-9px); }
+      80% { -webkit-transform: translateX(9px); }
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-14px); }
+      40% { transform: translateX(14px); }
+      60% { transform: translateX(-9px); }
+      80% { transform: translateX(9px); }
+    }
+    @-webkit-keyframes pop {
+      0% { -webkit-transform: scale(0.3); opacity: 0; }
+      60% { -webkit-transform: scale(1.2); opacity: 1; }
+      100% { -webkit-transform: scale(1); opacity: 1; }
+    }
+    @keyframes pop {
+      0% { transform: scale(0.3); opacity: 0; }
+      60% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @-webkit-keyframes burststar {
+      0% { -webkit-transform: translate(-50%, -50%) scale(0.2); opacity: 0; }
+      40% { -webkit-transform: translate(-50%, -50%) scale(1.25); opacity: 1; }
+      100% { -webkit-transform: translate(-50%, -80%) scale(0.6); opacity: 0; }
+    }
+    @keyframes burststar {
+      0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0; }
+      40% { transform: translate(-50%, -50%) scale(1.25); opacity: 1; }
+      100% { transform: translate(-50%, -80%) scale(0.6); opacity: 0; }
+    }
+    @-webkit-keyframes bounce {
+      0%, 100% { -webkit-transform: translateY(0); }
+      50% { -webkit-transform: translateY(-16px); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-16px); }
+    }
+    @-webkit-keyframes spin-slow {
+      0% { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
+    @keyframes spin-slow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @-webkit-keyframes fadeup {
+      0% { opacity: 0; -webkit-transform: translate(-50%, 8px); }
+      15% { opacity: 1; -webkit-transform: translate(-50%, 0); }
+      80% { opacity: 1; }
+      100% { opacity: 0; -webkit-transform: translate(-50%, -10px); }
+    }
+    @keyframes fadeup {
+      0% { opacity: 0; transform: translate(-50%, 8px); }
+      15% { opacity: 1; transform: translate(-50%, 0); }
+      80% { opacity: 1; }
+      100% { opacity: 0; transform: translate(-50%, -10px); }
+    }
+
+    #burst {
+      position: absolute;
+      left: 50%;
+      top: 42%;
+      width: 160px;
+      height: 160px;
+      margin: 0;
+      z-index: 20;
+      pointer-events: none;
+      -webkit-animation: burststar 0.9s ease-out forwards;
+      animation: burststar 0.9s ease-out forwards;
+    }
+    #burst svg { width: 160px; height: 160px; }
+
+    #toast {
+      position: absolute;
+      left: 50%;
+      bottom: 150px;
+      -webkit-transform: translateX(-50%);
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.95);
+      color: #1A4A6A;
+      font-size: 28px;
+      font-weight: 800;
+      padding: 12px 28px;
+      border-radius: 24px;
+      z-index: 25;
+      -webkit-box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+      pointer-events: none;
+      white-space: nowrap;
+      -webkit-animation: fadeup 1.2s ease-out forwards;
+      animation: fadeup 1.2s ease-out forwards;
+    }
+    #toast.good { color: #1B7A2A; }
+
+    .overlay {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(30, 60, 90, 0.35);
+      z-index: 30;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+    }
+    .reward-card {
+      background: #FFFDF7;
+      border-radius: 36px;
+      width: 86%;
+      max-width: 560px;
+      padding: 32px 24px 28px 24px;
+      text-align: center;
+      -webkit-box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+      -webkit-animation: pop 0.45s ease-out;
+      animation: pop 0.45s ease-out;
+    }
+    .reward-stars {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .reward-stars .rs {
+      width: 88px;
+      height: 88px;
+      margin: 0 8px;
+      -webkit-animation: bounce 0.9s ease-in-out infinite;
+      animation: bounce 0.9s ease-in-out infinite;
+    }
+    .reward-stars .rs:nth-child(2) {
+      -webkit-animation-delay: 0.15s;
+      animation-delay: 0.15s;
+      width: 108px;
+      height: 108px;
+    }
+    .reward-stars .rs:nth-child(3) {
+      -webkit-animation-delay: 0.3s;
+      animation-delay: 0.3s;
+    }
+    .reward-text {
+      font-size: 44px;
+      font-weight: 800;
+      color: #E65100;
+      margin: 8px 0 20px 0;
+    }
+    .reward-btn {
+      display: inline-block;
+      background: #4CC86E;
+      color: #fff;
+      font-size: 32px;
+      font-weight: 800;
+      padding: 16px 48px;
+      border-radius: 28px;
+      -webkit-box-shadow: 0 8px 0 #2E9A4F;
+      box-shadow: 0 8px 0 #2E9A4F;
+    }
+    .reward-btn.pressed, .reward-btn:active {
+      -webkit-transform: translateY(6px);
+      transform: translateY(6px);
+      -webkit-box-shadow: 0 2px 0 #2E9A4F;
+      box-shadow: 0 2px 0 #2E9A4F;
+    }
+
+    /* Portrait tweaks */
+    @media screen and (max-width: 800px) {
+      .title { font-size: 54px; }
+      .sun { width: 96px; height: 96px; }
+      .level-btn { min-height: 170px; }
+      .level-label { font-size: 30px; }
+      .prompt { font-size: 36px; }
+      .obj { width: 72px; height: 72px; margin: 4px; }
+      .answer-btn { height: 120px; font-size: 68px; margin: 0 8px; }
+      .group { max-width: 360px; }
+      #toast { bottom: 170px; }
+    }
+    @media screen and (max-height: 800px) {
+      .sun { width: 84px; height: 84px; }
+      .title { font-size: 52px; }
+      .level-btn { min-height: 132px; }
+      .level-icon { height: 56px; margin-bottom: 2px; }
+      .level-icon svg, .level-icon .mini { width: 44px; height: 44px; }
+      .level-label { font-size: 28px; }
+      .prompt { font-size: 34px; margin: 0 0 4px 0; }
+      .obj { width: 70px; height: 70px; margin: 4px; }
+      .answer-btn { height: 96px; font-size: 56px; }
+      .op-sign { width: 56px; height: 56px; -webkit-flex-basis: 56px; flex-basis: 56px; }
+      #toast { bottom: 130px; font-size: 24px; }
+    }
+    @media screen and (max-height: 700px) {
+      .home-hero { margin-top: 0; }
+      .subtitle { font-size: 18px; }
+      .level-sub { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div id="c1" class="cloud"></div>
+  <div id="c2" class="cloud"></div>
+  <div id="c3" class="cloud"></div>
+
+  <div id="app">
+    <div id="screen-home">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-sound" data-act="sound" title="Geluid">
+            <span id="sound-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="home-star-icon"></span>
+            <span class="star-count" id="home-stars">0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="home-hero">
+        <div class="sun" id="sun-icon"></div>
+        <h1 class="title">Sommetjes</h1>
+        <div class="subtitle">Kies een spel</div>
+      </div>
+
+      <div id="level-grid">
+        <button type="button" class="tap level-btn lvl-count" id="btn-count" data-act="level" data-level="count">
+          <div class="level-icon" id="icon-count"></div>
+          <div class="level-label">Tellen</div>
+          <div class="level-sub">1 tot 10</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-plus5" id="btn-plus5" data-act="level" data-level="plus5">
+          <div class="level-icon" id="icon-plus5"></div>
+          <div class="level-label">Plus 5</div>
+          <div class="level-sub">Optellen</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-plus10" id="btn-plus10" data-act="level" data-level="plus10">
+          <div class="level-icon" id="icon-plus10"></div>
+          <div class="level-label">Plus 10</div>
+          <div class="level-sub">Optellen</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-minus" id="btn-minus" data-act="level" data-level="minus">
+          <div class="level-icon" id="icon-minus"></div>
+          <div class="level-label">Min</div>
+          <div class="level-sub">Aftrekken</div>
+        </button>
+      </div>
+      <div class="home-hint" id="home-hint"></div>
+    </div>
+
+    <div id="screen-play" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-home" data-act="home" title="Terug">
+            <span id="home-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-sound-play" data-act="sound" title="Geluid" style="margin-left:8px;">
+            <span id="sound-icon-play"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="play-star-icon"></span>
+            <span class="star-count" id="play-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="progress-row" id="progress-row"></div>
+      <div class="prompt" id="prompt">Hoeveel?</div>
+      <div id="objects"></div>
+      <div id="answers">
+        <button type="button" class="tap answer-btn" data-act="answer" data-value="0">0</button>
+        <button type="button" class="tap answer-btn" data-act="answer" data-value="0">0</button>
+        <button type="button" class="tap answer-btn" data-act="answer" data-value="0">0</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="burst" class="is-hidden"></div>
+  <div id="toast" class="is-hidden"></div>
+  <div id="overlay-reward" class="overlay is-hidden">
+    <div class="reward-card">
+      <div class="reward-stars" id="reward-stars"></div>
+      <div class="reward-text" id="reward-text">Wat knap!</div>
+      <button type="button" class="tap reward-btn" id="btn-verder" data-act="verder">Verder</button>
+    </div>
+  </div>
+
+  <script>
+(function () {
+  'use strict';
+
+  var KINDS = ['apple', 'star', 'ball', 'flower', 'balloon', 'pear'];
+  var PRAISE = ['Goed zo!', 'Super!', 'Wat knap!', 'Prima!', 'Ja!', 'Goed gedaan!'];
+  var REWARD = ['Wat knap!', 'Super gedaan!', 'Vijf sterren!', 'Goed zo!'];
+
+  var state = {
+    screen: 'home',
+    level: null,
+    stars: 0,
+    sessionCorrect: 0,
+    locked: false,
+    question: null,
+    lastAnswer: -1,
+    soundOn: true,
+    audioCtx: null,
+    minusHard: false,
+    towardsReward: 0
+  };
+
+  var toastTimer = null;
+  var burstTimer = null;
+  var lastTouchEnd = 0;
+  var touchStartX = 0;
+  var touchStartY = 0;
+  var touchStartTime = 0;
+  var touchMoved = false;
+  var pressEl = null;
+
+  function $(id) {
+    return document.getElementById(id);
+  }
+
+  function randInt(min, max) {
+    return min + Math.floor(Math.random() * (max - min + 1));
+  }
+
+  function contains(arr, val) {
+    var i;
+    for (i = 0; i < arr.length; i++) {
+      if (arr[i] === val) return true;
+    }
+    return false;
+  }
+
+  function shuffle(arr) {
+    var i, j, t;
+    for (i = arr.length - 1; i > 0; i--) {
+      j = Math.floor(Math.random() * (i + 1));
+      t = arr[i];
+      arr[i] = arr[j];
+      arr[j] = t;
+    }
+    return arr;
+  }
+
+  function pick(arr) {
+    return arr[randInt(0, arr.length - 1)];
+  }
+
+  function loadState() {
+    try {
+      var s = window.localStorage.getItem('sommetjes-stars');
+      if (s) {
+        var n = parseInt(s, 10);
+        if (!isNaN(n) && n >= 0) state.stars = n;
+      }
+      var so = window.localStorage.getItem('sommetjes-sound');
+      if (so === '0') state.soundOn = false;
+    } catch (e) {}
+  }
+
+  function saveStars() {
+    try {
+      window.localStorage.setItem('sommetjes-stars', String(state.stars));
+    } catch (e) {}
+  }
+
+  function saveSound() {
+    try {
+      window.localStorage.setItem('sommetjes-sound', state.soundOn ? '1' : '0');
+    } catch (e) {}
+  }
+
+  /* ---------- SVG ---------- */
+  function starSvg(color, stroke) {
+    color = color || '#FFD54F';
+    stroke = stroke || '#F9A825';
+    return '<svg viewBox="0 0 100 100" class="obj-svg" focusable="false">' +
+      '<polygon points="50,6 61,36 93,38 68,58 76,92 50,74 24,92 32,58 7,38 39,36" fill="' + color + '" stroke="' + stroke + '" stroke-width="3" stroke-linejoin="round"/>' +
+      '</svg>';
+  }
+
+  function appleSvg() {
+    return '<svg viewBox="0 0 100 100" class="obj-svg" focusable="false">' +
+      '<rect x="47" y="12" width="6" height="18" rx="3" fill="#6D4C41"/>' +
+      '<ellipse cx="64" cy="22" rx="14" ry="7" fill="#43A047" transform="rotate(28 64 22)"/>' +
+      '<ellipse cx="38" cy="58" rx="25" ry="30" fill="#E53935"/>' +
+      '<ellipse cx="62" cy="58" rx="25" ry="30" fill="#E53935"/>' +
+      '<ellipse cx="50" cy="64" rx="26" ry="26" fill="#E53935"/>' +
+      '<ellipse cx="37" cy="50" rx="8" ry="13" fill="#FF8A80" opacity="0.5"/>' +
+      '</svg>';
+  }
+
+  function ballSvg() {
+    return '<svg viewBox="0 0 100 100" class="obj-svg" focusable="false">' +
+      '<circle cx="50" cy="52" r="32" fill="#1E88E5"/>' +
+      '<path d="M50 20 C68 28 74 40 74 52 C74 64 68 76 50 84 C32 76 26 64 26 52 C26 40 32 28 50 20 Z" fill="#1565C0" opacity="0.18"/>' +
+      '<ellipse cx="40" cy="40" rx="10" ry="8" fill="#BBDEFB" opacity="0.85"/>' +
+      '<path d="M22 48 Q50 38 78 48" fill="none" stroke="#FFF176" stroke-width="5" stroke-linecap="round"/>' +
+      '</svg>';
+  }
+
+  function flowerSvg() {
+    return '<svg viewBox="0 0 100 100" class="obj-svg" focusable="false">' +
+      '<circle cx="50" cy="28" r="14" fill="#EC407A"/>' +
+      '<circle cx="72" cy="42" r="14" fill="#EC407A"/>' +
+      '<circle cx="65" cy="68" r="14" fill="#EC407A"/>' +
+      '<circle cx="35" cy="68" r="14" fill="#EC407A"/>' +
+      '<circle cx="28" cy="42" r="14" fill="#EC407A"/>' +
+      '<circle cx="50" cy="52" r="13" fill="#FFD54F"/>' +
+      '<circle cx="46" cy="48" r="4" fill="#FFF9C4"/>' +
+      '</svg>';
+  }
+
+  function balloonSvg() {
+    return '<svg viewBox="0 0 100 100" class="obj-svg" focusable="false">' +
+      '<ellipse cx="50" cy="40" rx="24" ry="28" fill="#7E57C2"/>' +
+      '<ellipse cx="42" cy="30" rx="8" ry="10" fill="#B39DDB" opacity="0.75"/>' +
+      '<polygon points="50,68 44,76 56,76" fill="#7E57C2"/>' +
+      '<path d="M50 76 Q42 86 50 96" fill="none" stroke="#6D4C41" stroke-width="2" stroke-linecap="round"/>' +
+      '</svg>';
+  }
+
+  function pearSvg() {
+    return '<svg viewBox="0 0 100 100" class="obj-svg" focusable="false">' +
+      '<rect x="47" y="10" width="6" height="16" rx="3" fill="#6D4C41"/>' +
+      '<ellipse cx="62" cy="22" rx="11" ry="6" fill="#7CB342" transform="rotate(25 62 22)"/>' +
+      '<ellipse cx="50" cy="46" rx="16" ry="20" fill="#C0CA33"/>' +
+      '<ellipse cx="50" cy="68" rx="24" ry="22" fill="#C0CA33"/>' +
+      '<ellipse cx="40" cy="58" rx="7" ry="11" fill="#F0F4C3" opacity="0.55"/>' +
+      '</svg>';
+  }
+
+  function objectSvg(kind) {
+    if (kind === 'star') return starSvg('#FFD54F', '#F9A825');
+    if (kind === 'ball') return ballSvg();
+    if (kind === 'flower') return flowerSvg();
+    if (kind === 'balloon') return balloonSvg();
+    if (kind === 'pear') return pearSvg();
+    return appleSvg();
+  }
+
+  function objectHtml(kind, crossed) {
+    var cls = 'obj' + (crossed ? ' obj-gone' : '');
+    var html = '<div class="' + cls + '">' + objectSvg(kind);
+    if (crossed) {
+      html += '<svg class="obj-cross" viewBox="0 0 100 100" focusable="false">' +
+        '<line x1="18" y1="18" x2="82" y2="82" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round"/>' +
+        '<line x1="82" y1="18" x2="18" y2="82" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round"/>' +
+        '<line x1="18" y1="18" x2="82" y2="82" stroke="#C62828" stroke-width="8" stroke-linecap="round"/>' +
+        '<line x1="82" y1="18" x2="18" y2="82" stroke="#C62828" stroke-width="8" stroke-linecap="round"/>' +
+        '</svg>';
+    }
+    html += '</div>';
+    return html;
+  }
+
+  function plusSignHtml() {
+    return '<div class="op-sign">' +
+      '<svg viewBox="0 0 80 80" focusable="false">' +
+      '<rect x="32" y="8" width="16" height="64" rx="8" fill="#EF6C00"/>' +
+      '<rect x="8" y="32" width="64" height="16" rx="8" fill="#EF6C00"/>' +
+      '</svg></div>';
+  }
+
+  function sunHtml() {
+    return '<svg viewBox="0 0 120 120" focusable="false">' +
+      '<g fill="#FFD54F">' +
+      '<rect x="56" y="4" width="8" height="18" rx="4"/>' +
+      '<rect x="56" y="98" width="8" height="18" rx="4"/>' +
+      '<rect x="4" y="56" width="18" height="8" rx="4"/>' +
+      '<rect x="98" y="56" width="18" height="8" rx="4"/>' +
+      '<rect x="56" y="4" width="8" height="18" rx="4" transform="rotate(45 60 60)"/>' +
+      '<rect x="56" y="4" width="8" height="18" rx="4" transform="rotate(135 60 60)"/>' +
+      '<rect x="56" y="4" width="8" height="18" rx="4" transform="rotate(225 60 60)"/>' +
+      '<rect x="56" y="4" width="8" height="18" rx="4" transform="rotate(315 60 60)"/>' +
+      '</g>' +
+      '<circle cx="60" cy="60" r="32" fill="#FFE566" stroke="#F9A825" stroke-width="3"/>' +
+      '<circle cx="50" cy="54" r="4" fill="#6D4C41"/>' +
+      '<circle cx="70" cy="54" r="4" fill="#6D4C41"/>' +
+      '<path d="M48 70 Q60 82 72 70" fill="none" stroke="#6D4C41" stroke-width="3" stroke-linecap="round"/>' +
+      '</svg>';
+  }
+
+  function homeIconHtml() {
+    return '<svg viewBox="0 0 30 30" width="30" height="30" focusable="false">' +
+      '<path d="M5 14 L15 6 L25 14 V24 H18 V18 H12 V24 H5 Z" fill="#1A7FB3" stroke="#1A7FB3" stroke-width="1.5" stroke-linejoin="round"/>' +
+      '</svg>';
+  }
+
+  function soundOnHtml() {
+    return '<svg viewBox="0 0 30 30" width="30" height="30" focusable="false">' +
+      '<path d="M6 12 H11 L17 7 V23 L11 18 H6 Z" fill="#1A7FB3"/>' +
+      '<path d="M20 11 Q23 15 20 19" fill="none" stroke="#1A7FB3" stroke-width="2.2" stroke-linecap="round"/>' +
+      '<path d="M23 8 Q28 15 23 22" fill="none" stroke="#1A7FB3" stroke-width="2.2" stroke-linecap="round"/>' +
+      '</svg>';
+  }
+
+  function soundOffHtml() {
+    return '<svg viewBox="0 0 30 30" width="30" height="30" focusable="false">' +
+      '<path d="M6 12 H11 L17 7 V23 L11 18 H6 Z" fill="#1A7FB3"/>' +
+      '<line x1="20" y1="11" x2="26" y2="19" stroke="#C62828" stroke-width="2.4" stroke-linecap="round"/>' +
+      '<line x1="26" y1="11" x2="20" y2="19" stroke="#C62828" stroke-width="2.4" stroke-linecap="round"/>' +
+      '</svg>';
+  }
+
+  /* ---------- audio / speech ---------- */
+  function ensureAudio() {
+    var Ctx, ctx;
+    if (state.audioCtx) {
+      ctx = state.audioCtx;
+      if (ctx.state === 'suspended' && ctx.resume) {
+        try { ctx.resume(); } catch (e1) {}
+      }
+      return ctx;
+    }
+    Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return null;
+    try {
+      state.audioCtx = new Ctx();
+      return state.audioCtx;
+    } catch (e2) {
+      return null;
+    }
+  }
+
+  function playTone(freq, dur, type, gainVal, delay) {
+    var ctx, osc, gain, now;
+    if (!state.soundOn) return;
+    ctx = ensureAudio();
+    if (!ctx) return;
+    try {
+      osc = ctx.createOscillator();
+      gain = ctx.createGain();
+      osc.type = type || 'sine';
+      osc.frequency.value = freq;
+      now = ctx.currentTime + (delay || 0);
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(gainVal || 0.12, now + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + dur + 0.05);
+    } catch (e) {}
+  }
+
+  function playSuccess() {
+    playTone(523.25, 0.13, 'sine', 0.11, 0);
+    playTone(659.25, 0.13, 'sine', 0.11, 0.1);
+    playTone(783.99, 0.28, 'sine', 0.13, 0.2);
+  }
+
+  function playWrong() {
+    playTone(262, 0.16, 'sine', 0.06, 0);
+    playTone(220, 0.2, 'sine', 0.05, 0.08);
+  }
+
+  function playReward() {
+    playTone(523, 0.18, 'sine', 0.11, 0);
+    playTone(659, 0.18, 'sine', 0.11, 0.12);
+    playTone(784, 0.18, 'sine', 0.11, 0.24);
+    playTone(1046, 0.32, 'sine', 0.13, 0.36);
+  }
+
+  function speak(text) {
+    var u, voices, i, chosen;
+    if (!state.soundOn) return;
+    if (!text) return;
+    try {
+      if (!window.speechSynthesis || typeof window.SpeechSynthesisUtterance === 'undefined') {
+        return;
+      }
+      window.speechSynthesis.cancel();
+      u = new window.SpeechSynthesisUtterance(text);
+      u.lang = 'nl-NL';
+      u.rate = 0.9;
+      u.pitch = 1.05;
+      u.volume = 1;
+      try {
+        voices = window.speechSynthesis.getVoices();
+        if (voices && voices.length) {
+          chosen = null;
+          for (i = 0; i < voices.length; i++) {
+            if (voices[i].lang && voices[i].lang.toLowerCase().indexOf('nl') === 0) {
+              chosen = voices[i];
+              break;
+            }
+          }
+          if (chosen) u.voice = chosen;
+        }
+      } catch (e1) {}
+      window.speechSynthesis.speak(u);
+    } catch (e2) {}
+  }
+
+  /* ---------- questions ---------- */
+  function makeChoices(correct, minN, maxN) {
+    var set = [correct];
+    var guard = 0;
+    var n, extra, down, up;
+    while (set.length < 3 && guard < 40) {
+      guard += 1;
+      n = randInt(minN, maxN);
+      if (!contains(set, n)) set.push(n);
+    }
+    extra = 0;
+    while (set.length < 3) {
+      extra += 1;
+      down = correct - extra;
+      up = correct + extra;
+      if (down >= 0 && !contains(set, down)) set.push(down);
+      if (set.length < 3 && !contains(set, up)) set.push(up);
+    }
+    return shuffle(set);
+  }
+
+  function makeCountQ() {
+    var n, tries, kind, q;
+    tries = 0;
+    do {
+      n = randInt(1, 10);
+      tries += 1;
+    } while (n === state.lastAnswer && tries < 8);
+    kind = pick(KINDS);
+    q = {
+      mode: 'count',
+      kind: kind,
+      answer: n,
+      prompt: 'Hoeveel?',
+      speech: 'Hoeveel zijn het?',
+      choices: makeChoices(n, 1, 10)
+    };
+    return q;
+  }
+
+  function makePlusQ(maxSum) {
+    var a, b, sum, tries, kind, minSum, q;
+    tries = 0;
+    minSum = (maxSum <= 5) ? 2 : 5;
+    do {
+      sum = randInt(minSum, maxSum);
+      a = randInt(1, sum - 1);
+      b = sum - a;
+      tries += 1;
+    } while (sum === state.lastAnswer && tries < 8);
+    kind = pick(KINDS);
+    q = {
+      mode: 'plus',
+      kind: kind,
+      a: a,
+      b: b,
+      answer: sum,
+      prompt: 'Hoeveel?',
+      speech: a + ' plus ' + b + '. Hoeveel is dat?',
+      choices: makeChoices(sum, 1, maxSum)
+    };
+    return q;
+  }
+
+  function makeMinusQ(maxN) {
+    var total, take, left, tries, kind, q;
+    tries = 0;
+    do {
+      total = randInt(2, maxN);
+      take = (total <= 2) ? 1 : randInt(1, total - 1);
+      left = total - take;
+      tries += 1;
+    } while (left === state.lastAnswer && tries < 8);
+    kind = pick(KINDS);
+    q = {
+      mode: 'minus',
+      kind: kind,
+      total: total,
+      take: take,
+      answer: left,
+      prompt: 'Hoeveel blijven er?',
+      speech: 'Er zijn ' + total + ', er gaan ' + take + ' weg. Hoeveel blijven er?',
+      choices: makeChoices(left, 0, maxN)
+    };
+    return q;
+  }
+
+  function nextQuestion() {
+    var q, maxN;
+    state.locked = false;
+    hideToast();
+    hideBurst();
+    if (state.level === 'count') q = makeCountQ();
+    else if (state.level === 'plus5') q = makePlusQ(5);
+    else if (state.level === 'plus10') q = makePlusQ(10);
+    else {
+      if (state.sessionCorrect >= 5) state.minusHard = true;
+      maxN = state.minusHard ? 10 : 5;
+      q = makeMinusQ(maxN);
+    }
+    state.question = q;
+    renderQuestion(q);
+  }
+
+  function renderQuestion(q) {
+    var box, html, i, buttons, btn, val, n, sizeCls;
+    $('prompt').innerHTML = q.prompt;
+    box = $('objects');
+    html = '';
+    if (q.mode === 'count') {
+      html = '<div class="group">';
+      for (i = 0; i < q.answer; i++) html += objectHtml(q.kind, false);
+      html += '</div>';
+    } else if (q.mode === 'plus') {
+      html = '<div class="group group-eq">';
+      for (i = 0; i < q.a; i++) html += objectHtml(q.kind, false);
+      html += '</div>';
+      html += plusSignHtml();
+      html += '<div class="group group-eq">';
+      for (i = 0; i < q.b; i++) html += objectHtml(q.kind, false);
+      html += '</div>';
+    } else {
+      html = '<div class="group">';
+      for (i = 0; i < q.total; i++) {
+        html += objectHtml(q.kind, i >= (q.total - q.take));
+      }
+      html += '</div>';
+    }
+    n = (q.mode === 'count') ? q.answer : (q.mode === 'plus' ? (q.a + q.b) : q.total);
+    sizeCls = (n <= 4) ? 'size-lg' : (n <= 7 ? 'size-md' : 'size-sm');
+    box.innerHTML = '<div class="tray ' + sizeCls + '">' + html + '</div>';
+
+    buttons = $('answers').getElementsByTagName('button');
+    for (i = 0; i < 3; i++) {
+      btn = buttons[i];
+      val = q.choices[i];
+      btn.innerHTML = String(val);
+      btn.setAttribute('data-value', String(val));
+      btn.setAttribute('data-act', 'answer');
+      if (val === q.answer) btn.setAttribute('data-ok', '1');
+      else btn.removeAttribute('data-ok');
+      btn.className = 'tap answer-btn';
+    }
+    updateStarsUI();
+    speak(q.speech);
+  }
+
+  /* ---------- UI ---------- */
+  function updateStarsUI() {
+    var i, row, html, filled, el;
+    if ($('home-stars')) $('home-stars').innerHTML = String(state.stars);
+    if ($('play-stars')) $('play-stars').innerHTML = String(state.stars);
+    row = $('progress-row');
+    if (row) {
+      filled = state.towardsReward;
+      if (filled > 5) filled = 5;
+      html = '';
+      for (i = 0; i < 5; i++) {
+        html += '<span class="prog-star' + (i < filled ? ' on' : '') + '">' +
+          starSvg(i < filled ? '#FFD54F' : '#FFFFFF', i < filled ? '#F9A825' : '#CFC8B8') +
+          '</span>';
+      }
+      row.innerHTML = html;
+    }
+    updateSoundIcons();
+  }
+
+  function updateSoundIcons() {
+    var html = state.soundOn ? soundOnHtml() : soundOffHtml();
+    elSet('sound-icon', html);
+    elSet('sound-icon-play', html);
+  }
+
+  function elSet(id, html) {
+    var el = $(id);
+    if (el) el.innerHTML = html;
+  }
+
+  function showScreen(name) {
+    state.screen = name;
+    if (name === 'home') {
+      $('screen-home').className = '';
+      $('screen-play').className = 'is-hidden';
+    } else {
+      $('screen-home').className = 'is-hidden';
+      $('screen-play').className = '';
+    }
+    hideReward();
+    hideToast();
+    hideBurst();
+  }
+
+  function showToast(text, good) {
+    var el = $('toast');
+    el.innerHTML = text;
+    el.className = 'is-hidden';
+    el.offsetWidth;
+    el.className = good ? 'good' : '';
+    if (toastTimer) window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(function () {
+      hideToast();
+    }, 1200);
+  }
+
+  function hideToast() {
+    $('toast').className = 'is-hidden';
+    if (toastTimer) {
+      window.clearTimeout(toastTimer);
+      toastTimer = null;
+    }
+  }
+
+  function showBurst() {
+    var el = $('burst');
+    el.innerHTML = starSvg('#FFD54F', '#F9A825');
+    el.className = '';
+    if (burstTimer) window.clearTimeout(burstTimer);
+    burstTimer = window.setTimeout(function () {
+      hideBurst();
+    }, 900);
+  }
+
+  function hideBurst() {
+    $('burst').className = 'is-hidden';
+    if (burstTimer) {
+      window.clearTimeout(burstTimer);
+      burstTimer = null;
+    }
+  }
+
+  function showReward() {
+    var i, html;
+    html = '';
+    for (i = 0; i < 3; i++) {
+      html += '<span class="rs">' + starSvg('#FFD54F', '#F9A825') + '</span>';
+    }
+    $('reward-stars').innerHTML = html;
+    $('reward-text').innerHTML = pick(REWARD);
+    $('overlay-reward').className = 'overlay';
+    playReward();
+    speak($('reward-text').innerHTML);
+  }
+
+  function hideReward() {
+    $('overlay-reward').className = 'overlay is-hidden';
+  }
+
+  function goHome() {
+    state.level = null;
+    state.locked = false;
+    state.question = null;
+    hideReward();
+    showScreen('home');
+    updateStarsUI();
+  }
+
+  function startLevel(level) {
+    state.level = level;
+    state.sessionCorrect = 0;
+    state.towardsReward = 0;
+    state.locked = false;
+    state.lastAnswer = -1;
+    state.minusHard = false;
+    showScreen('play');
+    nextQuestion();
+  }
+
+  function onAnswer(btn) {
+    var val, correct;
+    if (state.locked) return;
+    if (!state.question) return;
+    val = parseInt(btn.getAttribute('data-value'), 10);
+    correct = state.question.answer;
+    if (val === correct) {
+      state.locked = true;
+      state.stars += 1;
+      state.sessionCorrect += 1;
+      state.towardsReward += 1;
+      state.lastAnswer = correct;
+      saveStars();
+      btn.className = 'tap answer-btn is-correct';
+      playSuccess();
+      showBurst();
+      showToast(pick(PRAISE), true);
+      speak(btn ? pick(PRAISE) : 'Goed zo!');
+      updateStarsUI();
+      window.setTimeout(function () {
+        if (state.towardsReward >= 5) {
+          showReward();
+        } else {
+          nextQuestion();
+        }
+      }, 1100);
+    } else {
+      playWrong();
+      btn.className = 'tap answer-btn is-wrong shake';
+      showToast('Probeer nog eens', false);
+      speak('Probeer nog eens');
+      window.setTimeout(function () {
+        if (btn && btn.className.indexOf('is-correct') === -1) {
+          btn.className = 'tap answer-btn is-wrong';
+        }
+      }, 450);
+    }
+  }
+
+  function toggleSound() {
+    state.soundOn = !state.soundOn;
+    saveSound();
+    updateSoundIcons();
+    if (state.soundOn) {
+      ensureAudio();
+      playSuccess();
+    } else if (window.speechSynthesis) {
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+    }
+  }
+
+  /* ---------- tap handling (iOS 9, no 300ms delay) ---------- */
+  function findClickable(el) {
+    while (el && el !== document.body && el !== document.documentElement) {
+      if (el.getAttribute && el.getAttribute('data-act') &&
+          el.className && (' ' + el.className + ' ').indexOf(' tap ') !== -1) {
+        return el;
+      }
+      el = el.parentNode;
+    }
+    return null;
+  }
+
+  function clearPressed() {
+    if (pressEl) {
+      pressEl.className = pressEl.className.replace(/\s?pressed/g, '');
+      pressEl = null;
+    }
+  }
+
+  function setPressed(el) {
+    clearPressed();
+    if (!el) return;
+    pressEl = el;
+    if ((' ' + el.className + ' ').indexOf(' pressed ') === -1) {
+      el.className = el.className + ' pressed';
+    }
+  }
+
+  function handleAct(el) {
+    var act, level;
+    act = el.getAttribute('data-act');
+    if (act === 'sound') {
+      toggleSound();
+      return;
+    }
+    if (act === 'home') {
+      goHome();
+      return;
+    }
+    if (act === 'verder') {
+      hideReward();
+      state.towardsReward = 0;
+      updateStarsUI();
+      nextQuestion();
+      return;
+    }
+    if (act === 'level') {
+      level = el.getAttribute('data-level');
+      if (level) startLevel(level);
+      return;
+    }
+    if (act === 'answer') {
+      onAnswer(el);
+    }
+  }
+
+  function onTouchStart(e) {
+    var t, el;
+    if (!e.touches || e.touches.length !== 1) return;
+    t = e.touches[0];
+    touchStartX = t.clientX;
+    touchStartY = t.clientY;
+    touchStartTime = new Date().getTime();
+    touchMoved = false;
+    el = findClickable(e.target);
+    if (el) setPressed(el);
+  }
+
+  function onTouchMove(e) {
+    var t;
+    if (!e.touches || e.touches.length < 1) return;
+    t = e.touches[0];
+    if (Math.abs(t.clientX - touchStartX) > 16 || Math.abs(t.clientY - touchStartY) > 16) {
+      touchMoved = true;
+      clearPressed();
+    }
+    e.preventDefault();
+  }
+
+  function onTouchEnd(e) {
+    var el, now;
+    now = new Date().getTime();
+    el = findClickable(e.target);
+    clearPressed();
+    if (!touchMoved && el && (now - touchStartTime) < 700) {
+      e.preventDefault();
+      lastTouchEnd = now;
+      handleAct(el);
+    }
+  }
+
+  function onTouchCancel() {
+    touchMoved = true;
+    clearPressed();
+  }
+
+  function onClick(e) {
+    var el, now;
+    now = new Date().getTime();
+    if (now - lastTouchEnd < 600) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+    el = findClickable(e.target);
+    if (el) {
+      handleAct(el);
+    }
+  }
+
+  function onGestureStart(e) {
+    e.preventDefault();
+  }
+
+  function decorateStatic() {
+    $('sun-icon').innerHTML = sunHtml();
+    $('home-star-icon').innerHTML = starSvg('#FFD54F', '#F9A825');
+    $('play-star-icon').innerHTML = starSvg('#FFD54F', '#F9A825');
+    $('home-icon').innerHTML = homeIconHtml();
+    $('icon-count').innerHTML =
+      '<span class="mini">' + appleSvg() + '</span>' +
+      '<span class="mini">' + appleSvg() + '</span>' +
+      '<span class="mini">' + appleSvg() + '</span>';
+    $('icon-plus5').innerHTML =
+      '<span class="mini">' + flowerSvg() + '</span>' +
+      plusSignHtml().replace('op-sign', 'op-sign').replace('70px', '40px') +
+      '<span class="mini">' + flowerSvg() + '</span>';
+    $('icon-plus10').innerHTML =
+      '<span class="mini">' + ballSvg() + '</span>' +
+      plusSignHtml() +
+      '<span class="mini">' + ballSvg() + '</span>';
+    $('icon-minus').innerHTML =
+      '<span class="mini">' + objectHtml('apple', false).replace('class="obj"', 'class="obj" style="width:44px;height:44px;margin:0 2px;"') + '</span>' +
+      '<span class="mini">' + objectHtml('apple', true).replace('class="obj obj-gone"', 'class="obj obj-gone" style="width:44px;height:44px;margin:0 2px;"') + '</span>';
+
+    if (window.navigator && window.navigator.standalone) {
+      document.body.className = 'standalone';
+      $('home-hint').innerHTML = '';
+    } else {
+      $('home-hint').innerHTML = 'Zet op beginscherm: Delen \u2192 Zet op beginscherm';
+    }
+  }
+
+  function ready() {
+    loadState();
+    decorateStatic();
+    updateStarsUI();
+    showScreen('home');
+
+    document.addEventListener('touchstart', onTouchStart, false);
+    document.addEventListener('touchmove', onTouchMove, false);
+    document.addEventListener('touchend', onTouchEnd, false);
+    document.addEventListener('touchcancel', onTouchCancel, false);
+    document.addEventListener('click', onClick, false);
+    document.addEventListener('gesturestart', onGestureStart, false);
+
+    window.addEventListener('orientationchange', function () {
+      window.scrollTo(0, 0);
+      window.setTimeout(function () { window.scrollTo(0, 0); }, 250);
+    }, false);
+
+    document.addEventListener('touchstart', function () {
+      ensureAudio();
+    }, false);
+  }
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    ready();
+  } else {
+    document.addEventListener('DOMContentLoaded', ready, false);
+  }
+})();
+  </script>
+</body>
+</html>
