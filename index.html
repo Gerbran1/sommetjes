@@ -3172,6 +3172,7 @@
     playerName: '',
     voiceName: null,
     lastWasPersonal: false,
+    chimeOnlyStreak: 0,
     allLetters: false
   };
 
@@ -3568,6 +3569,9 @@
   var advanceEndedHandler = null;
   var advanceMetaHandler = null;
   var advancePending = false;
+  var advanceAudio = null;
+  var goedAudio = null;
+  var praiseLeadTimer = null;
 
   function ensureVoiceAudio() {
     if (!voiceAudio) {
@@ -3598,6 +3602,14 @@
         if (a.currentTime) a.currentTime = 0;
       } catch (e2) {}
     }
+    a = ensureGoedAudio();
+    if (a) {
+      try {
+        a.play();
+        a.pause();
+        if (a.currentTime) a.currentTime = 0;
+      } catch (e3) {}
+    }
     audioUnlocked = true;
   }
 
@@ -3610,21 +3622,28 @@
   }
 
   function clearAdvanceWait() {
+    var a;
     if (advanceTimer) {
       window.clearTimeout(advanceTimer);
       advanceTimer = null;
     }
-    if (voiceAudio) {
+    if (praiseLeadTimer) {
+      window.clearTimeout(praiseLeadTimer);
+      praiseLeadTimer = null;
+    }
+    a = advanceAudio || voiceAudio;
+    if (a) {
       if (advanceEndedHandler) {
-        try { voiceAudio.removeEventListener('ended', advanceEndedHandler, false); } catch (e1) {}
+        try { a.removeEventListener('ended', advanceEndedHandler, false); } catch (e1) {}
       }
       if (advanceMetaHandler) {
-        try { voiceAudio.removeEventListener('loadedmetadata', advanceMetaHandler, false); } catch (e1b) {}
-        try { voiceAudio.removeEventListener('canplay', advanceMetaHandler, false); } catch (e1c) {}
+        try { a.removeEventListener('loadedmetadata', advanceMetaHandler, false); } catch (e1b) {}
+        try { a.removeEventListener('canplay', advanceMetaHandler, false); } catch (e1c) {}
       }
     }
     advanceEndedHandler = null;
     advanceMetaHandler = null;
+    advanceAudio = null;
   }
 
   function cancelAdvanceWait() {
@@ -3632,7 +3651,7 @@
     clearAdvanceWait();
   }
 
-  function scheduleAfterPraise(done) {
+  function scheduleAfterPraise(done, audioEl) {
     var a, started;
     clearAdvanceWait();
     advancePending = true;
@@ -3667,7 +3686,8 @@
       return;
     }
 
-    a = voiceAudio;
+    a = audioEl || voiceAudio;
+    advanceAudio = a;
     armFallback(3000);
     if (!a) return;
 
@@ -4647,27 +4667,82 @@
     }
   }
 
+  function ensureGoedAudio() {
+    if (!goedAudio) {
+      goedAudio = new Audio();
+      try { goedAudio.setAttribute('preload', 'auto'); } catch (e1) {}
+      try { goedAudio.setAttribute('playsinline', 'playsinline'); } catch (e2) {}
+      goedAudio.src = 'audio/sfx/goed.mp3';
+    }
+    return goedAudio;
+  }
+
+  function playGoedChime() {
+    var a;
+    if (!state.soundOn) return null;
+    a = ensureGoedAudio();
+    try {
+      a.pause();
+      if (a.currentTime) a.currentTime = 0;
+      a.play();
+    } catch (e) {}
+    return a;
+  }
+
+  function praiseIsSpecial() {
+    return !!(state.question && state.question.mode === 'begint' && state.question.word);
+  }
+
+  function specialPraise() {
+    return {
+      id: 'de-' + state.question.word.letter + '-van-' + state.question.word.word,
+      text: 'De ' + state.question.word.letter + ' van ' + state.question.word.word + '!'
+    };
+  }
+
+  function deliverPraise(done) {
+    var praise, chimeOnly, a;
+    if (praiseLeadTimer) {
+      window.clearTimeout(praiseLeadTimer);
+      praiseLeadTimer = null;
+    }
+    if (praiseIsSpecial()) {
+      state.chimeOnlyStreak = 0;
+      praise = specialPraise();
+      showToast(praise.text, true);
+      playGoedChime();
+      praiseLeadTimer = window.setTimeout(function () {
+        praiseLeadTimer = null;
+        speak(praise.id);
+        scheduleAfterPraise(done);
+      }, 280);
+      return;
+    }
+    chimeOnly = ((state.chimeOnlyStreak || 0) < 2) && (Math.random() < 0.5);
+    if (chimeOnly) {
+      state.chimeOnlyStreak = (state.chimeOnlyStreak || 0) + 1;
+      showToast('Goed!', true);
+      a = playGoedChime();
+      scheduleAfterPraise(done, a);
+      return;
+    }
+    state.chimeOnlyStreak = 0;
+    playSuccess();
+    praise = choosePraise();
+    showToast(praise.text, true);
+    speak(praise.id);
+    scheduleAfterPraise(done);
+  }
+
   function awardCorrect() {
-    var praise;
     state.locked = true;
     state.stars += 1;
     state.sessionCorrect += 1;
     state.towardsReward += 1;
     saveStars();
-    playSuccess();
     showBurst();
-    if (state.question && state.question.mode === 'begint' && state.question.word) {
-      praise = {
-        id: 'de-' + state.question.word.letter + '-van-' + state.question.word.word,
-        text: 'De ' + state.question.word.letter + ' van ' + state.question.word.word + '!'
-      };
-    } else {
-      praise = choosePraise();
-    }
-    showToast(praise.text, true);
-    speak(praise.id);
     updateStarsUI();
-    scheduleAfterPraise(function () {
+    deliverPraise(function () {
       if (state.towardsReward >= 5) {
         showReward();
       } else {
@@ -5325,17 +5400,12 @@
   }
 
   function memoryComplete() {
-    var praise;
     state.locked = true;
     state.stars += 1;
     saveStars();
-    playSuccess();
     showBurst();
-    praise = choosePraise();
-    showToast(praise.text, true);
-    speak(praise.id);
     updateStarsUI();
-    scheduleAfterPraise(function () {
+    deliverPraise(function () {
       showReward();
     });
   }
