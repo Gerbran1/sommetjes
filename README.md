@@ -27,6 +27,7 @@ Op het startscherm kies je **Getallen**, **Letters**, **Puzzels**, **Geheugen** 
 12. **Tangram** — sleep 3 of 4 grote stukken in de silhouet (huis, boot, boom). Later kun je tikken om te draaien.
 13. **Wat hoort waar?** — kies het plaatje waarop de beer op, onder, naast, achter, voor of in de tafel of doos zit.
 14. **Doolhofje** — zoek met je vinger de weg van het kind naar het huis. Je kiest klein (5×5), middel (7×7) of groot (9×9). Een ronde is vijf nieuwe doolhoven, daarna ga je terug naar Puzzels. Teruglopen wist het pad; muren houden je tegen.
+15. **Zoek de verschillen** — twee vrolijke plaatjes naast elkaar (onder elkaar in portret). Zoek de vijf verschillen; tik je er één aan, dan komt er een cirkel omheen op beide plaatjes. Een fout tikje schudt even, zonder straf. Een ronde is drie plaatjes, daarna ga je terug naar Puzzels.
 
 **Tekenen**
 15. **Vrij tekenen** — teken zelf met dikke kleuren, drie lijndiktes, een spuitbus en een gum. Wissen vraagt eerst even of het echt mag. Geen sterren, je tekent zo lang je wilt.

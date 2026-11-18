@@ -13,7 +13,7 @@ const wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms)
 const SCREENS = [
   'start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay',
   'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken',
-  'tangram', 'waar', 'doolhof', 'doolhoflevel', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn'
+  'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn'
 ];
 
 async function visibleScreen(page) {
@@ -359,7 +359,8 @@ async function waitSpiegelNext(page) {
       { game: 'spiegel', screen: 'spiegel', back: '#btn-spiegel-back', home: '#btn-spiegel-home' },
       { game: 'nateken', screen: 'nateken', back: '#btn-nateken-back', home: '#btn-nateken-home' },
       { game: 'tangram', screen: 'tangram', back: '#btn-tangram-back', home: '#btn-tangram-home' },
-      { game: 'waar', screen: 'waar', back: '#btn-waar-back', home: '#btn-waar-home' }
+      { game: 'waar', screen: 'waar', back: '#btn-waar-back', home: '#btn-waar-home' },
+      { game: 'verschillen', screen: 'verschillen', back: '#btn-vers-back', home: '#btn-vers-home' }
     ];
     for (const g of puzzles) {
       await fresh(page);
@@ -546,6 +547,51 @@ async function waitSpiegelNext(page) {
     await expectScreen(page, 'puzzles', 'auto after reward');
     if (await rewardVisible(page)) throw new Error('reward still visible after auto-return');
     ok('Ronde van 5 (Spiegelen): na beloning automatisch naar Puzzels-menu');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-puzzles');
+    await tap(page, '[data-game="verschillen"]');
+    await expectScreen(page, 'verschillen', 'verschillen start');
+    for (var vi = 0; vi < 3; vi++) {
+      const vKey = await page.evaluate(() => {
+        var w = document.getElementById('vers-wrap');
+        return w ? w.getAttribute('data-key') : '';
+      });
+      for (var vd = 0; vd < 5; vd++) {
+        await page.evaluate((n) => {
+          var hit = document.querySelector('#vers-left .vers-hit[data-diff="' + n + '"]');
+          if (hit) hit.click();
+        }, vd);
+        await wait(80);
+      }
+      if (vi < 2) {
+        var vNext = Date.now() + 12000;
+        var vMoved = false;
+        while (Date.now() < vNext) {
+          vMoved = await page.evaluate((prev) => {
+            var w = document.getElementById('vers-wrap');
+            var k = w ? w.getAttribute('data-key') : '';
+            var done = w && w.getAttribute('data-done') === '1';
+            return !!(k && k !== prev && !done);
+          }, vKey);
+          if (vMoved) break;
+          await wait(150);
+        }
+        if (!vMoved) throw new Error('verschillen next scene did not appear after ' + vKey);
+      } else if (!(await waitReward(page, 12000))) {
+        throw new Error('verschillen reward did not appear after 3');
+      }
+    }
+    var vEnd = Date.now() + 8000;
+    while (Date.now() < vEnd) {
+      const vs = await visibleScreen(page);
+      const vrw = await rewardVisible(page);
+      if (vs === 'puzzles' && !vrw) break;
+      await wait(150);
+    }
+    await expectScreen(page, 'puzzles', 'auto after verschillen reward');
+    if (await rewardVisible(page)) throw new Error('reward still visible after verschillen auto-return');
+    ok('Ronde van 3 (Zoek de verschillen): na beloning automatisch naar Puzzels-menu');
 
     // Tafels: after reward, back to the table picker
     await fresh(page);

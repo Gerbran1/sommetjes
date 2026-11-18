@@ -197,7 +197,7 @@
       line-height: 1;
     }
 
-    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-doolhoflevel, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij, #screen-cups, #screen-veranderd, #screen-tekenmenu, #screen-kleurkies, #screen-teken, #screen-klinkers, #screen-lijnlevel, #screen-lijn {
+    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-doolhoflevel, #screen-verschillen, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij, #screen-cups, #screen-veranderd, #screen-tekenmenu, #screen-kleurkies, #screen-teken, #screen-klinkers, #screen-lijnlevel, #screen-lijn {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -2365,6 +2365,136 @@
     @media screen and (max-height: 800px) {
       #doolhoflevel-grid .level-btn { min-height: 120px; }
     }
+    .lvl-vers {
+      background: #7E57C2;
+      -webkit-box-shadow: 0 8px 0 #5E35B1, 0 12px 16px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 0 #5E35B1, 0 12px 16px rgba(0,0,0,0.15);
+    }
+    .lvl-vers.pressed, .lvl-vers:active {
+      -webkit-box-shadow: 0 2px 0 #5E35B1, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #5E35B1, 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .vers-mini {
+      width: 72px;
+      height: 44px;
+    }
+    .vers-mini svg {
+      width: 72px;
+      height: 44px;
+      display: block;
+    }
+    #vers-wrap {
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      position: relative;
+      width: 100%;
+      min-height: 0;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+    }
+    #vers-dots {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      height: 28px;
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+    }
+    .vers-dot {
+      width: 16px;
+      height: 16px;
+      margin: 0 6px;
+      border-radius: 50%;
+      background: #E2D3A8;
+      -webkit-box-shadow: inset 0 2px 0 rgba(0,0,0,0.08);
+      box-shadow: inset 0 2px 0 rgba(0,0,0,0.08);
+    }
+    .vers-dot.is-on {
+      background: #43A047;
+      -webkit-box-shadow: 0 2px 0 #2E7D32;
+      box-shadow: 0 2px 0 #2E7D32;
+    }
+    #vers-stage, .vers-stage {
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .vers-frame {
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+      position: relative;
+      margin: 6px;
+      background: #5D4037;
+      border-radius: 16px;
+      overflow: hidden;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-shadow: 0 4px 0 #3E2723;
+      box-shadow: 0 4px 0 #3E2723;
+    }
+    .vers-inner {
+      position: relative;
+      background: #FFFDF7;
+      overflow: hidden;
+    }
+    .vers-inner svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    .vers-hit {
+      position: absolute;
+      z-index: 2;
+      background: transparent;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+    }
+    .vers-ring {
+      position: absolute;
+      z-index: 3;
+      pointer-events: none;
+      border: 5px solid #E53935;
+      border-radius: 50%;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      -webkit-box-shadow: 0 0 0 2px rgba(255,255,255,0.7);
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.7);
+    }
+    @media screen and (max-width: 800px) {
+      #vers-stage, .vers-stage {
+        -webkit-flex-direction: column;
+        flex-direction: column;
+      }
+      .vers-frame { margin: 4px 8px; }
+    }
+    @media screen and (max-height: 800px) {
+      #vers-dots { height: 22px; }
+      .vers-dot { width: 14px; height: 14px; margin: 0 5px; }
+      .vers-frame { margin: 4px; border-radius: 12px; }
+      .vers-ring { border-width: 4px; }
+    }
+
     .doolhof-icon {
       position: absolute;
       z-index: 3;
@@ -3484,6 +3614,12 @@
           </div>
           <div class="level-label">Doolhofje</div>
         </button>
+        <button type="button" class="tap level-btn lvl-vers" data-act="puzzle-game" data-game="verschillen">
+          <div class="act-icon">
+            <div class="vers-mini" id="icon-vers"></div>
+          </div>
+          <div class="level-label">Zoek de verschillen</div>
+        </button>
       </div>
     </div>
 
@@ -3715,6 +3851,37 @@
       </div>
       <div class="prompt" id="doolhof-prompt">Breng het kind naar huis</div>
       <div id="doolhof-wrap"></div>
+    </div>
+
+    <div id="screen-verschillen" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-vers-back" data-act="back" title="Terug">
+            <span id="vers-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-vers-home" data-act="home" title="Start" style="margin-left:8px;">
+            <span id="vers-home-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="vers-star-icon"></span>
+            <span class="star-count" id="vers-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt" id="vers-prompt">Zoek de 5 verschillen!</div>
+      <div id="vers-wrap">
+        <div id="vers-dots"></div>
+        <div id="vers-stage" class="vers-stage">
+          <div class="vers-frame tap" id="vers-frame-l" data-act="vers-miss" data-side="L">
+            <div class="vers-inner" id="vers-left"></div>
+          </div>
+          <div class="vers-frame tap" id="vers-frame-r" data-act="vers-miss" data-side="R">
+            <div class="vers-inner" id="vers-right"></div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div id="screen-trace" class="is-hidden">
@@ -5625,6 +5792,10 @@
       startDoolhof(false);
       return;
     }
+    else if (state.level === 'verschillen') {
+      startVers(false);
+      return;
+    }
     else if (state.level === 'weg') {
       startWeg(false);
       return;
@@ -6606,7 +6777,9 @@
     showBurst();
     updateStarsUI();
     deliverPraise(function () {
-      if (state.towardsReward >= 5) {
+      var need;
+      need = (state.level === 'verschillen') ? 3 : 5;
+      if (state.towardsReward >= need) {
         showReward();
       } else {
         nextQuestion();
@@ -6947,7 +7120,7 @@
   /* ---------- UI ---------- */
   function updateStarsUI() {
     var i, row, html, filled, el, rows;
-    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars', 'cups-stars', 'veranderd-stars', 'klinkers-stars', 'lijnlevel-stars', 'lijn-stars', 'doolhoflevel-stars'], String(state.stars));
+    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'vers-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars', 'cups-stars', 'veranderd-stars', 'klinkers-stars', 'lijnlevel-stars', 'lijn-stars', 'doolhoflevel-stars'], String(state.stars));
     filled = state.towardsReward;
     if (filled > 5) filled = 5;
     html = '';
@@ -6980,7 +7153,7 @@
   function showScreen(name) {
     var ids, i, el;
     state.screen = name;
-    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'doolhoflevel', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn'];
+    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn'];
     for (i = 0; i < ids.length; i++) {
       el = $('screen-' + ids[i]);
       if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
@@ -7052,7 +7225,7 @@
     state.towardsReward = 0;
     updateStarsUI();
     s = state.screen;
-    if (s === 'doolhof') {
+    if (s === 'doolhof' || s === 'verschillen') {
       leavePlay();
       showPuzzlesMenu();
       return;
@@ -10677,6 +10850,723 @@
     return true;
   }
 
+  /* ---------- Puzzels: Zoek de verschillen ---------- */
+  var VERS_W = 400;
+  var VERS_H = 300;
+  var VERS_INK = '#4E342E';
+  var versState = { id: '', found: {}, count: 0, diffs: [] };
+
+  function vR(x, y, w, h, fill, stroke, rx) {
+    var s;
+    s = '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" fill="' + fill + '"';
+    if (stroke) s += ' stroke="' + stroke + '" stroke-width="2.2" stroke-linejoin="round"';
+    if (rx) s += ' rx="' + rx + '" ry="' + rx + '"';
+    return s + '/>';
+  }
+  function vC(cx, cy, r, fill, stroke) {
+    var s;
+    s = '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="' + fill + '"';
+    if (stroke) s += ' stroke="' + stroke + '" stroke-width="2.2"';
+    return s + '/>';
+  }
+  function vE(cx, cy, rx, ry, fill, stroke) {
+    var s;
+    s = '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + rx + '" ry="' + ry + '" fill="' + fill + '"';
+    if (stroke) s += ' stroke="' + stroke + '" stroke-width="2.2"';
+    return s + '/>';
+  }
+  function vP(d, fill, stroke, sw) {
+    var s;
+    s = '<path d="' + d + '" fill="' + (fill || 'none') + '"';
+    if (stroke) s += ' stroke="' + stroke + '" stroke-width="' + (sw || 2.2) + '" stroke-linejoin="round" stroke-linecap="round"';
+    return s + '/>';
+  }
+  function vL(x1, y1, x2, y2, stroke, sw) {
+    return '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke="' + (stroke || VERS_INK) + '" stroke-width="' + (sw || 2.2) + '" stroke-linecap="round"/>';
+  }
+  function vPoly(pts, fill, stroke) {
+    var s;
+    s = '<polygon points="' + pts + '" fill="' + fill + '"';
+    if (stroke) s += ' stroke="' + stroke + '" stroke-width="2.2" stroke-linejoin="round"';
+    return s + '/>';
+  }
+  function versSun(cx, cy, r, fill) {
+    var i, a, html, r2, x1, y1, x2, y2;
+    fill = fill || '#FFD54F';
+    r2 = r + Math.max(8, Math.round(r * 0.45));
+    html = '';
+    for (i = 0; i < 8; i++) {
+      a = (i * 3.14159265) / 4;
+      x1 = cx + Math.cos(a) * (r + 1);
+      y1 = cy + Math.sin(a) * (r + 1);
+      x2 = cx + Math.cos(a) * r2;
+      y2 = cy + Math.sin(a) * r2;
+      html += vL(x1, y1, x2, y2, fill, 3);
+    }
+    html += vC(cx, cy, r, fill, '#F9A825');
+    return html;
+  }
+  function versCloud(x, y, s, fill) {
+    fill = fill || '#FFFDF7';
+    return vC(x, y, 12 * s, fill, '') +
+      vC(x + 14 * s, y - 6 * s, 16 * s, fill, '') +
+      vC(x + 28 * s, y, 13 * s, fill, '') +
+      vE(x + 14 * s, y + 6 * s, 24 * s, 12 * s, fill, '');
+  }
+  function versTree(x, y, crown) {
+    return vR(x - 6, y + 28, 12, 32, '#8D6E63', VERS_INK, 2) +
+      vC(x, y + 10, 26, crown || '#43A047', VERS_INK) +
+      vC(x - 16, y + 18, 16, crown || '#43A047', VERS_INK) +
+      vC(x + 16, y + 18, 16, crown || '#43A047', VERS_INK);
+  }
+
+  function versBoerderij(side) {
+    var h, barn, cow, chicken, apple2, sunR;
+    barn = (side === 'L') ? '#E53935' : '#FDD835';
+    cow = (side === 'L') ? '#FFFDF7' : '#A1887F';
+    chicken = (side === 'L');
+    apple2 = (side === 'R');
+    sunR = (side === 'L') ? 18 : 30;
+    h = vR(0, 0, 400, 200, '#81D4FA', '') +
+      vR(0, 200, 400, 100, '#8BC34A', '') +
+      vP('M0 200 C80 170 160 210 240 185 C300 170 350 200 400 180 L400 200 Z', '#7CB342', '') +
+      versCloud(60, 48, 1.1, '#FFF') +
+      versCloud(230, 36, 0.9, '#FFF') +
+      versSun(360, 42, sunR, '#FFD54F') +
+      vPoly('40 128 100 78 160 128', '#6D4C41', VERS_INK) +
+      vR(50, 126, 100, 80, barn, VERS_INK, 2) +
+      vR(86, 158, 28, 48, '#6D4C41', VERS_INK, 2) +
+      vC(100, 182, 3, '#FFD54F', '') +
+      vR(60, 142, 18, 16, '#BBDEFB', VERS_INK, 2) +
+      vR(122, 142, 18, 16, '#BBDEFB', VERS_INK, 2) +
+      versTree(300, 130, '#2E7D32') +
+      vC(288, 118, 6, '#E53935', VERS_INK);
+    if (apple2) h += vC(318, 112, 6, '#E53935', VERS_INK);
+    h += vE(210, 248, 42, 16, '#4FC3F7', '#0277BD') +
+      vR(318, 214, 50, 22, '#43A047', VERS_INK, 4) +
+      vC(330, 214, 10, '#243044', VERS_INK) +
+      vC(358, 214, 10, '#243044', VERS_INK) +
+      vR(348, 200, 16, 16, '#FFC107', VERS_INK, 2) +
+      vE(100, 230, 28, 16, cow, VERS_INK) +
+      vC(74, 222, 11, cow, VERS_INK) +
+      vC(70, 218, 2.2, '#243044', '') +
+      vR(88, 242, 5, 12, '#5D4037', VERS_INK, 1) +
+      vR(112, 242, 5, 12, '#5D4037', VERS_INK, 1);
+    if (side === 'L') {
+      h += vC(96, 226, 4, '#243044', '') + vC(110, 232, 3.5, '#243044', '');
+    }
+    h += vR(16, 198, 7, 16, '#A1887F', VERS_INK, 1) +
+      vR(36, 198, 7, 16, '#A1887F', VERS_INK, 1) +
+      vR(16, 194, 28, 6, '#D7CCC8', VERS_INK, 1) +
+      vR(168, 198, 7, 16, '#A1887F', VERS_INK, 1) +
+      vR(200, 198, 7, 16, '#A1887F', VERS_INK, 1) +
+      vR(248, 198, 7, 16, '#A1887F', VERS_INK, 1) +
+      vR(168, 194, 92, 6, '#D7CCC8', VERS_INK, 1);
+    if (chicken) {
+      h += vC(230, 220, 16, '#FFFDE7', VERS_INK) +
+        vC(246, 212, 10, '#FFFDE7', VERS_INK) +
+        vP('M256 212 L268 208 L256 218 Z', '#FF9800', VERS_INK) +
+        vP('M242 202 L248 192 L254 202 Z', '#E53935', VERS_INK) +
+        vL(224, 234, 222, 246, VERS_INK, 2) +
+        vL(234, 234, 236, 246, VERS_INK, 2);
+    }
+    return h;
+  }
+
+  function versStrand(side) {
+    var h, umb, boat, ballR, crab, gull;
+    umb = (side === 'L') ? '#E53935' : '#1E88E5';
+    boat = (side === 'L') ? '#FFD54F' : '#66BB6A';
+    ballR = (side === 'L') ? 16 : 26;
+    crab = (side === 'L');
+    gull = (side === 'R');
+    h = vR(0, 0, 400, 150, '#81D4FA', '') +
+      vR(0, 150, 400, 55, '#29B6F6', '') +
+      vR(0, 200, 400, 100, '#F5E6C8', '') +
+      versSun(60, 44, 22, '#FFD54F') +
+      versCloud(140, 40, 1, '#FFF') +
+      vR(18, 150, 14, 70, '#8D6E63', VERS_INK, 3) +
+      vP('M18 150 Q8 110 32 70 Q50 110 32 150 Z', '#43A047', VERS_INK) +
+      vP('M32 70 Q60 110 36 150 Z', '#2E7D32', VERS_INK) +
+      vL(130, 130, 130, 230, '#8D6E63', 4) +
+      vP('M80 132 Q130 70 180 132 Z', umb, VERS_INK) +
+      vL(80, 132, 180, 132, VERS_INK, 2.2) +
+      vP('M90 230 L170 215 L185 245 L80 250 Z', '#E0C090', VERS_INK) +
+      vR(118, 200, 22, 18, '#FFFDE7', VERS_INK, 2) +
+      vR(122, 192, 14, 10, '#FFFDE7', VERS_INK, 2) +
+      vP('M250 178 L330 178 L310 198 L268 198 Z', boat, VERS_INK) +
+      vL(280, 178, 280, 148, VERS_INK, 2.5) +
+      vP('M280 148 L280 172 L312 172 Z', '#FFFDF7', VERS_INK) +
+      vC(200, 250, ballR, '#EF5350', VERS_INK) +
+      vP('M' + (200 - ballR) + ' 250 A ' + ballR + ' ' + ballR + ' 0 0 1 ' + (200 + ballR) + ' 250', '#FFF', '') +
+      vC(200, 250, 3, '#FFF', '');
+    if (crab) {
+      h += vE(310, 250, 16, 10, '#EF5350', VERS_INK) +
+        vC(298, 244, 5, '#EF5350', VERS_INK) +
+        vC(322, 244, 5, '#EF5350', VERS_INK) +
+        vL(296, 250, 286, 258, VERS_INK, 2) +
+        vL(324, 250, 334, 258, VERS_INK, 2);
+    }
+    if (gull) {
+      h += vP('M300 48 Q320 36 340 48', 'none', '#FFFFFF', 3.4) +
+        vP('M300 48 Q320 36 340 48', 'none', VERS_INK, 1.6);
+    }
+    h += vP('M360 48 Q380 36 400 48', 'none', '#FFFFFF', 3) +
+      vP('M360 48 Q380 36 400 48', 'none', VERS_INK, 1.4);
+    return h;
+  }
+
+  function versKamer(side) {
+    var h, rug, lamp, plantS, cat, star;
+    rug = (side === 'L') ? '#42A5F5' : '#EF5350';
+    lamp = (side === 'L') ? '#FFEE58' : '#F48FB1';
+    plantS = (side === 'L') ? 1 : 1.55;
+    cat = (side === 'L');
+    star = (side === 'R');
+    h = vR(0, 0, 400, 200, '#FFE0B2', '') +
+      vR(0, 200, 400, 100, '#BCAAA4', '') +
+      vR(0, 196, 400, 8, '#8D6E63', '') +
+      vR(40, 36, 90, 80, '#81D4FA', VERS_INK, 4) +
+      vL(85, 36, 85, 116, VERS_INK, 2) +
+      vL(40, 76, 130, 76, VERS_INK, 2) +
+      versSun(85, 62, 12, '#FFD54F') +
+      vR(30, 150, 130, 70, '#8D6E63', VERS_INK, 6) +
+      vR(42, 160, 106, 48, '#FFCDD2', VERS_INK, 4) +
+      vE(95, 160, 50, 10, '#EF9A9A', VERS_INK) +
+      vR(200, 70, 50, 70, '#FFF8E1', VERS_INK, 4) +
+      vP('M200 70 L225 40 L250 70 Z', lamp, VERS_INK) +
+      vC(225, 40, 5, '#FFD54F', VERS_INK) +
+      vR(218, 140, 14, 8, '#8D6E63', VERS_INK, 2) +
+      vR(310, 150, 22, 50, '#A1887F', VERS_INK, 3) +
+      vC(321, 150 - 8 * plantS, 16 * plantS, '#43A047', VERS_INK) +
+      vC(321 - 14 * plantS, 158 - 6 * plantS, 12 * plantS, '#2E7D32', VERS_INK) +
+      vC(321 + 14 * plantS, 158 - 6 * plantS, 12 * plantS, '#2E7D32', VERS_INK) +
+      vE(230, 250, 90, 22, rug, VERS_INK) +
+      vR(300, 40, 60, 44, '#FFFDF7', VERS_INK, 4) +
+      vC(330, 62, 12, '#FFD54F', VERS_INK);
+    if (star) {
+      h += vPoly('330 18 334 30 346 30 336 38 340 50 330 42 320 50 324 38 314 30 326 30', '#FFCA28', VERS_INK);
+    }
+    if (cat) {
+      h += vE(80, 200, 18, 12, '#FFB74D', VERS_INK) +
+        vC(66, 190, 9, '#FFB74D', VERS_INK) +
+        vP('M60 184 L62 174 L68 184 Z', '#FFB74D', VERS_INK) +
+        vP('M70 184 L74 174 L80 184 Z', '#FFB74D', VERS_INK) +
+        vC(64, 188, 1.6, VERS_INK, '') +
+        vP('M96 200 Q110 190 118 206', 'none', VERS_INK, 2);
+    }
+    h += vC(180, 230, 14, '#7E57C2', VERS_INK) +
+      vC(180, 230, 14, 'none', '#FFF') +
+      vL(180, 216, 180, 244, '#FFF', 2);
+    return h;
+  }
+
+  function versBos(side) {
+    var h, mush, flower, bunnyS, owl, fly;
+    mush = (side === 'L') ? '#E53935' : '#8E24AA';
+    flower = (side === 'L') ? '#FFD54F' : '#F48FB1';
+    bunnyS = (side === 'L') ? 1 : 1.5;
+    owl = (side === 'L');
+    fly = (side === 'R');
+    h = vR(0, 0, 400, 190, '#81D4FA', '') +
+      vR(0, 190, 400, 110, '#7CB342', '') +
+      versSun(50, 40, 18, '#FFD54F') +
+      versCloud(140, 36, 1, '#FFF') +
+      versTree(80, 120, '#2E7D32') +
+      versTree(200, 100, '#388E3C') +
+      versTree(330, 124, '#1B5E20') +
+      vR(70, 230, 8, 16, '#FFFDE7', VERS_INK, 2) +
+      vE(70, 226, 16, 10, mush, VERS_INK) +
+      vR(100, 238, 7, 14, '#FFFDE7', VERS_INK, 2) +
+      vE(100, 234, 13, 8, mush, VERS_INK) +
+      vC(72, 224, 2, '#FFFDE7', '') +
+      vC(100, 232, 2, '#FFFDE7', '') +
+      vC(250, 250, 8, flower, VERS_INK) +
+      vC(242, 244, 7, flower, VERS_INK) +
+      vC(258, 244, 7, flower, VERS_INK) +
+      vC(250, 250, 4, '#FFD54F', VERS_INK) +
+      vL(250, 254, 250, 272, '#2E7D32', 2.4) +
+      vC(280, 258, 8, flower, VERS_INK) +
+      vC(272, 252, 7, flower, VERS_INK) +
+      vC(288, 252, 7, flower, VERS_INK) +
+      vC(280, 258, 4, '#FFD54F', VERS_INK) +
+      vL(280, 262, 280, 278, '#2E7D32', 2.4) +
+      vE(160, 250, 14 * bunnyS, 10 * bunnyS, '#FFFDF7', VERS_INK) +
+      vC(150 - 2 * (bunnyS - 1) * 10, 238 - 4 * (bunnyS - 1), 7 * bunnyS, '#FFFDF7', VERS_INK) +
+      vE(146 - 4 * (bunnyS - 1), 226 - 8 * (bunnyS - 1), 3 * bunnyS, 8 * bunnyS, '#FFFDF7', VERS_INK) +
+      vE(154 + 2 * (bunnyS - 1), 226 - 8 * (bunnyS - 1), 3 * bunnyS, 8 * bunnyS, '#FFFDF7', VERS_INK) +
+      vC(148 - 2 * (bunnyS - 1) * 8, 236 - 4 * (bunnyS - 1), 1.5, VERS_INK, '');
+    if (owl) {
+      h += vC(200, 108, 16, '#FFCC80', VERS_INK) +
+        vC(194, 104, 5, '#FFFDF7', VERS_INK) +
+        vC(206, 104, 5, '#FFFDF7', VERS_INK) +
+        vC(194, 104, 2, VERS_INK, '') +
+        vC(206, 104, 2, VERS_INK, '') +
+        vP('M200 108 L196 114 L204 114 Z', '#E65100', VERS_INK);
+    }
+    if (fly) {
+      h += vC(300, 80, 6, '#FFD54F', VERS_INK) +
+        vE(292, 78, 8, 5, '#BBDEFB', VERS_INK) +
+        vE(308, 78, 8, 5, '#BBDEFB', VERS_INK);
+    }
+    return h;
+  }
+
+  function versOnderwater(side) {
+    var h, fish, chestOpen, turtS, star, extra;
+    fish = (side === 'L') ? '#FF9800' : '#8E24AA';
+    chestOpen = (side === 'R');
+    turtS = (side === 'L') ? 1 : 1.45;
+    star = (side === 'L');
+    extra = (side === 'R');
+    h = vR(0, 0, 400, 240, '#0288D1', '') +
+      vP('M0 80 C80 40 140 120 220 70 C300 20 350 90 400 50 L400 0 L0 0 Z', '#03A9F4', '') +
+      vR(0, 240, 400, 60, '#F5E6C8', '') +
+      vP('M0 240 C60 220 120 250 200 230 C280 210 340 250 400 228 L400 240 Z', '#E6D3A3', '') +
+      vR(30, 170, 10, 80, '#2E7D32', VERS_INK, 3) +
+      vP('M30 190 Q8 180 30 170 Q16 200 30 200', '#43A047', VERS_INK) +
+      vP('M40 200 Q58 186 40 170 Q54 210 40 210', '#43A047', VERS_INK) +
+      vR(360, 180, 10, 70, '#2E7D32', VERS_INK, 3) +
+      vP('M360 200 Q340 186 360 176', '#43A047', VERS_INK) +
+      vP('M370 210 Q390 190 370 176', '#43A047', VERS_INK) +
+      vC(80, 60, 8, '#B3E5FC', '#81D4FA') +
+      vC(110, 40, 5, '#B3E5FC', '#81D4FA') +
+      vC(70, 36, 4, '#B3E5FC', '#81D4FA') +
+      vC(330, 70, 7, '#B3E5FC', '#81D4FA') +
+      vE(140, 120, 28, 16, fish, VERS_INK) +
+      vP('M168 120 L196 100 L196 140 Z', fish, VERS_INK) +
+      vC(126, 116, 4, '#FFF', VERS_INK) +
+      vC(125, 116, 2, VERS_INK, '') +
+      vE(260, 200, 22 * turtS, 14 * turtS, '#66BB6A', VERS_INK) +
+      vC(238 - 10 * (turtS - 1), 198, 10 * turtS, '#A5D6A7', VERS_INK) +
+      vC(260, 200, 12 * turtS, '#2E7D32', VERS_INK);
+    if (chestOpen) {
+      h += vR(300, 230, 44, 24, '#F9A825', VERS_INK, 3) +
+        vP('M300 230 L300 210 L344 210 L344 230 Z', '#FFE082', VERS_INK) +
+        vC(322, 220, 5, '#FFD54F', VERS_INK);
+    } else {
+      h += vR(300, 222, 44, 32, '#8D6E63', VERS_INK, 3) +
+        vR(300, 234, 44, 6, '#F9A825', VERS_INK, 1) +
+        vC(322, 238, 3, '#FFD54F', VERS_INK);
+    }
+    if (star) {
+      h += vPoly('70 250 76 262 90 262 78 270 82 284 70 274 58 284 62 270 50 262 64 262', '#FFCA28', VERS_INK);
+    }
+    if (extra) {
+      h += vE(200, 70, 14, 8, '#F06292', VERS_INK) +
+        vP('M214 70 L228 60 L228 80 Z', '#F06292', VERS_INK) +
+        vC(194, 68, 2.2, '#FFF', VERS_INK);
+    }
+    return h;
+  }
+
+  function versRuimte(side) {
+    var h, rocket, planet, moonR, alien, extraStar;
+    rocket = (side === 'L') ? '#E53935' : '#1E88E5';
+    planet = (side === 'L') ? '#26A69A' : '#FF8A65';
+    moonR = (side === 'L') ? 22 : 34;
+    alien = (side === 'L');
+    extraStar = (side === 'R');
+    h = vR(0, 0, 400, 300, '#0D1B4C', '') +
+      vC(40, 40, 2.2, '#FFF59D', '') +
+      vC(90, 70, 1.8, '#FFF', '') +
+      vC(160, 30, 2, '#FFF59D', '') +
+      vC(250, 50, 1.6, '#FFF', '') +
+      vC(320, 24, 2, '#FFF', '') +
+      vC(370, 80, 1.8, '#FFF59D', '') +
+      vC(60, 130, 1.6, '#FFF', '') +
+      vC(200, 90, 2, '#FFF', '') +
+      vC(280, 120, 1.5, '#FFF59D', '') +
+      vC(340, 160, 2, '#FFF', '') +
+      vC(30, 200, 1.6, '#FFF', '') +
+      vC(110, 230, 2, '#FFF59D', '') +
+      vC(180, 260, 1.5, '#FFF', '') +
+      vC(360, 240, 2, '#FFF', '') +
+      vC(70, 80, moonR, '#FFF8E1', '#FFE082') +
+      vC(60, 72, 5, '#FFE0B2', '') +
+      vC(80, 88, 4, '#FFE0B2', '') +
+      vC(300, 80, 28, planet, '#FFF') +
+      vE(300, 80, 40, 8, 'none', '#FFF8E1') +
+      vP('M140 200 L140 120 L170 90 L200 120 L200 200 Z', rocket, VERS_INK) +
+      vP('M140 120 L170 70 L200 120 Z', '#FFD54F', VERS_INK) +
+      vC(170, 140, 8, '#81D4FA', VERS_INK) +
+      vP('M140 200 L120 230 L140 218 Z', '#FF9800', VERS_INK) +
+      vP('M200 200 L220 230 L200 218 Z', '#FF9800', VERS_INK) +
+      vP('M150 200 L170 250 L190 200 Z', '#FFB74D', VERS_INK) +
+      vC(260, 200, 22, '#90CAF9', '#FFF') +
+      vC(260, 200, 12, '#1565C0', '') +
+      vE(248, 188, 4, 6, '#81D4FA', '') +
+      vE(272, 188, 4, 6, '#81D4FA', '');
+    if (alien) {
+      h += vC(330, 230, 18, '#9CCC65', VERS_INK) +
+        vC(318, 214, 10, '#9CCC65', VERS_INK) +
+        vC(342, 214, 10, '#9CCC65', VERS_INK) +
+        vC(318, 214, 4, '#FFF', VERS_INK) +
+        vC(342, 214, 4, '#FFF', VERS_INK) +
+        vC(318, 214, 2, VERS_INK, '') +
+        vC(342, 214, 2, VERS_INK, '') +
+        vC(330, 236, 4, '#689F38', '');
+    }
+    if (extraStar) {
+      h += vPoly('200 20 206 36 224 36 210 46 216 62 200 52 184 62 190 46 176 36 194 36', '#FFD54F', '#FFF59D');
+    }
+    return h;
+  }
+
+  function versSpeeltuin(side) {
+    var h, slide, swing, bucketS, ball, balloon;
+    slide = (side === 'L') ? '#FFD54F' : '#43A047';
+    swing = (side === 'L') ? '#E53935' : '#1E88E5';
+    bucketS = (side === 'L') ? 1 : 1.6;
+    ball = (side === 'L');
+    balloon = (side === 'R');
+    h = vR(0, 0, 400, 180, '#81D4FA', '') +
+      vR(0, 180, 400, 120, '#8BC34A', '') +
+      versSun(60, 44, 20, '#FFD54F') +
+      versCloud(160, 36, 1, '#FFF') +
+      versTree(350, 110, '#2E7D32') +
+      vR(40, 100, 10, 90, '#8D6E63', VERS_INK, 2) +
+      vR(120, 100, 10, 90, '#8D6E63', VERS_INK, 2) +
+      vR(40, 96, 90, 8, '#8D6E63', VERS_INK, 2) +
+      vL(60, 104, 60, 160, VERS_INK, 2) +
+      vL(100, 104, 100, 160, VERS_INK, 2) +
+      vR(50, 158, 20, 8, swing, VERS_INK, 3) +
+      vR(90, 158, 20, 8, swing, VERS_INK, 3) +
+      vR(200, 80, 12, 110, '#90A4AE', VERS_INK, 2) +
+      vR(200, 80, 70, 12, '#90A4AE', VERS_INK, 2) +
+      vP('M270 90 L270 200 L230 200 Z', slide, VERS_INK) +
+      vR(280, 200, 70, 28, '#F5E6C8', VERS_INK, 8) +
+      vP('M' + (310 - 10 * bucketS) + ' ' + (206 - 6 * bucketS) + ' L' + (310 - 14 * bucketS) + ' ' + (206 + 16 * bucketS) + ' L' + (310 + 14 * bucketS) + ' ' + (206 + 16 * bucketS) + ' L' + (310 + 10 * bucketS) + ' ' + (206 - 6 * bucketS) + ' Z', '#29B6F6', VERS_INK);
+    if (ball) {
+      h += vC(170, 230, 16, '#EF5350', VERS_INK) +
+        vP('M154 230 A16 16 0 0 1 186 230', '#FFF', '') +
+        vL(154, 230, 186, 230, '#FFF', 2);
+    }
+    if (balloon) {
+      h += vE(160, 70, 14, 18, '#EC407A', VERS_INK) +
+        vL(160, 88, 160, 120, VERS_INK, 1.6) +
+        vC(155, 66, 3, '#F8BBD0', '');
+    }
+    h += vC(240, 50, 6, '#FFF', '') +
+      vC(80, 80, 4, '#FFF', '');
+    return h;
+  }
+
+  function versFeest(side) {
+    var h, cake, flag, hatS, balloon2, gift2;
+    cake = (side === 'L') ? '#F8BBD0' : '#8D6E63';
+    flag = (side === 'L') ? '#66BB6A' : '#7E57C2';
+    hatS = (side === 'L') ? 1 : 1.5;
+    balloon2 = (side === 'L');
+    gift2 = (side === 'R');
+    h = vR(0, 0, 400, 200, '#FFF3E0', '') +
+      vR(0, 200, 400, 100, '#FFCC80', '') +
+      vR(0, 196, 400, 8, '#FFB74D', '') +
+      vL(30, 30, 370, 30, '#8D6E63', 3) +
+      vPoly('50 30 70 30 60 55', flag, VERS_INK) +
+      vPoly('110 30 130 30 120 55', '#FFD54F', VERS_INK) +
+      vPoly('170 30 190 30 180 55', flag, VERS_INK) +
+      vPoly('230 30 250 30 240 55', '#EF5350', VERS_INK) +
+      vPoly('290 30 310 30 300 55', flag, VERS_INK) +
+      vPoly('350 30 370 30 360 55', '#29B6F6', VERS_INK) +
+      vR(150, 170, 100, 50, cake, VERS_INK, 6) +
+      vR(160, 148, 80, 28, cake, VERS_INK, 6) +
+      vR(150, 190, 100, 10, '#FFFDE7', VERS_INK, 2) +
+      vR(168, 132, 6, 16, '#FFFDE7', VERS_INK, 1) +
+      vR(188, 128, 6, 20, '#FFFDE7', VERS_INK, 1) +
+      vR(208, 132, 6, 16, '#FFFDE7', VERS_INK, 1) +
+      vC(171, 130, 4, '#FF9800', '') +
+      vC(191, 126, 4, '#FF9800', '') +
+      vC(211, 130, 4, '#FF9800', '') +
+      vC(70, 80, 16, '#EF5350', VERS_INK) +
+      vL(70, 96, 70, 140, VERS_INK, 1.6);
+    if (balloon2) {
+      h += vC(110, 70, 16, '#1E88E5', VERS_INK) +
+        vL(110, 86, 110, 130, VERS_INK, 1.6);
+    }
+    h += vC(330, 80, 16, '#FFD54F', VERS_INK) +
+      vL(330, 96, 330, 140, VERS_INK, 1.6) +
+      vR(40, 210, 40, 30, '#7E57C2', VERS_INK, 4) +
+      vL(60, 210, 60, 240, '#FFD54F', 3) +
+      vL(40, 224, 80, 224, '#FFD54F', 3);
+    if (gift2) {
+      h += vR(90, 216, 36, 26, '#43A047', VERS_INK, 4) +
+        vL(108, 216, 108, 242, '#FFD54F', 3) +
+        vL(90, 228, 126, 228, '#FFD54F', 3);
+    }
+    h += vPoly((200 - 18 * hatS) + ' ' + (90 + 10 * hatS) + ' 200 ' + (90 - 28 * hatS) + ' ' + (200 + 18 * hatS) + ' ' + (90 + 10 * hatS), '#EC407A', VERS_INK) +
+      vC(200, 90 - 28 * hatS, 5 * hatS, '#FFD54F', VERS_INK) +
+      vE(200, 250, 80, 16, '#FFEeee', '#E57373');
+    return h;
+  }
+
+  var VERS_SCENES = [
+    { id: 'boerderij', draw: versBoerderij, diffs: [
+      { x: 36, y: 76, w: 130, h: 132 },
+      { x: 208, y: 188, w: 70, h: 62 },
+      { x: 300, y: 96, w: 36, h: 36 },
+      { x: 326, y: 8, w: 70, h: 70 },
+      { x: 62, y: 200, w: 70, h: 56 }
+    ]},
+    { id: 'strand', draw: versStrand, diffs: [
+      { x: 76, y: 68, w: 110, h: 70 },
+      { x: 276, y: 228, w: 64, h: 44 },
+      { x: 290, y: 24, w: 60, h: 40 },
+      { x: 170, y: 220, w: 60, h: 60 },
+      { x: 246, y: 144, w: 90, h: 58 }
+    ]},
+    { id: 'kamer', draw: versKamer, diffs: [
+      { x: 136, y: 222, w: 188, h: 54 },
+      { x: 52, y: 172, w: 70, h: 48 },
+      { x: 308, y: 6, w: 48, h: 48 },
+      { x: 292, y: 108, w: 70, h: 90 },
+      { x: 198, y: 34, w: 56, h: 50 }
+    ]},
+    { id: 'bos', draw: versBos, diffs: [
+      { x: 52, y: 208, w: 66, h: 46 },
+      { x: 180, y: 88, w: 44, h: 44 },
+      { x: 280, y: 60, w: 44, h: 40 },
+      { x: 132, y: 210, w: 64, h: 64 },
+      { x: 232, y: 230, w: 70, h: 50 }
+    ]},
+    { id: 'onderwater', draw: versOnderwater, diffs: [
+      { x: 108, y: 96, w: 92, h: 52 },
+      { x: 48, y: 236, w: 48, h: 52 },
+      { x: 182, y: 52, w: 52, h: 40 },
+      { x: 220, y: 168, w: 80, h: 64 },
+      { x: 292, y: 204, w: 60, h: 56 }
+    ]},
+    { id: 'ruimte', draw: versRuimte, diffs: [
+      { x: 116, y: 68, w: 108, h: 150 },
+      { x: 304, y: 196, w: 56, h: 56 },
+      { x: 174, y: 12, w: 52, h: 54 },
+      { x: 32, y: 40, w: 80, h: 80 },
+      { x: 258, y: 48, w: 84, h: 64 }
+    ]},
+    { id: 'speeltuin', draw: versSpeeltuin, diffs: [
+      { x: 224, y: 86, w: 56, h: 118 },
+      { x: 150, y: 210, w: 44, h: 44 },
+      { x: 140, y: 48, w: 44, h: 56 },
+      { x: 288, y: 186, w: 52, h: 48 },
+      { x: 46, y: 148, w: 70, h: 28 }
+    ]},
+    { id: 'feest', draw: versFeest, diffs: [
+      { x: 146, y: 124, w: 108, h: 100 },
+      { x: 90, y: 50, w: 44, h: 52 },
+      { x: 84, y: 206, w: 50, h: 42 },
+      { x: 170, y: 48, w: 60, h: 60 },
+      { x: 40, y: 16, w: 340, h: 30 }
+    ]}
+  ];
+
+  function versSceneById(id) {
+    var i;
+    for (i = 0; i < VERS_SCENES.length; i++) {
+      if (VERS_SCENES[i].id === id) return VERS_SCENES[i];
+    }
+    return VERS_SCENES[0];
+  }
+
+  function versSceneIds() {
+    var i, out;
+    out = [];
+    for (i = 0; i < VERS_SCENES.length; i++) out.push(VERS_SCENES[i].id);
+    return out;
+  }
+
+  function versSvgMarkup(scene, side) {
+    return '<svg viewBox="0 0 ' + VERS_W + ' ' + VERS_H + '" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" aria-hidden="true">' +
+      scene.draw(side) +
+      '</svg>';
+  }
+
+  function versHitHtml(diff, i, side) {
+    var l, t, w, h;
+    l = (diff.x / VERS_W) * 100;
+    t = (diff.y / VERS_H) * 100;
+    w = (diff.w / VERS_W) * 100;
+    h = (diff.h / VERS_H) * 100;
+    return '<div class="tap vers-hit" data-act="vers-diff" data-diff="' + i + '" data-side="' + side + '"' +
+      ' style="left:' + l + '%;top:' + t + '%;width:' + w + '%;height:' + h + '%;"></div>';
+  }
+
+  function versRingHtml(diff, i) {
+    var l, t, w, h, pad;
+    pad = 6;
+    l = ((diff.x - pad) / VERS_W) * 100;
+    t = ((diff.y - pad) / VERS_H) * 100;
+    w = ((diff.w + pad * 2) / VERS_W) * 100;
+    h = ((diff.h + pad * 2) / VERS_H) * 100;
+    return '<div class="vers-ring" data-ring="' + i + '" style="left:' + l + '%;top:' + t + '%;width:' + w + '%;height:' + h + '%;"></div>';
+  }
+
+  function layoutVers() {
+    var stage, frames, i, sw, sh, w, h, inner, fw, fh, pad, stacked;
+    stage = $('vers-stage');
+    if (!stage) return;
+    sw = stage.clientWidth || 1;
+    sh = stage.clientHeight || 1;
+    pad = 6;
+    stacked = sw <= 800;
+    if (stacked) {
+      fw = sw - 12;
+      fh = Math.floor((sh - 12) / 2);
+    } else {
+      fw = Math.floor((sw - 12) / 2);
+      fh = sh - 8;
+    }
+    w = fw - pad * 2;
+    h = Math.round(w * VERS_H / VERS_W);
+    if (h > fh - pad * 2) {
+      h = fh - pad * 2;
+      w = Math.round(h * VERS_W / VERS_H);
+    }
+    if (w < 40) w = 40;
+    if (h < 30) h = 30;
+    frames = stage.querySelectorAll('.vers-frame');
+    for (i = 0; i < frames.length; i++) {
+      inner = frames[i].querySelector('.vers-inner');
+      frames[i].style.width = (w + pad * 2) + 'px';
+      frames[i].style.height = (h + pad * 2) + 'px';
+      frames[i].style.webkitFlex = '0 0 auto';
+      frames[i].style.flex = '0 0 auto';
+      if (inner) {
+        inner.style.width = w + 'px';
+        inner.style.height = h + 'px';
+      }
+    }
+  }
+
+  function renderVers() {
+    var scene, left, right, i, htmlL, htmlR, dots, wrap, foundN, k;
+    scene = versSceneById(versState.id);
+    versState.diffs = scene.diffs;
+    left = $('vers-left');
+    right = $('vers-right');
+    if (!left || !right) return;
+    htmlL = versSvgMarkup(scene, 'L');
+    htmlR = versSvgMarkup(scene, 'R');
+    for (i = 0; i < scene.diffs.length; i++) {
+      htmlL += versHitHtml(scene.diffs[i], i, 'L');
+      htmlR += versHitHtml(scene.diffs[i], i, 'R');
+    }
+    for (i = 0; i < scene.diffs.length; i++) {
+      if (versState.found[String(i)]) {
+        htmlL += versRingHtml(scene.diffs[i], i);
+        htmlR += versRingHtml(scene.diffs[i], i);
+      }
+    }
+    left.innerHTML = htmlL;
+    right.innerHTML = htmlR;
+    dots = $('vers-dots');
+    if (dots) {
+      htmlL = '';
+      for (i = 0; i < 5; i++) {
+        htmlL += '<span class="vers-dot' + (versState.found[String(i)] ? ' is-on' : '') + '"></span>';
+      }
+      dots.innerHTML = htmlL;
+    }
+    wrap = $('vers-wrap');
+    if (!wrap) wrap = $('vers-stage');
+    foundN = 0;
+    for (k in versState.found) {
+      if (versState.found.hasOwnProperty(k) && versState.found[k]) foundN += 1;
+    }
+    if (wrap) {
+      wrap.setAttribute('data-key', versState.id);
+      wrap.setAttribute('data-scene', versState.id);
+      wrap.setAttribute('data-found', String(foundN));
+      wrap.setAttribute('data-done', foundN >= 5 ? '1' : '0');
+    }
+    layoutVers();
+  }
+
+  function startVers(fresh) {
+    var key;
+    state.level = 'verschillen';
+    state.locked = false;
+    if (fresh) {
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+    }
+    key = pickAvoiding(versSceneIds()) || VERS_SCENES[0].id;
+    rememberRoundKey(key);
+    versState.id = key;
+    versState.found = {};
+    versState.count = 0;
+    hideReward();
+    showScreen('verschillen');
+    updateStarsUI();
+    renderVers();
+    window.setTimeout(layoutVers, 40);
+    if (fresh) {
+      resetVoiceCycle();
+      state.lastWasPersonal = false;
+    }
+    beginQuestionVoice();
+    speak('verschillen-kies');
+  }
+
+  function versMarkFound(n) {
+    var left, right, diff;
+    if (!versState.diffs || !versState.diffs[n]) return;
+    diff = versState.diffs[n];
+    left = $('vers-left');
+    right = $('vers-right');
+    if (left) left.innerHTML += versRingHtml(diff, n);
+    if (right) right.innerHTML += versRingHtml(diff, n);
+  }
+
+  function versUpdateDots() {
+    var dots, i, html, wrap, foundN, k;
+    dots = $('vers-dots');
+    if (dots) {
+      html = '';
+      for (i = 0; i < 5; i++) {
+        html += '<span class="vers-dot' + (versState.found[String(i)] ? ' is-on' : '') + '"></span>';
+      }
+      dots.innerHTML = html;
+    }
+    wrap = $('vers-wrap') || $('vers-stage');
+    foundN = 0;
+    for (k in versState.found) {
+      if (versState.found.hasOwnProperty(k) && versState.found[k]) foundN += 1;
+    }
+    if (wrap) {
+      wrap.setAttribute('data-found', String(foundN));
+      wrap.setAttribute('data-done', foundN >= 5 ? '1' : '0');
+    }
+  }
+
+  function onVersDiff(el) {
+    var n;
+    if (state.locked) return;
+    if (!el) return;
+    n = parseInt(el.getAttribute('data-diff'), 10);
+    if (isNaN(n)) return;
+    if (versState.found[String(n)]) return;
+    versState.found[String(n)] = true;
+    versState.count += 1;
+    versMarkFound(n);
+    versUpdateDots();
+    if (versState.count >= 5) {
+      awardCorrect();
+    } else {
+      playGoedChime();
+    }
+  }
+
+  function onVersMiss() {
+    var stage;
+    if (state.locked) return;
+    stage = $('vers-stage');
+    if (!stage) return;
+    stage.className = 'vers-stage shake';
+    window.setTimeout(function () {
+      if (stage) stage.className = 'vers-stage';
+    }, 450);
+  }
+
   function showPuzzlesMenu() {
     state.level = null;
     state.locked = false;
@@ -11174,7 +12064,7 @@
     } else if (s === 'puzzle') {
       showPuzzleLevel();
     } else if (s === 'puzzlelevel' || s === 'vormen' || s === 'spiegel' || s === 'nateken' ||
-               s === 'tangram' || s === 'waar' || s === 'doolhoflevel') {
+               s === 'tangram' || s === 'waar' || s === 'doolhoflevel' || s === 'verschillen') {
       showPuzzlesMenu();
     } else if (s === 'doolhof') {
       showDoolhofLevel();
@@ -11441,6 +12331,7 @@
       else if (el.getAttribute('data-game') === 'tangram') startTangram(true);
       else if (el.getAttribute('data-game') === 'waar') startWaar(true);
       else if (el.getAttribute('data-game') === 'doolhof') showDoolhofLevel();
+      else if (el.getAttribute('data-game') === 'verschillen') startVers(true);
       else showPuzzleLevel();
       return;
     }
@@ -11462,6 +12353,14 @@
     }
     if (act === 'waar-choice') {
       onWaarChoice(el);
+      return;
+    }
+    if (act === 'vers-diff') {
+      onVersDiff(el);
+      return;
+    }
+    if (act === 'vers-miss') {
+      onVersMiss();
       return;
     }
     if (act === 'verder') {
@@ -11724,6 +12623,7 @@
     elSet('waar-home-icon', homeIconHtml());
     elSet('doolhof-home-icon', homeIconHtml());
     elSet('doolhoflevel-home-icon', homeIconHtml());
+    elSet('vers-home-icon', homeIconHtml());
     elSet('memory-home-icon', homeIconHtml());
     elSet('memorylevel-home-icon', homeIconHtml());
     elSet('memoryplay-home-icon', homeIconHtml());
@@ -11752,6 +12652,7 @@
     elSet('waar-back-icon', backIconHtml());
     elSet('doolhof-back-icon', backIconHtml());
     elSet('doolhoflevel-back-icon', backIconHtml());
+    elSet('vers-back-icon', backIconHtml());
     elSet('memorylevel-back-icon', backIconHtml());
     elSet('memoryplay-back-icon', backIconHtml());
     elSet('weg-back-icon', backIconHtml());
@@ -11779,6 +12680,7 @@
     elSet('waar-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('doolhof-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('doolhoflevel-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('vers-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('memory-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('memorylevel-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('memoryplay-star-icon', starSvg('#FFD54F', '#F9A825'));
@@ -11795,6 +12697,18 @@
         vormSvg('circle', '#2FB3F0', '#1A7FB3', 0) +
         vormSvg('square', '#4CC86E', '#2E9A4F', 0) +
         vormSvg('triangle', '#FF8A4C', '#D4692C', 0);
+    }
+    if ($('icon-vers')) {
+      $('icon-vers').innerHTML =
+        '<svg viewBox="0 0 72 44" width="72" height="44" aria-hidden="true">' +
+        '<rect x="2" y="4" width="30" height="36" rx="5" fill="#FFF8E1" stroke="#4E342E" stroke-width="2"/>' +
+        '<rect x="40" y="4" width="30" height="36" rx="5" fill="#FFF8E1" stroke="#4E342E" stroke-width="2"/>' +
+        '<circle cx="12" cy="16" r="6" fill="#FFD54F" stroke="#F9A825" stroke-width="1.5"/>' +
+        '<circle cx="50" cy="16" r="6" fill="#EF5350" stroke="#C62828" stroke-width="1.5"/>' +
+        '<rect x="8" y="28" width="14" height="6" rx="2" fill="#8BC34A" stroke="#4E342E" stroke-width="1.2"/>' +
+        '<rect x="46" y="28" width="14" height="6" rx="2" fill="#8BC34A" stroke="#4E342E" stroke-width="1.2"/>' +
+        '<circle cx="50" cy="16" r="10" fill="none" stroke="#E53935" stroke-width="2.4"/>' +
+        '</svg>';
     }
     $('icon-count').innerHTML =
       '<span class="mini">' + appleSvg() + '</span>' +
@@ -11886,6 +12800,7 @@
     window.addEventListener('resize', function () {
       if (state.screen === 'teken') sizeTekenCanvas();
       if (state.screen === 'lijn') layoutLijn();
+      if (state.screen === 'verschillen') layoutVers();
     }, false);
     document.addEventListener('click', onClick, false);
     document.addEventListener('mousedown', onMouseDown, false);
@@ -11905,6 +12820,7 @@
         if (state.screen === 'tangram') layoutTangram();
         if (state.screen === 'doolhof') layoutDoolhof();
         if (state.screen === 'lijn') layoutLijn();
+        if (state.screen === 'verschillen') layoutVers();
         if (state.screen === 'memoryplay') layoutMemory();
       }, 250);
     }, false);

@@ -597,7 +597,103 @@ function intersection(a, b) {
     if (dOverlap.length) throw new Error('doolhof r2 herhaalt r1: ' + dOverlap.join(','));
     ok('Doolhofje klein ronde 2 uniek en niet uit ronde 1: ' + d2.join(' | '));
 
+    async function waitVersReady(page, prev, ms) {
+      var deadline = Date.now() + (ms || 8000);
+      while (Date.now() < deadline) {
+        const ready = await page.evaluate((p) => {
+          var w = document.getElementById('vers-wrap');
+          var k = w ? w.getAttribute('data-key') : '';
+          var done = w && w.getAttribute('data-done') === '1';
+          var hit = document.querySelector('#vers-left .vers-hit[data-diff="0"]');
+          if (!w || !k || done || !hit) return false;
+          if (p && k === p) return false;
+          return true;
+        }, prev || '');
+        if (ready) return true;
+        await wait(120);
+      }
+      return false;
+    }
+    async function playVersPicture(page) {
+      var key, i;
+      key = await page.evaluate(() => {
+        var w = document.getElementById('vers-wrap');
+        return w ? (w.getAttribute('data-key') || '') : '';
+      });
+      for (i = 0; i < 5; i++) {
+        await page.evaluate((n) => {
+          var hit = document.querySelector('#vers-left .vers-hit[data-diff="' + n + '"]');
+          if (hit) hit.click();
+        }, i);
+        await wait(60);
+      }
+      return key;
+    }
+    async function playVersRound(page, n) {
+      var keys = [], i, key, moved, deadline, rewarded;
+      for (i = 0; i < n; i++) {
+        if (!(await waitVersReady(page, i ? keys[i - 1] : '', 12000))) {
+          throw new Error('verschillen not ready item ' + (i + 1) + ' after ' + keys.join(','));
+        }
+        key = await playVersPicture(page);
+        keys.push(key);
+        if (i < n - 1) {
+          deadline = Date.now() + 12000;
+          moved = false;
+          while (Date.now() < deadline) {
+            moved = await page.evaluate((prev) => {
+              var w = document.getElementById('vers-wrap');
+              var k = w ? w.getAttribute('data-key') : '';
+              var done = w && w.getAttribute('data-done') === '1';
+              return !!(k && k !== prev && !done);
+            }, key);
+            if (moved) break;
+            await wait(150);
+          }
+          if (!moved) throw new Error('verschillen next scene did not appear after ' + key);
+        }
+      }
+      deadline = Date.now() + 14000;
+      rewarded = false;
+      while (Date.now() < deadline) {
+        rewarded = await page.evaluate(() => {
+          var rew = document.getElementById('overlay-reward');
+          return !!(rew && rew.className.indexOf('is-hidden') === -1);
+        });
+        if (rewarded) break;
+        await wait(150);
+      }
+      if (!rewarded) throw new Error('verschillen expected reward after 3, keys=' + keys.join('|'));
+      return keys;
+    }
 
+    await fresh(page);
+    await page.click('#btn-goto-puzzles');
+    await wait(280);
+    await page.click('[data-game="verschillen"]');
+    await wait(400);
+    var v1 = await playVersRound(page, 3);
+    assertUnique(v1, 'verschillen r1');
+    ok('Zoek de verschillen ronde 1 uniek: ' + v1.join(', '));
+
+    var vMenu = Date.now() + 15000;
+    var onPuzzV = false;
+    while (Date.now() < vMenu) {
+      onPuzzV = await page.evaluate(() => {
+        var el = document.getElementById('screen-puzzles');
+        return !!(el && el.className.indexOf('is-hidden') === -1);
+      });
+      if (onPuzzV) break;
+      await wait(150);
+    }
+    if (!onPuzzV) throw new Error('verschillen did not return to Puzzels after reward');
+    await page.click('[data-game="verschillen"]');
+    await wait(400);
+    var v2 = await playVersRound(page, 3);
+    assertUnique(v2, 'verschillen r2');
+    var vOverlap = intersection(v1, v2);
+    if (vOverlap.length) throw new Error('verschillen r2 herhaalt r1: ' + vOverlap.join(','));
+    ok('Zoek de verschillen ronde 2 uniek en niet uit ronde 1: ' + v2.join(', '));
 
     async function waitWegReady(page, ms) {
       var deadline = Date.now() + (ms || 6000);
