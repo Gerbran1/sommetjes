@@ -508,6 +508,67 @@ function intersection(a, b) {
     if (cOver.length) throw new Error('cups r2 herhaalde vorige ronde: ' + cOver.join(','));
     ok('Waar zat het? ronde 2 uniek en niet uit ronde 1: ' + c2.join(', '));
 
+
+    async function waitVeranderdAsk(page, prev, ms) {
+      var deadline = Date.now() + (ms || 10000);
+      while (Date.now() < deadline) {
+        const key = await page.evaluate((prev) => {
+          var board = document.getElementById('veranderd-board');
+          if (!board || board.getAttribute('data-phase') !== 'ask') return null;
+          var s = board.getAttribute('data-key') || '';
+          if (!s) return null;
+          if (prev && s === prev) return null;
+          return s;
+        }, prev || '');
+        if (key) return key;
+        await wait(120);
+      }
+      return null;
+    }
+    async function playVeranderdRound(page, n) {
+      var keys = [], i, key;
+      var prev = '';
+      for (i = 0; i < n; i++) {
+        key = await waitVeranderdAsk(page, prev, 10000);
+        if (!key) throw new Error('veranderd not ready item ' + (i + 1));
+        keys.push(key);
+        await page.evaluate(() => {
+          var b = document.querySelector('#veranderd-board [data-ok="1"]');
+          if (b) b.click();
+        });
+        prev = key;
+        await wait(300);
+      }
+      return keys;
+    }
+
+    await fresh(page);
+    await page.click('#btn-goto-memory');
+    await wait(280);
+    await page.click('[data-game="veranderd"]');
+    await wait(280);
+    var v1 = await playVeranderdRound(page, 5);
+    assertUnique(v1, 'veranderd r1');
+    ok('Wat is er veranderd? ronde 1 uniek: ' + v1.join(', '));
+    var rwV = Date.now() + 5000;
+    while (Date.now() < rwV) {
+      const on = await page.evaluate(() => {
+        var el = document.getElementById('overlay-reward');
+        return !!(el && el.className.indexOf('is-hidden') === -1);
+      });
+      if (on) break;
+      await wait(150);
+    }
+    await page.click('#btn-verder');
+    await wait(400);
+    await page.click('[data-game="veranderd"]');
+    await wait(280);
+    var v2 = await playVeranderdRound(page, 5);
+    assertUnique(v2, 'veranderd r2');
+    var vOver = v1.filter(function (k) { return v2.indexOf(k) !== -1; });
+    if (vOver.length) throw new Error('veranderd r2 herhaalde vorige ronde: ' + vOver.join(','));
+    ok('Wat is er veranderd? ronde 2 uniek en niet uit ronde 1: ' + v2.join(', '));
+
     console.log('\nALL UNIQUE-ROUND CHECKS OK (' + results.length + ')');
     await browser.close();
     process.exit(0);

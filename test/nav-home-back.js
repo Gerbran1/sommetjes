@@ -13,7 +13,7 @@ const wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms)
 const SCREENS = [
   'start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay',
   'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken',
-  'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups'
+  'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd'
 ];
 
 async function visibleScreen(page) {
@@ -397,6 +397,17 @@ async function waitSpiegelNext(page) {
     ok('Waar zat het? terug → Geheugen, home → start');
 
     await fresh(page);
+    await tap(page, '#btn-goto-memory');
+    await tap(page, '[data-game="veranderd"]');
+    await expectScreen(page, 'veranderd', 'wat is er veranderd');
+    await tap(page, '#btn-veranderd-back');
+    await expectScreen(page, 'memory', 'veranderd back');
+    await tap(page, '[data-game="veranderd"]');
+    await tap(page, '#btn-veranderd-home');
+    await expectScreen(page, 'start', 'veranderd home');
+    ok('Wat is er veranderd? terug → Geheugen, home → start');
+
+    await fresh(page);
     await tap(page, '#btn-goto-games');
     await tap(page, '[data-level="plus5"]');
     await wait(400);
@@ -692,6 +703,53 @@ async function waitSpiegelNext(page) {
     await expectScreen(page, 'memory', 'auto after cups reward');
     if (await rewardVisible(page)) throw new Error('reward still visible after cups auto-return');
     ok('Ronde van 5 (Waar zat het?): na beloning automatisch naar Geheugen-menu');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-memory');
+    await tap(page, '[data-game="veranderd"]');
+    await expectScreen(page, 'veranderd', 'veranderd reward setup');
+    for (var vi = 0; vi < 5; vi++) {
+      var deadlineV = Date.now() + 10000;
+      var keyV = null;
+      while (Date.now() < deadlineV) {
+        keyV = await page.evaluate(function () {
+          var board = document.getElementById('veranderd-board');
+          if (!board || board.getAttribute('data-phase') !== 'ask') return null;
+          return board.getAttribute('data-key') || '';
+        });
+        if (keyV) break;
+        await wait(120);
+      }
+      if (!keyV) throw new Error('veranderd not ready on item ' + (vi + 1));
+      await tap(page, '#veranderd-board [data-ok="1"]');
+      if (vi < 4) {
+        var nextV = Date.now() + 10000;
+        var movedV = false;
+        while (Date.now() < nextV) {
+          movedV = await page.evaluate(function (prev) {
+            var board = document.getElementById('veranderd-board');
+            if (!board) return false;
+            var phase = board.getAttribute('data-phase');
+            var key = board.getAttribute('data-key') || '';
+            return phase === 'look' || (phase === 'ask' && key && key !== prev);
+          }, keyV);
+          if (movedV) break;
+          await wait(150);
+        }
+      } else if (!(await waitReward(page, 4500))) {
+        throw new Error('veranderd reward did not appear');
+      }
+    }
+    var dVer = Date.now() + 5000;
+    while (Date.now() < dVer) {
+      const sVer = await visibleScreen(page);
+      const rwVer = await rewardVisible(page);
+      if (sVer === 'memory' && !rwVer) break;
+      await wait(150);
+    }
+    await expectScreen(page, 'memory', 'auto after veranderd reward');
+    if (await rewardVisible(page)) throw new Error('reward still visible after veranderd auto-return');
+    ok('Ronde van 5 (Wat is er veranderd?): na beloning automatisch naar Geheugen-menu');
 
     console.log('\nALL NAV CHECKS OK (' + results.length + ')');
     await browser.close();
