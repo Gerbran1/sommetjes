@@ -1,10 +1,10 @@
 # Sommetjes
 
-Een eenvoudige oefenapp voor kinderen van 4 tot 6 jaar, met getallen, letters en puzzels. Werkt op een oude iPad 2 (iOS 9) als web-app op het beginscherm.
+Een eenvoudige oefenapp voor kinderen van 4 tot 6 jaar, met getallen, letters, puzzels en geheugenspellen. Werkt op een oude iPad 2 (iOS 9) als web-app op het beginscherm.
 
 ## Wat kun je oefenen?
 
-Op het startscherm kies je **Getallen**, **Letters** of **Puzzels**.
+Op het startscherm kies je **Getallen**, **Letters**, **Puzzels** of **Geheugen**.
 
 **Getallen**
 1. **Tellen** — tel 1 tot 10 plaatjes en tik het goede getal
@@ -25,6 +25,9 @@ Op het startscherm kies je **Getallen**, **Letters** of **Puzzels**.
 12. **Tangram** — sleep 3 of 4 grote stukken in de silhouet (huis, boot, boom). Later kun je tikken om te draaien.
 13. **Wat hoort waar?** — kies het plaatje waarop de beer op, onder, naast, achter, voor of in de tafel of doos zit.
 14. **Doolhofje** — volg met je vinger het pad van de muis naar de kaas. Er zijn meerdere doolhoven die steeds een stukje moeilijker worden.
+
+**Geheugen**
+15. **Memory** — draai de kaartjes om en zoek twee dezelfde. Je kiest 6, 12 of 16 kaartjes (3×2, 4×3 of 4×4). Een heel bord is één ster; daarna ga je terug naar het Geheugen-menu.
 
 Bij de getallen- en letterspellen heeft elke vraag drie grote antwoordknoppen. Bij een goed antwoord of een voltooide puzzel krijg je een ster. Na vijf sterren volgt een klein feestje; daarna ga je terug naar het menu van dat spel. Een fout antwoord is niet erg: je mag het gewoon nog eens proberen.
 

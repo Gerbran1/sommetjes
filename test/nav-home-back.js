@@ -13,7 +13,7 @@ const wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms)
 const SCREENS = [
   'start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay',
   'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken',
-  'tangram', 'waar', 'doolhof'
+  'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay'
 ];
 
 async function visibleScreen(page) {
@@ -172,6 +172,13 @@ async function waitSpiegelNext(page) {
     ok('Puzzels menu home → start');
 
     await fresh(page);
+    await tap(page, '#btn-goto-memory');
+    await expectScreen(page, 'memory', 'goto geheugen');
+    await tap(page, '#btn-memory-home');
+    await expectScreen(page, 'start', 'geheugen home');
+    ok('Geheugen menu home → start');
+
+    await fresh(page);
     await tap(page, '#btn-goto-games');
     await tap(page, '[data-level="count"]');
     await expectScreen(page, 'play', 'count');
@@ -324,6 +331,29 @@ async function waitSpiegelNext(page) {
     ok('Schuifpuzzel terug → kiezer, home → start');
 
     await fresh(page);
+    await tap(page, '#btn-goto-memory');
+    await tap(page, '[data-game="memory"]');
+    await expectScreen(page, 'memorylevel', 'memory level');
+    await tap(page, '#btn-memorylevel-back');
+    await expectScreen(page, 'memory', 'memory level back');
+    await tap(page, '[data-game="memory"]');
+    await tap(page, '#btn-memorylevel-home');
+    await expectScreen(page, 'start', 'memory level home');
+    ok('Memory-kiezer terug → Geheugen, home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-memory');
+    await tap(page, '[data-game="memory"]');
+    await tap(page, '[data-size="6"]');
+    await expectScreen(page, 'memoryplay', 'memory 6');
+    await tap(page, '#btn-memoryplay-back');
+    await expectScreen(page, 'memorylevel', 'memory play back');
+    await tap(page, '[data-size="6"]');
+    await tap(page, '#btn-memoryplay-home');
+    await expectScreen(page, 'start', 'memory play home');
+    ok('Memory terug → kiezer, home → start');
+
+    await fresh(page);
     await tap(page, '#btn-goto-games');
     await tap(page, '[data-level="plus5"]');
     await wait(400);
@@ -385,6 +415,48 @@ async function waitSpiegelNext(page) {
     await tap(page, '#btn-verder');
     await expectScreen(page, 'picker', 'tafel reward verder');
     ok('Ronde van 5 (Tafels): tik op beloning → tafelkiezer');
+
+    // Memory: one completed board is a reward, then back to Geheugen menu
+    await fresh(page);
+    await tap(page, '#btn-goto-memory');
+    await tap(page, '[data-game="memory"]');
+    await tap(page, '[data-size="6"]');
+    await expectScreen(page, 'memoryplay', 'memory reward setup');
+    await wait(200);
+    var pairs = await page.evaluate(function () {
+      var board = document.getElementById('memory-board');
+      var btns = board ? board.getElementsByTagName('button') : [];
+      var map = {}, keys = [], i, html, front, out = [], k;
+      for (i = 0; i < btns.length; i++) {
+        front = btns[i].getElementsByClassName('mem-front')[0];
+        html = front ? front.innerHTML : String(i);
+        if (!map[html]) {
+          map[html] = [];
+          keys.push(html);
+        }
+        map[html].push(i);
+      }
+      for (k = 0; k < keys.length; k++) out.push(map[keys[k]]);
+      return out;
+    });
+    if (!pairs.length) throw new Error('memory board has no pairs');
+    for (var mp = 0; mp < pairs.length; mp++) {
+      await tap(page, '[data-act="memory-card"][data-i="' + pairs[mp][0] + '"]');
+      await wait(120);
+      await tap(page, '[data-act="memory-card"][data-i="' + pairs[mp][1] + '"]');
+      await wait(220);
+    }
+    if (!(await waitReward(page, 4500))) throw new Error('memory reward did not appear');
+    var dMem = Date.now() + 5000;
+    while (Date.now() < dMem) {
+      const sMem = await visibleScreen(page);
+      const rwMem = await rewardVisible(page);
+      if (sMem === 'memory' && !rwMem) break;
+      await wait(150);
+    }
+    await expectScreen(page, 'memory', 'auto after memory reward');
+    if (await rewardVisible(page)) throw new Error('reward still visible after memory auto-return');
+    ok('Memory-bord voltooid: na beloning automatisch naar Geheugen-menu');
 
     console.log('\nALL NAV CHECKS OK (' + results.length + ')');
     await browser.close();
