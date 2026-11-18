@@ -14,7 +14,6 @@ async function fresh(page) {
   await page.evaluate(() => {
     try {
       localStorage.clear();
-      localStorage.setItem('sommetjes-sound', '0');
     } catch (e) {}
   });
   await page.reload({ waitUntil: 'networkidle0' });
@@ -319,6 +318,70 @@ function intersection(a, b) {
     var wOver = w1.filter(function (k) { return w2.indexOf(k) !== -1; });
     if (wOver.length) throw new Error('weg r2 herhaalde vorige ronde: ' + wOver.join(','));
     ok('Wat is er weg ronde 2 uniek en niet uit ronde 1: ' + w2.join(', '));
+
+    async function waitSimonRepeat(page, prev, ms) {
+      var deadline = Date.now() + (ms || 10000);
+      while (Date.now() < deadline) {
+        const seq = await page.evaluate((prev) => {
+          var board = document.getElementById('simon-board');
+          if (!board || board.getAttribute('data-phase') !== 'repeat') return null;
+          var s = board.getAttribute('data-seq') || '';
+          if (!s) return null;
+          if (prev && s === prev) return null;
+          return s;
+        }, prev || '');
+        if (seq) return seq;
+        await wait(120);
+      }
+      return null;
+    }
+    async function playSimonRound(page, n) {
+      var keys = [], i, key, parts, j;
+      var prev = '';
+      for (i = 0; i < n; i++) {
+        key = await waitSimonRepeat(page, prev, 10000);
+        if (!key) throw new Error('simon not ready item ' + (i + 1));
+        keys.push(key);
+        parts = key.split('-');
+        for (j = 0; j < parts.length; j++) {
+          await page.evaluate((idx) => {
+            var b = document.querySelector('#simon-board [data-act="simon-pad"][data-i="' + idx + '"]');
+            if (b) b.click();
+          }, parts[j]);
+          await wait(80);
+        }
+        prev = key;
+        await wait(300);
+      }
+      return keys;
+    }
+
+    await fresh(page);
+    await page.click('#btn-goto-memory');
+    await wait(280);
+    await page.click('[data-game="simon"]');
+    await wait(280);
+    var s1 = await playSimonRound(page, 5);
+    assertUnique(s1, 'simon r1');
+    ok('Simon zegt ronde 1 uniek: ' + s1.join(', '));
+    var rwS = Date.now() + 5000;
+    while (Date.now() < rwS) {
+      const on = await page.evaluate(() => {
+        var el = document.getElementById('overlay-reward');
+        return !!(el && el.className.indexOf('is-hidden') === -1);
+      });
+      if (on) break;
+      await wait(150);
+    }
+    await page.click('#btn-verder');
+    await wait(400);
+    await page.click('[data-game="simon"]');
+    await wait(280);
+    var s2 = await playSimonRound(page, 5);
+    assertUnique(s2, 'simon r2');
+    var sOver = s1.filter(function (k) { return s2.indexOf(k) !== -1; });
+    if (sOver.length) throw new Error('simon r2 herhaalde vorige ronde: ' + sOver.join(','));
+    ok('Simon zegt ronde 2 uniek en niet uit ronde 1: ' + s2.join(', '));
 
     console.log('\nALL UNIQUE-ROUND CHECKS OK (' + results.length + ')');
     await browser.close();

@@ -6,10 +6,10 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Sommetjes">
+  <meta name="apple-mobile-web-app-title" content="Leer &amp; Speel">
   <meta name="format-detection" content="telephone=no">
   <meta name="theme-color" content="#6EC9F0">
-  <title>Sommetjes</title>
+  <title>Leer &amp; Speel</title>
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180.png">
   <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152.png">
   <link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76.png">
@@ -126,7 +126,7 @@
       align-items: center;
       min-width: 120px;
     }
-    .topbar-left { min-width: 200px; }
+    .topbar-left { min-width: 136px; }
     .icon-btn svg {
       display: block;
       pointer-events: none;
@@ -197,7 +197,7 @@
       line-height: 1;
     }
 
-    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg {
+    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -1648,6 +1648,65 @@
       box-shadow: 0 6px 0 #C62828;
       background: #FFEBEE;
     }
+    #simon-board {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-align-content: center;
+      align-content: center;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      max-width: 460px;
+      margin: 0 auto;
+      min-height: 0;
+      padding: 4px;
+    }
+    .simon-pad {
+      -webkit-flex: 0 0 42%;
+      flex: 0 0 42%;
+      max-width: 200px;
+      height: 150px;
+      margin: 8px;
+      padding: 0;
+      border: 0;
+      border-radius: 28px;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .simon-pad.pressed, .simon-pad:active {
+      -webkit-transform: translateY(6px);
+      transform: translateY(6px);
+    }
+    .pad-red {
+      background: #E53935;
+      -webkit-box-shadow: 0 8px 0 #B71C1C, 0 10px 14px rgba(0,0,0,0.12);
+      box-shadow: 0 8px 0 #B71C1C, 0 10px 14px rgba(0,0,0,0.12);
+    }
+    .pad-red.lit, .pad-red.pressed, .pad-red:active { background: #FF8A80; }
+    .pad-yellow {
+      background: #F9A825;
+      -webkit-box-shadow: 0 8px 0 #F57F17, 0 10px 14px rgba(0,0,0,0.12);
+      box-shadow: 0 8px 0 #F57F17, 0 10px 14px rgba(0,0,0,0.12);
+    }
+    .pad-yellow.lit, .pad-yellow.pressed, .pad-yellow:active { background: #FFE082; }
+    .pad-green {
+      background: #43A047;
+      -webkit-box-shadow: 0 8px 0 #2E7D32, 0 10px 14px rgba(0,0,0,0.12);
+      box-shadow: 0 8px 0 #2E7D32, 0 10px 14px rgba(0,0,0,0.12);
+    }
+    .pad-green.lit, .pad-green.pressed, .pad-green:active { background: #A5D6A7; }
+    .pad-blue {
+      background: #1E88E5;
+      -webkit-box-shadow: 0 8px 0 #1565C0, 0 10px 14px rgba(0,0,0,0.12);
+      box-shadow: 0 8px 0 #1565C0, 0 10px 14px rgba(0,0,0,0.12);
+    }
+    .pad-blue.lit, .pad-blue.pressed, .pad-blue:active { background: #90CAF9; }
     .lvl-slide {
       background: #FF8A4C;
       -webkit-box-shadow: 0 8px 0 #D4692C, 0 12px 16px rgba(0,0,0,0.15);
@@ -2294,6 +2353,7 @@
       .weg-slot { height: 118px; margin: 6px; border-radius: 16px; }
       .pic-answer { width: 96px; height: 96px; margin: 0 8px; }
       #weg-answers { min-height: 104px; padding-bottom: 6px; }
+      .simon-pad { height: 112px; margin: 6px; border-radius: 22px; }
       .letter-set-btn { min-height: 40px; font-size: 18px; }
     }
     @media screen and (max-height: 700px) {
@@ -2312,9 +2372,6 @@
     <div id="screen-start">
       <div class="topbar">
         <div class="topbar-left">
-          <button type="button" class="tap icon-btn" id="btn-sound" data-act="sound" title="Geluid">
-            <span id="sound-icon"></span>
-          </button>
         </div>
         <div class="topbar-right">
           <div class="star-badge">
@@ -2326,7 +2383,7 @@
 
       <div class="home-hero">
         <div class="sun" id="sun-icon"></div>
-        <h1 class="title">Sommetjes</h1>
+        <h1 class="title">Leer &amp; Speel</h1>
         <div class="subtitle">Kies een spel</div>
         <div class="home-hint" id="home-hint"></div>
       </div>
@@ -2369,9 +2426,6 @@
         <div class="topbar-left">
           <button type="button" class="tap icon-btn" id="btn-games-home" data-act="home" title="Start">
             <span id="games-home-icon"></span>
-          </button>
-          <button type="button" class="tap icon-btn" id="btn-sound-games" data-act="sound" title="Geluid" style="margin-left:8px;">
-            <span id="sound-icon-games"></span>
           </button>
         </div>
         <div class="topbar-right">
@@ -2426,9 +2480,6 @@
           <button type="button" class="tap icon-btn" id="btn-picker-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="picker-home-icon"></span>
           </button>
-          <button type="button" class="tap icon-btn" id="btn-sound-picker" data-act="sound" title="Geluid" style="margin-left:8px;">
-            <span id="sound-icon-picker"></span>
-          </button>
         </div>
         <div class="topbar-right">
           <div class="star-badge">
@@ -2462,9 +2513,6 @@
           <button type="button" class="tap icon-btn" id="btn-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="home-icon"></span>
           </button>
-          <button type="button" class="tap icon-btn" id="btn-sound-play" data-act="sound" title="Geluid" style="margin-left:8px;">
-            <span id="sound-icon-play"></span>
-          </button>
         </div>
         <div class="topbar-right">
           <div class="star-badge">
@@ -2488,9 +2536,6 @@
         <div class="topbar-left">
           <button type="button" class="tap icon-btn" id="btn-letters-home" data-act="home" title="Start">
             <span id="letters-home-icon"></span>
-          </button>
-          <button type="button" class="tap icon-btn" id="btn-sound-letters" data-act="sound" title="Geluid" style="margin-left:8px;">
-            <span id="sound-icon-letters"></span>
           </button>
         </div>
         <div class="topbar-right">
@@ -2531,9 +2576,6 @@
         <div class="topbar-left">
           <button type="button" class="tap icon-btn" id="btn-puzzles-home" data-act="home" title="Start">
             <span id="puzzles-home-icon"></span>
-          </button>
-          <button type="button" class="tap icon-btn" id="btn-sound-puzzles" data-act="sound" title="Geluid" style="margin-left:8px;">
-            <span id="sound-icon-puzzles"></span>
           </button>
         </div>
         <div class="topbar-right">
@@ -2643,9 +2685,6 @@
           <button type="button" class="tap icon-btn" id="btn-puzzlelevel-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="puzzlelevel-home-icon"></span>
           </button>
-          <button type="button" class="tap icon-btn" id="btn-sound-puzzlelevel" data-act="sound" title="Geluid" style="margin-left:8px;">
-            <span id="sound-icon-puzzlelevel"></span>
-          </button>
         </div>
         <div class="topbar-right">
           <div class="star-badge">
@@ -2687,9 +2726,6 @@
           <button type="button" class="tap icon-btn" id="btn-puzzle-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="puzzle-home-icon"></span>
           </button>
-          <button type="button" class="tap icon-btn" id="btn-sound-puzzle" data-act="sound" title="Geluid" style="margin-left:8px;">
-            <span id="sound-icon-puzzle"></span>
-          </button>
         </div>
         <div class="topbar-right">
           <div class="star-badge">
@@ -2716,9 +2752,6 @@
           <button type="button" class="tap icon-btn" id="btn-vormen-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="vormen-home-icon"></span>
           </button>
-          <button type="button" class="tap icon-btn" id="btn-sound-vormen" data-act="sound" title="Geluid" style="margin-left:8px;">
-            <span id="sound-icon-vormen"></span>
-          </button>
         </div>
         <div class="topbar-right">
           <div class="star-badge">
@@ -2739,9 +2772,6 @@
           </button>
           <button type="button" class="tap icon-btn" id="btn-spiegel-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="spiegel-home-icon"></span>
-          </button>
-          <button type="button" class="tap icon-btn" id="btn-sound-spiegel" data-act="sound" title="Geluid" style="margin-left:8px;">
-            <span id="sound-icon-spiegel"></span>
           </button>
         </div>
         <div class="topbar-right">
@@ -2764,9 +2794,6 @@
           <button type="button" class="tap icon-btn" id="btn-nateken-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="nateken-home-icon"></span>
           </button>
-          <button type="button" class="tap icon-btn" id="btn-sound-nateken" data-act="sound" title="Geluid" style="margin-left:8px;">
-            <span id="sound-icon-nateken"></span>
-          </button>
         </div>
         <div class="topbar-right">
           <div class="star-badge">
@@ -2788,9 +2815,6 @@
           <button type="button" class="tap icon-btn" id="btn-tangram-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="tangram-home-icon"></span>
           </button>
-          <button type="button" class="tap icon-btn" id="btn-sound-tangram" data-act="sound" title="Geluid" style="margin-left:8px;">
-            <span id="sound-icon-tangram"></span>
-          </button>
         </div>
         <div class="topbar-right">
           <div class="star-badge">
@@ -2811,9 +2835,6 @@
           </button>
           <button type="button" class="tap icon-btn" id="btn-waar-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="waar-home-icon"></span>
-          </button>
-          <button type="button" class="tap icon-btn" id="btn-sound-waar" data-act="sound" title="Geluid" style="margin-left:8px;">
-            <span id="sound-icon-waar"></span>
           </button>
         </div>
         <div class="topbar-right">
@@ -2838,9 +2859,6 @@
           <button type="button" class="tap icon-btn" id="btn-doolhof-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="doolhof-home-icon"></span>
           </button>
-          <button type="button" class="tap icon-btn" id="btn-sound-doolhof" data-act="sound" title="Geluid" style="margin-left:8px;">
-            <span id="sound-icon-doolhof"></span>
-          </button>
         </div>
         <div class="topbar-right">
           <div class="star-badge">
@@ -2861,9 +2879,6 @@
           </button>
           <button type="button" class="tap icon-btn" id="btn-trace-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="trace-home-icon"></span>
-          </button>
-          <button type="button" class="tap icon-btn" id="btn-sound-trace" data-act="sound" title="Geluid" style="margin-left:8px;">
-            <span id="sound-icon-trace"></span>
           </button>
         </div>
         <div class="topbar-right">
@@ -2890,9 +2905,6 @@
           <button type="button" class="tap icon-btn" id="btn-names-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="names-home-icon"></span>
           </button>
-          <button type="button" class="tap icon-btn" id="btn-sound-names" data-act="sound" title="Geluid" style="margin-left:8px;">
-            <span id="sound-icon-names"></span>
-          </button>
         </div>
         <div class="topbar-right">
           <div class="star-badge">
@@ -2918,9 +2930,6 @@
           <button type="button" class="tap icon-btn" id="btn-nameplay-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="nameplay-home-icon"></span>
           </button>
-          <button type="button" class="tap icon-btn" id="btn-sound-nameplay" data-act="sound" title="Geluid" style="margin-left:8px;">
-            <span id="sound-icon-nameplay"></span>
-          </button>
         </div>
         <div class="topbar-right">
           <div class="star-badge">
@@ -2939,9 +2948,6 @@
         <div class="topbar-left">
           <button type="button" class="tap icon-btn" id="btn-memory-home" data-act="home" title="Start">
             <span id="memory-home-icon"></span>
-          </button>
-          <button type="button" class="tap icon-btn" id="btn-sound-memory" data-act="sound" title="Geluid" style="margin-left:8px;">
-            <span id="sound-icon-memory"></span>
           </button>
         </div>
         <div class="topbar-right">
@@ -2988,9 +2994,6 @@
           <button type="button" class="tap icon-btn" id="btn-memorylevel-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="memorylevel-home-icon"></span>
           </button>
-          <button type="button" class="tap icon-btn" id="btn-sound-memorylevel" data-act="sound" title="Geluid" style="margin-left:8px;">
-            <span id="sound-icon-memorylevel"></span>
-          </button>
         </div>
         <div class="topbar-right">
           <div class="star-badge">
@@ -3025,9 +3028,6 @@
           <button type="button" class="tap icon-btn" id="btn-memoryplay-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="memoryplay-home-icon"></span>
           </button>
-          <button type="button" class="tap icon-btn" id="btn-sound-memoryplay" data-act="sound" title="Geluid" style="margin-left:8px;">
-            <span id="sound-icon-memoryplay"></span>
-          </button>
         </div>
         <div class="topbar-right">
           <div class="star-badge">
@@ -3051,9 +3051,6 @@
           <button type="button" class="tap icon-btn" id="btn-weg-home" data-act="home" title="Start" style="margin-left:8px;">
             <span id="weg-home-icon"></span>
           </button>
-          <button type="button" class="tap icon-btn" id="btn-sound-weg" data-act="sound" title="Geluid" style="margin-left:8px;">
-            <span id="sound-icon-weg"></span>
-          </button>
         </div>
         <div class="topbar-right">
           <div class="star-badge">
@@ -3066,6 +3063,28 @@
       <div class="progress-row"></div>
       <div id="weg-board"></div>
       <div id="weg-answers"></div>
+    </div>
+
+    <div id="screen-simon" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-simon-back" data-act="back" title="Terug">
+            <span id="simon-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-simon-home" data-act="home" title="Start" style="margin-left:8px;">
+            <span id="simon-home-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="simon-star-icon"></span>
+            <span class="star-count" id="simon-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt" id="simon-prompt">Simon zegt</div>
+      <div class="progress-row"></div>
+      <div id="simon-board"></div>
     </div>
   </div>
 
@@ -3255,8 +3274,8 @@
         var n = parseInt(s, 10);
         if (!isNaN(n) && n >= 0) state.stars = n;
       }
-      var so = window.localStorage.getItem('sommetjes-sound');
-      if (so === '0') state.soundOn = false;
+      try { window.localStorage.removeItem('sommetjes-sound'); } catch (eSound) {}
+      state.soundOn = true;
       var pl = window.localStorage.getItem('sommetjes-player');
       if (pl === 'Jasper' || pl === 'Laurens' || pl === 'Mirthe') state.playerName = pl;
       if (window.localStorage.getItem('sommetjes-all-letters') === '1') state.allLetters = true;
@@ -3270,9 +3289,8 @@
   }
 
   function saveSound() {
-    try {
-      window.localStorage.setItem('sommetjes-sound', state.soundOn ? '1' : '0');
-    } catch (e) {}
+    state.soundOn = true;
+    try { window.localStorage.removeItem('sommetjes-sound'); } catch (e) {}
   }
 
   function savePlayer() {
@@ -3999,6 +4017,10 @@
     }
     else if (state.level === 'weg') {
       startWeg(false);
+      return;
+    }
+    else if (state.level === 'simon') {
+      startSimon(false);
       return;
     }
     else {
@@ -4960,7 +4982,7 @@
   /* ---------- UI ---------- */
   function updateStarsUI() {
     var i, row, html, filled, el, rows;
-    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars'], String(state.stars));
+    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars'], String(state.stars));
     filled = state.towardsReward;
     if (filled > 5) filled = 5;
     html = '';
@@ -4982,30 +5004,8 @@
     }
   }
 
-  function updateSoundIcons() {
-    var html = state.soundOn ? soundOnHtml() : soundOffHtml();
-    elSet('sound-icon', html);
-    elSet('sound-icon-games', html);
-    elSet('sound-icon-play', html);
-    elSet('sound-icon-picker', html);
-    elSet('sound-icon-letters', html);
-    elSet('sound-icon-trace', html);
-    elSet('sound-icon-names', html);
-    elSet('sound-icon-nameplay', html);
-    elSet('sound-icon-puzzles', html);
-    elSet('sound-icon-puzzlelevel', html);
-    elSet('sound-icon-puzzle', html);
-    elSet('sound-icon-vormen', html);
-    elSet('sound-icon-spiegel', html);
-    elSet('sound-icon-nateken', html);
-    elSet('sound-icon-tangram', html);
-    elSet('sound-icon-waar', html);
-    elSet('sound-icon-doolhof', html);
-    elSet('sound-icon-memory', html);
-    elSet('sound-icon-memorylevel', html);
-    elSet('sound-icon-memoryplay', html);
-    elSet('sound-icon-weg', html);
-  }
+  function updateSoundIcons() {}
+
 
   function elSet(id, html) {
     var el = $(id);
@@ -5015,7 +5015,7 @@
   function showScreen(name) {
     var ids, i, el;
     state.screen = name;
-    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg'];
+    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon'];
     for (i = 0; i < ids.length; i++) {
       el = $('screen-' + ids[i]);
       if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
@@ -5435,6 +5435,168 @@
           el.className = 'tap pic-answer is-wrong';
         }
       }, 450);
+    }
+  }
+
+  var simonFlashTimer = null;
+  var SIMON_COLORS = ['red', 'yellow', 'green', 'blue'];
+  var SIMON_FREQ = [330, 262, 392, 220];
+
+  function clearSimonFlash() {
+    if (simonFlashTimer) {
+      window.clearTimeout(simonFlashTimer);
+      simonFlashTimer = null;
+    }
+  }
+
+  function simonPadClass(i, lit) {
+    return 'tap simon-pad pad-' + SIMON_COLORS[i] + (lit ? ' lit' : '');
+  }
+
+  function setSimonPhase(phase) {
+    var board;
+    if (!state.simon) return;
+    state.simon.phase = phase;
+    board = $('simon-board');
+    if (board) board.setAttribute('data-phase', phase);
+  }
+
+  function flashSimonPad(i, dur) {
+    var board, pads;
+    board = $('simon-board');
+    if (!board) return;
+    pads = board.getElementsByTagName('button');
+    if (!pads[i]) return;
+    pads[i].className = simonPadClass(i, true);
+    playTone(SIMON_FREQ[i], 0.28, 'sine', 0.12, 0);
+    clearSimonFlash();
+    simonFlashTimer = window.setTimeout(function () {
+      simonFlashTimer = null;
+      if (pads[i]) pads[i].className = simonPadClass(i, false);
+    }, dur || 380);
+  }
+
+  function renderSimonBoard() {
+    var board, html, i;
+    board = $('simon-board');
+    if (!board || !state.simon) return;
+    board.setAttribute('data-seq', state.simon.seq.join('-'));
+    board.setAttribute('data-phase', state.simon.phase);
+    html = '';
+    for (i = 0; i < 4; i++) {
+      html += '<button type="button" class="' + simonPadClass(i, false) + '" data-act="simon-pad" data-i="' + i + '"></button>';
+    }
+    board.innerHTML = html;
+  }
+
+  function playSimonStep(step) {
+    if (!state.simon || state.level !== 'simon') return;
+    if (step >= state.simon.seq.length) {
+      setSimonPhase('repeat');
+      state.simon.progress = 0;
+      state.locked = false;
+      return;
+    }
+    setSimonPhase('play');
+    state.locked = true;
+    flashSimonPad(state.simon.seq[step], 400);
+    geheugenTimer = window.setTimeout(function () {
+      geheugenTimer = null;
+      playSimonStep(step + 1);
+    }, 720);
+  }
+
+  function startSimonPlayback() {
+    clearGeheugenTimer();
+    state.locked = true;
+    setSimonPhase('play');
+    geheugenTimer = window.setTimeout(function () {
+      geheugenTimer = null;
+      playSimonStep(0);
+    }, 1100);
+  }
+
+  function startSimon(fresh) {
+    var len, seq, keys, sets, tries, key, i, n, last, opts, pickSeq;
+    state.level = 'simon';
+    state.locked = true;
+    if (fresh) {
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+      state.lastWasPersonal = false;
+      resetVoiceCycle();
+    }
+    clearGeheugenTimer();
+    clearSimonFlash();
+    len = 2;
+    if ((state.towardsReward || 0) >= 2) len = 3;
+    if ((state.towardsReward || 0) >= 4) len = 4;
+    keys = [];
+    sets = [];
+    for (tries = 0; tries < 40; tries++) {
+      seq = [];
+      last = -1;
+      for (i = 0; i < len; i++) {
+        opts = [];
+        for (n = 0; n < 4; n++) {
+          if (n !== last) opts.push(n);
+        }
+        n = pick(opts);
+        seq.push(n);
+        last = n;
+      }
+      key = seq.join('-');
+      if (!contains(keys, key)) {
+        keys.push(key);
+        sets.push(seq);
+      }
+    }
+    key = pickAvoiding(keys) || keys[0];
+    pickSeq = sets[0];
+    for (i = 0; i < keys.length; i++) {
+      if (keys[i] === key) {
+        pickSeq = sets[i];
+        break;
+      }
+    }
+    rememberRoundKey(key);
+    state.simon = { seq: pickSeq, progress: 0, phase: 'play', key: key };
+    hideReward();
+    showScreen('simon');
+    updateStarsUI();
+    renderSimonBoard();
+    elSet('simon-prompt', 'Simon zegt');
+    beginQuestionVoice();
+    speak('simon');
+    startSimonPlayback();
+  }
+
+  function onSimonPad(el) {
+    var i;
+    if (state.locked || !state.simon || state.simon.phase !== 'repeat') return;
+    i = parseInt(el.getAttribute('data-i'), 10);
+    if (isNaN(i) || i < 0 || i > 3) return;
+    if (i === state.simon.seq[state.simon.progress]) {
+      flashSimonPad(i, 320);
+      state.simon.progress += 1;
+      if (state.simon.progress >= state.simon.seq.length) {
+        state.locked = true;
+        setSimonPhase('done');
+        awardCorrect();
+      }
+    } else {
+      playWrong();
+      showToast('Probeer nog eens', false);
+      speak('retry');
+      state.locked = true;
+      setSimonPhase('play');
+      state.simon.progress = 0;
+      clearGeheugenTimer();
+      geheugenTimer = window.setTimeout(function () {
+        geheugenTimer = null;
+        if (state.level !== 'simon' || !state.simon) return;
+        playSimonStep(0);
+      }, 900);
     }
   }
 
@@ -7498,6 +7660,7 @@
     if (typeof traceState !== 'undefined') traceState.drawing = false;
     clearMemoryTimer();
     clearGeheugenTimer();
+    clearSimonFlash();
     hideReward();
     hideToast();
     hideBurst();
@@ -7599,19 +7762,6 @@
     }
   }
 
-  function toggleSound() {
-    state.soundOn = !state.soundOn;
-    saveSound();
-    updateSoundIcons();
-    if (state.soundOn) {
-      ensureAudio();
-      unlockAudio();
-      playSuccess();
-    } else {
-      stopSpeak();
-    }
-  }
-
   /* ---------- tap handling (iOS 9, no 300ms delay) ---------- */
   function findClickable(el) {
     while (el && el !== document.body && el !== document.documentElement) {
@@ -7662,10 +7812,6 @@
   function handleAct(el) {
     var act, level, t;
     act = el.getAttribute('data-act');
-    if (act === 'sound') {
-      toggleSound();
-      return;
-    }
     if (act === 'home') {
       goToStart();
       return;
@@ -7702,6 +7848,8 @@
         speak('memory-kies');
       } else if (g === 'weg') {
         startWeg(true);
+      } else if (g === 'simon') {
+        startSimon(true);
       } else {
         showToast('Die komt zo', false);
       }
@@ -7709,6 +7857,10 @@
     }
     if (act === 'weg-answer') {
       onWegAnswer(el);
+      return;
+    }
+    if (act === 'simon-pad') {
+      onSimonPad(el);
       return;
     }
     if (act === 'memory-size') {
@@ -7947,6 +8099,7 @@
     elSet('memorylevel-home-icon', homeIconHtml());
     elSet('memoryplay-home-icon', homeIconHtml());
     elSet('weg-home-icon', homeIconHtml());
+    elSet('simon-home-icon', homeIconHtml());
     elSet('play-back-icon', backIconHtml());
     elSet('picker-back-icon', backIconHtml());
     elSet('trace-back-icon', backIconHtml());
@@ -7963,6 +8116,7 @@
     elSet('memorylevel-back-icon', backIconHtml());
     elSet('memoryplay-back-icon', backIconHtml());
     elSet('weg-back-icon', backIconHtml());
+    elSet('simon-back-icon', backIconHtml());
     elSet('letters-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('trace-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('names-star-icon', starSvg('#FFD54F', '#F9A825'));
@@ -7980,6 +8134,7 @@
     elSet('memorylevel-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('memoryplay-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('weg-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('simon-star-icon', starSvg('#FFD54F', '#F9A825'));
     if ($('icon-vormen')) {
       $('icon-vormen').innerHTML =
         vormSvg('circle', '#2FB3F0', '#1A7FB3', 0) +

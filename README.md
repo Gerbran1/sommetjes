@@ -1,4 +1,4 @@
-# Sommetjes
+# Leer & Speel
 
 Een eenvoudige oefenapp voor kinderen van 4 tot 6 jaar, met getallen, letters, puzzels en geheugenspellen. Werkt op een oude iPad 2 (iOS 9) als web-app op het beginscherm.
 
@@ -29,6 +29,7 @@ Op het startscherm kies je **Getallen**, **Letters**, **Puzzels** of **Geheugen*
 **Geheugen**
 15. **Memory** — draai de kaartjes om en zoek twee dezelfde. Je kiest 6, 12 of 16 kaartjes (3×2, 4×3 of 4×4). Een heel bord is één ster; daarna ga je terug naar het Geheugen-menu.
 16. **Wat is er weg?** — kijk naar vier plaatjes; één verdwijnt, en je tikt wat er weg is.
+17. **Simon zegt** — kijk en luister naar de gekleurde knoppen en tik dezelfde volgorde na. De rij wordt steeds een stukje langer.
 
 Bij de getallen- en letterspellen heeft elke vraag drie grote antwoordknoppen. Bij een goed antwoord of een voltooide puzzel krijg je een ster. Na vijf sterren volgt een klein feestje; daarna ga je terug naar het menu van dat spel. Een fout antwoord is niet erg: je mag het gewoon nog eens proberen.
 

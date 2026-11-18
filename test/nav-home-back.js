@@ -13,7 +13,7 @@ const wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms)
 const SCREENS = [
   'start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay',
   'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken',
-  'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg'
+  'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon'
 ];
 
 async function visibleScreen(page) {
@@ -47,7 +47,6 @@ async function fresh(page) {
   await page.evaluate(() => {
     try {
       localStorage.clear();
-      localStorage.setItem('sommetjes-sound', '0');
     } catch (e) {}
   });
   await page.reload({ waitUntil: 'networkidle0' });
@@ -365,6 +364,17 @@ async function waitSpiegelNext(page) {
     ok('Wat is er weg terug → Geheugen, home → start');
 
     await fresh(page);
+    await tap(page, '#btn-goto-memory');
+    await tap(page, '[data-game="simon"]');
+    await expectScreen(page, 'simon', 'simon zegt');
+    await tap(page, '#btn-simon-back');
+    await expectScreen(page, 'memory', 'simon back');
+    await tap(page, '[data-game="simon"]');
+    await tap(page, '#btn-simon-home');
+    await expectScreen(page, 'start', 'simon home');
+    ok('Simon zegt terug → Geheugen, home → start');
+
+    await fresh(page);
     await tap(page, '#btn-goto-games');
     await tap(page, '[data-level="plus5"]');
     await wait(400);
@@ -513,6 +523,56 @@ async function waitSpiegelNext(page) {
     await expectScreen(page, 'memory', 'auto after weg reward');
     if (await rewardVisible(page)) throw new Error('reward still visible after weg auto-return');
     ok('Ronde van 5 (Wat is er weg?): na beloning automatisch naar Geheugen-menu');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-memory');
+    await tap(page, '[data-game="simon"]');
+    await expectScreen(page, 'simon', 'simon reward setup');
+    for (var si = 0; si < 5; si++) {
+      var deadlineS = Date.now() + 10000;
+      var seqS = null;
+      while (Date.now() < deadlineS) {
+        seqS = await page.evaluate(function () {
+          var board = document.getElementById('simon-board');
+          if (!board || board.getAttribute('data-phase') !== 'repeat') return null;
+          var s = board.getAttribute('data-seq') || '';
+          return s ? s.split('-') : null;
+        });
+        if (seqS && seqS.length) break;
+        await wait(120);
+      }
+      if (!seqS || !seqS.length) throw new Error('simon sequence not ready on item ' + (si + 1));
+      for (var sj = 0; sj < seqS.length; sj++) {
+        await tap(page, '#simon-board [data-act="simon-pad"][data-i="' + seqS[sj] + '"]');
+      }
+      if (si < 4) {
+        var nextS = Date.now() + 8000;
+        var movedS = false;
+        while (Date.now() < nextS) {
+          movedS = await page.evaluate(function (prev) {
+            var board = document.getElementById('simon-board');
+            if (!board) return false;
+            var phase = board.getAttribute('data-phase');
+            var seq = board.getAttribute('data-seq') || '';
+            return phase === 'play' || (phase === 'repeat' && seq && seq !== prev);
+          }, seqS.join('-'));
+          if (movedS) break;
+          await wait(150);
+        }
+      } else if (!(await waitReward(page, 4500))) {
+        throw new Error('simon reward did not appear');
+      }
+    }
+    var dSimon = Date.now() + 5000;
+    while (Date.now() < dSimon) {
+      const sSim = await visibleScreen(page);
+      const rwSim = await rewardVisible(page);
+      if (sSim === 'memory' && !rwSim) break;
+      await wait(150);
+    }
+    await expectScreen(page, 'memory', 'auto after simon reward');
+    if (await rewardVisible(page)) throw new Error('reward still visible after simon auto-return');
+    ok('Ronde van 5 (Simon zegt): na beloning automatisch naar Geheugen-menu');
 
     console.log('\nALL NAV CHECKS OK (' + results.length + ')');
     await browser.close();
