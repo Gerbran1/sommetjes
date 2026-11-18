@@ -197,7 +197,7 @@
       line-height: 1;
     }
 
-    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij {
+    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij, #screen-cups {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -1764,6 +1764,72 @@
       padding: 4px 8px 12px 8px;
       min-height: 128px;
     }
+    #cups-stage {
+      position: relative;
+      width: 100%;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+    .cup-slot {
+      position: absolute;
+      top: 10px;
+      width: 28%;
+      height: 240px;
+      -webkit-transition: left 0.6s ease-in-out;
+      transition: left 0.6s ease-in-out;
+    }
+    .cup-item {
+      position: absolute;
+      left: 12%;
+      width: 76%;
+      bottom: 16px;
+      height: 108px;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .cup-item .obj-svg, .cup-item .word-svg, .cup-item svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .cup-hit {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 175px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      z-index: 2;
+      -webkit-appearance: none;
+      appearance: none;
+      -webkit-transition: -webkit-transform 0.35s ease;
+      transition: transform 0.35s ease;
+    }
+    .cup-hit svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      pointer-events: none;
+    }
+    .cup-slot.open .cup-hit {
+      -webkit-transform: translateY(-88px);
+      transform: translateY(-88px);
+    }
+    .cup-hit.pressed, .cup-hit:active {
+      -webkit-transform: translateY(4px);
+      transform: translateY(4px);
+    }
+    .cup-slot.open .cup-hit.pressed, .cup-slot.open .cup-hit:active {
+      -webkit-transform: translateY(-84px);
+      transform: translateY(-84px);
+    }
+    .cup-slot.shake .cup-hit {
+      -webkit-animation: shake 0.45s ease;
+      animation: shake 0.45s ease;
+    }
     .lvl-slide {
       background: #FF8A4C;
       -webkit-box-shadow: 0 8px 0 #D4692C, 0 12px 16px rgba(0,0,0,0.15);
@@ -2414,6 +2480,11 @@
       .rij-slot { height: 108px; margin: 6px; border-radius: 16px; }
       #rij-choices { min-height: 104px; padding-bottom: 6px; }
       #rij-choices .pic-answer { width: 88px; height: 88px; margin: 0 6px; }
+      .cup-slot { height: 188px; top: 4px; }
+      .cup-item { height: 86px; bottom: 10px; }
+      .cup-hit { height: 140px; }
+      .cup-slot.open .cup-hit { -webkit-transform: translateY(-64px); transform: translateY(-64px); }
+      .cup-slot.open .cup-hit.pressed, .cup-slot.open .cup-hit:active { -webkit-transform: translateY(-60px); transform: translateY(-60px); }
       .letter-set-btn { min-height: 40px; font-size: 18px; }
     }
     @media screen and (max-height: 700px) {
@@ -3168,6 +3239,28 @@
       <div class="progress-row"></div>
       <div id="rij-row"></div>
       <div id="rij-choices"></div>
+    </div>
+
+    <div id="screen-cups" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-cups-back" data-act="back" title="Terug">
+            <span id="cups-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-cups-home" data-act="home" title="Start" style="margin-left:8px;">
+            <span id="cups-home-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="cups-star-icon"></span>
+            <span class="star-count" id="cups-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt" id="cups-prompt">Waar zat het?</div>
+      <div class="progress-row"></div>
+      <div id="cups-stage"></div>
     </div>
   </div>
 
@@ -4138,6 +4231,10 @@
     }
     else if (state.level === 'rij') {
       startRij(false);
+      return;
+    }
+    else if (state.level === 'cups') {
+      startCups(false);
       return;
     }
     else {
@@ -5154,7 +5251,7 @@
   /* ---------- UI ---------- */
   function updateStarsUI() {
     var i, row, html, filled, el, rows;
-    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars'], String(state.stars));
+    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars', 'cups-stars'], String(state.stars));
     filled = state.towardsReward;
     if (filled > 5) filled = 5;
     html = '';
@@ -5187,7 +5284,7 @@
   function showScreen(name) {
     var ids, i, el;
     state.screen = name;
-    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij'];
+    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups'];
     for (i = 0; i < ids.length; i++) {
       el = $('screen-' + ids[i]);
       if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
@@ -5970,6 +6067,238 @@
         if (state.level !== 'rij' || !state.rij) return;
         renderRijChoices(false);
         startRijPlayback();
+      }, 800);
+    }
+  }
+
+  function cupSvg() {
+    return '<svg viewBox="0 0 100 110" width="100" height="110" aria-hidden="true">' +
+      '<path d="M28 12 Q50 4 72 12 L86 86 Q50 102 14 86 Z" fill="#E53935" stroke="#B71C1C" stroke-width="3"/>' +
+      '<ellipse cx="50" cy="86" rx="38" ry="12" fill="#C62828" stroke="#B71C1C" stroke-width="3"/>' +
+      '<ellipse cx="50" cy="84" rx="26" ry="7" fill="#E53935"/>' +
+      '<path d="M34 20 Q50 12 66 20" fill="none" stroke="#FF8A80" stroke-width="4" stroke-linecap="round"/>' +
+      '</svg>';
+  }
+
+  function cupLeftPct(slot) {
+    return (5 + slot * 31) + '%';
+  }
+
+  function setCupsPhase(phase) {
+    var stage;
+    if (!state.cups) return;
+    state.cups.phase = phase;
+    stage = $('cups-stage');
+    if (stage) stage.setAttribute('data-phase', phase);
+  }
+
+  function findCupSlotEl(slot) {
+    var stage, nodes, i;
+    stage = $('cups-stage');
+    if (!stage) return null;
+    nodes = stage.querySelectorAll('.cup-slot');
+    for (i = 0; i < nodes.length; i++) {
+      if (nodes[i].getAttribute('data-slot') === String(slot)) return nodes[i];
+    }
+    return null;
+  }
+
+  function renderCups(openSlot) {
+    var stage, html, i, has, open, cls;
+    stage = $('cups-stage');
+    if (!stage || !state.cups) return;
+    stage.setAttribute('data-key', state.cups.key);
+    stage.setAttribute('data-phase', state.cups.phase);
+    stage.setAttribute('data-at', String(state.cups.at));
+    html = '';
+    for (i = 0; i < 3; i++) {
+      has = (i === state.cups.at);
+      open = (openSlot === i);
+      cls = 'cup-slot' + (has ? ' has-item' : '') + (open ? ' open' : '');
+      html += '<div class="' + cls + '" data-slot="' + i + '" data-has="' + (has ? '1' : '0') + '" style="left:' + cupLeftPct(i) + '">' +
+        '<div class="cup-item">' + (has ? memoryPicHtml(state.cups.pic) : '') + '</div>' +
+        '<button type="button" class="tap cup-hit" data-act="cups-pick" data-slot="' + i + '">' + cupSvg() + '</button>' +
+        '</div>';
+    }
+    stage.innerHTML = html;
+  }
+
+  function swapCupSlots(a, b) {
+    var ea, eb, hit;
+    ea = findCupSlotEl(a);
+    eb = findCupSlotEl(b);
+    if (!ea || !eb) return;
+    ea.setAttribute('data-slot', String(b));
+    eb.setAttribute('data-slot', String(a));
+    hit = ea.querySelector('.cup-hit');
+    if (hit) hit.setAttribute('data-slot', String(b));
+    hit = eb.querySelector('.cup-hit');
+    if (hit) hit.setAttribute('data-slot', String(a));
+    ea.style.zIndex = '5';
+    eb.style.zIndex = '4';
+    ea.style.left = cupLeftPct(b);
+    eb.style.left = cupLeftPct(a);
+    if (state.cups.at === a) state.cups.at = b;
+    else if (state.cups.at === b) state.cups.at = a;
+    if ($('cups-stage')) $('cups-stage').setAttribute('data-at', String(state.cups.at));
+    ea.setAttribute('data-has', (state.cups.at === b) ? '1' : '0');
+    eb.setAttribute('data-has', (state.cups.at === a) ? '1' : '0');
+  }
+
+  function makeCupSwaps(start, n) {
+    var swaps, tries, i, a, b, at, moved;
+    for (tries = 0; tries < 40; tries++) {
+      swaps = [];
+      at = start;
+      moved = false;
+      for (i = 0; i < n; i++) {
+        a = Math.floor(Math.random() * 3);
+        b = (a + 1 + Math.floor(Math.random() * 2)) % 3;
+        swaps.push([a, b]);
+        if (at === a) { at = b; moved = true; }
+        else if (at === b) { at = a; moved = true; }
+      }
+      if (moved && swaps.length === n) return swaps;
+    }
+    return [[start, (start + 1) % 3], [(start + 1) % 3, (start + 2) % 3], [start, (start + 2) % 3]];
+  }
+
+  function playCupsSwap(step) {
+    var pair;
+    if (!state.cups || state.level !== 'cups') return;
+    if (step >= state.cups.swaps.length) {
+      renderCups(-1);
+      setCupsPhase('pick');
+      state.locked = false;
+      elSet('cups-prompt', 'Waar zat het?');
+      speak('cups');
+      return;
+    }
+    pair = state.cups.swaps[step];
+    setCupsPhase('swap');
+    playTone(300 + step * 30, 0.12, 'sine', 0.07, 0);
+    swapCupSlots(pair[0], pair[1]);
+    geheugenTimer = window.setTimeout(function () {
+      geheugenTimer = null;
+      playCupsSwap(step + 1);
+    }, 700);
+  }
+
+  function startCupsPlayback() {
+    clearGeheugenTimer();
+    state.locked = true;
+    setCupsPhase('look');
+    renderCups(state.cups.start);
+    elSet('cups-prompt', 'Kijk goed waar het zit');
+    speak('cups-kijk');
+    geheugenTimer = window.setTimeout(function () {
+      var slots, i;
+      geheugenTimer = null;
+      if (!state.cups || state.level !== 'cups') return;
+      slots = document.querySelectorAll('.cup-slot');
+      for (i = 0; i < slots.length; i++) {
+        slots[i].className = slots[i].className.replace(/(?:^|\s)open(?=\s|$)/g, '');
+      }
+      geheugenTimer = window.setTimeout(function () {
+        geheugenTimer = null;
+        if (!state.cups || state.level !== 'cups') return;
+        playCupsSwap(0);
+      }, 450);
+    }, 2800);
+  }
+
+  function startCups(fresh) {
+    var pool, pic, start, n, swaps, keys, sets, tries, key, i, pickSet, swapKey;
+    state.level = 'cups';
+    state.locked = true;
+    if (fresh) {
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+      state.lastWasPersonal = false;
+      resetVoiceCycle();
+    }
+    clearGeheugenTimer();
+    n = 3;
+    if ((state.towardsReward || 0) >= 2) n = 4;
+    if ((state.towardsReward || 0) >= 4) n = 5;
+    pool = memoryPicIds();
+    keys = [];
+    sets = [];
+    for (tries = 0; tries < 40; tries++) {
+      pic = pool[Math.floor(Math.random() * pool.length)];
+      start = Math.floor(Math.random() * 3);
+      swaps = makeCupSwaps(start, n);
+      swapKey = '';
+      for (i = 0; i < swaps.length; i++) {
+        if (i) swapKey += ',';
+        swapKey += swaps[i][0] + '-' + swaps[i][1];
+      }
+      key = pic + ':' + start + ':' + swapKey;
+      if (!contains(keys, key)) {
+        keys.push(key);
+        sets.push({ pic: pic, start: start, swaps: swaps, key: key });
+      }
+    }
+    key = pickAvoiding(keys) || keys[0];
+    pickSet = sets[0];
+    for (i = 0; i < keys.length; i++) {
+      if (keys[i] === key) {
+        pickSet = sets[i];
+        break;
+      }
+    }
+    rememberRoundKey(key);
+    state.cups = {
+      pic: pickSet.pic,
+      start: pickSet.start,
+      at: pickSet.start,
+      swaps: pickSet.swaps,
+      phase: 'look',
+      key: key
+    };
+    hideReward();
+    showScreen('cups');
+    updateStarsUI();
+    elSet('cups-prompt', 'Kijk goed waar het zit');
+    beginQuestionVoice();
+    startCupsPlayback();
+  }
+
+  function onCupsPick(el) {
+    var slot, node, i, slots;
+    if (state.locked || !state.cups || state.cups.phase !== 'pick') return;
+    slot = parseInt(el.getAttribute('data-slot'), 10);
+    if (slot === state.cups.at) {
+      state.locked = true;
+      node = findCupSlotEl(slot);
+      if (node) {
+        if ((' ' + node.className + ' ').indexOf(' open ') === -1) {
+          node.className = node.className + ' open';
+        }
+      }
+      setCupsPhase('done');
+      playTone(392, 0.12, 'sine', 0.08, 0);
+      awardCorrect();
+    } else {
+      playWrong();
+      showToast('Probeer nog eens', false);
+      speak('retry');
+      node = findCupSlotEl(slot);
+      if (node) {
+        node.className = node.className.replace(/(?:^|\s)shake(?=\s|$)/g, '');
+        node.className = node.className + ' shake';
+        node.className = node.className.replace(/(?:^|\s)open(?=\s|$)/g, '');
+        node.className = node.className + ' open';
+      }
+      state.locked = true;
+      geheugenTimer = window.setTimeout(function () {
+        geheugenTimer = null;
+        if (!state.cups || state.level !== 'cups') return;
+        slots = document.querySelectorAll('.cup-slot');
+        for (i = 0; i < slots.length; i++) {
+          slots[i].className = slots[i].className.replace(/(?:^|\s)open(?=\s|$)/g, '').replace(/(?:^|\s)shake(?=\s|$)/g, '');
+        }
+        if (state.cups.phase === 'pick') state.locked = false;
       }, 800);
     }
   }
@@ -8226,6 +8555,8 @@
         startSimon(true);
       } else if (g === 'rij') {
         startRij(true);
+      } else if (g === 'cups') {
+        startCups(true);
       } else {
         showToast('Die komt zo', false);
       }
@@ -8241,6 +8572,10 @@
     }
     if (act === 'rij-pick') {
       onRijPick(el);
+      return;
+    }
+    if (act === 'cups-pick') {
+      onCupsPick(el);
       return;
     }
     if (act === 'memory-size') {
@@ -8481,6 +8816,7 @@
     elSet('weg-home-icon', homeIconHtml());
     elSet('simon-home-icon', homeIconHtml());
     elSet('rij-home-icon', homeIconHtml());
+    elSet('cups-home-icon', homeIconHtml());
     elSet('play-back-icon', backIconHtml());
     elSet('picker-back-icon', backIconHtml());
     elSet('trace-back-icon', backIconHtml());
@@ -8499,6 +8835,7 @@
     elSet('weg-back-icon', backIconHtml());
     elSet('simon-back-icon', backIconHtml());
     elSet('rij-back-icon', backIconHtml());
+    elSet('cups-back-icon', backIconHtml());
     elSet('letters-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('trace-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('names-star-icon', starSvg('#FFD54F', '#F9A825'));
@@ -8518,6 +8855,7 @@
     elSet('weg-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('simon-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('rij-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('cups-star-icon', starSvg('#FFD54F', '#F9A825'));
     if ($('icon-vormen')) {
       $('icon-vormen').innerHTML =
         vormSvg('circle', '#2FB3F0', '#1A7FB3', 0) +

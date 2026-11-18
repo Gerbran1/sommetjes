@@ -447,6 +447,67 @@ function intersection(a, b) {
     if (rOver.length) throw new Error('rij r2 herhaalde vorige ronde: ' + rOver.join(','));
     ok('Onthoud de rij ronde 2 uniek en niet uit ronde 1: ' + r2.join(', '));
 
+
+    async function waitCupsPick(page, prev, ms) {
+      var deadline = Date.now() + (ms || 16000);
+      while (Date.now() < deadline) {
+        const key = await page.evaluate((prev) => {
+          var stage = document.getElementById('cups-stage');
+          if (!stage || stage.getAttribute('data-phase') !== 'pick') return null;
+          var s = stage.getAttribute('data-key') || '';
+          if (!s) return null;
+          if (prev && s === prev) return null;
+          return s;
+        }, prev || '');
+        if (key) return key;
+        await wait(120);
+      }
+      return null;
+    }
+    async function playCupsRound(page, n) {
+      var keys = [], i, key;
+      var prev = '';
+      for (i = 0; i < n; i++) {
+        key = await waitCupsPick(page, prev, 16000);
+        if (!key) throw new Error('cups not ready item ' + (i + 1));
+        keys.push(key);
+        await page.evaluate(() => {
+          var b = document.querySelector('#cups-stage .cup-slot[data-has="1"] .cup-hit');
+          if (b) b.click();
+        });
+        prev = key;
+        await wait(300);
+      }
+      return keys;
+    }
+
+    await fresh(page);
+    await page.click('#btn-goto-memory');
+    await wait(280);
+    await page.click('[data-game="cups"]');
+    await wait(280);
+    var c1 = await playCupsRound(page, 5);
+    assertUnique(c1, 'cups r1');
+    ok('Waar zat het? ronde 1 uniek: ' + c1.join(', '));
+    var rwC = Date.now() + 5000;
+    while (Date.now() < rwC) {
+      const on = await page.evaluate(() => {
+        var el = document.getElementById('overlay-reward');
+        return !!(el && el.className.indexOf('is-hidden') === -1);
+      });
+      if (on) break;
+      await wait(150);
+    }
+    await page.click('#btn-verder');
+    await wait(400);
+    await page.click('[data-game="cups"]');
+    await wait(280);
+    var c2 = await playCupsRound(page, 5);
+    assertUnique(c2, 'cups r2');
+    var cOver = c1.filter(function (k) { return c2.indexOf(k) !== -1; });
+    if (cOver.length) throw new Error('cups r2 herhaalde vorige ronde: ' + cOver.join(','));
+    ok('Waar zat het? ronde 2 uniek en niet uit ronde 1: ' + c2.join(', '));
+
     console.log('\nALL UNIQUE-ROUND CHECKS OK (' + results.length + ')');
     await browser.close();
     process.exit(0);

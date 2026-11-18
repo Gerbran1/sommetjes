@@ -13,7 +13,7 @@ const wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms)
 const SCREENS = [
   'start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay',
   'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken',
-  'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij'
+  'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups'
 ];
 
 async function visibleScreen(page) {
@@ -386,6 +386,17 @@ async function waitSpiegelNext(page) {
     ok('Onthoud de rij terug → Geheugen, home → start');
 
     await fresh(page);
+    await tap(page, '#btn-goto-memory');
+    await tap(page, '[data-game="cups"]');
+    await expectScreen(page, 'cups', 'waar zat het');
+    await tap(page, '#btn-cups-back');
+    await expectScreen(page, 'memory', 'cups back');
+    await tap(page, '[data-game="cups"]');
+    await tap(page, '#btn-cups-home');
+    await expectScreen(page, 'start', 'cups home');
+    ok('Waar zat het? terug → Geheugen, home → start');
+
+    await fresh(page);
     await tap(page, '#btn-goto-games');
     await tap(page, '[data-level="plus5"]');
     await wait(400);
@@ -634,6 +645,53 @@ async function waitSpiegelNext(page) {
     await expectScreen(page, 'memory', 'auto after rij reward');
     if (await rewardVisible(page)) throw new Error('reward still visible after rij auto-return');
     ok('Ronde van 5 (Onthoud de rij): na beloning automatisch naar Geheugen-menu');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-memory');
+    await tap(page, '[data-game="cups"]');
+    await expectScreen(page, 'cups', 'cups reward setup');
+    for (var ci = 0; ci < 5; ci++) {
+      var deadlineC = Date.now() + 16000;
+      var keyC = null;
+      while (Date.now() < deadlineC) {
+        keyC = await page.evaluate(function () {
+          var stage = document.getElementById('cups-stage');
+          if (!stage || stage.getAttribute('data-phase') !== 'pick') return null;
+          return stage.getAttribute('data-key') || '';
+        });
+        if (keyC) break;
+        await wait(120);
+      }
+      if (!keyC) throw new Error('cups not ready on item ' + (ci + 1));
+      await tap(page, '#cups-stage .cup-slot[data-has="1"] .cup-hit');
+      if (ci < 4) {
+        var nextC = Date.now() + 12000;
+        var movedC = false;
+        while (Date.now() < nextC) {
+          movedC = await page.evaluate(function (prev) {
+            var stage = document.getElementById('cups-stage');
+            if (!stage) return false;
+            var phase = stage.getAttribute('data-phase');
+            var key = stage.getAttribute('data-key') || '';
+            return phase === 'look' || phase === 'swap' || (phase === 'pick' && key && key !== prev);
+          }, keyC);
+          if (movedC) break;
+          await wait(150);
+        }
+      } else if (!(await waitReward(page, 4500))) {
+        throw new Error('cups reward did not appear');
+      }
+    }
+    var dCups = Date.now() + 5000;
+    while (Date.now() < dCups) {
+      const sCups = await visibleScreen(page);
+      const rwCups = await rewardVisible(page);
+      if (sCups === 'memory' && !rwCups) break;
+      await wait(150);
+    }
+    await expectScreen(page, 'memory', 'auto after cups reward');
+    if (await rewardVisible(page)) throw new Error('reward still visible after cups auto-return');
+    ok('Ronde van 5 (Waar zat het?): na beloning automatisch naar Geheugen-menu');
 
     console.log('\nALL NAV CHECKS OK (' + results.length + ')');
     await browser.close();
