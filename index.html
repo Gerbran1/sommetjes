@@ -190,7 +190,7 @@
       line-height: 1;
     }
 
-    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen {
+    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -1421,6 +1421,87 @@
       display: block;
       pointer-events: none;
     }
+    .lvl-spiegel {
+      background: #26C6DA;
+      -webkit-box-shadow: 0 8px 0 #00ACC1, 0 12px 16px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 0 #00ACC1, 0 12px 16px rgba(0,0,0,0.15);
+    }
+    .lvl-spiegel.pressed, .lvl-spiegel:active {
+      -webkit-box-shadow: 0 2px 0 #00ACC1, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #00ACC1, 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .spiegel-mini {
+      position: relative;
+      width: 58px;
+      height: 40px;
+    }
+    .spiegel-mini .sp-half {
+      position: absolute;
+      top: 2px;
+      width: 24px;
+      height: 36px;
+    }
+    .spiegel-mini .sp-left { left: 0; }
+    .spiegel-mini .sp-right { right: 0; }
+    .spiegel-mini .sp-axis {
+      position: absolute;
+      left: 27px;
+      top: 0;
+      width: 4px;
+      height: 40px;
+      background: #FFFFFF;
+      border-radius: 2px;
+    }
+    .spiegel-mini span {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: rgba(255,255,255,0.35);
+      border-radius: 2px;
+    }
+    .spiegel-mini .sp-left span.on { background: #FFFFFF; }
+    #spiegel-wrap {
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      position: relative;
+      width: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+    #spiegel-board {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+    }
+    #spiegel-axis {
+      position: absolute;
+      width: 8px;
+      background: #FFFFFF;
+      border-radius: 4px;
+      -webkit-box-shadow: 0 0 0 3px rgba(35,66,89,0.12);
+      box-shadow: 0 0 0 3px rgba(35,66,89,0.12);
+    }
+    .spiegel-cell {
+      position: absolute;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border: 3px solid #FFFFFF;
+      background: #E8F4FC;
+      border-radius: 10px;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .spiegel-cell.on {
+      background: #7B6CFF;
+      border-color: #5A4CC8;
+    }
+    .spiegel-cell.locked {
+      pointer-events: none;
+    }
+ 
     @media screen and (max-height: 800px) {
       .puzzle-hint { font-size: 18px; }
     }
@@ -1860,6 +1941,30 @@
           </div>
           <div class="level-label">Vormen passen</div>
         </button>
+        <button type="button" class="tap level-btn lvl-spiegel" data-act="puzzle-game" data-game="spiegel">
+          <div class="act-icon">
+            <div class="spiegel-mini" id="icon-spiegel">
+              <div class="sp-half sp-left">
+                <span class="on" style="left:1px;top:1px;"></span>
+                <span style="left:13px;top:1px;"></span>
+                <span class="on" style="left:1px;top:13px;"></span>
+                <span class="on" style="left:13px;top:13px;"></span>
+                <span style="left:1px;top:25px;"></span>
+                <span class="on" style="left:13px;top:25px;"></span>
+              </div>
+              <div class="sp-axis"></div>
+              <div class="sp-half sp-right">
+                <span style="left:1px;top:1px;"></span>
+                <span style="left:13px;top:1px;"></span>
+                <span style="left:1px;top:13px;"></span>
+                <span style="left:13px;top:13px;"></span>
+                <span style="left:1px;top:25px;"></span>
+                <span style="left:13px;top:25px;"></span>
+              </div>
+            </div>
+          </div>
+          <div class="level-label">Spiegelen</div>
+        </button>
       </div>
     </div>
 
@@ -1949,6 +2054,27 @@
       </div>
       <div class="prompt" id="vormen-prompt">Leg de vormen</div>
       <div id="vormen-wrap"></div>
+    </div>
+
+    <div id="screen-spiegel" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-spiegel-home" data-act="home" title="Terug">
+            <span id="spiegel-home-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-sound-spiegel" data-act="sound" title="Geluid" style="margin-left:8px;">
+            <span id="sound-icon-spiegel"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="spiegel-star-icon"></span>
+            <span class="star-count" id="spiegel-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt" id="spiegel-prompt">Maak de andere kant hetzelfde</div>
+      <div id="spiegel-wrap"></div>
     </div>
 
     <div id="screen-trace" class="is-hidden">
@@ -2756,6 +2882,10 @@
     }
     else if (state.level === 'vormen') {
       startVormen(false);
+      return;
+    }
+    else if (state.level === 'spiegel') {
+      startSpiegel(false);
       return;
     }
     else {
@@ -3707,7 +3837,7 @@
   /* ---------- UI ---------- */
   function updateStarsUI() {
     var i, row, html, filled, el, rows;
-    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars'], String(state.stars));
+    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars'], String(state.stars));
     filled = state.towardsReward;
     if (filled > 5) filled = 5;
     html = '';
@@ -3743,6 +3873,7 @@
     elSet('sound-icon-puzzlelevel', html);
     elSet('sound-icon-puzzle', html);
     elSet('sound-icon-vormen', html);
+    elSet('sound-icon-spiegel', html);
   }
 
   function elSet(id, html) {
@@ -3753,7 +3884,7 @@
   function showScreen(name) {
     var ids, i, el;
     state.screen = name;
-    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen'];
+    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel'];
     for (i = 0; i < ids.length; i++) {
       el = $('screen-' + ids[i]);
       if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
@@ -4120,6 +4251,176 @@
     if (vormenDrag.on) {
       vormenDragEnd(e);
       if (e.preventDefault) e.preventDefault();
+    }
+  }
+
+  function makeSpiegelLeft(rows, cols) {
+    var grid, r, c, i, count, target, dirs, d, nr, nc, presets, pickP;
+    presets = null;
+    if (rows === 4 && cols === 2) {
+      presets = [
+        [[0, 1], [1, 1], [0, 1], [1, 1]],
+        [[0, 1], [0, 1], [1, 1], [1, 0]],
+        [[1, 0], [1, 0], [1, 1], [0, 0]],
+        [[0, 0], [0, 1], [1, 1], [1, 1]],
+        [[0, 1], [1, 1], [1, 1], [0, 1]],
+        [[1, 1], [0, 1], [0, 1], [1, 1]]
+      ];
+    } else if (rows === 5 && cols === 2) {
+      presets = [
+        [[0, 1], [1, 1], [0, 1], [1, 1], [0, 1]],
+        [[0, 0], [0, 1], [1, 1], [1, 1], [1, 0]],
+        [[1, 0], [1, 0], [1, 1], [0, 1], [0, 1]],
+        [[0, 1], [0, 1], [1, 1], [0, 1], [1, 1]],
+        [[1, 1], [1, 0], [1, 1], [0, 1], [0, 0]]
+      ];
+    } else if (rows === 6 && cols === 3) {
+      presets = [
+        [[0, 0, 1], [0, 1, 1], [1, 1, 1], [0, 0, 1], [0, 1, 1], [1, 1, 1]],
+        [[0, 1, 0], [1, 1, 1], [0, 1, 0], [0, 1, 0], [0, 1, 0], [1, 1, 1]],
+        [[0, 0, 1], [0, 0, 1], [0, 1, 1], [1, 1, 1], [0, 0, 1], [0, 0, 1]],
+        [[1, 0, 0], [1, 1, 0], [1, 1, 1], [1, 1, 0], [1, 0, 0], [0, 0, 0]],
+        [[0, 1, 1], [1, 1, 0], [0, 1, 1], [0, 0, 1], [0, 1, 1], [1, 1, 0]]
+      ];
+    }
+    if (presets && Math.random() < 0.8) {
+      pickP = presets[randInt(0, presets.length - 1)];
+      grid = [];
+      for (r = 0; r < rows; r++) {
+        grid[r] = [];
+        for (c = 0; c < cols; c++) grid[r][c] = pickP[r][c];
+      }
+      return grid;
+    }
+    grid = [];
+    for (r = 0; r < rows; r++) {
+      grid[r] = [];
+      for (c = 0; c < cols; c++) grid[r][c] = 0;
+    }
+    r = randInt(0, rows - 1);
+    c = cols - 1;
+    grid[r][c] = 1;
+    count = 1;
+    target = randInt(Math.max(3, Math.floor(rows * cols * 0.3)), Math.max(4, Math.floor(rows * cols * 0.55)));
+    dirs = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+    i = 0;
+    while (count < target && i < 120) {
+      i += 1;
+      r = randInt(0, rows - 1);
+      c = randInt(0, cols - 1);
+      if (!grid[r][c]) continue;
+      d = dirs[randInt(0, 3)];
+      nr = r + d[0];
+      nc = c + d[1];
+      if (nr >= 0 && nr < rows && nc >= 0 && nc < cols && !grid[nr][nc]) {
+        grid[nr][nc] = 1;
+        count += 1;
+      }
+    }
+    return grid;
+  }
+
+  function startSpiegel(fresh) {
+    var rows, cols, r, c, left, right;
+    if (fresh) {
+      state.level = 'spiegel';
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+      resetVoiceCycle();
+    }
+    if (state.sessionCorrect >= 6) {
+      rows = 6;
+      cols = 3;
+    } else if (state.sessionCorrect >= 3) {
+      rows = 5;
+      cols = 2;
+    } else {
+      rows = 4;
+      cols = 2;
+    }
+    left = makeSpiegelLeft(rows, cols);
+    right = [];
+    for (r = 0; r < rows; r++) {
+      right[r] = [];
+      for (c = 0; c < cols; c++) right[r][c] = 0;
+    }
+    state.spiegel = { rows: rows, cols: cols, left: left, right: right, done: false };
+    hideReward();
+    showScreen('spiegel');
+    updateStarsUI();
+    window.setTimeout(function () {
+      layoutSpiegel();
+      beginQuestionVoice();
+      speak('spiegel');
+    }, 40);
+  }
+
+  function layoutSpiegel() {
+    var wrap, html, r, c, rows, cols, W, H, size, gap, boardW, boardH, left0, top0, axisW, axisGap, x, y, on;
+    wrap = $('spiegel-wrap');
+    if (!wrap || !state.spiegel) return;
+    rows = state.spiegel.rows;
+    cols = state.spiegel.cols;
+    W = wrap.clientWidth || 700;
+    H = wrap.clientHeight || 500;
+    axisW = 10;
+    axisGap = 12;
+    gap = 6;
+    size = Math.floor(Math.min((W - axisW - axisGap * 2 - 24) / (cols * 2) - gap, (H - 24) / rows - gap, 108));
+    if (size < 48) size = 48;
+    boardW = cols * 2 * (size + gap) - gap + axisW + axisGap * 2;
+    boardH = rows * (size + gap) - gap;
+    left0 = Math.floor((W - boardW) / 2);
+    top0 = Math.floor((H - boardH) / 2);
+    html = '<div id="spiegel-board">';
+    html += '<div id="spiegel-axis" style="left:' + (left0 + cols * (size + gap) - gap + axisGap) +
+      'px;top:' + top0 + 'px;height:' + boardH + 'px;"></div>';
+    for (r = 0; r < rows; r++) {
+      for (c = 0; c < cols; c++) {
+        x = left0 + c * (size + gap);
+        y = top0 + r * (size + gap);
+        on = state.spiegel.left[r][c] ? ' on' : '';
+        html += '<div class="spiegel-cell locked' + on + '" style="left:' + x + 'px;top:' + y +
+          'px;width:' + size + 'px;height:' + size + 'px;"></div>';
+      }
+    }
+    for (r = 0; r < rows; r++) {
+      for (c = 0; c < cols; c++) {
+        x = left0 + cols * (size + gap) - gap + axisW + axisGap * 2 + c * (size + gap);
+        y = top0 + r * (size + gap);
+        on = state.spiegel.right[r][c] ? ' on' : '';
+        html += '<button type="button" class="tap spiegel-cell' + on + '" data-act="spiegel-cell" data-r="' +
+          r + '" data-c="' + c + '" style="left:' + x + 'px;top:' + y + 'px;width:' + size +
+          'px;height:' + size + 'px;"></button>';
+      }
+    }
+    html += '</div>';
+    wrap.innerHTML = html;
+  }
+
+  function onSpiegelCell(el) {
+    var r, c, cls, ok, rr, cc;
+    if (!state.spiegel || state.spiegel.done) return;
+    r = parseInt(el.getAttribute('data-r'), 10);
+    c = parseInt(el.getAttribute('data-c'), 10);
+    if (isNaN(r) || isNaN(c)) return;
+    state.spiegel.right[r][c] = state.spiegel.right[r][c] ? 0 : 1;
+    cls = 'tap spiegel-cell';
+    if (state.spiegel.right[r][c]) cls += ' on';
+    el.className = cls;
+    ok = true;
+    for (rr = 0; rr < state.spiegel.rows; rr++) {
+      for (cc = 0; cc < state.spiegel.cols; cc++) {
+        if (state.spiegel.right[rr][cc] !== state.spiegel.left[rr][state.spiegel.cols - 1 - cc]) {
+          ok = false;
+          break;
+        }
+      }
+      if (!ok) break;
+    }
+    if (ok) {
+      state.spiegel.done = true;
+      awardCorrect();
     }
   }
 
@@ -4689,7 +4990,7 @@
         goHome();
       } else if (state.screen === 'puzzle') {
         showPuzzleLevel();
-      } else if (state.screen === 'vormen') {
+      } else if (state.screen === 'vormen' || state.screen === 'spiegel') {
         showPuzzlesMenu();
       } else if (state.screen === 'puzzlelevel') {
         showPuzzlesMenu();
@@ -4724,6 +5025,7 @@
     }
     if (act === 'puzzle-game') {
       if (el.getAttribute('data-game') === 'vormen') startVormen(true);
+      else if (el.getAttribute('data-game') === 'spiegel') startSpiegel(true);
       else showPuzzleLevel();
       return;
     }
@@ -4733,6 +5035,10 @@
     }
     if (act === 'puzzle-tile') {
       onPuzzleTile(el);
+      return;
+    }
+    if (act === 'spiegel-cell') {
+      onSpiegelCell(el);
       return;
     }
     if (act === 'verder') {
@@ -4884,6 +5190,7 @@
     elSet('puzzlelevel-home-icon', homeIconHtml());
     elSet('puzzle-home-icon', homeIconHtml());
     elSet('vormen-home-icon', homeIconHtml());
+    elSet('spiegel-home-icon', homeIconHtml());
     elSet('letters-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('trace-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('names-star-icon', starSvg('#FFD54F', '#F9A825'));
@@ -4892,6 +5199,7 @@
     elSet('puzzlelevel-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('puzzle-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('vormen-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('spiegel-star-icon', starSvg('#FFD54F', '#F9A825'));
     if ($('icon-vormen')) {
       $('icon-vormen').innerHTML =
         vormSvg('circle', '#2FB3F0', '#1A7FB3', 0) +
@@ -4955,6 +5263,7 @@
         if (state.screen === 'trace') sizeAndDrawTrace();
         if (state.screen === 'puzzle') layoutAndDrawPuzzle();
         if (state.screen === 'vormen') layoutVormen();
+        if (state.screen === 'spiegel') layoutSpiegel();
       }, 250);
     }, false);
 
