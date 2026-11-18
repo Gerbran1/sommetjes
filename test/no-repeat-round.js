@@ -249,6 +249,77 @@ function intersection(a, b) {
     assertUnique(b1, 'begint r1');
     ok('Begint met ronde 1 uniek: ' + b1.join(', '));
 
+    async function waitWegReady(page, ms) {
+      var deadline = Date.now() + (ms || 6000);
+      while (Date.now() < deadline) {
+        const ready = await page.evaluate(() => {
+          var b = document.querySelector('#weg-answers [data-ok="1"]');
+          return !!(b && b.className.indexOf('is-correct') === -1);
+        });
+        if (ready) return true;
+        await wait(120);
+      }
+      return false;
+    }
+    async function playWegRound(page, n) {
+      var keys = [], i, key;
+      for (i = 0; i < n; i++) {
+        if (!(await waitWegReady(page, 7000))) throw new Error('weg not ready item ' + (i + 1));
+        key = await page.evaluate(() => (document.getElementById('weg-board') || {}).getAttribute('data-key') || '');
+        keys.push(key);
+        await page.evaluate(() => {
+          var b = document.querySelector('#weg-answers [data-ok="1"]');
+          if (b) b.click();
+        });
+        await wait(300);
+        if (i < n - 1) {
+          var deadline = Date.now() + 7000;
+          var moved = false;
+          while (Date.now() < deadline) {
+            moved = await page.evaluate((prev) => {
+              var board = document.getElementById('weg-board');
+              var k = board ? board.getAttribute('data-key') : '';
+              var b = document.querySelector('#weg-answers [data-ok="1"]');
+              var looking = board && board.querySelectorAll('.weg-slot').length === 4 && !b;
+              return looking || (k && k !== prev && b && b.className.indexOf('is-correct') === -1);
+            }, key);
+            if (moved) break;
+            await wait(150);
+          }
+          if (!moved) throw new Error('weg next item did not appear after ' + key);
+        }
+      }
+      return keys;
+    }
+
+    await fresh(page);
+    await page.click('#btn-goto-memory');
+    await wait(280);
+    await page.click('[data-game="weg"]');
+    await wait(280);
+    var w1 = await playWegRound(page, 5);
+    assertUnique(w1, 'weg r1');
+    ok('Wat is er weg ronde 1 uniek: ' + w1.join(', '));
+    // dismiss reward and play a second round
+    var rwDeadline = Date.now() + 5000;
+    while (Date.now() < rwDeadline) {
+      const on = await page.evaluate(() => {
+        var el = document.getElementById('overlay-reward');
+        return !!(el && el.className.indexOf('is-hidden') === -1);
+      });
+      if (on) break;
+      await wait(150);
+    }
+    await page.click('#btn-verder');
+    await wait(400);
+    await page.click('[data-game="weg"]');
+    await wait(280);
+    var w2 = await playWegRound(page, 5);
+    assertUnique(w2, 'weg r2');
+    var wOver = w1.filter(function (k) { return w2.indexOf(k) !== -1; });
+    if (wOver.length) throw new Error('weg r2 herhaalde vorige ronde: ' + wOver.join(','));
+    ok('Wat is er weg ronde 2 uniek en niet uit ronde 1: ' + w2.join(', '));
+
     console.log('\nALL UNIQUE-ROUND CHECKS OK (' + results.length + ')');
     await browser.close();
     process.exit(0);

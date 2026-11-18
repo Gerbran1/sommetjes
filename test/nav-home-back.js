@@ -13,7 +13,7 @@ const wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms)
 const SCREENS = [
   'start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay',
   'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken',
-  'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay'
+  'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg'
 ];
 
 async function visibleScreen(page) {
@@ -354,6 +354,17 @@ async function waitSpiegelNext(page) {
     ok('Memory terug → kiezer, home → start');
 
     await fresh(page);
+    await tap(page, '#btn-goto-memory');
+    await tap(page, '[data-game="weg"]');
+    await expectScreen(page, 'weg', 'wat is er weg');
+    await tap(page, '#btn-weg-back');
+    await expectScreen(page, 'memory', 'weg back');
+    await tap(page, '[data-game="weg"]');
+    await tap(page, '#btn-weg-home');
+    await expectScreen(page, 'start', 'weg home');
+    ok('Wat is er weg terug → Geheugen, home → start');
+
+    await fresh(page);
     await tap(page, '#btn-goto-games');
     await tap(page, '[data-level="plus5"]');
     await wait(400);
@@ -457,6 +468,51 @@ async function waitSpiegelNext(page) {
     await expectScreen(page, 'memory', 'auto after memory reward');
     if (await rewardVisible(page)) throw new Error('reward still visible after memory auto-return');
     ok('Memory-bord voltooid: na beloning automatisch naar Geheugen-menu');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-memory');
+    await tap(page, '[data-game="weg"]');
+    await expectScreen(page, 'weg', 'weg reward setup');
+    for (var wi = 0; wi < 5; wi++) {
+      var deadlineW = Date.now() + 6000;
+      var readyW = false;
+      while (Date.now() < deadlineW) {
+        readyW = await page.evaluate(function () {
+          var b = document.querySelector('#weg-answers [data-ok="1"]');
+          return !!(b && b.className.indexOf('is-correct') === -1);
+        });
+        if (readyW) break;
+        await wait(120);
+      }
+      if (!readyW) throw new Error('weg answers not ready on item ' + (wi + 1));
+      await tap(page, '#weg-answers [data-ok="1"]');
+      if (wi < 4) {
+        var nextW = Date.now() + 7000;
+        var moved = false;
+        while (Date.now() < nextW) {
+          moved = await page.evaluate(function () {
+            var b = document.querySelector('#weg-answers [data-ok="1"]');
+            var board = document.getElementById('weg-board');
+            var looking = board && board.querySelectorAll('.weg-slot').length === 4 && !b;
+            return looking || (b && b.className.indexOf('is-correct') === -1);
+          });
+          if (moved) break;
+          await wait(150);
+        }
+      } else if (!(await waitReward(page, 4500))) {
+        throw new Error('weg reward did not appear');
+      }
+    }
+    var dWeg = Date.now() + 5000;
+    while (Date.now() < dWeg) {
+      const sWeg = await visibleScreen(page);
+      const rwWeg = await rewardVisible(page);
+      if (sWeg === 'memory' && !rwWeg) break;
+      await wait(150);
+    }
+    await expectScreen(page, 'memory', 'auto after weg reward');
+    if (await rewardVisible(page)) throw new Error('reward still visible after weg auto-return');
+    ok('Ronde van 5 (Wat is er weg?): na beloning automatisch naar Geheugen-menu');
 
     console.log('\nALL NAV CHECKS OK (' + results.length + ')');
     await browser.close();

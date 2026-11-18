@@ -197,7 +197,7 @@
       line-height: 1;
     }
 
-    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-memory, #screen-memorylevel, #screen-memoryplay {
+    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -1559,6 +1559,95 @@
       -webkit-box-shadow: 0 2px 0 #6E45D1, 0 4px 8px rgba(0,0,0,0.15);
       box-shadow: 0 2px 0 #6E45D1, 0 4px 8px rgba(0,0,0,0.15);
     }
+    #weg-board {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      min-height: 0;
+      padding: 4px 8px;
+    }
+    .weg-slot {
+      -webkit-flex: 1 1 22%;
+      flex: 1 1 22%;
+      max-width: 170px;
+      height: 160px;
+      margin: 8px;
+      border-radius: 22px;
+      background: #FFFDF7;
+      -webkit-box-shadow: 0 6px 0 rgba(0,0,0,0.08);
+      box-shadow: 0 6px 0 rgba(0,0,0,0.08);
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+    }
+    .weg-slot.empty {
+      background: transparent;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+      border: 4px dashed #B8C4D0;
+    }
+    .weg-slot .obj-svg, .weg-slot .word-svg, .weg-slot svg,
+    .pic-answer .obj-svg, .pic-answer .word-svg, .pic-answer svg {
+      width: 86%;
+      height: 86%;
+      display: block;
+      pointer-events: none;
+    }
+    #weg-answers {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      width: 100%;
+      padding: 4px 8px 12px 8px;
+      min-height: 128px;
+    }
+    .pic-answer {
+      width: 118px;
+      height: 118px;
+      margin: 0 10px;
+      padding: 0;
+      border: 0;
+      border-radius: 24px;
+      background: #FFFDF7;
+      -webkit-box-shadow: 0 6px 0 rgba(0,0,0,0.10);
+      box-shadow: 0 6px 0 rgba(0,0,0,0.10);
+      -webkit-appearance: none;
+      appearance: none;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+    }
+    .pic-answer.pressed, .pic-answer:active {
+      -webkit-transform: translateY(4px);
+      transform: translateY(4px);
+    }
+    .pic-answer.is-correct {
+      -webkit-box-shadow: 0 6px 0 #2E7D32;
+      box-shadow: 0 6px 0 #2E7D32;
+      background: #E8F5E9;
+    }
+    .pic-answer.is-wrong {
+      -webkit-box-shadow: 0 6px 0 #C62828;
+      box-shadow: 0 6px 0 #C62828;
+      background: #FFEBEE;
+    }
     .lvl-slide {
       background: #FF8A4C;
       -webkit-box-shadow: 0 8px 0 #D4692C, 0 12px 16px rgba(0,0,0,0.15);
@@ -2202,6 +2291,9 @@
       #puzzles-grid .level-label, #memory-grid .level-label, #memorylevel-grid .level-label { font-size: 22px; }
       #puzzles-grid .level-icon { height: 40px; }
       #memory-grid .level-btn { min-height: 100px; }
+      .weg-slot { height: 118px; margin: 6px; border-radius: 16px; }
+      .pic-answer { width: 96px; height: 96px; margin: 0 8px; }
+      #weg-answers { min-height: 104px; padding-bottom: 6px; }
       .letter-set-btn { min-height: 40px; font-size: 18px; }
     }
     @media screen and (max-height: 700px) {
@@ -2948,6 +3040,32 @@
       <div id="memory-board-wrap">
         <div id="memory-board"></div>
       </div>
+    </div>
+
+    <div id="screen-weg" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-weg-back" data-act="back" title="Terug">
+            <span id="weg-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-weg-home" data-act="home" title="Start" style="margin-left:8px;">
+            <span id="weg-home-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-sound-weg" data-act="sound" title="Geluid" style="margin-left:8px;">
+            <span id="sound-icon-weg"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="weg-star-icon"></span>
+            <span class="star-count" id="weg-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt" id="weg-prompt">Kijk goed</div>
+      <div class="progress-row"></div>
+      <div id="weg-board"></div>
+      <div id="weg-answers"></div>
     </div>
   </div>
 
@@ -3877,6 +3995,10 @@
     }
     else if (state.level === 'doolhof') {
       startDoolhof(false);
+      return;
+    }
+    else if (state.level === 'weg') {
+      startWeg(false);
       return;
     }
     else {
@@ -4838,7 +4960,7 @@
   /* ---------- UI ---------- */
   function updateStarsUI() {
     var i, row, html, filled, el, rows;
-    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars'], String(state.stars));
+    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars'], String(state.stars));
     filled = state.towardsReward;
     if (filled > 5) filled = 5;
     html = '';
@@ -4882,6 +5004,7 @@
     elSet('sound-icon-memory', html);
     elSet('sound-icon-memorylevel', html);
     elSet('sound-icon-memoryplay', html);
+    elSet('sound-icon-weg', html);
   }
 
   function elSet(id, html) {
@@ -4892,7 +5015,7 @@
   function showScreen(name) {
     var ids, i, el;
     state.screen = name;
-    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay'];
+    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg'];
     for (i = 0; i < ids.length; i++) {
       el = $('screen-' + ids[i]);
       if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
@@ -5188,6 +5311,131 @@
     scheduleAfterPraise(function () {
       showReward();
     });
+  }
+
+  var geheugenTimer = null;
+
+  function clearGeheugenTimer() {
+    if (geheugenTimer) {
+      window.clearTimeout(geheugenTimer);
+      geheugenTimer = null;
+    }
+  }
+
+  function startWeg(fresh) {
+    var pool, keys, sets, tries, shown, missing, rest, distractors, key, i, pickSet;
+    state.level = 'weg';
+    state.locked = true;
+    if (fresh) {
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+      state.lastWasPersonal = false;
+      resetVoiceCycle();
+    }
+    clearGeheugenTimer();
+    pool = memoryPicIds();
+    keys = [];
+    sets = [];
+    for (tries = 0; tries < 40; tries++) {
+      shuffle(pool);
+      shown = pool.slice(0, 4);
+      missing = pick(shown);
+      rest = pool.slice(4);
+      shuffle(rest);
+      distractors = rest.slice(0, 2);
+      key = shown.slice(0).sort().join(',') + '>' + missing;
+      if (!contains(keys, key)) {
+        keys.push(key);
+        sets.push({ shown: shown, missing: missing, distractors: distractors, key: key });
+      }
+    }
+    key = pickAvoiding(keys) || keys[0];
+    pickSet = sets[0];
+    for (i = 0; i < keys.length; i++) {
+      if (keys[i] === key) {
+        pickSet = sets[i];
+        break;
+      }
+    }
+    rememberRoundKey(key);
+    state.weg = {
+      shown: pickSet.shown,
+      missing: pickSet.missing,
+      distractors: pickSet.distractors,
+      key: key,
+      phase: 'look'
+    };
+    hideReward();
+    showScreen('weg');
+    updateStarsUI();
+    renderWeg(true);
+    elSet('weg-prompt', 'Kijk goed');
+    beginQuestionVoice();
+    speak('kijk-goed');
+    geheugenTimer = window.setTimeout(function () {
+      geheugenTimer = null;
+      if (state.level !== 'weg' || !state.weg) return;
+      state.weg.phase = 'ask';
+      state.locked = false;
+      renderWeg(false);
+      elSet('weg-prompt', 'Wat is er weg?');
+      speak('weg');
+    }, 3200);
+  }
+
+  function renderWeg(allVisible) {
+    var board, answers, html, i, pic, choices, cls;
+    board = $('weg-board');
+    answers = $('weg-answers');
+    if (!board || !state.weg) return;
+    board.setAttribute('data-key', state.weg.key);
+    html = '';
+    for (i = 0; i < state.weg.shown.length; i++) {
+      pic = state.weg.shown[i];
+      if (!allVisible && pic === state.weg.missing) {
+        html += '<div class="weg-slot empty"></div>';
+      } else {
+        html += '<div class="weg-slot">' + memoryPicHtml(pic) + '</div>';
+      }
+    }
+    board.innerHTML = html;
+    if (!answers) return;
+    if (allVisible) {
+      answers.innerHTML = '';
+      return;
+    }
+    choices = [state.weg.missing].concat(state.weg.distractors);
+    shuffle(choices);
+    html = '';
+    for (i = 0; i < choices.length; i++) {
+      pic = choices[i];
+      cls = 'tap pic-answer';
+      html += '<button type="button" class="' + cls + '" data-act="weg-answer" data-pic="' + pic + '"' +
+        (pic === state.weg.missing ? ' data-ok="1"' : '') + '>' +
+        memoryPicHtml(pic) + '</button>';
+    }
+    answers.innerHTML = html;
+  }
+
+  function onWegAnswer(el) {
+    var pic;
+    if (state.locked || !state.weg || state.weg.phase !== 'ask') return;
+    pic = el.getAttribute('data-pic');
+    if (pic === state.weg.missing) {
+      state.locked = true;
+      el.className = 'tap pic-answer is-correct';
+      awardCorrect();
+    } else {
+      playWrong();
+      el.className = 'tap pic-answer is-wrong shake';
+      showToast('Probeer nog eens', false);
+      speak('retry');
+      window.setTimeout(function () {
+        if (el && el.className.indexOf('is-correct') === -1) {
+          el.className = 'tap pic-answer is-wrong';
+        }
+      }, 450);
+    }
   }
 
   /* ---------- Puzzels: schuifpuzzel ---------- */
@@ -7249,6 +7497,7 @@
     if (typeof doolhofDrag !== 'undefined') doolhofDrag.on = false;
     if (typeof traceState !== 'undefined') traceState.drawing = false;
     clearMemoryTimer();
+    clearGeheugenTimer();
     hideReward();
     hideToast();
     hideBurst();
@@ -7286,7 +7535,7 @@
       showPuzzlesMenu();
     } else if (s === 'memoryplay') {
       showMemoryLevel();
-    } else if (s === 'memorylevel') {
+    } else if (s === 'memorylevel' || s === 'weg' || s === 'simon' || s === 'rij' || s === 'cups' || s === 'veranderd') {
       showMemoryMenu();
     } else {
       goToStart();
@@ -7446,13 +7695,20 @@
       return;
     }
     if (act === 'memory-game') {
-      if (el.getAttribute('data-game') === 'memory') {
+      var g = el.getAttribute('data-game');
+      if (g === 'memory') {
         showMemoryLevel();
         beginQuestionVoice();
         speak('memory-kies');
+      } else if (g === 'weg') {
+        startWeg(true);
       } else {
         showToast('Die komt zo', false);
       }
+      return;
+    }
+    if (act === 'weg-answer') {
+      onWegAnswer(el);
       return;
     }
     if (act === 'memory-size') {
@@ -7690,6 +7946,7 @@
     elSet('memory-home-icon', homeIconHtml());
     elSet('memorylevel-home-icon', homeIconHtml());
     elSet('memoryplay-home-icon', homeIconHtml());
+    elSet('weg-home-icon', homeIconHtml());
     elSet('play-back-icon', backIconHtml());
     elSet('picker-back-icon', backIconHtml());
     elSet('trace-back-icon', backIconHtml());
@@ -7705,6 +7962,7 @@
     elSet('doolhof-back-icon', backIconHtml());
     elSet('memorylevel-back-icon', backIconHtml());
     elSet('memoryplay-back-icon', backIconHtml());
+    elSet('weg-back-icon', backIconHtml());
     elSet('letters-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('trace-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('names-star-icon', starSvg('#FFD54F', '#F9A825'));
@@ -7721,6 +7979,7 @@
     elSet('memory-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('memorylevel-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('memoryplay-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('weg-star-icon', starSvg('#FFD54F', '#F9A825'));
     if ($('icon-vormen')) {
       $('icon-vormen').innerHTML =
         vormSvg('circle', '#2FB3F0', '#1A7FB3', 0) +
