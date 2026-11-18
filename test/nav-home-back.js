@@ -13,7 +13,7 @@ const wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms)
 const SCREENS = [
   'start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay',
   'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken',
-  'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken'
+  'tangram', 'waar', 'doolhof', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers'
 ];
 
 async function visibleScreen(page) {
@@ -296,6 +296,7 @@ async function waitSpiegelNext(page) {
       { mode: 'zoeken', screen: 'play', back: '#btn-play-back', home: '#btn-home' },
       { mode: 'begint', screen: 'play', back: '#btn-play-back', home: '#btn-home' },
       { mode: 'trace', screen: 'trace', back: '#btn-trace-back', home: '#btn-trace-home' },
+      { mode: 'klinkers', screen: 'klinkers', back: '#btn-klinkers-back', home: '#btn-klinkers-home' },
       { mode: 'naam', screen: 'names', back: '#btn-names-back', home: '#btn-names-home' }
     ];
     for (const m of letterModes) {

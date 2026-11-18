@@ -277,6 +277,87 @@ function intersection(a, b) {
     assertUnique(b1, 'begint r1');
     ok('Begint met ronde 1 uniek: ' + b1.join(', '));
 
+    async function waitKlinkReady(page, ms) {
+      var deadline = Date.now() + (ms || 8000);
+      while (Date.now() < deadline) {
+        const ready = await page.evaluate(() => {
+          var b = document.querySelector('#klink-tiles [data-ok="1"]');
+          var word = document.getElementById('klink-word');
+          return !!(b && word && word.getAttribute('data-word') && b.getAttribute('data-used') !== '1');
+        });
+        if (ready) return true;
+        await wait(120);
+      }
+      return false;
+    }
+    async function playKlinkRound(page, n) {
+      var keys = [], i, key;
+      for (i = 0; i < n; i++) {
+        if (!(await waitKlinkReady(page, 10000))) throw new Error('klinkers not ready item ' + (i + 1));
+        key = await page.evaluate(() => (document.getElementById('klink-word') || {}).getAttribute('data-word') || '');
+        keys.push(key);
+        await page.evaluate(() => {
+          var b = document.querySelector('#klink-tiles [data-ok="1"]');
+          if (b) b.click();
+        });
+        if (i < n - 1) {
+          var deadline = Date.now() + 10000;
+          var moved = false;
+          while (Date.now() < deadline) {
+            moved = await page.evaluate((prev) => {
+              var word = document.getElementById('klink-word');
+              var k = word ? word.getAttribute('data-word') : '';
+              var b = document.querySelector('#klink-tiles [data-ok="1"]');
+              return !!(k && k !== prev && b && b.getAttribute('data-used') !== '1');
+            }, key);
+            if (moved) break;
+            await wait(150);
+          }
+          if (!moved) throw new Error('klinkers next item did not appear after ' + key);
+        }
+      }
+      var rewDeadline = Date.now() + 12000;
+      var rewarded = false;
+      while (Date.now() < rewDeadline) {
+        rewarded = await page.evaluate(() => {
+          var rew = document.getElementById('overlay-reward');
+          return !!(rew && rew.className.indexOf('is-hidden') === -1);
+        });
+        if (rewarded) break;
+        await wait(150);
+      }
+      if (!rewarded) throw new Error('klinkers expected reward after 5, keys=' + keys.join(','));
+      return keys;
+    }
+
+    await fresh(page);
+    await page.click('#btn-goto-letters');
+    await wait(280);
+    await page.click('[data-mode="klinkers"]');
+    await wait(280);
+    var k1 = await playKlinkRound(page, 5);
+    assertUnique(k1, 'klinkers r1');
+    ok('Klinkers ronde 1 uniek: ' + k1.join(', '));
+
+    var kMenu = Date.now() + 15000;
+    var onLetters = false;
+    while (Date.now() < kMenu) {
+      onLetters = await page.evaluate(() => {
+        var el = document.getElementById('screen-letters');
+        return !!(el && el.className.indexOf('is-hidden') === -1);
+      });
+      if (onLetters) break;
+      await wait(150);
+    }
+    if (!onLetters) throw new Error('klinkers did not return to Letters menu after reward');
+    await page.click('[data-mode="klinkers"]');
+    await wait(280);
+    var k2 = await playKlinkRound(page, 5);
+    assertUnique(k2, 'klinkers r2');
+    var kOverlap = intersection(k1, k2);
+    if (kOverlap.length) throw new Error('klinkers r2 herhaalt r1: ' + kOverlap.join(','));
+    ok('Klinkers ronde 2 uniek en niet uit ronde 1: ' + k2.join(', '));
+
     async function waitWegReady(page, ms) {
       var deadline = Date.now() + (ms || 6000);
       while (Date.now() < deadline) {
