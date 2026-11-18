@@ -1662,10 +1662,10 @@
       -webkit-flex: 1 1 auto;
       flex: 1 1 auto;
       width: 100%;
-      max-width: 500px;
+      max-width: 460px;
       margin: 0 auto;
       min-height: 0;
-      padding: 18px;
+      padding: 4px;
     }
     .simon-pad {
       -webkit-flex: 0 0 42%;
@@ -1674,56 +1674,39 @@
       height: 150px;
       margin: 8px;
       padding: 0;
-      border: 6px solid transparent;
+      border: 0;
       border-radius: 28px;
-      position: relative;
-      z-index: 1;
       -webkit-appearance: none;
       appearance: none;
-      -webkit-transition: background 0.12s ease, opacity 0.12s ease, -webkit-transform 0.12s ease, -webkit-box-shadow 0.12s ease, border-color 0.12s ease;
-      transition: background 0.12s ease, opacity 0.12s ease, transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
     }
     .simon-pad.pressed, .simon-pad:active {
       -webkit-transform: translateY(6px);
       transform: translateY(6px);
-    }
-    #simon-board.is-lit .simon-pad {
-      opacity: 0.38;
-    }
-    #simon-board.is-lit .simon-pad.lit,
-    .simon-pad.lit {
-      opacity: 1;
-      z-index: 3;
-      border-color: #FFFFFF;
-      -webkit-transform: scale(1.1);
-      transform: scale(1.1);
-      -webkit-box-shadow: 0 0 0 10px rgba(255,255,255,0.95), 0 0 28px 8px rgba(255,255,255,0.9), 0 8px 16px rgba(0,0,0,0.12);
-      box-shadow: 0 0 0 10px rgba(255,255,255,0.95), 0 0 28px 8px rgba(255,255,255,0.9), 0 8px 16px rgba(0,0,0,0.12);
     }
     .pad-red {
       background: #E53935;
       -webkit-box-shadow: 0 8px 0 #B71C1C, 0 10px 14px rgba(0,0,0,0.12);
       box-shadow: 0 8px 0 #B71C1C, 0 10px 14px rgba(0,0,0,0.12);
     }
-    .pad-red.lit { background: #FFF5F3; }
+    .pad-red.lit, .pad-red.pressed, .pad-red:active { background: #FF8A80; }
     .pad-yellow {
       background: #F9A825;
       -webkit-box-shadow: 0 8px 0 #F57F17, 0 10px 14px rgba(0,0,0,0.12);
       box-shadow: 0 8px 0 #F57F17, 0 10px 14px rgba(0,0,0,0.12);
     }
-    .pad-yellow.lit { background: #FFFBE6; }
+    .pad-yellow.lit, .pad-yellow.pressed, .pad-yellow:active { background: #FFE082; }
     .pad-green {
       background: #43A047;
       -webkit-box-shadow: 0 8px 0 #2E7D32, 0 10px 14px rgba(0,0,0,0.12);
       box-shadow: 0 8px 0 #2E7D32, 0 10px 14px rgba(0,0,0,0.12);
     }
-    .pad-green.lit { background: #F1FFF1; }
+    .pad-green.lit, .pad-green.pressed, .pad-green:active { background: #A5D6A7; }
     .pad-blue {
       background: #1E88E5;
       -webkit-box-shadow: 0 8px 0 #1565C0, 0 10px 14px rgba(0,0,0,0.12);
       box-shadow: 0 8px 0 #1565C0, 0 10px 14px rgba(0,0,0,0.12);
     }
-    .pad-blue.lit { background: #F0F8FF; }
+    .pad-blue.lit, .pad-blue.pressed, .pad-blue:active { background: #90CAF9; }
     .lvl-slide {
       background: #FF8A4C;
       -webkit-box-shadow: 0 8px 0 #D4692C, 0 12px 16px rgba(0,0,0,0.15);
@@ -5570,27 +5553,12 @@
     } catch (e) {}
   }
 
-  function setSimonBoardLit(on) {
-    var board, parts, i, bit, out;
-    board = $('simon-board');
-    if (!board) return;
-    parts = String(board.className || '').split(' ');
-    out = [];
-    for (i = 0; i < parts.length; i++) {
-      bit = parts[i];
-      if (bit && bit !== 'is-lit') out.push(bit);
-    }
-    if (on) out.push('is-lit');
-    board.className = out.join(' ');
-  }
-
   function clearSimonFlash() {
     var board, pads, i;
     if (simonFlashTimer) {
       window.clearTimeout(simonFlashTimer);
       simonFlashTimer = null;
     }
-    setSimonBoardLit(false);
     board = $('simon-board');
     if (!board) return;
     pads = board.getElementsByTagName('button');
@@ -5621,13 +5589,11 @@
       window.clearTimeout(simonFlashTimer);
       simonFlashTimer = null;
     }
-    setSimonBoardLit(true);
     pads[i].className = simonPadClass(i, true);
     playSimonTone(i);
     simonFlashTimer = window.setTimeout(function () {
       simonFlashTimer = null;
       if (pads[i]) pads[i].className = simonPadClass(i, false);
-      setSimonBoardLit(false);
     }, dur || 600);
   }
 
@@ -5683,9 +5649,8 @@
     }
     clearGeheugenTimer();
     clearSimonFlash();
-    len = 2;
-    if ((state.towardsReward || 0) >= 2) len = 3;
-    if ((state.towardsReward || 0) >= 4) len = 4;
+    len = 2 + (state.towardsReward || 0);
+    if (len > 6) len = 6;
     keys = [];
     sets = [];
     for (tries = 0; tries < 40; tries++) {
