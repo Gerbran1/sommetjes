@@ -2859,6 +2859,21 @@
       color: #fff;
     }
     .teken-clear-btn { background: #FFCDD2; }
+    .teken-undo-btn {
+      min-width: 56px;
+      background: #90CAF9;
+    }
+    .teken-undo-btn svg {
+      width: 30px;
+      height: 30px;
+      display: block;
+      margin: 0 auto;
+    }
+    .teken-undo-btn.is-off {
+      opacity: 0.38;
+      -webkit-box-shadow: 0 2px 0 rgba(0,0,0,0.10);
+      box-shadow: 0 2px 0 rgba(0,0,0,0.10);
+    }
     .tw { display: block; background: #1A4A6A; border-radius: 50%; margin: 0 auto; }
     .teken-tool.on .tw { background: #fff; }
     .tw1 { width: 8px; height: 8px; }
@@ -2908,6 +2923,8 @@
       #teken-title { font-size: 24px; }
       .teken-swatch { width: 34px; height: 34px; margin: 3px; }
       .teken-tool { height: 38px; font-size: 16px; min-width: 48px; }
+      .teken-undo-btn { min-width: 52px; }
+      .teken-undo-btn svg { width: 26px; height: 26px; }
     }
     @media screen and (max-width: 800px) {
       .kleur-pick { -webkit-flex: 0 0 30%; flex: 0 0 30%; min-height: 130px; }
@@ -8314,8 +8331,11 @@
     paper: null,
     outline: null,
     rasterImg: null,
-    rasterSrc: null
+    rasterSrc: null,
+    undo: [],
+    undoPushed: false
   };
+  var TEKEN_UNDO_MAX = 20;
 
   function tekenThickPx() {
     var t = tekenState.thick || 2;
@@ -8521,6 +8541,7 @@
     if (tekenState.mode === 'kleur' && tekenState.page) {
       paintKleurOutline(w, h, tekenState.page);
     }
+    resetTekenUndo();
   }
 
   function startTekenVrij() {
@@ -8582,6 +8603,7 @@
     box = $('teken-tools');
     if (box) {
       html = '';
+      html += '<button type="button" class="tap teken-tool teken-undo-btn' + (tekenState.undo && tekenState.undo.length ? '' : ' is-off') + '" id="teken-undo" data-act="teken-undo" title="Terug">' + tekenUndoIcon() + '</button>';
       html += '<button type="button" class="tap teken-tool' + (tekenState.thick === 1 ? ' on' : '') + '" data-act="teken-thick" data-thick="1"><span class="tw tw1"></span></button>';
       html += '<button type="button" class="tap teken-tool' + (tekenState.thick === 2 ? ' on' : '') + '" data-act="teken-thick" data-thick="2"><span class="tw tw2"></span></button>';
       html += '<button type="button" class="tap teken-tool' + (tekenState.thick === 3 ? ' on' : '') + '" data-act="teken-thick" data-thick="3"><span class="tw tw3"></span></button>';
@@ -8694,6 +8716,7 @@
     if ((0.299 * sr + 0.587 * sg + 0.114 * sb) < 140 && sa > 40) return;
     fill = hexRgb(tekenState.color);
     if (sr === fill.r && sg === fill.g && sb === fill.b && sa >= 250) return;
+    pushTekenUndo();
     tol = 48;
     seen = new Uint8Array(w * h);
     stack = [x, y];
@@ -8732,9 +8755,14 @@
     tekenState.moved = false;
     tekenState.lastX = p.x;
     tekenState.lastY = p.y;
+    tekenState.undoPushed = false;
     if (tekenState.tool === 'spray') {
+      pushTekenUndo();
+      tekenState.undoPushed = true;
       strokeTeken(p.x, p.y, p.x, p.y);
     } else if (tekenState.mode === 'vrij' || tekenState.tool === 'eraser') {
+      pushTekenUndo();
+      tekenState.undoPushed = true;
       strokeTeken(p.x, p.y, p.x, p.y);
     }
     return true;
@@ -8749,6 +8777,10 @@
     dy = p.y - tekenState.lastY;
     if (dx * dx + dy * dy > 16) tekenState.moved = true;
     if (tekenState.mode === 'kleur' && tekenState.tool === 'pen' && !tekenState.moved) return true;
+    if (!tekenState.undoPushed) {
+      pushTekenUndo();
+      tekenState.undoPushed = true;
+    }
     strokeTeken(tekenState.lastX, tekenState.lastY, p.x, p.y);
     tekenState.lastX = p.x;
     tekenState.lastY = p.y;
@@ -8788,6 +8820,57 @@
     tekenState.paper.globalCompositeOperation = 'source-over';
     tekenState.paper.fillRect(0, 0, w, h);
     hideTekenConfirm();
+    resetTekenUndo();
+  }
+
+  function tekenUndoIcon() {
+    return '<svg viewBox="0 0 48 48" width="30" height="30" aria-hidden="true">' +
+      '<path d="M18 20 H31 a10 10 0 1 1 0 20 H24" fill="none" stroke="#1A4A6A" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<path d="M18 20 L26 12 M18 20 L26 28" fill="none" stroke="#1A4A6A" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '</svg>';
+  }
+
+  function resetTekenUndo() {
+    tekenState.undo = [];
+    tekenState.undoPushed = false;
+    updateTekenUndoBtn();
+  }
+
+  function pushTekenUndo() {
+    var paper, img;
+    paper = $('teken-paper');
+    if (!paper || !tekenState.paper) return;
+    try {
+      img = tekenState.paper.getImageData(0, 0, paper.width, paper.height);
+    } catch (err) {
+      return;
+    }
+    if (!tekenState.undo) tekenState.undo = [];
+    tekenState.undo.push(img);
+    while (tekenState.undo.length > TEKEN_UNDO_MAX) tekenState.undo.shift();
+    updateTekenUndoBtn();
+  }
+
+  function undoTeken() {
+    var paper, img;
+    if (!tekenState.undo || !tekenState.undo.length) return;
+    paper = $('teken-paper');
+    if (!paper || !tekenState.paper) return;
+    img = tekenState.undo.pop();
+    try {
+      tekenState.paper.putImageData(img, 0, 0);
+    } catch (err) {}
+    updateTekenUndoBtn();
+  }
+
+  function updateTekenUndoBtn() {
+    var btn, on;
+    btn = $('teken-undo');
+    if (!btn) return;
+    on = !!(tekenState.undo && tekenState.undo.length);
+    btn.className = 'tap teken-tool teken-undo-btn' + (on ? '' : ' is-off');
+    if (on) btn.removeAttribute('aria-disabled');
+    else btn.setAttribute('aria-disabled', 'true');
   }
 
   function stopTekenDrag() {
@@ -12268,6 +12351,10 @@
     }
     if (act === 'teken-clear-no') {
       hideTekenConfirm();
+      return;
+    }
+    if (act === 'teken-undo') {
+      undoTeken();
       return;
     }
     if (act === 'memory-game') {

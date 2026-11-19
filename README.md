@@ -30,8 +30,8 @@ Op het startscherm kies je **Getallen**, **Letters**, **Puzzels**, **Geheugen** 
 15. **Zoek de verschillen** — twee vrolijke plaatjes naast elkaar (onder elkaar in portret). Zoek de vijf verschillen; tik je er één aan, dan komt er een cirkel omheen op beide plaatjes. Een fout tikje schudt even, zonder straf. Een ronde is drie plaatjes, daarna ga je terug naar Puzzels.
 
 **Tekenen**
-15. **Vrij tekenen** — teken zelf met dikke kleuren, drie lijndiktes, een spuitbus en een gum. Wissen vraagt eerst even of het echt mag. Geen sterren, je tekent zo lang je wilt.
-16. **Kleurplaten** — kies een plaat (monstertruck, dino, raket, draak, eenhoorn, brandweerauto, piratenschip, boerderijdieren, kasteel, vliegtuig, prinses of onderwater) en tik in de vlakken om ze te kleuren. Je kunt ook zelf bijtekenen.
+15. **Vrij tekenen** — teken zelf met dikke kleuren, drie lijndiktes, een spuitbus en een gum. Met het pijltje terug maak je de laatste streek ongedaan. Wissen vraagt eerst even of het echt mag. Geen sterren, je tekent zo lang je wilt.
+16. **Kleurplaten** — kies een plaat (monstertruck, dino, raket, draak, eenhoorn, brandweerauto, piratenschip, boerderijdieren, kasteel, vliegtuig, prinses of onderwater) en tik in de vlakken om ze te kleuren. Je kunt ook zelf bijtekenen. Het pijltje terug maakt de laatste vulkleur of streek ongedaan.
 
 **Geheugen**
 15. **Memory** — draai de kaartjes om en zoek twee dezelfde. Je kiest 6, 12 of 16 kaartjes (3×2, 4×3 of 4×4). Een heel bord is één ster; daarna ga je terug naar het Geheugen-menu.
