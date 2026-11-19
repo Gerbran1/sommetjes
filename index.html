@@ -583,6 +583,15 @@
       -webkit-box-shadow: inset 0 0 0 4px #2E7D32;
       box-shadow: inset 0 0 0 4px #2E7D32;
     }
+    .robot-cell.is-wrong {
+      background: #FFCDD2;
+      -webkit-box-shadow: inset 0 0 0 4px #C62828;
+      box-shadow: inset 0 0 0 4px #C62828;
+    }
+    .robot-cell.shake {
+      -webkit-animation: shake 0.45s ease-in-out;
+      animation: shake 0.45s ease-in-out;
+    }
     #robot-wrap[data-game="volg"] #robot-controls { display: none; }
     #robot-wrap[data-game="fout"] .robot-cmd,
     #robot-wrap[data-game="fout"] .robot-wis,
@@ -12679,7 +12688,10 @@
     pickC: -1,
     showEnd: false,
     execCmds: [],
-    stepTile: []
+    stepTile: [],
+    volgMisses: 0,
+    volgReveal: false,
+    shakePick: false
   };
 
   function clearRobotTimer() {
@@ -13484,6 +13496,9 @@
     robotState.execCmds = [];
     robotState.stepTile = [];
     robotState.showEnd = false;
+    robotState.volgMisses = 0;
+    robotState.volgReveal = false;
+    robotState.shakePick = false;
     robotState.busy = false;
     robotState.r = level.sr;
     robotState.c = level.sc;
@@ -13524,6 +13539,8 @@
     wrap.setAttribute('data-pick', robotState.pickR + ',' + robotState.pickC);
     wrap.setAttribute('data-wrong', String(robotState.wrongI));
     wrap.setAttribute('data-slots', String(robotState.maxSlots || 0));
+    wrap.setAttribute('data-misses', String(robotState.volgMisses || 0));
+    wrap.setAttribute('data-reveal', robotState.volgReveal ? '1' : '0');
   }
 
   function renderRobot() {
@@ -13537,8 +13554,12 @@
       for (c = 0; c < n; c++) {
         cls = 'robot-cell';
         if (game === 'volg') cls += ' is-volg';
-        if (game === 'volg' && r === robotState.pickR && c === robotState.pickC) cls += ' is-pick';
+        if (game === 'volg' && r === robotState.pickR && c === robotState.pickC) {
+          if (r === robotState.gr && c === robotState.gc) cls += ' is-pick';
+          else cls += ' is-wrong';
+        }
         if (game === 'volg' && robotState.showEnd && r === robotState.gr && c === robotState.gc) cls += ' is-end';
+        if (game === 'volg' && robotState.shakePick && r === robotState.pickR && c === robotState.pickC) cls += ' shake';
         if (game === 'volg') {
           html += '<div class="tap ' + cls + '" data-r="' + r + '" data-c="' + c + '" data-act="volg-cell"></div>';
         } else {
@@ -13746,13 +13767,50 @@
   }
 
   function volgTap(r, c) {
+    var ok;
     if (state.locked || robotState.busy) return;
     if (robotState.game !== 'volg') return;
+    if (typeof r !== 'number' || typeof c !== 'number' || isNaN(r) || isNaN(c)) return;
     robotState.pickR = r;
     robotState.pickC = c;
     robotState.showEnd = false;
+    ok = (r === robotState.gr && c === robotState.gc);
+    if (ok) {
+      robotState.volgReveal = false;
+      renderRobot();
+      robotWriteData();
+      robotPlay();
+      return;
+    }
+    robotState.volgMisses = (robotState.volgMisses || 0) + 1;
+    if (robotState.volgMisses <= 1) {
+      volgFirstMiss();
+      return;
+    }
+    robotState.volgReveal = true;
     renderRobot();
+    robotWriteData();
     robotPlay();
+  }
+
+  function volgFirstMiss() {
+    robotState.volgReveal = false;
+    robotState.shakePick = true;
+    renderRobot();
+    robotWriteData();
+    playWrong();
+    showToast('Oeps!', false);
+    speak('robot-fout');
+    robotSetBusy(true);
+    clearRobotTimer();
+    robotTimer = window.setTimeout(function () {
+      robotState.shakePick = false;
+      robotState.pickR = -1;
+      robotState.pickC = -1;
+      robotSetBusy(false);
+      renderRobot();
+      robotWriteData();
+    }, 800);
   }
 
   function foutTap(i) {
@@ -13916,30 +13974,24 @@
 
   function volgFinish() {
     var ok;
-    robotState.showEnd = true;
-    renderRobot();
-    placeRobot(false);
     ok = robotState.pickR === robotState.gr && robotState.pickC === robotState.gc;
     if (ok) {
+      robotState.showEnd = true;
+      renderRobot();
+      placeRobot(false);
       robotWin();
       return;
     }
+    robotState.showEnd = true;
+    renderRobot();
+    placeRobot(false);
     playWrong();
-    showToast('Kijk nog eens!', false);
-    speak('volg-fout');
+    showToast('Oeps!', false);
+    speak('robot-fout');
     robotTimer = window.setTimeout(function () {
-      robotState.r = robotState.sr;
-      robotState.c = robotState.sc;
-      robotState.dir = robotState.sdir;
-      robotState.step = 0;
-      robotState.pickR = -1;
-      robotState.pickC = -1;
-      robotState.showEnd = false;
-      placeRobot(true);
       robotSetBusy(false);
-      renderRobot();
-      robotWriteData();
-    }, 1200);
+      startProgramPlay(false);
+    }, 1100);
   }
 
   function robotFail() {

@@ -32,7 +32,7 @@ Op het startscherm kies je **Getallen**, **Letters**, **Puzzels**, **Programmere
 **Programmeren**
 16. **De robot** — stuur de robot naar de ster met pijltjes omhoog, omlaag, naar links en naar rechts (zoals je ze op het bord ziet). Tik ze in de rij, haal er een weg door erop te tikken, en druk op afspelen. Je kiest makkelijk (4×4, vaak rechtuit), middel (5×5, een paar bochten en muurtjes) of moeilijk (6×6, zigzaggen tussen muren). Een ronde is vijf puzzels, daarna ga je terug naar Programmeren. Bots je of kom je niet op de ster, dan mag je het programma aanpassen.
 17. **Herhalen** — dezelfde robot, maar je hebt maar een paar plekken (3, 4 of 5). De weg is te lang voor losse pijltjes, dus je moet een herhaal-blokje 2× of 3× gebruiken. Tik eerst op 2× of 3× en daarna op het pijltje dat herhaald wordt.
-18. **Volg de code** — je ziet een rij pijltjes. Tik het vakje waar de robot uitkomt. Daarna loopt de robot de code na, zodat je het antwoord ziet.
+18. **Volg de code** — je ziet een rij pijltjes. Tik het vakje waar de robot uitkomt. Als het klopt, loopt de robot de code na ter bevestiging. Tik je voor het eerst mis, dan wordt het vakje even rood; het goede antwoord wordt niet getoond, en je mag het nog eens proberen. Tik je weer mis, dan loopt de robot de code voor en ga je door naar de volgende puzzel (die telt niet als goed).
 19. **Zoek de fout** — er zit precies één verkeerd pijltje in de code. Tik dat pijltje, tik er nog eens op tot de goede richting erin staat, en druk op afspelen.
 
 **Tekenen**
