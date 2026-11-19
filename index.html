@@ -524,13 +524,78 @@
       max-width: 980px;
       margin: 8px auto 0 auto;
     }
+
     #program-grid .level-btn {
-      -webkit-flex: 0 0 40%;
-      flex: 0 0 40%;
-      max-width: 360px;
-      min-height: 200px;
-      max-height: 280px;
+      -webkit-flex: 0 0 44%;
+      flex: 0 0 44%;
+      max-width: 420px;
+      min-height: 180px;
+      max-height: 240px;
     }
+    .lvl-program-herhaal { background: #7E57C2; -webkit-box-shadow: 0 10px 0 #5E35B1, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #5E35B1, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-program-herhaal.pressed, .lvl-program-herhaal:active { -webkit-box-shadow: 0 2px 0 #5E35B1, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #5E35B1, 0 4px 8px rgba(0,0,0,0.15); }
+    .lvl-program-volg { background: #42A5F5; -webkit-box-shadow: 0 10px 0 #1565C0, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #1565C0, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-program-volg.pressed, .lvl-program-volg:active { -webkit-box-shadow: 0 2px 0 #1565C0, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #1565C0, 0 4px 8px rgba(0,0,0,0.15); }
+    .lvl-program-fout { background: #FF7043; -webkit-box-shadow: 0 10px 0 #D84315, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #D84315, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-program-fout.pressed, .lvl-program-fout:active { -webkit-box-shadow: 0 2px 0 #D84315, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #D84315, 0 4px 8px rgba(0,0,0,0.15); }
+    .herhaal-rep {
+      width: 70px; height: 70px; margin: 5px; padding: 0; border: 0; border-radius: 18px;
+      background: #EDE7F6; color: #5E35B1; font-size: 26px; font-weight: 800;
+      -webkit-box-shadow: 0 5px 0 #5E35B1, 0 8px 10px rgba(0,0,0,0.12);
+      box-shadow: 0 5px 0 #5E35B1, 0 8px 10px rgba(0,0,0,0.12);
+    }
+    .herhaal-rep.pressed, .herhaal-rep:active {
+      -webkit-box-shadow: 0 2px 0 #5E35B1, 0 3px 6px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #5E35B1, 0 3px 6px rgba(0,0,0,0.15);
+    }
+    .robot-tile-rep {
+      width: 86px; height: 52px; background: #EDE7F6;
+      display: -webkit-flex; display: flex;
+      -webkit-align-items: center; align-items: center;
+      -webkit-justify-content: center; justify-content: center;
+      padding: 3px 4px;
+    }
+    .robot-tile-rep svg { width: 34px; height: 34px; }
+    .robot-rep-n { font-size: 20px; font-weight: 800; color: #5E35B1; margin-right: 2px; }
+    .robot-rep-empty {
+      width: 24px; height: 24px; border: 2px dashed #7E57C2; border-radius: 8px;
+      color: #7E57C2; font-size: 16px; font-weight: 800; line-height: 20px; text-align: center;
+    }
+    .robot-tile.is-pending { background: #F3E5F5; }
+    .robot-tile.is-sel {
+      background: #FFE0B2;
+      -webkit-box-shadow: 0 0 0 3px #EF6C00, 0 3px 0 rgba(0,0,0,0.12);
+      box-shadow: 0 0 0 3px #EF6C00, 0 3px 0 rgba(0,0,0,0.12);
+    }
+    .robot-slot {
+      width: 44px; height: 44px; margin: 3px;
+      border: 2px dashed rgba(26,74,106,0.28); border-radius: 12px;
+      -webkit-box-sizing: border-box; box-sizing: border-box;
+    }
+    .robot-cell.is-volg { cursor: pointer; }
+    .robot-cell.is-pick {
+      background: #FFE082;
+      -webkit-box-shadow: inset 0 0 0 4px #F9A825;
+      box-shadow: inset 0 0 0 4px #F9A825;
+    }
+    .robot-cell.is-end {
+      background: #C8E6C9;
+      -webkit-box-shadow: inset 0 0 0 4px #2E7D32;
+      box-shadow: inset 0 0 0 4px #2E7D32;
+    }
+    #robot-wrap[data-game="volg"] #robot-controls { display: none; }
+    #robot-wrap[data-game="fout"] .robot-cmd,
+    #robot-wrap[data-game="fout"] .robot-wis,
+    #robot-wrap[data-game="fout"] .herhaal-rep { display: none; }
+    #robot-wrap[data-game="robot"] .herhaal-rep { display: none; }
+    #robot-wrap[data-game="volg"] .herhaal-rep { display: none; }
+    @media screen and (max-height: 800px) {
+      .herhaal-rep { width: 58px; height: 58px; margin: 4px; border-radius: 16px; font-size: 22px; }
+      .robot-tile-rep { width: 76px; height: 44px; }
+      .robot-slot { width: 36px; height: 36px; margin: 2px; border-radius: 10px; }
+      .robot-rep-n { font-size: 14px; }
+    }
+
     #program-grid .level-icon,
     #program-grid .level-icon svg {
       width: 88px;
@@ -4585,6 +4650,18 @@
           <div class="level-icon" id="icon-program-robot"></div>
           <div class="level-label">De robot</div>
         </button>
+        <button type="button" class="tap level-btn lvl-program-herhaal" data-act="program-game" data-game="herhaal">
+          <div class="level-icon" id="icon-program-herhaal"></div>
+          <div class="level-label">Herhalen</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-program-volg" data-act="program-game" data-game="volg">
+          <div class="level-icon" id="icon-program-volg"></div>
+          <div class="level-label">Volg de code</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-program-fout" data-act="program-game" data-game="fout">
+          <div class="level-icon" id="icon-program-fout"></div>
+          <div class="level-label">Zoek de fout</div>
+        </button>
       </div>
     </div>
 
@@ -4605,7 +4682,7 @@
           </div>
         </div>
       </div>
-      <div class="prompt">De robot</div>
+      <div class="prompt" id="robotlevel-title">De robot</div>
       <div id="robotlevel-grid">
         <button type="button" class="tap level-btn lvl-count" data-act="robot-kind" data-kind="easy">
           <div class="level-label">Makkelijk</div>
@@ -4650,6 +4727,8 @@
           <button type="button" class="tap robot-cmd" data-act="robot-cmd" data-dir="1" title="Rechts"><svg viewBox="0 0 48 48" width="100%" height="100%" aria-hidden="true"><g transform="rotate(90 24 24)"><path d="M24 5 L42 26 H32 V43 H16 V26 H6 Z" fill="#00838F" stroke="#1A4A6A" stroke-width="2.4" stroke-linejoin="round"/></g></svg></button>
           <button type="button" class="tap robot-cmd" data-act="robot-cmd" data-dir="2" title="Omlaag"><svg viewBox="0 0 48 48" width="100%" height="100%" aria-hidden="true"><g transform="rotate(180 24 24)"><path d="M24 5 L42 26 H32 V43 H16 V26 H6 Z" fill="#00838F" stroke="#1A4A6A" stroke-width="2.4" stroke-linejoin="round"/></g></svg></button>
           <button type="button" class="tap robot-cmd" data-act="robot-cmd" data-dir="3" title="Links"><svg viewBox="0 0 48 48" width="100%" height="100%" aria-hidden="true"><g transform="rotate(270 24 24)"><path d="M24 5 L42 26 H32 V43 H16 V26 H6 Z" fill="#00838F" stroke="#1A4A6A" stroke-width="2.4" stroke-linejoin="round"/></g></svg></button>
+          <button type="button" class="tap herhaal-rep" data-act="herhaal-rep" data-n="2" title="Herhaal 2 keer">2×</button>
+          <button type="button" class="tap herhaal-rep" data-act="herhaal-rep" data-n="3" title="Herhaal 3 keer">3×</button>
           <button type="button" class="tap robot-wis" data-act="robot-clear" title="Wissen">Wis</button>
           <button type="button" class="tap robot-go" data-act="robot-play" title="Start"><svg viewBox="0 0 48 48" width="100%" height="100%" aria-hidden="true"><circle cx="24" cy="24" r="22" fill="#2E7D32"/><path d="M18 12 L38 24 L18 36 Z" fill="#FFFDF7"/></svg></button>
         </div>
@@ -5306,7 +5385,7 @@
     if (level === 'memory') return 'memory-' + String(state.memoryN || 0);
     if (level === 'lijn') return 'lijn-' + String(state.lijnMax || lijnState.max || 0);
     if (level === 'doolhof') return 'doolhof-' + String(state.doolhofN || 0);
-    if (level === 'robot') return 'robot-' + (state.robotKind || 'easy');
+    if (level === 'robot' || level === 'herhaal' || level === 'volg' || level === 'fout') return level + '-' + (state.robotKind || 'easy');
     if (level === 'geld') return 'geld-' + (state.geldGame || 'pot') + '-' + String(state.geldMax || 0);
     return level || 'game';
   }
@@ -6693,8 +6772,8 @@
       startVers(false);
       return;
     }
-    else if (state.level === 'robot') {
-      startRobot(false);
+    else if (state.level === 'robot' || state.level === 'herhaal' || state.level === 'volg' || state.level === 'fout') {
+      startProgramPlay(false);
       return;
     }
     else if (state.level === 'geld') {
@@ -12586,7 +12665,21 @@
     sol: [],
     cell: 0,
     ox: 0,
-    oy: 0
+    oy: 0,
+    game: 'robot',
+    tiles: [],
+    pendingRep: 0,
+    maxSlots: 3,
+    given: [],
+    wrongI: -1,
+    correctDir: -1,
+    selI: -1,
+    phase: '',
+    pickR: -1,
+    pickC: -1,
+    showEnd: false,
+    execCmds: [],
+    stepTile: []
   };
 
   function clearRobotTimer() {
@@ -12980,6 +13073,343 @@
       '</svg>';
   }
 
+
+  function herhaalMaxSlots(kind) {
+    if (kind === 'hard') return 5;
+    if (kind === 'mid') return 4;
+    return 3;
+  }
+
+  function herhaalCompress(cmds) {
+    var tiles, i, d, run, left;
+    tiles = [];
+    i = 0;
+    while (i < cmds.length) {
+      d = cmds[i];
+      run = 1;
+      while (i + run < cmds.length && cmds[i + run] === d) run += 1;
+      left = run;
+      while (left > 0) {
+        if (left >= 3) {
+          tiles.push({ typ: 'rep', n: 3, dir: d });
+          left -= 3;
+        } else if (left >= 2) {
+          tiles.push({ typ: 'rep', n: 2, dir: d });
+          left -= 2;
+        } else {
+          tiles.push({ typ: 'move', dir: d });
+          left -= 1;
+        }
+      }
+      i += run;
+    }
+    return tiles;
+  }
+
+  function herhaalExpand(tiles) {
+    var cmds, i, t, k;
+    cmds = [];
+    for (i = 0; i < tiles.length; i++) {
+      t = tiles[i];
+      if (t.typ === 'rep') {
+        for (k = 0; k < t.n; k++) cmds.push(t.dir);
+      } else {
+        cmds.push(t.dir);
+      }
+    }
+    return cmds;
+  }
+
+  function herhaalTryWalk(n, runs) {
+    var attempt, sr, sc, r, c, path, cmds, used, i, k, d, di, choices, ok, foundDir, good, rr, cc;
+    for (attempt = 0; attempt < 50; attempt++) {
+      sr = randInt(0, n - 1);
+      sc = randInt(0, n - 1);
+      r = sr;
+      c = sc;
+      path = [{ r: r, c: c }];
+      cmds = [];
+      used = {};
+      used[r + ',' + c] = 1;
+      ok = true;
+      for (i = 0; i < runs.length; i++) {
+        choices = shuffle([0, 1, 2, 3]);
+        foundDir = false;
+        for (di = 0; di < 4; di++) {
+          d = choices[di];
+          if (i > 0 && cmds.length && d === cmds[cmds.length - 1]) continue;
+          good = true;
+          rr = r;
+          cc = c;
+          for (k = 0; k < runs[i]; k++) {
+            rr += ROBOT_DR[d];
+            cc += ROBOT_DC[d];
+            if (rr < 0 || cc < 0 || rr >= n || cc >= n || used[rr + ',' + cc]) {
+              good = false;
+              break;
+            }
+          }
+          if (!good) continue;
+          for (k = 0; k < runs[i]; k++) {
+            r += ROBOT_DR[d];
+            c += ROBOT_DC[d];
+            path.push({ r: r, c: c });
+            used[r + ',' + c] = 1;
+            cmds.push(d);
+          }
+          foundDir = true;
+          break;
+        }
+        if (!foundDir) {
+          ok = false;
+          break;
+        }
+      }
+      if (ok && cmds.length) {
+        return { path: path, cmds: cmds, sr: sr, sc: sc, gr: r, gc: c, turns: robotCountTurns(cmds) };
+      }
+    }
+    return null;
+  }
+
+  function makeHerhaalLevel(kind) {
+    var n, maxSlots, patterns, extra, tries, runs, walk, walls, sol, tiles, level, fallback;
+    if (kind === 'mid') {
+      n = 5;
+      maxSlots = 4;
+      patterns = [[3, 3], [3, 2, 1], [2, 2, 2], [3, 2], [3, 3, 1], [2, 3, 2]];
+      extra = 6;
+    } else if (kind === 'hard') {
+      n = 6;
+      maxSlots = 5;
+      patterns = [[3, 3, 2], [3, 3, 3], [2, 3, 2, 2], [3, 2, 3], [3, 3, 2, 1], [2, 2, 3, 2]];
+      extra = 12;
+    } else {
+      kind = 'easy';
+      n = 4;
+      maxSlots = 3;
+      patterns = [[3, 2], [3, 1], [2, 2], [2, 3], [3, 2, 1]];
+      extra = 0;
+    }
+    for (tries = 0; tries < 100; tries++) {
+      runs = patterns[randInt(0, patterns.length - 1)];
+      walk = herhaalTryWalk(n, runs);
+      if (!walk) continue;
+      if (walk.cmds.length <= maxSlots) continue;
+      tiles = herhaalCompress(walk.cmds);
+      if (tiles.length > maxSlots || !tiles.length) continue;
+      walls = robotEmptyWalls(n);
+      if (kind !== 'easy') {
+        sol = robotForceShortest(n, walls, walk.path, walk.cmds);
+        if (!sol || sol.len !== walk.cmds.length) continue;
+        robotAddExtraWalls(n, walls, walk.path, extra);
+        sol = robotShortest(n, walls, walk.sr, walk.sc, walk.gr, walk.gc);
+      } else {
+        sol = robotShortest(n, walls, walk.sr, walk.sc, walk.gr, walk.gc);
+      }
+      if (!sol || sol.len <= maxSlots) continue;
+      tiles = herhaalCompress(sol.cmds);
+      if (tiles.length > maxSlots || tiles.length < 1) continue;
+      if (herhaalExpand(tiles).join(',') !== sol.cmds.join(',')) continue;
+      level = robotPackLevel(kind, n, walls, walk.sr, walk.sc, walk.gr, walk.gc, sol);
+      level.maxSlots = maxSlots;
+      level.tiles = tiles;
+      level.key = 'herhaal:' + level.key + ':' + maxSlots;
+      return level;
+    }
+    walls = robotEmptyWalls(4);
+    sol = robotShortest(4, walls, 0, 0, 1, 3);
+    tiles = herhaalCompress(sol.cmds);
+    level = robotPackLevel('easy', 4, walls, 0, 0, 1, 3, sol);
+    level.maxSlots = 3;
+    level.tiles = tiles;
+    level.key = 'herhaal:' + level.key + ':3';
+    return level;
+  }
+
+  function makeVolgLevel(kind) {
+    var n, minLen, maxLen, minTurns, extra, tries, walk, walls, sol, level, cmds;
+    if (kind === 'mid') {
+      n = 5; minLen = 4; maxLen = 5; minTurns = 1; extra = 5;
+    } else if (kind === 'hard') {
+      n = 6; minLen = 6; maxLen = 8; minTurns = 2; extra = 10;
+    } else {
+      kind = 'easy';
+      n = 4; minLen = 2; maxLen = 3; minTurns = 0; extra = 0;
+    }
+    for (tries = 0; tries < 80; tries++) {
+      walk = robotRandomPath(n, minLen, maxLen, minTurns);
+      if (!walk) continue;
+      if (kind === 'easy' && walk.turns > 1) continue;
+      walls = robotEmptyWalls(n);
+      if (kind !== 'easy') {
+        sol = robotForceShortest(n, walls, walk.path, walk.cmds);
+        if (!sol || sol.len < minLen || sol.len > maxLen) continue;
+        robotAddExtraWalls(n, walls, walk.path, extra);
+        sol = robotShortest(n, walls, walk.sr, walk.sc, walk.gr, walk.gc);
+        if (!sol || sol.len < minLen || sol.len > maxLen) continue;
+        cmds = sol.cmds.slice(0);
+      } else {
+        cmds = walk.cmds.slice(0);
+      }
+      if (cmds.length < minLen || cmds.length > maxLen) continue;
+      level = robotPackLevel(kind, n, walls, walk.sr, walk.sc, walk.gr, walk.gc, { cmds: cmds, turns: robotCountTurns(cmds) });
+      level.given = cmds;
+      level.key = 'volg:' + kind + ':' + n + ':' + walk.sr + ',' + walk.sc + ':' + cmds.join(',') + ':' + robotWallKey(walls, n);
+      return level;
+    }
+    walls = robotEmptyWalls(4);
+    cmds = [1, 1, 2];
+    level = robotPackLevel('easy', 4, walls, 0, 0, 1, 2, { cmds: cmds, turns: 1 });
+    level.given = cmds;
+    level.key = 'volg:easy:4:0,0:1,1,2:' + robotWallKey(walls, 4);
+    return level;
+  }
+
+  function robotCorridorWalls(n, path) {
+    var walls, r, c, want;
+    walls = robotEmptyWalls(n);
+    want = robotPathEdges(path);
+    for (r = 0; r < n; r++) {
+      for (c = 0; c < n; c++) {
+        if (c + 1 < n && !want[robotEdgeKey(r, c, r, c + 1)]) robotSetWall(walls, r, c, r, c + 1, 1);
+        if (r + 1 < n && !want[robotEdgeKey(r, c, r + 1, c)]) robotSetWall(walls, r, c, r + 1, c, 1);
+      }
+    }
+    return walls;
+  }
+
+  function foutListFixes(level, broken) {
+    var fixes, j, d, trial, res;
+    fixes = [];
+    for (j = 0; j < broken.length; j++) {
+      for (d = 0; d < 4; d++) {
+        if (d === broken[j]) continue;
+        trial = broken.slice(0);
+        trial[j] = d;
+        res = robotSimulate(level, trial);
+        if (res.ok) fixes.push({ i: j, dir: d });
+      }
+    }
+    return fixes;
+  }
+
+  function pathFromCmds(sr, sc, cmds) {
+    var path, r, c, i;
+    r = sr;
+    c = sc;
+    path = [{ r: r, c: c }];
+    for (i = 0; i < cmds.length; i++) {
+      r += ROBOT_DR[cmds[i]];
+      c += ROBOT_DC[cmds[i]];
+      path.push({ r: r, c: c });
+    }
+    return path;
+  }
+
+  function makeFoutLevel(kind) {
+    var n, minLen, maxLen, minTurns, extra, corridor, tries, walk, walls, sol, level;
+    var i, w, di, dirs, broken, fixes, packed, base;
+    if (kind === 'mid') {
+      n = 5; minLen = 5; maxLen = 6; minTurns = 1; extra = 6; corridor = false;
+    } else if (kind === 'hard') {
+      n = 6; minLen = 7; maxLen = 9; minTurns = 2; extra = 10; corridor = false;
+    } else {
+      kind = 'easy';
+      n = 4; minLen = 3; maxLen = 4; minTurns = 0; extra = 0; corridor = true;
+    }
+    for (tries = 0; tries < 120; tries++) {
+      if (kind === 'easy') walk = robotRandomPath(n, minLen, maxLen, minTurns);
+      else walk = robotRandomPath(n, minLen, maxLen, minTurns);
+      if (!walk) continue;
+      if (kind === 'easy' && walk.turns > 1) continue;
+      if (corridor) walls = robotCorridorWalls(n, walk.path);
+      else {
+        walls = robotEmptyWalls(n);
+        sol = robotForceShortest(n, walls, walk.path, walk.cmds);
+        if (!sol || sol.len < minLen || sol.len > maxLen) continue;
+        robotAddExtraWalls(n, walls, walk.path, extra);
+      }
+      sol = robotShortest(n, walls, walk.sr, walk.sc, walk.gr, walk.gc);
+      if (!sol || sol.len < minLen || sol.len > maxLen) continue;
+      if (corridor && sol.cmds.join(',') !== walk.cmds.join(',')) continue;
+      base = { n: n, walls: walls, sr: walk.sr, sc: walk.sc, gr: walk.gr, gc: walk.gc };
+      i = randInt(0, sol.cmds.length - 1);
+      dirs = shuffle([0, 1, 2, 3]);
+      for (di = 0; di < 4; di++) {
+        w = dirs[di];
+        if (w === sol.cmds[i]) continue;
+        broken = sol.cmds.slice(0);
+        broken[i] = w;
+        if (robotSimulate(base, broken).ok) continue;
+        fixes = foutListFixes(base, broken);
+        if (fixes.length === 1 && fixes[0].i === i && fixes[0].dir === sol.cmds[i]) {
+          packed = robotPackLevel(kind, n, walls, walk.sr, walk.sc, walk.gr, walk.gc, sol);
+          packed.given = broken;
+          packed.wrongI = i;
+          packed.correctDir = sol.cmds[i];
+          packed.key = 'fout:' + packed.key + ':' + broken.join(',') + ':' + i;
+          return packed;
+        }
+      }
+    }
+    walls = robotCorridorWalls(4, pathFromCmds(0, 0, [1, 1, 2]));
+    sol = robotShortest(4, walls, 0, 0, 1, 2);
+    broken = sol.cmds.slice(0);
+    i = broken.length - 1;
+    broken[i] = 0;
+    packed = robotPackLevel('easy', 4, walls, 0, 0, 1, 2, sol);
+    packed.given = broken;
+    packed.wrongI = i;
+    packed.correctDir = sol.cmds[i];
+    packed.key = 'fout:' + packed.key + ':' + broken.join(',') + ':' + i;
+    return packed;
+  }
+
+  function programTitle(game) {
+    if (game === 'herhaal') return 'Herhalen';
+    if (game === 'volg') return 'Volg de code';
+    if (game === 'fout') return 'Zoek de fout';
+    return 'De robot';
+  }
+
+  function programPrompt(game, phase) {
+    if (game === 'herhaal') return 'Help de robot met herhalen!';
+    if (game === 'volg') return 'Kijk naar de pijltjes. Tik waar de robot uitkomt.';
+    if (game === 'fout') {
+      if (phase === 'fix') return 'Zet het goede pijltje en druk op afspelen.';
+      return 'Er zit een foutje in. Tik het verkeerde pijltje.';
+    }
+    return 'Help de robot naar de ster!';
+  }
+
+  function programSpeakId(game) {
+    if (game === 'herhaal') return 'herhaal-kies';
+    if (game === 'volg') return 'volg-kies';
+    if (game === 'fout') return 'fout-kies';
+    return 'robot-kies';
+  }
+
+  function pickProgramLevel(game, kind) {
+    var level, key, tries, hist, id, make;
+    if (game === 'herhaal') make = function () { return makeHerhaalLevel(kind); };
+    else if (game === 'volg') make = function () { return makeVolgLevel(kind); };
+    else if (game === 'fout') make = function () { return makeFoutLevel(kind); };
+    else make = function () { return makeRobotLevel(kind); };
+    id = currentGameId();
+    hist = (state.recentByGame && state.recentByGame[id]) ? state.recentByGame[id] : [];
+    tries = 0;
+    level = make();
+    key = level.key;
+    while (tries < 24 && ((state.roundKeys && contains(state.roundKeys, key)) || contains(hist, key))) {
+      level = make();
+      key = level.key;
+      tries += 1;
+    }
+    rememberRoundKey(key);
+    return level;
+  }
+
   function showProgramMenu() {
     state.level = null;
     state.locked = false;
@@ -12989,24 +13419,37 @@
     updateStarsUI();
   }
 
-  function showRobotLevel() {
-    state.level = 'robot';
+  function showRobotLevel(game) {
+    if (game) state.programGame = game;
+    game = state.programGame || 'robot';
+    state.level = game;
     state.locked = false;
     state.question = null;
+    if ($('robotlevel-title')) $('robotlevel-title').textContent = programTitle(game);
     hideReward();
     showScreen('robotlevel');
     updateStarsUI();
   }
 
   function startRobot(kind, fresh) {
-    var level;
-    if (typeof kind === 'boolean') {
+    startProgramPlay(state.programGame || 'robot', kind, fresh);
+  }
+
+  function startProgramPlay(game, kind, fresh) {
+    var level, promptEl, wrap;
+    if (typeof game === 'boolean') {
+      fresh = game;
+      game = '';
+      kind = '';
+    } else if (typeof kind === 'boolean') {
       fresh = kind;
       kind = '';
     }
+    if (game) state.programGame = game;
+    game = state.programGame || 'robot';
     if (kind) state.robotKind = kind;
     kind = state.robotKind || 'easy';
-    state.level = 'robot';
+    state.level = game;
     state.locked = false;
     if (fresh) {
       state.sessionCorrect = 0;
@@ -13015,7 +13458,8 @@
       state.lastWasPersonal = false;
     }
     clearRobotTimer();
-    level = pickRobotLevel(kind);
+    level = pickProgramLevel(game, kind);
+    robotState.game = game;
     robotState.kind = kind;
     robotState.n = level.n;
     robotState.sr = level.sr;
@@ -13024,24 +13468,42 @@
     robotState.gr = level.gr;
     robotState.gc = level.gc;
     robotState.walls = level.walls;
-    robotState.sol = level.sol;
+    robotState.sol = level.sol || [];
     robotState.key = level.key;
     robotState.cmds = [];
+    robotState.tiles = [];
+    robotState.pendingRep = 0;
+    robotState.maxSlots = level.maxSlots || herhaalMaxSlots(kind);
+    robotState.given = (level.given && level.given.slice) ? level.given.slice(0) : [];
+    robotState.wrongI = (typeof level.wrongI === 'number') ? level.wrongI : -1;
+    robotState.correctDir = (typeof level.correctDir === 'number') ? level.correctDir : -1;
+    robotState.selI = -1;
+    robotState.phase = (game === 'fout') ? 'find' : '';
+    robotState.pickR = -1;
+    robotState.pickC = -1;
+    robotState.execCmds = [];
+    robotState.stepTile = [];
+    robotState.showEnd = false;
     robotState.busy = false;
     robotState.r = level.sr;
     robotState.c = level.sc;
     robotState.dir = level.sdir;
     robotState.step = 0;
+    if (game === 'fout' || game === 'volg') robotState.cmds = robotState.given.slice(0);
     hideReward();
     hideToast();
     showScreen('robot');
     updateStarsUI();
+    promptEl = $('robot-prompt');
+    if (promptEl) promptEl.textContent = programPrompt(game, robotState.phase);
+    wrap = $('robot-wrap');
+    if (wrap) wrap.setAttribute('data-game', game);
     renderRobot();
     window.setTimeout(function () {
       layoutRobot();
       placeRobot(false);
       beginQuestionVoice();
-      speak('robot-kies');
+      speak(programSpeakId(game));
     }, 40);
   }
 
@@ -13057,21 +13519,36 @@
     wrap.setAttribute('data-busy', robotState.busy ? '1' : '0');
     wrap.setAttribute('data-done', '0');
     wrap.setAttribute('data-kind', robotState.kind || '');
+    wrap.setAttribute('data-game', robotState.game || 'robot');
+    wrap.setAttribute('data-phase', robotState.phase || '');
+    wrap.setAttribute('data-pick', robotState.pickR + ',' + robotState.pickC);
+    wrap.setAttribute('data-wrong', String(robotState.wrongI));
+    wrap.setAttribute('data-slots', String(robotState.maxSlots || 0));
   }
 
   function renderRobot() {
-    var board, html, r, c, n, walls;
+    var board, html, r, c, n, cls, game;
     n = robotState.n;
-    walls = robotState.walls;
     board = $('robot-board');
     if (!board) return;
+    game = robotState.game || 'robot';
     html = '';
     for (r = 0; r < n; r++) {
       for (c = 0; c < n; c++) {
-        html += '<div class="robot-cell" data-r="' + r + '" data-c="' + c + '"></div>';
+        cls = 'robot-cell';
+        if (game === 'volg') cls += ' is-volg';
+        if (game === 'volg' && r === robotState.pickR && c === robotState.pickC) cls += ' is-pick';
+        if (game === 'volg' && robotState.showEnd && r === robotState.gr && c === robotState.gc) cls += ' is-end';
+        if (game === 'volg') {
+          html += '<div class="tap ' + cls + '" data-r="' + r + '" data-c="' + c + '" data-act="volg-cell"></div>';
+        } else {
+          html += '<div class="' + cls + '" data-r="' + r + '" data-c="' + c + '"></div>';
+        }
       }
     }
-    html += '<div class="robot-goal" id="robot-goal">' + robotStarSvg() + '</div>';
+    if (game !== 'volg') {
+      html += '<div class="robot-goal" id="robot-goal">' + robotStarSvg() + '</div>';
+    }
     html += '<div class="robot-sprite" id="robot-sprite">' + robotSpriteSvg() + '</div>';
     board.innerHTML = html;
     renderRobotSeq();
@@ -13169,11 +13646,55 @@
   }
 
   function renderRobotSeq() {
-    var box, html, i, cls;
+    var box, html, i, cls, game, tiles, t, max, used, onTile;
     box = $('robot-seq');
     if (!box) return;
+    game = robotState.game || 'robot';
     html = '';
-    if (!robotState.cmds.length) {
+    if (game === 'herhaal') {
+      tiles = robotState.tiles || [];
+      max = robotState.maxSlots || 3;
+      if (!tiles.length && !robotState.pendingRep) {
+        html = '<div class="robot-seq-empty">Tik een pijltje of 2× / 3×</div>';
+      }
+      for (i = 0; i < tiles.length; i++) {
+        t = tiles[i];
+        cls = 'tap robot-tile';
+        onTile = robotState.busy && robotState.stepTile && robotState.stepTile[robotState.step] === i;
+        if (onTile) cls += ' is-on';
+        if (t.typ === 'rep') {
+          cls += ' robot-tile-rep';
+          html += '<button type="button" class="' + cls + '" data-act="herhaal-del" data-i="' + i + '" title="Wissen">' +
+            '<span class="robot-rep-n">' + t.n + '×</span>' + robotArrowSvg(t.dir, '#5E35B1') + '</button>';
+        } else {
+          html += '<button type="button" class="' + cls + '" data-act="herhaal-del" data-i="' + i + '" title="Wissen">' +
+            robotArrowSvg(t.dir, '#26C6DA') + '</button>';
+        }
+      }
+      if (robotState.pendingRep) {
+        html += '<div class="robot-tile robot-tile-rep is-pending"><span class="robot-rep-n">' +
+          robotState.pendingRep + '×</span><span class="robot-rep-empty">?</span></div>';
+      }
+      used = tiles.length + (robotState.pendingRep ? 1 : 0);
+      if (tiles.length || robotState.pendingRep) {
+        for (i = used; i < max; i++) html += '<div class="robot-slot"></div>';
+      }
+    } else if (game === 'volg') {
+      for (i = 0; i < (robotState.given || []).length; i++) {
+        cls = 'robot-tile';
+        if (robotState.busy && i === robotState.step) cls += ' is-on';
+        html += '<div class="' + cls + '">' + robotArrowSvg(robotState.given[i], '#1565C0') + '</div>';
+      }
+    } else if (game === 'fout') {
+      for (i = 0; i < robotState.cmds.length; i++) {
+        cls = 'tap robot-tile';
+        if (robotState.busy && i === robotState.step) cls += ' is-on';
+        if (robotState.phase === 'fix' && i === robotState.selI) cls += ' is-sel';
+        html += '<button type="button" class="' + cls + '" data-act="fout-tile" data-i="' + i + '">' +
+          robotArrowSvg(robotState.cmds[i], (robotState.phase === 'fix' && i === robotState.selI) ? '#E65100' : '#26C6DA') +
+          '</button>';
+      }
+    } else if (!robotState.cmds.length) {
       html = '<div class="robot-seq-empty">Tik de pijltjes</div>';
     } else {
       for (i = 0; i < robotState.cmds.length; i++) {
@@ -13186,8 +13707,88 @@
     box.innerHTML = html;
   }
 
+  function herhaalSlotCount() {
+    return (robotState.tiles || []).length + (robotState.pendingRep ? 1 : 0);
+  }
+
+  function herhaalStartRep(n) {
+    if (state.locked || robotState.busy) return;
+    if (robotState.game !== 'herhaal') return;
+    if (robotState.pendingRep === n) {
+      robotState.pendingRep = 0;
+      renderRobotSeq();
+      return;
+    }
+    if (!robotState.pendingRep && herhaalSlotCount() >= (robotState.maxSlots || 3)) return;
+    robotState.pendingRep = n;
+    renderRobotSeq();
+  }
+
+  function herhaalAdd(dir) {
+    var max;
+    max = robotState.maxSlots || 3;
+    if (robotState.pendingRep) {
+      robotState.tiles.push({ typ: 'rep', n: robotState.pendingRep, dir: dir });
+      robotState.pendingRep = 0;
+      renderRobotSeq();
+      return;
+    }
+    if (herhaalSlotCount() >= max) return;
+    robotState.tiles.push({ typ: 'move', dir: dir });
+    renderRobotSeq();
+  }
+
+  function herhaalDel(i) {
+    if (state.locked || robotState.busy) return;
+    if (i < 0 || i >= (robotState.tiles || []).length) return;
+    robotState.tiles.splice(i, 1);
+    renderRobotSeq();
+  }
+
+  function volgTap(r, c) {
+    if (state.locked || robotState.busy) return;
+    if (robotState.game !== 'volg') return;
+    robotState.pickR = r;
+    robotState.pickC = c;
+    robotState.showEnd = false;
+    renderRobot();
+    robotPlay();
+  }
+
+  function foutTap(i) {
+    var el;
+    if (state.locked || robotState.busy) return;
+    if (robotState.game !== 'fout') return;
+    if (robotState.phase === 'find') {
+      if (i === robotState.wrongI) {
+        robotState.phase = 'fix';
+        robotState.selI = i;
+        el = $('robot-prompt');
+        if (el) el.textContent = programPrompt('fout', 'fix');
+        speak('fout-zet');
+        renderRobotSeq();
+        robotWriteData();
+      } else {
+        playWrong();
+        showToast('Dat pijltje klopt al!', false);
+        speak('fout-al');
+      }
+      return;
+    }
+    if (robotState.phase === 'fix' && i === robotState.selI) {
+      robotState.cmds[i] = (robotState.cmds[i] + 1) % 4;
+      renderRobotSeq();
+      robotWriteData();
+    }
+  }
+
   function robotAddCmd(dir) {
     if (state.locked || robotState.busy) return;
+    if (robotState.game === 'herhaal') {
+      herhaalAdd(dir);
+      return;
+    }
+    if (robotState.game === 'volg' || robotState.game === 'fout') return;
     if (robotState.cmds.length >= ROBOT_MAX_CMDS) return;
     robotState.cmds.push(dir);
     renderRobotSeq();
@@ -13202,6 +13803,13 @@
 
   function robotClearCmds() {
     if (state.locked || robotState.busy) return;
+    if (robotState.game === 'herhaal') {
+      robotState.tiles = [];
+      robotState.pendingRep = 0;
+      renderRobotSeq();
+      return;
+    }
+    if (robotState.game === 'volg' || robotState.game === 'fout') return;
     robotState.cmds = [];
     renderRobotSeq();
   }
@@ -13214,14 +13822,45 @@
     if (wrap) wrap.setAttribute('data-busy', on ? '1' : '0');
   }
 
+  function robotBuildExec() {
+    var tiles, i, t, k, cmds, map;
+    if (robotState.game === 'herhaal') {
+      tiles = robotState.tiles || [];
+      cmds = [];
+      map = [];
+      for (i = 0; i < tiles.length; i++) {
+        t = tiles[i];
+        if (t.typ === 'rep') {
+          for (k = 0; k < t.n; k++) {
+            cmds.push(t.dir);
+            map.push(i);
+          }
+        } else {
+          cmds.push(t.dir);
+          map.push(i);
+        }
+      }
+      robotState.execCmds = cmds;
+      robotState.stepTile = map;
+      return cmds;
+    }
+    robotState.execCmds = (robotState.cmds || []).slice(0);
+    robotState.stepTile = [];
+    return robotState.execCmds;
+  }
+
   function robotPlay() {
+    var cmds;
     if (state.locked || robotState.busy) return;
-    if (!robotState.cmds.length) return;
+    if (robotState.game === 'fout' && robotState.phase !== 'fix') return;
+    cmds = robotBuildExec();
+    if (!cmds.length) return;
     clearRobotTimer();
     robotState.r = robotState.sr;
     robotState.c = robotState.sc;
     robotState.dir = robotState.sdir;
     robotState.step = 0;
+    robotState.showEnd = false;
     robotSetBusy(true);
     placeRobot(false);
     renderRobotSeq();
@@ -13230,14 +13869,19 @@
   }
 
   function robotTick() {
-    var cmd;
+    var cmds, cmd;
     if (!robotState.busy) return;
-    if (robotState.step >= robotState.cmds.length) {
+    cmds = robotState.execCmds || robotState.cmds || [];
+    if (robotState.step >= cmds.length) {
+      if (robotState.game === 'volg') {
+        volgFinish();
+        return;
+      }
       if (robotState.r === robotState.gr && robotState.c === robotState.gc) robotWin();
       else robotFail();
       return;
     }
-    cmd = robotState.cmds[robotState.step];
+    cmd = cmds[robotState.step];
     renderRobotSeq();
     if (cmd !== robotState.dir) {
       robotState.dir = cmd;
@@ -13249,9 +13893,10 @@
   }
 
   function robotDoMove() {
-    var cmd;
+    var cmds, cmd;
     if (!robotState.busy) return;
-    cmd = robotState.cmds[robotState.step];
+    cmds = robotState.execCmds || robotState.cmds || [];
+    cmd = cmds[robotState.step];
     if (robotBlocked(robotState.n, robotState.walls, robotState.r, robotState.c, cmd)) {
       robotFail();
       return;
@@ -13259,7 +13904,7 @@
     robotState.r += ROBOT_DR[cmd];
     robotState.c += ROBOT_DC[cmd];
     placeRobot(true);
-    if (robotState.r === robotState.gr && robotState.c === robotState.gc) {
+    if (robotState.game !== 'volg' && robotState.r === robotState.gr && robotState.c === robotState.gc) {
       robotState.step += 1;
       renderRobotSeq();
       robotTimer = window.setTimeout(robotWin, 430);
@@ -13267,6 +13912,34 @@
     }
     robotState.step += 1;
     robotTimer = window.setTimeout(robotTick, 460);
+  }
+
+  function volgFinish() {
+    var ok;
+    robotState.showEnd = true;
+    renderRobot();
+    placeRobot(false);
+    ok = robotState.pickR === robotState.gr && robotState.pickC === robotState.gc;
+    if (ok) {
+      robotWin();
+      return;
+    }
+    playWrong();
+    showToast('Kijk nog eens!', false);
+    speak('volg-fout');
+    robotTimer = window.setTimeout(function () {
+      robotState.r = robotState.sr;
+      robotState.c = robotState.sc;
+      robotState.dir = robotState.sdir;
+      robotState.step = 0;
+      robotState.pickR = -1;
+      robotState.pickC = -1;
+      robotState.showEnd = false;
+      placeRobot(true);
+      robotSetBusy(false);
+      renderRobot();
+      robotWriteData();
+    }, 1200);
   }
 
   function robotFail() {
@@ -13310,6 +13983,17 @@
     countWalls: robotCountWalls,
     countTurns: robotCountTurns,
     blocked: robotBlocked
+  };
+  window.__programTest = {
+    makeHerhaal: makeHerhaalLevel,
+    makeVolg: makeVolgLevel,
+    makeFout: makeFoutLevel,
+    compress: herhaalCompress,
+    expand: herhaalExpand,
+    maxSlots: herhaalMaxSlots,
+    fixes: foutListFixes,
+    simulate: robotSimulate,
+    state: robotState
   };
 
   function showPuzzlesMenu() {
@@ -13977,7 +14661,7 @@
       return;
     }
     if (act === 'program-game') {
-      if (el.getAttribute('data-game') === 'robot') showRobotLevel();
+      showRobotLevel(el.getAttribute('data-game') || 'robot');
       return;
     }
     if (act === 'goto-memory') {
@@ -14175,6 +14859,22 @@
     }
     if (act === 'robot-play') {
       robotPlay();
+      return;
+    }
+    if (act === 'herhaal-rep') {
+      herhaalStartRep(parseInt(el.getAttribute('data-n'), 10));
+      return;
+    }
+    if (act === 'herhaal-del') {
+      herhaalDel(parseInt(el.getAttribute('data-i'), 10));
+      return;
+    }
+    if (act === 'volg-cell') {
+      volgTap(parseInt(el.getAttribute('data-r'), 10), parseInt(el.getAttribute('data-c'), 10));
+      return;
+    }
+    if (act === 'fout-tile') {
+      foutTap(parseInt(el.getAttribute('data-i'), 10));
       return;
     }
     if (act === 'verder') {
@@ -15279,6 +15979,46 @@
         '<polygon points="56,10 59,18 68,18 61,24 64,33 56,27 48,33 51,24 44,18 53,18" fill="#FFD54F" stroke="#F9A825" stroke-width="1.3" stroke-linejoin="round"/>' +
         '</svg>';
     }
+
+    if ($('icon-program-herhaal')) {
+      $('icon-program-herhaal').innerHTML =
+        '<svg viewBox="0 0 72 48" width="72" height="48" aria-hidden="true">' +
+        '<rect x="10" y="14" width="24" height="20" rx="6" fill="#B39DDB" stroke="#4E342E" stroke-width="1.8"/>' +
+        '<rect x="15" y="19" width="14" height="8" rx="3" fill="#FFF8E1" stroke="#4E342E" stroke-width="1.2"/>' +
+        '<circle cx="19" cy="23" r="1.5" fill="#1A4A6A"/>' +
+        '<circle cx="25" cy="23" r="1.5" fill="#1A4A6A"/>' +
+        '<path d="M42 14 A12 12 0 1 1 42 36" fill="none" stroke="#FFD54F" stroke-width="4" stroke-linecap="round"/>' +
+        '<path d="M38 34 L42 40 L46 32" fill="#FFD54F" stroke="#4E342E" stroke-width="1.2" stroke-linejoin="round"/>' +
+        '<text x="58" y="30" text-anchor="middle" font-size="16" font-weight="800" font-family="Arial, sans-serif" fill="#FFF8E1" stroke="#4E342E" stroke-width="0.6">2×</text>' +
+        '</svg>';
+    }
+    if ($('icon-program-volg')) {
+      $('icon-program-volg').innerHTML =
+        '<svg viewBox="0 0 72 48" width="72" height="48" aria-hidden="true">' +
+        '<rect x="6" y="8" width="34" height="34" rx="5" fill="#E3F2FD" stroke="#4E342E" stroke-width="1.8"/>' +
+        '<path d="M6 19.3 H40 M6 30.7 H40 M17.3 8 V42 M28.7 8 V42" stroke="#90CAF9" stroke-width="1.2"/>' +
+        '<circle cx="12" cy="13.5" r="3.2" fill="#26C6DA" stroke="#4E342E" stroke-width="1"/>' +
+        '<rect x="23.5" y="24.8" width="9.5" height="9.5" fill="#FFD54F" stroke="#F9A825" stroke-width="1.2"/>' +
+        '<path d="M48 14 L62 14 L62 20" fill="none" stroke="#1565C0" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>' +
+        '<path d="M58 16 L62 20 L54 20" fill="#1565C0"/>' +
+        '<path d="M48 28 L62 28 L62 38 L54 38" fill="none" stroke="#1565C0" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>' +
+        '<path d="M58 34 L54 38 L58 42" fill="none" stroke="#1565C0" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>' +
+        '</svg>';
+    }
+    if ($('icon-program-fout')) {
+      $('icon-program-fout').innerHTML =
+        '<svg viewBox="0 0 72 48" width="72" height="48" aria-hidden="true">' +
+        '<rect x="8" y="14" width="16" height="16" rx="4" fill="#B2EBF2" stroke="#4E342E" stroke-width="1.5"/>' +
+        '<path d="M16 16 L16 28 L11 24" fill="none" stroke="#00838F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>' +
+        '<rect x="28" y="14" width="16" height="16" rx="4" fill="#FFCDD2" stroke="#C62828" stroke-width="2"/>' +
+        '<path d="M32 18 L40 26 M40 18 L32 26" stroke="#C62828" stroke-width="2.4" stroke-linecap="round"/>' +
+        '<rect x="48" y="14" width="16" height="16" rx="4" fill="#B2EBF2" stroke="#4E342E" stroke-width="1.5"/>' +
+        '<path d="M56 16 L56 28 L61 24" fill="none" stroke="#00838F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>' +
+        '<circle cx="36" cy="40" r="6" fill="#FFD54F" stroke="#4E342E" stroke-width="1.5"/>' +
+        '<text x="36" y="44" text-anchor="middle" font-size="11" font-weight="800" font-family="Arial, sans-serif" fill="#4E342E">?</text>' +
+        '</svg>';
+    }
+
     if ($('icon-geld-pot')) {
       $('icon-geld-pot').innerHTML =
         '<svg viewBox="0 0 72 48" width="72" height="48" aria-hidden="true"><ellipse cx="36" cy="30" rx="22" ry="14" fill="#FF7EB3" stroke="#E0568A" stroke-width="2"/><ellipse cx="24" cy="18" rx="7" ry="9" fill="#FF7EB3" stroke="#E0568A" stroke-width="2"/><ellipse cx="48" cy="18" rx="7" ry="9" fill="#FF7EB3" stroke="#E0568A" stroke-width="2"/><rect x="30" y="14" width="12" height="4" rx="2" fill="#6A2040"/><circle cx="30" cy="28" r="2" fill="#243044"/><circle cx="42" cy="28" r="2" fill="#243044"/><ellipse cx="40" cy="34" rx="6" ry="4" fill="#FF6B9D" stroke="#E0568A" stroke-width="1.2"/></svg>';

@@ -477,6 +477,75 @@ async function waitSpiegelNext(page) {
     ok('De robot makkelijk terug → kiezer, home → start');
 
     await fresh(page);
+    await tap(page, '#btn-goto-program');
+    await tap(page, '#program-grid [data-game="herhaal"]');
+    await expectScreen(page, 'robotlevel', 'herhaal level');
+    await tap(page, '#btn-robotlevel-back');
+    await expectScreen(page, 'program', 'herhaal level back');
+    await tap(page, '#program-grid [data-game="herhaal"]');
+    await tap(page, '#btn-robotlevel-home');
+    await expectScreen(page, 'start', 'herhaal level home');
+    ok('Herhalen-kiezer terug → Programmeren, home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-program');
+    await tap(page, '#program-grid [data-game="herhaal"]');
+    await tap(page, '[data-kind="easy"]');
+    await expectScreen(page, 'robot', 'herhaal easy');
+    await tap(page, '#btn-robot-back');
+    await expectScreen(page, 'robotlevel', 'herhaal play back');
+    await tap(page, '[data-kind="easy"]');
+    await tap(page, '#btn-robot-home');
+    await expectScreen(page, 'start', 'herhaal play home');
+    ok('Herhalen makkelijk terug → kiezer, home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-program');
+    await tap(page, '#program-grid [data-game="volg"]');
+    await expectScreen(page, 'robotlevel', 'volg level');
+    await tap(page, '#btn-robotlevel-back');
+    await expectScreen(page, 'program', 'volg level back');
+    await tap(page, '#program-grid [data-game="volg"]');
+    await tap(page, '#btn-robotlevel-home');
+    await expectScreen(page, 'start', 'volg level home');
+    ok('Volg de code-kiezer terug → Programmeren, home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-program');
+    await tap(page, '#program-grid [data-game="volg"]');
+    await tap(page, '[data-kind="easy"]');
+    await expectScreen(page, 'robot', 'volg easy');
+    await tap(page, '#btn-robot-back');
+    await expectScreen(page, 'robotlevel', 'volg play back');
+    await tap(page, '[data-kind="easy"]');
+    await tap(page, '#btn-robot-home');
+    await expectScreen(page, 'start', 'volg play home');
+    ok('Volg de code makkelijk terug → kiezer, home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-program');
+    await tap(page, '#program-grid [data-game="fout"]');
+    await expectScreen(page, 'robotlevel', 'fout level');
+    await tap(page, '#btn-robotlevel-back');
+    await expectScreen(page, 'program', 'fout level back');
+    await tap(page, '#program-grid [data-game="fout"]');
+    await tap(page, '#btn-robotlevel-home');
+    await expectScreen(page, 'start', 'fout level home');
+    ok('Zoek de fout-kiezer terug → Programmeren, home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-program');
+    await tap(page, '#program-grid [data-game="fout"]');
+    await tap(page, '[data-kind="easy"]');
+    await expectScreen(page, 'robot', 'fout easy');
+    await tap(page, '#btn-robot-back');
+    await expectScreen(page, 'robotlevel', 'fout play back');
+    await tap(page, '[data-kind="easy"]');
+    await tap(page, '#btn-robot-home');
+    await expectScreen(page, 'start', 'fout play home');
+    ok('Zoek de fout makkelijk terug → kiezer, home → start');
+
+    await fresh(page);
     await tap(page, '#btn-goto-puzzles');
     await openSlidePicker(page);
     await expectScreen(page, 'puzzlelevel', 'schuif level');
