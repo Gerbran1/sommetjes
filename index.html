@@ -197,7 +197,7 @@
       line-height: 1;
     }
 
-    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-doolhoflevel, #screen-verschillen, #screen-robotlevel, #screen-robot, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij, #screen-cups, #screen-veranderd, #screen-tekenmenu, #screen-kleurkies, #screen-teken, #screen-klinkers, #screen-lijnlevel, #screen-lijn, #screen-geld, #screen-geldlevel, #screen-geldplay {
+    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-doolhoflevel, #screen-verschillen, #screen-robotlevel, #screen-robot, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij, #screen-cups, #screen-veranderd, #screen-tekenmenu, #screen-kleurkies, #screen-teken, #screen-klinkers, #screen-lijnlevel, #screen-lijn, #screen-geld, #screen-geldlevel, #screen-geldplay, #screen-program {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -490,6 +490,62 @@
       -webkit-box-shadow: 0 2px 0 #C48A12, 0 4px 8px rgba(0,0,0,0.15);
       box-shadow: 0 2px 0 #C48A12, 0 4px 8px rgba(0,0,0,0.15);
     }
+
+    .choice-program {
+      background: #26C6DA;
+      -webkit-box-shadow: 0 10px 0 #00838F, 0 14px 20px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 0 #00838F, 0 14px 20px rgba(0,0,0,0.15);
+    }
+    .choice-program.pressed, .choice-program:active {
+      -webkit-box-shadow: 0 2px 0 #00838F, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #00838F, 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .program-glyph { width: 72px; height: 56px; }
+    .program-glyph svg { width: 72px; height: 56px; }
+    #choice-grid.choices-7 .choice-btn {
+      -webkit-flex: 0 0 21%;
+      flex: 0 0 21%;
+      max-width: 230px;
+    }
+    #program-grid {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-align-content: center;
+      align-content: center;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      max-width: 980px;
+      margin: 8px auto 0 auto;
+    }
+    #program-grid .level-btn {
+      -webkit-flex: 0 0 40%;
+      flex: 0 0 40%;
+      max-width: 360px;
+      min-height: 200px;
+      max-height: 280px;
+    }
+    #program-grid .level-icon,
+    #program-grid .level-icon svg {
+      width: 88px;
+      height: 60px;
+    }
+    .lvl-program-robot { background: #26C6DA; -webkit-box-shadow: 0 10px 0 #00838F, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #00838F, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-program-robot.pressed, .lvl-program-robot:active { -webkit-box-shadow: 0 2px 0 #00838F, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #00838F, 0 4px 8px rgba(0,0,0,0.15); }
+    @media screen and (max-height: 800px) {
+      #choice-grid.choices-7 .choice-btn { min-height: 108px; }
+      #choice-grid.choices-7 .choice-label { font-size: 18px; }
+      #choice-grid.choices-7 .program-glyph,
+      #choice-grid.choices-7 .program-glyph svg { width: 52px; height: 40px; }
+      #program-grid .level-btn { min-height: 140px; max-height: 200px; }
+    }
+
     .geld-glyph {
       width: 72px;
       height: 56px;
@@ -3829,7 +3885,7 @@
         <div class="home-hint" id="home-hint"></div>
       </div>
 
-      <div id="choice-grid" class="choices-6">
+      <div id="choice-grid" class="choices-7">
         <button type="button" class="tap choice-btn choice-numbers" id="btn-goto-games" data-act="goto-games">
           <div class="choice-glyph">123</div>
           <div class="choice-label">Getallen</div>
@@ -3844,6 +3900,10 @@
             <span class="pg3"></span><span class="pg4"></span>
           </div>
           <div class="choice-label">Puzzels</div>
+        </button>
+        <button type="button" class="tap choice-btn choice-program" id="btn-goto-program" data-act="goto-program">
+          <div class="choice-glyph program-glyph" id="icon-program-start"></div>
+          <div class="choice-label">Programmeren</div>
         </button>
         <button type="button" class="tap choice-btn choice-memory" id="btn-goto-memory" data-act="goto-memory">
           <div class="choice-glyph mem-glyph">
@@ -4237,12 +4297,6 @@
           </div>
           <div class="level-label">Zoek de verschillen</div>
         </button>
-        <button type="button" class="tap level-btn lvl-robot" data-act="puzzle-game" data-game="robot">
-          <div class="act-icon">
-            <div class="robot-mini" id="icon-robot"></div>
-          </div>
-          <div class="level-label">De robot</div>
-        </button>
       </div>
     </div>
 
@@ -4504,6 +4558,33 @@
             <div class="vers-inner" id="vers-right"></div>
           </div>
         </div>
+      </div>
+    </div>
+
+
+    <div id="screen-program" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-program-back" data-act="back" title="Terug">
+            <span id="program-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-program-home" data-act="home" title="Start">
+            <span id="program-home-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="program-star-icon"></span>
+            <span class="star-count" id="program-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt">Programmeren</div>
+      <div id="program-grid">
+        <button type="button" class="tap level-btn lvl-program-robot" data-act="program-game" data-game="robot">
+          <div class="level-icon" id="icon-program-robot"></div>
+          <div class="level-label">De robot</div>
+        </button>
       </div>
     </div>
 
@@ -7944,7 +8025,7 @@
   /* ---------- UI ---------- */
   function updateStarsUI() {
     var i, row, html, filled, el, rows;
-    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'vers-stars', 'robot-stars', 'robotlevel-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars', 'cups-stars', 'veranderd-stars', 'klinkers-stars', 'lijnlevel-stars', 'lijn-stars', 'doolhoflevel-stars', 'geld-stars', 'geldlevel-stars', 'geldplay-stars'], String(state.stars));
+    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'vers-stars', 'robot-stars', 'robotlevel-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars', 'cups-stars', 'veranderd-stars', 'klinkers-stars', 'lijnlevel-stars', 'lijn-stars', 'doolhoflevel-stars', 'geld-stars', 'geldlevel-stars', 'geldplay-stars', 'program-stars'], String(state.stars));
     filled = state.towardsReward;
     if (filled > 5) filled = 5;
     html = '';
@@ -7977,7 +8058,7 @@
   function showScreen(name) {
     var ids, i, el;
     state.screen = name;
-    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay'];
+    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay', 'program'];
     for (i = 0; i < ids.length; i++) {
       el = $('screen-' + ids[i]);
       if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
@@ -8049,9 +8130,14 @@
     state.towardsReward = 0;
     updateStarsUI();
     s = state.screen;
-    if (s === 'doolhof' || s === 'verschillen' || s === 'robot') {
+    if (s === 'doolhof' || s === 'verschillen') {
       leavePlay();
       showPuzzlesMenu();
+      return;
+    }
+    if (s === 'robot') {
+      leavePlay();
+      showProgramMenu();
       return;
     }
     if (s === 'geldplay') {
@@ -12894,6 +12980,15 @@
       '</svg>';
   }
 
+  function showProgramMenu() {
+    state.level = null;
+    state.locked = false;
+    state.question = null;
+    hideReward();
+    showScreen('program');
+    updateStarsUI();
+  }
+
   function showRobotLevel() {
     state.level = 'robot';
     state.locked = false;
@@ -13716,12 +13811,16 @@
     } else if (s === 'puzzle') {
       showPuzzleLevel();
     } else if (s === 'puzzlelevel' || s === 'vormen' || s === 'spiegel' || s === 'nateken' ||
-               s === 'tangram' || s === 'waar' || s === 'doolhoflevel' || s === 'verschillen' || s === 'robotlevel') {
+               s === 'tangram' || s === 'waar' || s === 'doolhoflevel' || s === 'verschillen') {
       showPuzzlesMenu();
     } else if (s === 'doolhof') {
       showDoolhofLevel();
     } else if (s === 'robot') {
       showRobotLevel();
+    } else if (s === 'robotlevel') {
+      showProgramMenu();
+    } else if (s === 'program') {
+      goToStart();
     } else if (s === 'memoryplay') {
       showMemoryLevel();
     } else if (s === 'memorylevel' || s === 'weg' || s === 'simon' || s === 'rij' || s === 'cups' || s === 'veranderd') {
@@ -13870,6 +13969,15 @@
     if (act === 'goto-puzzles') {
       cancelAdvanceWait();
       showPuzzlesMenu();
+      return;
+    }
+    if (act === 'goto-program') {
+      cancelAdvanceWait();
+      showProgramMenu();
+      return;
+    }
+    if (act === 'program-game') {
+      if (el.getAttribute('data-game') === 'robot') showRobotLevel();
       return;
     }
     if (act === 'goto-memory') {
@@ -15025,6 +15133,10 @@
         '<path d="M18 54 L14 66 L30 58 Z" fill="#FF8A4C" stroke="#6A3E00" stroke-width="3" stroke-linejoin="round"/>' +
         '</svg>';
     }
+    if ($('icon-program-start')) {
+      $('icon-program-start').innerHTML =
+        '<svg viewBox="0 0 72 56" width="72" height="56" aria-hidden="true"><rect x="22" y="14" width="28" height="24" rx="7" fill="#FFF8E1" stroke="#4E342E" stroke-width="2"/><rect x="28" y="20" width="16" height="9" rx="4" fill="#26C6DA" stroke="#4E342E" stroke-width="1.5"/><circle cx="33" cy="24.5" r="1.8" fill="#1A4A6A"/><circle cx="39" cy="24.5" r="1.8" fill="#1A4A6A"/><rect x="18" y="22" width="6" height="10" rx="3" fill="#FFF8E1" stroke="#4E342E" stroke-width="1.5"/><rect x="48" y="22" width="6" height="10" rx="3" fill="#FFF8E1" stroke="#4E342E" stroke-width="1.5"/><circle cx="36" cy="10" r="3" fill="#FF8A4C" stroke="#4E342E" stroke-width="1.4"/><path d="M36 8 L36 4" stroke="#4E342E" stroke-width="2" stroke-linecap="round"/><path d="M16 48 L28 40 L44 40 L56 48" fill="none" stroke="#FFF8E1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    }
     if ($('icon-geld-start')) {
       $('icon-geld-start').innerHTML =
         '<svg viewBox="0 0 72 56" width="72" height="56" aria-hidden="true"><circle cx="22" cy="34" r="16" fill="#C9853A" stroke="#6B3510" stroke-width="2"/><text x="22" y="40" text-anchor="middle" font-size="11" font-weight="700" fill="#5A3010" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">5</text><circle cx="40" cy="30" r="18" fill="#F0B429" stroke="#7A5A0A" stroke-width="2"/><text x="40" y="36" text-anchor="middle" font-size="12" font-weight="700" fill="#5A4408" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">10</text><circle cx="56" cy="28" r="14" fill="#E8E4D8" stroke="#7A5A0A" stroke-width="2"/><circle cx="56" cy="28" r="8" fill="#F0B429"/><text x="56" y="32" text-anchor="middle" font-size="8" font-weight="700" fill="#5A4408" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">1</text></svg>';
@@ -15070,6 +15182,7 @@
     elSet('geld-home-icon', homeIconHtml());
     elSet('geldlevel-home-icon', homeIconHtml());
     elSet('geldplay-home-icon', homeIconHtml());
+    elSet('program-home-icon', homeIconHtml());
     elSet('play-back-icon', backIconHtml());
     elSet('picker-back-icon', backIconHtml());
     elSet('trace-back-icon', backIconHtml());
@@ -15103,6 +15216,7 @@
     elSet('geld-back-icon', backIconHtml());
     elSet('geldlevel-back-icon', backIconHtml());
     elSet('geldplay-back-icon', backIconHtml());
+    elSet('program-back-icon', backIconHtml());
     elSet('letters-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('trace-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('names-star-icon', starSvg('#FFD54F', '#F9A825'));
@@ -15134,6 +15248,7 @@
     elSet('geld-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('geldlevel-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('geldplay-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('program-star-icon', starSvg('#FFD54F', '#F9A825'));
     if ($('icon-vormen')) {
       $('icon-vormen').innerHTML =
         vormSvg('circle', '#2FB3F0', '#1A7FB3', 0) +
@@ -15152,8 +15267,8 @@
         '<circle cx="50" cy="16" r="10" fill="none" stroke="#E53935" stroke-width="2.4"/>' +
         '</svg>';
     }
-    if ($('icon-robot')) {
-      $('icon-robot').innerHTML =
+    if ($('icon-program-robot')) {
+      $('icon-program-robot').innerHTML =
         '<svg viewBox="0 0 72 48" width="72" height="48" aria-hidden="true">' +
         '<rect x="22" y="10" width="28" height="24" rx="7" fill="#26C6DA" stroke="#4E342E" stroke-width="2"/>' +
         '<rect x="28" y="16" width="16" height="9" rx="4" fill="#FFF8E1" stroke="#4E342E" stroke-width="1.5"/>' +

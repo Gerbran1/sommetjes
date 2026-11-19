@@ -681,9 +681,9 @@ function intersection(a, b) {
     }
 
     await fresh(page);
-    await page.click('#btn-goto-puzzles');
+    await page.click('#btn-goto-program');
     await wait(280);
-    await page.click('[data-game="robot"]');
+    await page.click('#program-grid [data-game="robot"]');
     await wait(280);
     await page.click('[data-kind="easy"]');
     await wait(400);
@@ -695,14 +695,14 @@ function intersection(a, b) {
     var onPuzzR = false;
     while (Date.now() < robMenu) {
       onPuzzR = await page.evaluate(() => {
-        var el = document.getElementById('screen-puzzles');
+        var el = document.getElementById('screen-program');
         return !!(el && el.className.indexOf('is-hidden') === -1);
       });
       if (onPuzzR) break;
       await wait(150);
     }
-    if (!onPuzzR) throw new Error('robot did not return to Puzzels after reward');
-    await page.click('[data-game="robot"]');
+    if (!onPuzzR) throw new Error('robot did not return to Programmeren after reward');
+    await page.click('#program-grid [data-game="robot"]');
     await wait(280);
     await page.click('[data-kind="easy"]');
     await wait(400);
