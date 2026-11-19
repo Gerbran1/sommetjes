@@ -13,7 +13,7 @@ const wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms)
 const SCREENS = [
   'start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay',
   'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken',
-  'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn'
+  'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay'
 ];
 
 async function visibleScreen(page) {
@@ -209,6 +209,51 @@ async function waitSpiegelNext(page) {
     await tap(page, '#btn-kleurkies-back');
     await expectScreen(page, 'tekenmenu', 'kiezer back');
     ok('Kleurplaten kiezer en plaat terug naar het menu');
+
+
+    await fresh(page);
+    await tap(page, '#btn-goto-geld');
+    await expectScreen(page, 'geld', 'geld menu');
+    await tap(page, '#btn-geld-back');
+    await expectScreen(page, 'start', 'geld menu back');
+    await tap(page, '#btn-goto-geld');
+    await tap(page, '#btn-geld-home');
+    await expectScreen(page, 'start', 'geld menu home');
+    ok('Geld-menu terug/home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-geld');
+    await tap(page, '#geld-grid [data-game="pot"]');
+    await expectScreen(page, 'geldlevel', 'spaarpot kiezer');
+    await tap(page, '#btn-geldlevel-back');
+    await expectScreen(page, 'geld', 'spaarpot kiezer back');
+    await tap(page, '#geld-grid [data-game="winkel"]');
+    await tap(page, '#btn-geldlevel-home');
+    await expectScreen(page, 'start', 'winkeltje kiezer home');
+    ok('Geld-kiezer terug → Geld, home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-geld');
+    await tap(page, '#geld-grid [data-game="pot"]');
+    await tap(page, '#geldlevel-grid [data-max="10"]');
+    await expectScreen(page, 'geldplay', 'spaarpot play');
+    await tap(page, '#btn-geldplay-back');
+    await expectScreen(page, 'geldlevel', 'spaarpot play back');
+    await tap(page, '#geldlevel-grid [data-max="10"]');
+    await tap(page, '#btn-geldplay-home');
+    await expectScreen(page, 'start', 'spaarpot play home');
+    ok('Spaarpot terug → kiezer, home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-geld');
+    await tap(page, '#geld-grid [data-game="brief"]');
+    await expectScreen(page, 'geldlevel', 'briefjes kiezer');
+    await tap(page, '#geldlevel-grid [data-max="2000"]');
+    await expectScreen(page, 'geldplay', 'briefjes play');
+    await tap(page, '#btn-geldplay-back');
+    await expectScreen(page, 'geldlevel', 'briefjes play back');
+    ok('Winkel met briefjes terug → kiezer');
+
 
     await fresh(page);
     await tap(page, '#btn-goto-games');

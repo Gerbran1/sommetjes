@@ -1131,6 +1131,104 @@ function intersection(a, b) {
     if (vOver.length) throw new Error('veranderd r2 herhaalde vorige ronde: ' + vOver.join(','));
     ok('Wat is er veranderd? ronde 2 uniek en niet uit ronde 1: ' + v2.join(', '));
 
+
+    async function waitGeldReady(page, prev, ms) {
+      var deadline = Date.now() + (ms || 8000);
+      while (Date.now() < deadline) {
+        const ready = await page.evaluate((p) => {
+          var w = document.getElementById('geld-play');
+          var k = w ? w.getAttribute('data-key') : '';
+          var busy = w && w.getAttribute('data-busy') === '1';
+          if (!w || !k || busy) return false;
+          if (p && k === p) return false;
+          return true;
+        }, prev || '');
+        if (ready) return true;
+        await wait(120);
+      }
+      return false;
+    }
+    async function playGeldRound(page, n) {
+      var keys = [], i, key, moved, deadline, rewarded;
+      for (i = 0; i < n; i++) {
+        if (!(await waitGeldReady(page, i ? keys[i - 1] : '', 12000))) {
+          throw new Error('geld not ready item ' + (i + 1) + ' after ' + keys.join(','));
+        }
+        key = await page.evaluate(() => {
+          if (!window.__geldTest) throw new Error('no __geldTest');
+          window.__geldTest.payExact();
+          var w = document.getElementById('geld-play');
+          return w ? w.getAttribute('data-key') : '';
+        });
+        keys.push(key);
+        if (i < n - 1) {
+          deadline = Date.now() + 16000;
+          moved = false;
+          while (Date.now() < deadline) {
+            moved = await page.evaluate((prev) => {
+              var w = document.getElementById('geld-play');
+              var k = w ? w.getAttribute('data-key') : '';
+              var busy = w && w.getAttribute('data-busy') === '1';
+              return !!(k && k !== prev && !busy);
+            }, key);
+            if (moved) break;
+            await wait(150);
+          }
+          if (!moved) throw new Error('geld next item did not appear after ' + key);
+        }
+      }
+      deadline = Date.now() + 16000;
+      rewarded = false;
+      while (Date.now() < deadline) {
+        rewarded = await page.evaluate(() => {
+          var rew = document.getElementById('overlay-reward');
+          return !!(rew && rew.className.indexOf('is-hidden') === -1);
+        });
+        if (rewarded) break;
+        await wait(150);
+      }
+      if (!rewarded) throw new Error('geld expected reward after 5, keys=' + keys.join('|'));
+      return keys;
+    }
+    async function waitGeldMenu(page) {
+      var deadline = Date.now() + 15000, on = false;
+      while (Date.now() < deadline) {
+        on = await page.evaluate(() => {
+          var el = document.getElementById('screen-geld');
+          return !!(el && el.className.indexOf('is-hidden') === -1);
+        });
+        if (on) return;
+        await wait(150);
+      }
+      throw new Error('geld did not return to menu after reward');
+    }
+    async function playTwoGeldRounds(page, game, max, label) {
+      await fresh(page);
+      await page.click('#btn-goto-geld');
+      await wait(280);
+      await page.click('#geld-grid [data-game="' + game + '"]');
+      await wait(280);
+      await page.click('#geldlevel-grid [data-max="' + max + '"]');
+      await wait(400);
+      var r1 = await playGeldRound(page, 5);
+      assertUnique(r1, label + ' r1');
+      ok(label + ' ronde 1 uniek: ' + r1.join(' | '));
+      await waitGeldMenu(page);
+      await page.click('#geld-grid [data-game="' + game + '"]');
+      await wait(280);
+      await page.click('#geldlevel-grid [data-max="' + max + '"]');
+      await wait(400);
+      var r2 = await playGeldRound(page, 5);
+      assertUnique(r2, label + ' r2');
+      var overlap = intersection(r1, r2);
+      if (overlap.length) throw new Error(label + ' r2 herhaalt r1: ' + overlap.join(','));
+      ok(label + ' ronde 2 uniek en niet uit ronde 1: ' + r2.join(' | '));
+    }
+
+    await playTwoGeldRounds(page, 'pot', 10, 'Spaarpot tot 10 cent');
+    await playTwoGeldRounds(page, 'winkel', 100, 'Winkeltje tot €1');
+    await playTwoGeldRounds(page, 'brief', 2000, 'Winkel met briefjes tot €20');
+
     console.log('\nALL UNIQUE-ROUND CHECKS OK (' + results.length + ')');
     await browser.close();
     process.exit(0);

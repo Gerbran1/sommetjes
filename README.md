@@ -4,7 +4,7 @@ Een eenvoudige oefenapp voor kinderen van 4 tot 6 jaar, met getallen, letters, p
 
 ## Wat kun je oefenen?
 
-Op het startscherm kies je **Getallen**, **Letters**, **Puzzels**, **Geheugen** of **Tekenen**.
+Op het startscherm kies je **Getallen**, **Letters**, **Puzzels**, **Geheugen**, **Tekenen** of **Geld**.
 
 **Getallen**
 1. **Tellen** — tel 1 tot 10 plaatjes en tik het goede getal
@@ -41,6 +41,12 @@ Op het startscherm kies je **Getallen**, **Letters**, **Puzzels**, **Geheugen** 
 18. **Onthoud de rij** — onthoud de plaatjes in volgorde en tik ze daarna in dezelfde volgorde na.
 19. **Waar zat het?** — kijk onder welk dopje het plaatje zit, volg de wissel, en tik het goede dopje aan.
 20. **Wat is er veranderd?** — kijk naar vier plaatjes; één verandert, en je tikt welk plaatje anders is geworden.
+
+
+**Geld**
+21. **Spaarpot** — sleep muntjes in het spaarvarken tot het gevraagde bedrag (tot 10 cent of tot 50 cent) en tik op Klaar!. Tik op een muntje in de pot om het terug te doen.
+22. **Winkeltje** — een speelgoedje heeft een prijskaartje; sleep muntjes naar de kassa (tot €1 of tot €5). Te veel betalen mag nog niet: je hoort "Dat is te veel!" (nog geen wisselgeld).
+23. **Winkel met briefjes** — hetzelfde winkeltje, maar nu ook met briefjes van €5 (grijs), €10 (rood) en €20 (blauw). Je kiest tot €20 of tot €50, met duurdere dingen zoals een fiets of een skateboard.
 
 Bij de getallen- en letterspellen heeft elke vraag drie grote antwoordknoppen. Bij een goed antwoord of een voltooide puzzel krijg je een ster. Na vijf sterren volgt een klein feestje; daarna ga je terug naar het menu van dat spel. Een fout antwoord is niet erg: je mag het gewoon nog eens proberen.
 

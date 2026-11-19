@@ -197,7 +197,7 @@
       line-height: 1;
     }
 
-    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-doolhoflevel, #screen-verschillen, #screen-robotlevel, #screen-robot, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij, #screen-cups, #screen-veranderd, #screen-tekenmenu, #screen-kleurkies, #screen-teken, #screen-klinkers, #screen-lijnlevel, #screen-lijn {
+    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-doolhoflevel, #screen-verschillen, #screen-robotlevel, #screen-robot, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij, #screen-cups, #screen-veranderd, #screen-tekenmenu, #screen-kleurkies, #screen-teken, #screen-klinkers, #screen-lijnlevel, #screen-lijn, #screen-geld, #screen-geldlevel, #screen-geldplay {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -409,7 +409,7 @@
       flex: 0 0 44%;
       max-width: none;
     }
-    #choice-grid.choices-5 .choice-btn {
+    #choice-grid.choices-5 .choice-btn, #choice-grid.choices-6 .choice-btn {
       -webkit-flex: 0 0 30%;
       flex: 0 0 30%;
       max-width: none;
@@ -481,6 +481,417 @@
       -webkit-box-shadow: 0 2px 0 #E64A19, 0 4px 8px rgba(0,0,0,0.15);
       box-shadow: 0 2px 0 #E64A19, 0 4px 8px rgba(0,0,0,0.15);
     }
+    .choice-geld {
+      background: #F0B429;
+      -webkit-box-shadow: 0 10px 0 #C48A12, 0 14px 20px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 0 #C48A12, 0 14px 20px rgba(0,0,0,0.15);
+    }
+    .choice-geld.pressed, .choice-geld:active {
+      -webkit-box-shadow: 0 2px 0 #C48A12, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #C48A12, 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .geld-glyph {
+      width: 72px;
+      height: 56px;
+    }
+    .geld-glyph svg { width: 72px; height: 56px; }
+
+    #choice-grid.choices-6 .choice-btn {
+      -webkit-flex: 0 0 30%;
+      flex: 0 0 30%;
+      max-width: none;
+    }
+
+    #geld-grid, #geldlevel-grid {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-align-content: center;
+      align-content: center;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      max-width: 980px;
+      margin: 8px auto 0 auto;
+    }
+    #geld-grid .level-btn {
+      -webkit-flex: 0 0 30%;
+      flex: 0 0 30%;
+      max-width: 300px;
+      min-height: 220px;
+      max-height: 280px;
+    }
+    #geldlevel-grid .level-btn {
+      -webkit-flex: 0 0 40%;
+      flex: 0 0 40%;
+      max-width: 360px;
+      min-height: 200px;
+      max-height: 260px;
+    }
+    #geld-grid .level-icon, #geld-grid .level-icon svg {
+      width: 72px;
+      height: 48px;
+    }
+    #geld-grid .level-label {
+      text-align: center;
+      padding: 0 8px;
+    }
+    .lvl-geld-pot { background: #FF7EB3; -webkit-box-shadow: 0 10px 0 #E0568A, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #E0568A, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-geld-pot.pressed, .lvl-geld-pot:active { -webkit-box-shadow: 0 2px 0 #E0568A, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #E0568A, 0 4px 8px rgba(0,0,0,0.15); }
+    .lvl-geld-winkel { background: #FF8A4C; -webkit-box-shadow: 0 10px 0 #D4692C, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #D4692C, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-geld-winkel.pressed, .lvl-geld-winkel:active { -webkit-box-shadow: 0 2px 0 #D4692C, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #D4692C, 0 4px 8px rgba(0,0,0,0.15); }
+    .lvl-geld-brief { background: #3E73B3; -webkit-box-shadow: 0 10px 0 #1E4A80, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #1E4A80, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-geld-brief.pressed, .lvl-geld-brief:active { -webkit-box-shadow: 0 2px 0 #1E4A80, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #1E4A80, 0 4px 8px rgba(0,0,0,0.15); }
+
+    #geld-play {
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      min-height: 0;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    #geld-prompt { font-size: 42px; }
+    #screen-geldplay #geld-stage {
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      position: relative;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    #geld-pot-view, #geld-winkel-view {
+      width: 100%;
+      height: 100%;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+    }
+    #geld-pot-view.is-hidden, #geld-winkel-view.is-hidden { display: none; }
+
+    .geld-dropzone {
+      position: relative;
+      background: rgba(255,253,247,0.62);
+      border: 3px dashed #E2D3A8;
+      border-radius: 36px;
+      padding: 10px 28px 12px 28px;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      min-width: 340px;
+    }
+    .geld-dropzone.is-ok {
+      border-color: #7BE07B;
+      background: rgba(232, 248, 232, 0.72);
+    }
+    .geld-dropzone.is-hot {
+      border-color: #F0B429;
+      background: rgba(255, 248, 220, 0.75);
+    }
+    .geld-piggy-wrap { position: relative; }
+    .geld-piggy-svg { display: block; width: 300px; height: 270px; }
+
+    .geld-dropped {
+      position: absolute;
+      left: 50%;
+      bottom: 28px;
+      -webkit-transform: translateX(-50%);
+      transform: translateX(-50%);
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-align-items: flex-end;
+      align-items: flex-end;
+      -webkit-justify-content: center;
+      justify-content: center;
+      min-height: 56px;
+      width: 260px;
+      z-index: 4;
+    }
+    .geld-dropped .geld-coin-wrap,
+    .geld-dropped .geld-note-wrap { margin: 2px 3px; }
+
+    .geld-total {
+      margin-top: 4px;
+      background: #FFFDF7;
+      color: #1A4A6A;
+      font-size: 28px;
+      font-weight: 800;
+      padding: 8px 22px;
+      border-radius: 22px;
+      -webkit-box-shadow: 0 4px 0 rgba(0,0,0,0.08);
+      box-shadow: 0 4px 0 rgba(0,0,0,0.08);
+      line-height: 1.15;
+    }
+    .geld-total.is-ok {
+      background: #7BE07B;
+      color: #145214;
+      -webkit-box-shadow: 0 4px 0 #3DA03D;
+      box-shadow: 0 4px 0 #3DA03D;
+    }
+
+    .geld-winkel-row {
+      width: 100%;
+      height: 100%;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+    }
+    .geld-product-card {
+      background: rgba(255,253,247,0.85);
+      border-radius: 32px;
+      padding: 16px 22px 14px 22px;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+      margin-right: 28px;
+      -webkit-box-shadow: 0 6px 0 rgba(0,0,0,0.06);
+      box-shadow: 0 6px 0 rgba(0,0,0,0.06);
+      min-width: 240px;
+    }
+    .geld-price-tag {
+      position: relative;
+      background: #FFC93A;
+      color: #6A3E00;
+      font-size: 36px;
+      font-weight: 800;
+      padding: 8px 22px 8px 28px;
+      border-radius: 8px 18px 18px 8px;
+      -webkit-box-shadow: 0 4px 0 #D4A017;
+      box-shadow: 0 4px 0 #D4A017;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .geld-price-tag:before {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      width: 10px;
+      height: 10px;
+      margin-top: -5px;
+      background: #FFFDF7;
+      border-radius: 50%;
+      -webkit-box-shadow: inset 0 1px 0 rgba(0,0,0,0.15);
+      box-shadow: inset 0 1px 0 rgba(0,0,0,0.15);
+    }
+    .geld-product-svg { display: block; width: 230px; height: 163px; }
+    .geld-product-name {
+      margin-top: 4px;
+      font-size: 20px;
+      font-weight: 700;
+      color: #215078;
+    }
+    .geld-kassa-wrap {
+      position: relative;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+    }
+    .geld-kassa-drop {
+      position: relative;
+      background: rgba(255,253,247,0.62);
+      border: 3px dashed #E2D3A8;
+      border-radius: 36px;
+      padding: 8px 16px 6px 16px;
+    }
+    .geld-kassa-drop.is-ok {
+      border-color: #7BE07B;
+      background: rgba(232, 248, 232, 0.72);
+    }
+    .geld-kassa-drop.is-hot {
+      border-color: #F0B429;
+      background: rgba(255, 248, 220, 0.75);
+    }
+    .geld-kassa-svg { display: block; width: 300px; height: 260px; }
+    .geld-kassa-screen {
+      position: absolute;
+      left: 50%;
+      top: 28px;
+      width: 148px;
+      margin-left: -74px;
+      text-align: center;
+      z-index: 3;
+      pointer-events: none;
+    }
+    .geld-kassa-screen .geld-ks-lbl {
+      font-size: 14px;
+      font-weight: 700;
+      color: #8FD9A8;
+      letter-spacing: 0.3px;
+      line-height: 1.1;
+    }
+    .geld-kassa-screen .geld-ks-amt {
+      font-size: 32px;
+      font-weight: 800;
+      color: #C8F8D4;
+      line-height: 1.15;
+    }
+    .geld-kassa-coins {
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      bottom: 14px;
+      height: 70px;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+      -webkit-align-items: flex-end;
+      align-items: flex-end;
+      -webkit-justify-content: center;
+      justify-content: center;
+      z-index: 4;
+      overflow: visible;
+    }
+    .geld-kassa-coins .geld-coin-wrap,
+    .geld-kassa-coins .geld-note-wrap { margin: 2px 4px; }
+    .geld-kassa-label {
+      margin-top: 6px;
+      background: #FFFDF7;
+      color: #1A4A6A;
+      font-size: 26px;
+      font-weight: 800;
+      padding: 8px 20px;
+      border-radius: 22px;
+      -webkit-box-shadow: 0 4px 0 rgba(0,0,0,0.08);
+      box-shadow: 0 4px 0 rgba(0,0,0,0.08);
+    }
+    .geld-kassa-label.is-ok {
+      background: #7BE07B;
+      color: #145214;
+      -webkit-box-shadow: 0 4px 0 #3DA03D;
+      box-shadow: 0 4px 0 #3DA03D;
+    }
+
+    #geld-bottom {
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+      width: 100%;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      padding: 6px 0 2px 0;
+    }
+    #geld-tray {
+      background: rgba(255,253,247,0.78);
+      -webkit-box-shadow: 0 6px 0 rgba(0,0,0,0.06);
+      box-shadow: 0 6px 0 rgba(0,0,0,0.06);
+      border-radius: 32px;
+      padding: 10px 16px 12px 16px;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-align-items: flex-end;
+      align-items: flex-end;
+      -webkit-justify-content: center;
+      justify-content: center;
+      max-width: 820px;
+    }
+    #geld-tray .geld-coin-wrap { margin: 0 5px; }
+    #geld-tray .geld-note-wrap { margin: 6px 6px 0 6px; }
+    .geld-coin-wrap, .geld-note-wrap { display: block; line-height: 0; }
+    .geld-coin-wrap svg, .geld-note-wrap svg { display: block; pointer-events: none; }
+    .geld-tray-item { cursor: default; }
+    .geld-paid-item { cursor: default; }
+    .geld-drag-ghost {
+      position: fixed;
+      z-index: 80;
+      margin: 0;
+      pointer-events: none;
+      line-height: 0;
+    }
+
+    #btn-geld-klaar {
+      display: inline-block;
+      background: #4CC86E;
+      color: #fff;
+      font-size: 32px;
+      font-weight: 800;
+      padding: 16px 36px;
+      border-radius: 28px;
+      -webkit-box-shadow: 0 8px 0 #2E9A4F;
+      box-shadow: 0 8px 0 #2E9A4F;
+      margin-left: 16px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    #btn-geld-klaar.pressed, #btn-geld-klaar:active {
+      -webkit-box-shadow: 0 2px 0 #2E9A4F;
+      box-shadow: 0 2px 0 #2E9A4F;
+      -webkit-transform: translateY(6px);
+      transform: translateY(6px);
+    }
+
+    @media screen and (max-height: 800px) {
+      #geld-prompt { font-size: 34px; margin: 0 0 2px 0; }
+      .geld-piggy-svg { width: 220px; height: 198px; }
+      .geld-product-svg { width: 180px; height: 128px; }
+      .geld-kassa-svg { width: 240px; height: 208px; }
+      .geld-kassa-screen { top: 22px; width: 120px; margin-left: -60px; }
+      .geld-kassa-screen .geld-ks-amt { font-size: 26px; }
+      .geld-price-tag { font-size: 28px; padding: 6px 16px 6px 24px; }
+      .geld-product-name { font-size: 18px; }
+      .geld-total, .geld-kassa-label { font-size: 22px; padding: 6px 16px; }
+      .geld-dropzone { min-width: 260px; padding: 6px 16px 8px 16px; border-radius: 28px; }
+      .geld-product-card { padding: 8px 14px 8px 14px; margin-right: 16px; min-width: 180px; }
+      #btn-geld-klaar { font-size: 28px; padding: 12px 26px; }
+      .geld-glyph { width: 56px; height: 44px; }
+      .geld-glyph svg { width: 56px; height: 44px; }
+    }
+    @media screen and (max-width: 800px) {
+      .geld-winkel-row {
+        -webkit-flex-direction: column;
+        flex-direction: column;
+      }
+      .geld-product-card { margin-right: 0; margin-bottom: 8px; }
+      .geld-piggy-svg { width: 240px; height: 216px; }
+      #geld-prompt { font-size: 32px; }
+      #geld-tray { max-width: 700px; }
+      #btn-geld-klaar { margin-left: 10px; padding: 14px 22px; font-size: 26px; }
+    }
+
     .teken-glyph {
       width: 72px;
       height: 72px;
@@ -1868,17 +2279,22 @@
     }
     .cup-item {
       position: absolute;
-      left: 12%;
-      width: 76%;
-      bottom: 16px;
-      height: 108px;
+      left: 29%;
+      width: 42%;
+      bottom: 30px;
+      height: 64px;
       z-index: 1;
       pointer-events: none;
+      overflow: hidden;
     }
     .cup-item .obj-svg, .cup-item .word-svg, .cup-item svg {
       width: 100%;
       height: 100%;
       display: block;
+    }
+    /* Hide the picture completely while the cup is down, so nothing peeks out. */
+    .cup-slot:not(.open) .cup-item {
+      visibility: hidden;
     }
     .cup-hit {
       position: absolute;
@@ -2905,7 +3321,7 @@
       #rij-choices { min-height: 104px; padding-bottom: 6px; }
       #rij-choices .pic-answer { width: 88px; height: 88px; margin: 0 6px; }
       .cup-slot { height: 188px; top: 4px; }
-      .cup-item { height: 86px; bottom: 10px; }
+      .cup-item { height: 48px; bottom: 22px; left: 29%; width: 42%; }
       .cup-hit { height: 140px; }
       .cup-slot.open .cup-hit { -webkit-transform: translateY(-64px); transform: translateY(-64px); }
       .cup-slot.open .cup-hit.pressed, .cup-slot.open .cup-hit:active { -webkit-transform: translateY(-60px); transform: translateY(-60px); }
@@ -3413,7 +3829,7 @@
         <div class="home-hint" id="home-hint"></div>
       </div>
 
-      <div id="choice-grid" class="choices-5">
+      <div id="choice-grid" class="choices-6">
         <button type="button" class="tap choice-btn choice-numbers" id="btn-goto-games" data-act="goto-games">
           <div class="choice-glyph">123</div>
           <div class="choice-label">Getallen</div>
@@ -3438,6 +3854,10 @@
         <button type="button" class="tap choice-btn choice-tekenen" id="btn-goto-tekenen" data-act="goto-tekenen">
           <div class="choice-glyph teken-glyph" id="icon-tekenen-start"></div>
           <div class="choice-label">Tekenen</div>
+        </button>
+        <button type="button" class="tap choice-btn choice-geld" id="btn-goto-geld" data-act="goto-geld">
+          <div class="choice-glyph geld-glyph" id="icon-geld-start"></div>
+          <div class="choice-label">Geld</div>
         </button>
       </div>
       <div id="player-bar">
@@ -4155,6 +4575,129 @@
       </div>
     </div>
 
+
+    <div id="screen-geld" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-geld-back" data-act="back" title="Terug">
+            <span id="geld-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-geld-home" data-act="home" title="Start">
+            <span id="geld-home-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="geld-star-icon"></span>
+            <span class="star-count" id="geld-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt">Geld</div>
+      <div id="geld-grid">
+        <button type="button" class="tap level-btn lvl-geld-pot" data-act="geld-game" data-game="pot">
+          <div class="level-icon" id="icon-geld-pot"></div>
+          <div class="level-label">Spaarpot</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-geld-winkel" data-act="geld-game" data-game="winkel">
+          <div class="level-icon" id="icon-geld-winkel"></div>
+          <div class="level-label">Winkeltje</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-geld-brief" data-act="geld-game" data-game="brief">
+          <div class="level-icon" id="icon-geld-brief"></div>
+          <div class="level-label">Winkel met briefjes</div>
+        </button>
+      </div>
+    </div>
+
+    <div id="screen-geldlevel" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-geldlevel-back" data-act="back" title="Terug">
+            <span id="geldlevel-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-geldlevel-home" data-act="home" title="Start">
+            <span id="geldlevel-home-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="geldlevel-star-icon"></span>
+            <span class="star-count" id="geldlevel-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt" id="geldlevel-title">Spaarpot</div>
+      <div id="geldlevel-grid">
+        <button type="button" class="tap level-btn lvl-count" id="geld-lvl-a" data-act="geld-level" data-max="10">
+          <div class="level-label" id="geld-lvl-a-label">Tot 10 cent</div>
+          <div class="level-sub" id="geld-lvl-a-sub"></div>
+        </button>
+        <button type="button" class="tap level-btn lvl-plus10" id="geld-lvl-b" data-act="geld-level" data-max="50">
+          <div class="level-label" id="geld-lvl-b-label">Tot 50 cent</div>
+          <div class="level-sub" id="geld-lvl-b-sub"></div>
+        </button>
+      </div>
+    </div>
+
+    <div id="screen-geldplay" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-geldplay-back" data-act="back" title="Terug">
+            <span id="geldplay-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-geldplay-home" data-act="home" title="Start" style="margin-left:8px;">
+            <span id="geldplay-home-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="geldplay-star-icon"></span>
+            <span class="star-count" id="geldplay-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt" id="geld-prompt">Leg 8 cent in de spaarpot</div>
+      <div class="progress-row"></div>
+      <div id="geld-play">
+        <div id="geld-stage">
+          <div id="geld-pot-view">
+            <div class="geld-dropzone" id="geld-dropzone">
+              <div class="geld-piggy-wrap" id="geld-piggy-wrap">
+                <div id="geld-piggy"></div>
+                <div class="geld-dropped" id="geld-dropped"></div>
+              </div>
+              <div class="geld-total" id="geld-total">Nu: 0 cent</div>
+            </div>
+          </div>
+          <div id="geld-winkel-view" class="is-hidden">
+            <div class="geld-winkel-row">
+              <div class="geld-product-card">
+                <div class="geld-price-tag" id="geld-price-tag">€0,00</div>
+                <div id="geld-product-art"></div>
+                <div class="geld-product-name" id="geld-product-name"></div>
+              </div>
+              <div class="geld-kassa-wrap">
+                <div class="geld-kassa-drop" id="geld-kassa-drop">
+                  <div id="geld-kassa-art"></div>
+                  <div class="geld-kassa-screen">
+                    <div class="geld-ks-lbl">Je hebt:</div>
+                    <div class="geld-ks-amt" id="geld-ks-amt">€0,00</div>
+                  </div>
+                  <div class="geld-kassa-coins" id="geld-kassa-coins"></div>
+                </div>
+                <div class="geld-kassa-label" id="geld-kassa-label">Je hebt: €0,00</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="geld-bottom">
+          <div id="geld-tray"></div>
+          <button type="button" class="tap" id="btn-geld-klaar" data-act="geld-klaar">Klaar!</button>
+        </div>
+      </div>
+    </div>
+
     <div id="screen-trace" class="is-hidden">
       <div class="topbar">
         <div class="topbar-left">
@@ -4683,6 +5226,7 @@
     if (level === 'lijn') return 'lijn-' + String(state.lijnMax || lijnState.max || 0);
     if (level === 'doolhof') return 'doolhof-' + String(state.doolhofN || 0);
     if (level === 'robot') return 'robot-' + (state.robotKind || 'easy');
+    if (level === 'geld') return 'geld-' + (state.geldGame || 'pot') + '-' + String(state.geldMax || 0);
     return level || 'game';
   }
 
@@ -6072,6 +6616,10 @@
       startRobot(false);
       return;
     }
+    else if (state.level === 'geld') {
+      startGeld(false);
+      return;
+    }
     else if (state.level === 'weg') {
       startWeg(false);
       return;
@@ -7396,7 +7944,7 @@
   /* ---------- UI ---------- */
   function updateStarsUI() {
     var i, row, html, filled, el, rows;
-    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'vers-stars', 'robot-stars', 'robotlevel-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars', 'cups-stars', 'veranderd-stars', 'klinkers-stars', 'lijnlevel-stars', 'lijn-stars', 'doolhoflevel-stars'], String(state.stars));
+    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'vers-stars', 'robot-stars', 'robotlevel-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars', 'cups-stars', 'veranderd-stars', 'klinkers-stars', 'lijnlevel-stars', 'lijn-stars', 'doolhoflevel-stars', 'geld-stars', 'geldlevel-stars', 'geldplay-stars'], String(state.stars));
     filled = state.towardsReward;
     if (filled > 5) filled = 5;
     html = '';
@@ -7429,7 +7977,7 @@
   function showScreen(name) {
     var ids, i, el;
     state.screen = name;
-    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn'];
+    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay'];
     for (i = 0; i < ids.length; i++) {
       el = $('screen-' + ids[i]);
       if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
@@ -7504,6 +8052,11 @@
     if (s === 'doolhof' || s === 'verschillen' || s === 'robot') {
       leavePlay();
       showPuzzlesMenu();
+      return;
+    }
+    if (s === 'geldplay') {
+      leavePlay();
+      showGeldMenu();
       return;
     }
     if (s === 'memoryplay' || s === 'weg' || s === 'simon' || s === 'rij' || s === 'cups' || s === 'veranderd') {
@@ -9654,6 +10207,10 @@
       if (lijnDragStart(e)) {
         if (e.preventDefault) e.preventDefault();
       }
+    } else if (state.screen === 'geldplay') {
+      if (geldDragStart(e)) {
+        if (e.preventDefault) e.preventDefault();
+      }
     }
   }
 
@@ -9688,6 +10245,11 @@
         lijnDragMove(e);
         if (e.preventDefault) e.preventDefault();
       }
+    } else if (state.screen === 'geldplay') {
+      if (geldDrag.on) {
+        geldDragMove(e);
+        if (e.preventDefault) e.preventDefault();
+      }
     }
   }
 
@@ -9720,6 +10282,11 @@
     } else if (state.screen === 'lijn') {
       if (lijnDrag.on) {
         lijnDragEnd(e);
+        if (e.preventDefault) e.preventDefault();
+      }
+    } else if (state.screen === 'geldplay') {
+      if (geldDrag.on) {
+        geldDragEnd(e);
         if (e.preventDefault) e.preventDefault();
       }
     }
@@ -13108,6 +13675,7 @@
     if (typeof stopKlinkDrag === 'function') stopKlinkDrag();
     if (typeof stopLijnDrag === 'function') stopLijnDrag();
     if (typeof clearRobotTimer === 'function') clearRobotTimer();
+    if (typeof stopGeldDrag === 'function') stopGeldDrag();
     clearMemoryTimer();
     clearGeheugenTimer();
     clearSimonFlash();
@@ -13165,6 +13733,10 @@
       showTekenMenu();
     } else if (s === 'tekenmenu') {
       goToStart();
+    } else if (s === 'geldplay') {
+      showGeldLevel(state.geldGame);
+    } else if (s === 'geldlevel') {
+      showGeldMenu();
     } else {
       goToStart();
     }
@@ -13308,6 +13880,29 @@
     if (act === 'goto-tekenen') {
       cancelAdvanceWait();
       showTekenMenu();
+      return;
+    }
+    if (act === 'goto-geld') {
+      cancelAdvanceWait();
+      showGeldMenu();
+      beginQuestionVoice();
+      speak('geld-kies');
+      return;
+    }
+    if (act === 'geld-game') {
+      showGeldLevel(el.getAttribute('data-game') || 'pot');
+      return;
+    }
+    if (act === 'geld-level') {
+      startGeld(state.geldGame || 'pot', parseInt(el.getAttribute('data-max'), 10) || 10, true);
+      return;
+    }
+    if (act === 'geld-klaar') {
+      geldKlaar();
+      return;
+    }
+    if (act === 'geld-return') {
+      geldReturnCoin(el.getAttribute('data-i'));
       return;
     }
     if (act === 'teken-vrij') {
@@ -13579,6 +14174,8 @@
       e.preventDefault();
     } else if (state.screen === 'lijn' && lijnDragStart(e)) {
       e.preventDefault();
+    } else if (state.screen === 'geldplay' && geldDragStart(e)) {
+      e.preventDefault();
     }
   }
 
@@ -13615,6 +14212,10 @@
       return;
     }
     if (state.screen === 'lijn' && lijnDragMove(e)) {
+      e.preventDefault();
+      return;
+    }
+    if (state.screen === 'geldplay' && geldDragMove(e)) {
       e.preventDefault();
       return;
     }
@@ -13667,6 +14268,12 @@
       lastTouchEnd = now;
       return;
     }
+    if (state.screen === 'geldplay' && geldDragEnd(e)) {
+      clearPressed();
+      e.preventDefault();
+      lastTouchEnd = now;
+      return;
+    }
     el = findClickableFromEvent(e);
     clearPressed();
     if (el && (now - touchStartTime) < 700 && (!touchMoved || isNavAct(el))) {
@@ -13682,6 +14289,7 @@
     clearPressed();
     if (state.screen === 'klinkers') stopKlinkDrag();
     if (state.screen === 'lijn') stopLijnDrag();
+    if (state.screen === 'geldplay') stopGeldDrag();
   }
 
   function onClick(e) {
@@ -13703,6 +14311,710 @@
     e.preventDefault();
   }
 
+  /* ---------- Geld ---------- */
+  var geldCoinUid = 1;
+  var geldDrag = { on: false, kind: '', cents: 0, offX: 0, offY: 0, w: 0, h: 0, startX: 0, startY: 0, moved: false, ghost: null };
+  var geldState = { game: 'pot', max: 10, target: 0, coins: [], product: '', key: '', paid: 0 };
+
+  var GELD_COIN_SVG = {
+    '1c': '<svg class="geld-coin-svg" viewBox="0 0 100 100"> <defs> <radialGradient id="GCOIN_face" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#F7C89A"/> <stop offset="48%" stop-color="#E09248"/> <stop offset="100%" stop-color="#A05218"/> </radialGradient> <radialGradient id="GCOIN_sil" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#FFFFFF"/> <stop offset="48%" stop-color="#D5DAE0"/> <stop offset="100%" stop-color="#8A919A"/> </radialGradient> <radialGradient id="GCOIN_gold" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#FFF0B0"/> <stop offset="48%" stop-color="#E6C34A"/> <stop offset="100%" stop-color="#A07812"/> </radialGradient> </defs> <ellipse cx="50" cy="93.5" rx="36" ry="5.2" fill="#000" opacity="0.18"/> <circle cx="50" cy="49" r="45.2" fill="url(#GCOIN_face)" stroke="#6B3510" stroke-width="1.6"/> <circle cx="50" cy="49" r="39.5" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="1.4"/> <circle cx="50" cy="49" r="36.2" fill="none" stroke="#6B3510" stroke-width="0.7" opacity="0.25"/> <polygon points="50.00,14.00 50.64,15.72 52.47,15.80 51.04,16.94 51.53,18.70 50.00,17.69 48.47,18.70 48.96,16.94 47.53,15.80 49.36,15.72" fill="#FBE6C8" opacity="0.95"/> <polygon points="66.20,18.34 66.84,20.06 68.67,20.14 67.24,21.28 67.73,23.04 66.20,22.03 64.67,23.04 65.16,21.28 63.73,20.14 65.56,20.06" fill="#FBE6C8" opacity="0.95"/> <polygon points="78.06,30.20 78.70,31.92 80.53,32.00 79.10,33.14 79.59,34.90 78.06,33.89 76.53,34.90 77.02,33.14 75.59,32.00 77.42,31.92" fill="#FBE6C8" opacity="0.95"/> <polygon points="82.40,46.40 83.04,48.12 84.87,48.20 83.44,49.34 83.93,51.10 82.40,50.09 80.87,51.10 81.36,49.34 79.93,48.20 81.76,48.12" fill="#FBE6C8" opacity="0.95"/> <polygon points="78.06,62.60 78.70,64.32 80.53,64.40 79.10,65.54 79.59,67.30 78.06,66.29 76.53,67.30 77.02,65.54 75.59,64.40 77.42,64.32" fill="#FBE6C8" opacity="0.95"/> <polygon points="66.20,74.46 66.84,76.18 68.67,76.26 67.24,77.40 67.73,79.16 66.20,78.15 64.67,79.16 65.16,77.40 63.73,76.26 65.56,76.18" fill="#FBE6C8" opacity="0.95"/> <polygon points="50.00,78.80 50.64,80.52 52.47,80.60 51.04,81.74 51.53,83.50 50.00,82.49 48.47,83.50 48.96,81.74 47.53,80.60 49.36,80.52" fill="#FBE6C8" opacity="0.95"/> <polygon points="33.80,74.46 34.44,76.18 36.27,76.26 34.84,77.40 35.33,79.16 33.80,78.15 32.27,79.16 32.76,77.40 31.33,76.26 33.16,76.18" fill="#FBE6C8" opacity="0.95"/> <polygon points="21.94,62.60 22.58,64.32 24.41,64.40 22.98,65.54 23.47,67.30 21.94,66.29 20.41,67.30 20.90,65.54 19.47,64.40 21.30,64.32" fill="#FBE6C8" opacity="0.95"/> <polygon points="17.60,46.40 18.24,48.12 20.07,48.20 18.64,49.34 19.13,51.10 17.60,50.09 16.07,51.10 16.56,49.34 15.13,48.20 16.96,48.12" fill="#FBE6C8" opacity="0.95"/> <polygon points="21.94,30.20 22.58,31.92 24.41,32.00 22.98,33.14 23.47,34.90 21.94,33.89 20.41,34.90 20.90,33.14 19.47,32.00 21.30,31.92" fill="#FBE6C8" opacity="0.95"/> <polygon points="33.80,18.34 34.44,20.06 36.27,20.14 34.84,21.28 35.33,23.04 33.80,22.03 32.27,23.04 32.76,21.28 31.33,20.14 33.16,20.06" fill="#FBE6C8" opacity="0.95"/> <ellipse cx="38" cy="34" rx="16" ry="9" fill="#fff" opacity="0.18"/> <text x="50" y="55" text-anchor="middle" font-size="42" font-weight="800" fill="#4A240A" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">1</text> <text x="50" y="72" text-anchor="middle" font-size="14" font-weight="700" fill="#5A3010" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">cent</text> </svg>',
+    '2c': '<svg class="geld-coin-svg" viewBox="0 0 100 100"> <defs> <radialGradient id="GCOIN_face" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#F7C89A"/> <stop offset="48%" stop-color="#E09248"/> <stop offset="100%" stop-color="#A05218"/> </radialGradient> <radialGradient id="GCOIN_sil" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#FFFFFF"/> <stop offset="48%" stop-color="#D5DAE0"/> <stop offset="100%" stop-color="#8A919A"/> </radialGradient> <radialGradient id="GCOIN_gold" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#FFF0B0"/> <stop offset="48%" stop-color="#E6C34A"/> <stop offset="100%" stop-color="#A07812"/> </radialGradient> </defs> <ellipse cx="50" cy="93.5" rx="36" ry="5.2" fill="#000" opacity="0.18"/> <circle cx="50" cy="49" r="45.2" fill="url(#GCOIN_face)" stroke="#6B3510" stroke-width="1.6"/> <circle cx="50" cy="49" r="39.5" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="1.4"/> <circle cx="50" cy="49" r="36.2" fill="none" stroke="#6B3510" stroke-width="0.7" opacity="0.25"/> <polygon points="50.00,14.00 50.64,15.72 52.47,15.80 51.04,16.94 51.53,18.70 50.00,17.69 48.47,18.70 48.96,16.94 47.53,15.80 49.36,15.72" fill="#FBE6C8" opacity="0.95"/> <polygon points="66.20,18.34 66.84,20.06 68.67,20.14 67.24,21.28 67.73,23.04 66.20,22.03 64.67,23.04 65.16,21.28 63.73,20.14 65.56,20.06" fill="#FBE6C8" opacity="0.95"/> <polygon points="78.06,30.20 78.70,31.92 80.53,32.00 79.10,33.14 79.59,34.90 78.06,33.89 76.53,34.90 77.02,33.14 75.59,32.00 77.42,31.92" fill="#FBE6C8" opacity="0.95"/> <polygon points="82.40,46.40 83.04,48.12 84.87,48.20 83.44,49.34 83.93,51.10 82.40,50.09 80.87,51.10 81.36,49.34 79.93,48.20 81.76,48.12" fill="#FBE6C8" opacity="0.95"/> <polygon points="78.06,62.60 78.70,64.32 80.53,64.40 79.10,65.54 79.59,67.30 78.06,66.29 76.53,67.30 77.02,65.54 75.59,64.40 77.42,64.32" fill="#FBE6C8" opacity="0.95"/> <polygon points="66.20,74.46 66.84,76.18 68.67,76.26 67.24,77.40 67.73,79.16 66.20,78.15 64.67,79.16 65.16,77.40 63.73,76.26 65.56,76.18" fill="#FBE6C8" opacity="0.95"/> <polygon points="50.00,78.80 50.64,80.52 52.47,80.60 51.04,81.74 51.53,83.50 50.00,82.49 48.47,83.50 48.96,81.74 47.53,80.60 49.36,80.52" fill="#FBE6C8" opacity="0.95"/> <polygon points="33.80,74.46 34.44,76.18 36.27,76.26 34.84,77.40 35.33,79.16 33.80,78.15 32.27,79.16 32.76,77.40 31.33,76.26 33.16,76.18" fill="#FBE6C8" opacity="0.95"/> <polygon points="21.94,62.60 22.58,64.32 24.41,64.40 22.98,65.54 23.47,67.30 21.94,66.29 20.41,67.30 20.90,65.54 19.47,64.40 21.30,64.32" fill="#FBE6C8" opacity="0.95"/> <polygon points="17.60,46.40 18.24,48.12 20.07,48.20 18.64,49.34 19.13,51.10 17.60,50.09 16.07,51.10 16.56,49.34 15.13,48.20 16.96,48.12" fill="#FBE6C8" opacity="0.95"/> <polygon points="21.94,30.20 22.58,31.92 24.41,32.00 22.98,33.14 23.47,34.90 21.94,33.89 20.41,34.90 20.90,33.14 19.47,32.00 21.30,31.92" fill="#FBE6C8" opacity="0.95"/> <polygon points="33.80,18.34 34.44,20.06 36.27,20.14 34.84,21.28 35.33,23.04 33.80,22.03 32.27,23.04 32.76,21.28 31.33,20.14 33.16,20.06" fill="#FBE6C8" opacity="0.95"/> <ellipse cx="38" cy="34" rx="16" ry="9" fill="#fff" opacity="0.18"/> <text x="50" y="55" text-anchor="middle" font-size="42" font-weight="800" fill="#4A240A" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">2</text> <text x="50" y="72" text-anchor="middle" font-size="14" font-weight="700" fill="#5A3010" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">cent</text> </svg>',
+    '5c': '<svg class="geld-coin-svg" viewBox="0 0 100 100"> <defs> <radialGradient id="GCOIN_face" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#F7C89A"/> <stop offset="48%" stop-color="#E09248"/> <stop offset="100%" stop-color="#A05218"/> </radialGradient> <radialGradient id="GCOIN_sil" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#FFFFFF"/> <stop offset="48%" stop-color="#D5DAE0"/> <stop offset="100%" stop-color="#8A919A"/> </radialGradient> <radialGradient id="GCOIN_gold" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#FFF0B0"/> <stop offset="48%" stop-color="#E6C34A"/> <stop offset="100%" stop-color="#A07812"/> </radialGradient> </defs> <ellipse cx="50" cy="93.5" rx="36" ry="5.2" fill="#000" opacity="0.18"/> <circle cx="50" cy="49" r="45.2" fill="url(#GCOIN_face)" stroke="#6B3510" stroke-width="1.6"/> <circle cx="50" cy="49" r="39.5" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="1.4"/> <circle cx="50" cy="49" r="36.2" fill="none" stroke="#6B3510" stroke-width="0.7" opacity="0.25"/> <polygon points="50.00,14.00 50.64,15.72 52.47,15.80 51.04,16.94 51.53,18.70 50.00,17.69 48.47,18.70 48.96,16.94 47.53,15.80 49.36,15.72" fill="#FBE6C8" opacity="0.95"/> <polygon points="66.20,18.34 66.84,20.06 68.67,20.14 67.24,21.28 67.73,23.04 66.20,22.03 64.67,23.04 65.16,21.28 63.73,20.14 65.56,20.06" fill="#FBE6C8" opacity="0.95"/> <polygon points="78.06,30.20 78.70,31.92 80.53,32.00 79.10,33.14 79.59,34.90 78.06,33.89 76.53,34.90 77.02,33.14 75.59,32.00 77.42,31.92" fill="#FBE6C8" opacity="0.95"/> <polygon points="82.40,46.40 83.04,48.12 84.87,48.20 83.44,49.34 83.93,51.10 82.40,50.09 80.87,51.10 81.36,49.34 79.93,48.20 81.76,48.12" fill="#FBE6C8" opacity="0.95"/> <polygon points="78.06,62.60 78.70,64.32 80.53,64.40 79.10,65.54 79.59,67.30 78.06,66.29 76.53,67.30 77.02,65.54 75.59,64.40 77.42,64.32" fill="#FBE6C8" opacity="0.95"/> <polygon points="66.20,74.46 66.84,76.18 68.67,76.26 67.24,77.40 67.73,79.16 66.20,78.15 64.67,79.16 65.16,77.40 63.73,76.26 65.56,76.18" fill="#FBE6C8" opacity="0.95"/> <polygon points="50.00,78.80 50.64,80.52 52.47,80.60 51.04,81.74 51.53,83.50 50.00,82.49 48.47,83.50 48.96,81.74 47.53,80.60 49.36,80.52" fill="#FBE6C8" opacity="0.95"/> <polygon points="33.80,74.46 34.44,76.18 36.27,76.26 34.84,77.40 35.33,79.16 33.80,78.15 32.27,79.16 32.76,77.40 31.33,76.26 33.16,76.18" fill="#FBE6C8" opacity="0.95"/> <polygon points="21.94,62.60 22.58,64.32 24.41,64.40 22.98,65.54 23.47,67.30 21.94,66.29 20.41,67.30 20.90,65.54 19.47,64.40 21.30,64.32" fill="#FBE6C8" opacity="0.95"/> <polygon points="17.60,46.40 18.24,48.12 20.07,48.20 18.64,49.34 19.13,51.10 17.60,50.09 16.07,51.10 16.56,49.34 15.13,48.20 16.96,48.12" fill="#FBE6C8" opacity="0.95"/> <polygon points="21.94,30.20 22.58,31.92 24.41,32.00 22.98,33.14 23.47,34.90 21.94,33.89 20.41,34.90 20.90,33.14 19.47,32.00 21.30,31.92" fill="#FBE6C8" opacity="0.95"/> <polygon points="33.80,18.34 34.44,20.06 36.27,20.14 34.84,21.28 35.33,23.04 33.80,22.03 32.27,23.04 32.76,21.28 31.33,20.14 33.16,20.06" fill="#FBE6C8" opacity="0.95"/> <ellipse cx="38" cy="34" rx="16" ry="9" fill="#fff" opacity="0.26"/> <text x="50" y="55" text-anchor="middle" font-size="42" font-weight="800" fill="#4A240A" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">5</text> <text x="50" y="72" text-anchor="middle" font-size="14" font-weight="700" fill="#5A3010" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">cent</text> </svg>',
+    '10c': '<svg class="geld-coin-svg" viewBox="0 0 100 100"> <defs> <radialGradient id="GCOIN_face" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#FFE9A8"/> <stop offset="48%" stop-color="#E8C445"/> <stop offset="100%" stop-color="#A07810"/> </radialGradient> <radialGradient id="GCOIN_sil" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#FFFFFF"/> <stop offset="48%" stop-color="#D5DAE0"/> <stop offset="100%" stop-color="#8A919A"/> </radialGradient> <radialGradient id="GCOIN_gold" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#FFF0B0"/> <stop offset="48%" stop-color="#E6C34A"/> <stop offset="100%" stop-color="#A07812"/> </radialGradient> </defs> <ellipse cx="50" cy="93.5" rx="36" ry="5.2" fill="#000" opacity="0.18"/> <circle cx="50" cy="49" r="45.2" fill="url(#GCOIN_face)" stroke="#7A5A0A" stroke-width="1.6"/> <circle cx="50" cy="49" r="39.5" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="1.4"/> <circle cx="50" cy="49" r="36.2" fill="none" stroke="#7A5A0A" stroke-width="0.7" opacity="0.25"/> <polygon points="50.00,14.00 50.64,15.72 52.47,15.80 51.04,16.94 51.53,18.70 50.00,17.69 48.47,18.70 48.96,16.94 47.53,15.80 49.36,15.72" fill="#FFF6D0" opacity="0.95"/> <polygon points="66.20,18.34 66.84,20.06 68.67,20.14 67.24,21.28 67.73,23.04 66.20,22.03 64.67,23.04 65.16,21.28 63.73,20.14 65.56,20.06" fill="#FFF6D0" opacity="0.95"/> <polygon points="78.06,30.20 78.70,31.92 80.53,32.00 79.10,33.14 79.59,34.90 78.06,33.89 76.53,34.90 77.02,33.14 75.59,32.00 77.42,31.92" fill="#FFF6D0" opacity="0.95"/> <polygon points="82.40,46.40 83.04,48.12 84.87,48.20 83.44,49.34 83.93,51.10 82.40,50.09 80.87,51.10 81.36,49.34 79.93,48.20 81.76,48.12" fill="#FFF6D0" opacity="0.95"/> <polygon points="78.06,62.60 78.70,64.32 80.53,64.40 79.10,65.54 79.59,67.30 78.06,66.29 76.53,67.30 77.02,65.54 75.59,64.40 77.42,64.32" fill="#FFF6D0" opacity="0.95"/> <polygon points="66.20,74.46 66.84,76.18 68.67,76.26 67.24,77.40 67.73,79.16 66.20,78.15 64.67,79.16 65.16,77.40 63.73,76.26 65.56,76.18" fill="#FFF6D0" opacity="0.95"/> <polygon points="50.00,78.80 50.64,80.52 52.47,80.60 51.04,81.74 51.53,83.50 50.00,82.49 48.47,83.50 48.96,81.74 47.53,80.60 49.36,80.52" fill="#FFF6D0" opacity="0.95"/> <polygon points="33.80,74.46 34.44,76.18 36.27,76.26 34.84,77.40 35.33,79.16 33.80,78.15 32.27,79.16 32.76,77.40 31.33,76.26 33.16,76.18" fill="#FFF6D0" opacity="0.95"/> <polygon points="21.94,62.60 22.58,64.32 24.41,64.40 22.98,65.54 23.47,67.30 21.94,66.29 20.41,67.30 20.90,65.54 19.47,64.40 21.30,64.32" fill="#FFF6D0" opacity="0.95"/> <polygon points="17.60,46.40 18.24,48.12 20.07,48.20 18.64,49.34 19.13,51.10 17.60,50.09 16.07,51.10 16.56,49.34 15.13,48.20 16.96,48.12" fill="#FFF6D0" opacity="0.95"/> <polygon points="21.94,30.20 22.58,31.92 24.41,32.00 22.98,33.14 23.47,34.90 21.94,33.89 20.41,34.90 20.90,33.14 19.47,32.00 21.30,31.92" fill="#FFF6D0" opacity="0.95"/> <polygon points="33.80,18.34 34.44,20.06 36.27,20.14 34.84,21.28 35.33,23.04 33.80,22.03 32.27,23.04 32.76,21.28 31.33,20.14 33.16,20.06" fill="#FFF6D0" opacity="0.95"/> <ellipse cx="38" cy="34" rx="16" ry="9" fill="#fff" opacity="0.18"/> <text x="50" y="55" text-anchor="middle" font-size="34" font-weight="800" fill="#4A3808" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">10</text> <text x="50" y="71" text-anchor="middle" font-size="13" font-weight="700" fill="#5A4408" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">cent</text> </svg>',
+    '20c': '<svg class="geld-coin-svg" viewBox="0 0 100 100"> <defs> <radialGradient id="GCOIN_face" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#FFE9A8"/> <stop offset="48%" stop-color="#E8C445"/> <stop offset="100%" stop-color="#A07810"/> </radialGradient> <radialGradient id="GCOIN_sil" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#FFFFFF"/> <stop offset="48%" stop-color="#D5DAE0"/> <stop offset="100%" stop-color="#8A919A"/> </radialGradient> <radialGradient id="GCOIN_gold" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#FFF0B0"/> <stop offset="48%" stop-color="#E6C34A"/> <stop offset="100%" stop-color="#A07812"/> </radialGradient> </defs> <ellipse cx="50" cy="93.5" rx="36" ry="5.2" fill="#000" opacity="0.18"/> <path d="M5.01,50.01 A45.00,45.00 0 0 1 9.91,28.57 A16.50,16.50 0 0 0 21.16,14.46 A45.00,45.00 0 0 1 40.98,4.91 A16.50,16.50 0 0 0 59.02,4.91 A45.00,45.00 0 0 1 78.84,14.46 A16.50,16.50 0 0 0 90.09,28.57 A45.00,45.00 0 0 1 94.99,50.01 A16.50,16.50 0 0 0 90.97,67.61 A45.00,45.00 0 0 1 77.26,84.80 A16.50,16.50 0 0 0 61.00,92.64 A45.00,45.00 0 0 1 39.00,92.64 A16.50,16.50 0 0 0 22.74,84.80 A45.00,45.00 0 0 1 9.03,67.61 A16.50,16.50 0 0 0 5.01,50.01 Z" fill="url(#GCOIN_face)" stroke="#7A5A0A" stroke-width="1.6"/> <circle cx="50" cy="49" r="35.5" fill="none" stroke="#C4A028" stroke-width="1.1" opacity="0.7"/> <polygon points="50.00,15.20 50.64,16.92 52.47,17.00 51.04,18.14 51.53,19.90 50.00,18.89 48.47,19.90 48.96,18.14 47.53,17.00 49.36,16.92" fill="#FFF6D0" opacity="0.95"/> <polygon points="65.60,19.38 66.24,21.10 68.07,21.18 66.64,22.32 67.13,24.08 65.60,23.07 64.07,24.08 64.56,22.32 63.13,21.18 64.96,21.10" fill="#FFF6D0" opacity="0.95"/> <polygon points="77.02,30.80 77.66,32.52 79.49,32.60 78.06,33.74 78.55,35.50 77.02,34.49 75.49,35.50 75.98,33.74 74.55,32.60 76.38,32.52" fill="#FFF6D0" opacity="0.95"/> <polygon points="81.20,46.40 81.84,48.12 83.67,48.20 82.24,49.34 82.73,51.10 81.20,50.09 79.67,51.10 80.16,49.34 78.73,48.20 80.56,48.12" fill="#FFF6D0" opacity="0.95"/> <polygon points="77.02,62.00 77.66,63.72 79.49,63.80 78.06,64.94 78.55,66.70 77.02,65.69 75.49,66.70 75.98,64.94 74.55,63.80 76.38,63.72" fill="#FFF6D0" opacity="0.95"/> <polygon points="65.60,73.42 66.24,75.14 68.07,75.22 66.64,76.36 67.13,78.12 65.60,77.11 64.07,78.12 64.56,76.36 63.13,75.22 64.96,75.14" fill="#FFF6D0" opacity="0.95"/> <polygon points="50.00,77.60 50.64,79.32 52.47,79.40 51.04,80.54 51.53,82.30 50.00,81.29 48.47,82.30 48.96,80.54 47.53,79.40 49.36,79.32" fill="#FFF6D0" opacity="0.95"/> <polygon points="34.40,73.42 35.04,75.14 36.87,75.22 35.44,76.36 35.93,78.12 34.40,77.11 32.87,78.12 33.36,76.36 31.93,75.22 33.76,75.14" fill="#FFF6D0" opacity="0.95"/> <polygon points="22.98,62.00 23.62,63.72 25.45,63.80 24.02,64.94 24.51,66.70 22.98,65.69 21.45,66.70 21.94,64.94 20.51,63.80 22.34,63.72" fill="#FFF6D0" opacity="0.95"/> <polygon points="18.80,46.40 19.44,48.12 21.27,48.20 19.84,49.34 20.33,51.10 18.80,50.09 17.27,51.10 17.76,49.34 16.33,48.20 18.16,48.12" fill="#FFF6D0" opacity="0.95"/> <polygon points="22.98,30.80 23.62,32.52 25.45,32.60 24.02,33.74 24.51,35.50 22.98,34.49 21.45,35.50 21.94,33.74 20.51,32.60 22.34,32.52" fill="#FFF6D0" opacity="0.95"/> <polygon points="34.40,19.38 35.04,21.10 36.87,21.18 35.44,22.32 35.93,24.08 34.40,23.07 32.87,24.08 33.36,22.32 31.93,21.18 33.76,21.10" fill="#FFF6D0" opacity="0.95"/> <ellipse cx="38" cy="34" rx="16" ry="9" fill="#fff" opacity="0.26"/> <text x="50" y="55" text-anchor="middle" font-size="34" font-weight="800" fill="#4A3808" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">20</text> <text x="50" y="71" text-anchor="middle" font-size="13" font-weight="700" fill="#5A4408" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">cent</text> </svg>',
+    '50c': '<svg class="geld-coin-svg" viewBox="0 0 100 100"> <defs> <radialGradient id="GCOIN_face" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#FFE9A8"/> <stop offset="48%" stop-color="#E8C445"/> <stop offset="100%" stop-color="#A07810"/> </radialGradient> <radialGradient id="GCOIN_sil" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#FFFFFF"/> <stop offset="48%" stop-color="#D5DAE0"/> <stop offset="100%" stop-color="#8A919A"/> </radialGradient> <radialGradient id="GCOIN_gold" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#FFF0B0"/> <stop offset="48%" stop-color="#E6C34A"/> <stop offset="100%" stop-color="#A07812"/> </radialGradient> </defs> <ellipse cx="50" cy="93.5" rx="36" ry="5.2" fill="#000" opacity="0.18"/> <circle cx="50" cy="49" r="45.2" fill="url(#GCOIN_face)" stroke="#7A5A0A" stroke-width="1.6"/> <circle cx="50" cy="49" r="39.5" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="1.4"/> <circle cx="50" cy="49" r="36.2" fill="none" stroke="#7A5A0A" stroke-width="0.7" opacity="0.25"/> <polygon points="50.00,14.00 50.64,15.72 52.47,15.80 51.04,16.94 51.53,18.70 50.00,17.69 48.47,18.70 48.96,16.94 47.53,15.80 49.36,15.72" fill="#FFF6D0" opacity="0.95"/> <polygon points="66.20,18.34 66.84,20.06 68.67,20.14 67.24,21.28 67.73,23.04 66.20,22.03 64.67,23.04 65.16,21.28 63.73,20.14 65.56,20.06" fill="#FFF6D0" opacity="0.95"/> <polygon points="78.06,30.20 78.70,31.92 80.53,32.00 79.10,33.14 79.59,34.90 78.06,33.89 76.53,34.90 77.02,33.14 75.59,32.00 77.42,31.92" fill="#FFF6D0" opacity="0.95"/> <polygon points="82.40,46.40 83.04,48.12 84.87,48.20 83.44,49.34 83.93,51.10 82.40,50.09 80.87,51.10 81.36,49.34 79.93,48.20 81.76,48.12" fill="#FFF6D0" opacity="0.95"/> <polygon points="78.06,62.60 78.70,64.32 80.53,64.40 79.10,65.54 79.59,67.30 78.06,66.29 76.53,67.30 77.02,65.54 75.59,64.40 77.42,64.32" fill="#FFF6D0" opacity="0.95"/> <polygon points="66.20,74.46 66.84,76.18 68.67,76.26 67.24,77.40 67.73,79.16 66.20,78.15 64.67,79.16 65.16,77.40 63.73,76.26 65.56,76.18" fill="#FFF6D0" opacity="0.95"/> <polygon points="50.00,78.80 50.64,80.52 52.47,80.60 51.04,81.74 51.53,83.50 50.00,82.49 48.47,83.50 48.96,81.74 47.53,80.60 49.36,80.52" fill="#FFF6D0" opacity="0.95"/> <polygon points="33.80,74.46 34.44,76.18 36.27,76.26 34.84,77.40 35.33,79.16 33.80,78.15 32.27,79.16 32.76,77.40 31.33,76.26 33.16,76.18" fill="#FFF6D0" opacity="0.95"/> <polygon points="21.94,62.60 22.58,64.32 24.41,64.40 22.98,65.54 23.47,67.30 21.94,66.29 20.41,67.30 20.90,65.54 19.47,64.40 21.30,64.32" fill="#FFF6D0" opacity="0.95"/> <polygon points="17.60,46.40 18.24,48.12 20.07,48.20 18.64,49.34 19.13,51.10 17.60,50.09 16.07,51.10 16.56,49.34 15.13,48.20 16.96,48.12" fill="#FFF6D0" opacity="0.95"/> <polygon points="21.94,30.20 22.58,31.92 24.41,32.00 22.98,33.14 23.47,34.90 21.94,33.89 20.41,34.90 20.90,33.14 19.47,32.00 21.30,31.92" fill="#FFF6D0" opacity="0.95"/> <polygon points="33.80,18.34 34.44,20.06 36.27,20.14 34.84,21.28 35.33,23.04 33.80,22.03 32.27,23.04 32.76,21.28 31.33,20.14 33.16,20.06" fill="#FFF6D0" opacity="0.95"/> <ellipse cx="38" cy="34" rx="16" ry="9" fill="#fff" opacity="0.26"/> <text x="50" y="55" text-anchor="middle" font-size="34" font-weight="800" fill="#4A3808" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">50</text> <text x="50" y="71" text-anchor="middle" font-size="13" font-weight="700" fill="#5A4408" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">cent</text> </svg>',
+    '1e': '<svg class="geld-coin-svg" viewBox="0 0 100 100"> <defs> <radialGradient id="GCOIN_face" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#FFE9A8"/> <stop offset="48%" stop-color="#E8C445"/> <stop offset="100%" stop-color="#A07810"/> </radialGradient> <radialGradient id="GCOIN_sil" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#FFFFFF"/> <stop offset="48%" stop-color="#D5DAE0"/> <stop offset="100%" stop-color="#8A919A"/> </radialGradient> <radialGradient id="GCOIN_gold" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#FFF0B0"/> <stop offset="48%" stop-color="#E6C34A"/> <stop offset="100%" stop-color="#A07812"/> </radialGradient> </defs> <ellipse cx="50" cy="93.5" rx="36" ry="5.2" fill="#000" opacity="0.18"/> <circle cx="50" cy="49" r="45.2" fill="url(#GCOIN_gold)" stroke="#7A5A0A" stroke-width="1.6"/> <circle cx="50" cy="49" r="32.2" fill="url(#GCOIN_sil)" stroke="#B8A040" stroke-width="1.8"/> <circle cx="50" cy="49" r="30.6" fill="none" stroke="#FFFFFF" stroke-width="0.7" opacity="0.45"/> <polygon points="50.00,7.60 50.69,9.45 52.66,9.53 51.12,10.76 51.65,12.67 50.00,11.58 48.35,12.67 48.88,10.76 47.34,9.53 49.31,9.45" fill="#FFF8DC" opacity="0.95"/> <polygon points="69.30,12.77 69.99,14.62 71.96,14.71 70.42,15.93 70.95,17.84 69.30,16.75 67.65,17.84 68.18,15.93 66.64,14.71 68.61,14.62" fill="#FFF8DC" opacity="0.95"/> <polygon points="83.43,26.90 84.12,28.75 86.09,28.83 84.55,30.06 85.07,31.97 83.43,30.88 81.78,31.97 82.31,30.06 80.77,28.83 82.74,28.75" fill="#FFF8DC" opacity="0.95"/> <polygon points="88.60,46.20 89.29,48.05 91.26,48.13 89.72,49.36 90.25,51.27 88.60,50.18 86.95,51.27 87.48,49.36 85.94,48.13 87.91,48.05" fill="#FFF8DC" opacity="0.95"/> <polygon points="83.43,65.50 84.12,67.35 86.09,67.43 84.55,68.66 85.07,70.57 83.43,69.48 81.78,70.57 82.31,68.66 80.77,67.43 82.74,67.35" fill="#FFF8DC" opacity="0.95"/> <polygon points="69.30,79.63 69.99,81.48 71.96,81.56 70.42,82.79 70.95,84.69 69.30,83.60 67.65,84.69 68.18,82.79 66.64,81.56 68.61,81.48" fill="#FFF8DC" opacity="0.95"/> <polygon points="50.00,84.80 50.69,86.65 52.66,86.73 51.12,87.96 51.65,89.87 50.00,88.78 48.35,89.87 48.88,87.96 47.34,86.73 49.31,86.65" fill="#FFF8DC" opacity="0.95"/> <polygon points="30.70,79.63 31.39,81.48 33.36,81.56 31.82,82.79 32.35,84.69 30.70,83.60 29.05,84.69 29.58,82.79 28.04,81.56 30.01,81.48" fill="#FFF8DC" opacity="0.95"/> <polygon points="16.57,65.50 17.26,67.35 19.23,67.43 17.69,68.66 18.22,70.57 16.57,69.48 14.93,70.57 15.45,68.66 13.91,67.43 15.88,67.35" fill="#FFF8DC" opacity="0.95"/> <polygon points="11.40,46.20 12.09,48.05 14.06,48.13 12.52,49.36 13.05,51.27 11.40,50.18 9.75,51.27 10.28,49.36 8.74,48.13 10.71,48.05" fill="#FFF8DC" opacity="0.95"/> <polygon points="16.57,26.90 17.26,28.75 19.23,28.83 17.69,30.06 18.22,31.97 16.57,30.88 14.93,31.97 15.45,30.06 13.91,28.83 15.88,28.75" fill="#FFF8DC" opacity="0.95"/> <polygon points="30.70,12.77 31.39,14.62 33.36,14.71 31.82,15.93 32.35,17.84 30.70,16.75 29.05,17.84 29.58,15.93 28.04,14.71 30.01,14.62" fill="#FFF8DC" opacity="0.95"/> <ellipse cx="38" cy="34" rx="16" ry="9" fill="#fff" opacity="0.26"/> <text x="50" y="32" text-anchor="middle" font-size="12" font-weight="800" fill="#2A3340" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">€</text> <text x="50" y="58" text-anchor="middle" font-size="38" font-weight="800" fill="#2A3340" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">1</text> <text x="50" y="73" text-anchor="middle" font-size="10" font-weight="700" fill="#3A4450" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">EURO</text> </svg>',
+    '2e': '<svg class="geld-coin-svg" viewBox="0 0 100 100"> <defs> <radialGradient id="GCOIN_face" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#FFE9A8"/> <stop offset="48%" stop-color="#E8C445"/> <stop offset="100%" stop-color="#A07810"/> </radialGradient> <radialGradient id="GCOIN_sil" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#FFFFFF"/> <stop offset="48%" stop-color="#D5DAE0"/> <stop offset="100%" stop-color="#8A919A"/> </radialGradient> <radialGradient id="GCOIN_gold" cx="36%" cy="30%" r="72%"> <stop offset="0%" stop-color="#FFF0B0"/> <stop offset="48%" stop-color="#E6C34A"/> <stop offset="100%" stop-color="#A07812"/> </radialGradient> </defs> <ellipse cx="50" cy="93.5" rx="36" ry="5.2" fill="#000" opacity="0.18"/> <circle cx="50" cy="49" r="45.2" fill="url(#GCOIN_sil)" stroke="#5A6068" stroke-width="1.6"/> <circle cx="50" cy="49" r="32.2" fill="url(#GCOIN_gold)" stroke="#8A919A" stroke-width="1.8"/> <circle cx="50" cy="49" r="30.6" fill="none" stroke="#FFFFFF" stroke-width="0.7" opacity="0.4"/> <polygon points="50.00,7.60 50.69,9.45 52.66,9.53 51.12,10.76 51.65,12.67 50.00,11.58 48.35,12.67 48.88,10.76 47.34,9.53 49.31,9.45" fill="#F4F6F8" opacity="0.95"/> <polygon points="69.30,12.77 69.99,14.62 71.96,14.71 70.42,15.93 70.95,17.84 69.30,16.75 67.65,17.84 68.18,15.93 66.64,14.71 68.61,14.62" fill="#F4F6F8" opacity="0.95"/> <polygon points="83.43,26.90 84.12,28.75 86.09,28.83 84.55,30.06 85.07,31.97 83.43,30.88 81.78,31.97 82.31,30.06 80.77,28.83 82.74,28.75" fill="#F4F6F8" opacity="0.95"/> <polygon points="88.60,46.20 89.29,48.05 91.26,48.13 89.72,49.36 90.25,51.27 88.60,50.18 86.95,51.27 87.48,49.36 85.94,48.13 87.91,48.05" fill="#F4F6F8" opacity="0.95"/> <polygon points="83.43,65.50 84.12,67.35 86.09,67.43 84.55,68.66 85.07,70.57 83.43,69.48 81.78,70.57 82.31,68.66 80.77,67.43 82.74,67.35" fill="#F4F6F8" opacity="0.95"/> <polygon points="69.30,79.63 69.99,81.48 71.96,81.56 70.42,82.79 70.95,84.69 69.30,83.60 67.65,84.69 68.18,82.79 66.64,81.56 68.61,81.48" fill="#F4F6F8" opacity="0.95"/> <polygon points="50.00,84.80 50.69,86.65 52.66,86.73 51.12,87.96 51.65,89.87 50.00,88.78 48.35,89.87 48.88,87.96 47.34,86.73 49.31,86.65" fill="#F4F6F8" opacity="0.95"/> <polygon points="30.70,79.63 31.39,81.48 33.36,81.56 31.82,82.79 32.35,84.69 30.70,83.60 29.05,84.69 29.58,82.79 28.04,81.56 30.01,81.48" fill="#F4F6F8" opacity="0.95"/> <polygon points="16.57,65.50 17.26,67.35 19.23,67.43 17.69,68.66 18.22,70.57 16.57,69.48 14.93,70.57 15.45,68.66 13.91,67.43 15.88,67.35" fill="#F4F6F8" opacity="0.95"/> <polygon points="11.40,46.20 12.09,48.05 14.06,48.13 12.52,49.36 13.05,51.27 11.40,50.18 9.75,51.27 10.28,49.36 8.74,48.13 10.71,48.05" fill="#F4F6F8" opacity="0.95"/> <polygon points="16.57,26.90 17.26,28.75 19.23,28.83 17.69,30.06 18.22,31.97 16.57,30.88 14.93,31.97 15.45,30.06 13.91,28.83 15.88,28.75" fill="#F4F6F8" opacity="0.95"/> <polygon points="30.70,12.77 31.39,14.62 33.36,14.71 31.82,15.93 32.35,17.84 30.70,16.75 29.05,17.84 29.58,15.93 28.04,14.71 30.01,14.62" fill="#F4F6F8" opacity="0.95"/> <ellipse cx="38" cy="34" rx="16" ry="9" fill="#fff" opacity="0.26"/> <text x="50" y="32" text-anchor="middle" font-size="12" font-weight="800" fill="#4A3808" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">€</text> <text x="50" y="58" text-anchor="middle" font-size="38" font-weight="800" fill="#4A3808" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">2</text> <text x="50" y="73" text-anchor="middle" font-size="10" font-weight="700" fill="#5A4408" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">EURO</text> </svg>'
+  };
+  var GELD_PIGGY_SVG = '<svg class="geld-piggy-svg" viewBox="0 0 400 360"> <ellipse cx="210" cy="328" rx="128" ry="16" fill="#000" opacity="0.12"/> <path d="M72 205 C42 198, 34 170, 58 164 C84 158, 86 186, 64 190 C52 193, 54 176, 68 178" fill="none" stroke="#E0568A" stroke-width="9" stroke-linecap="round"/> <rect x="118" y="262" width="40" height="52" rx="18" fill="#E0568A"/> <rect x="236" y="262" width="40" height="52" rx="18" fill="#E0568A"/> <rect x="158" y="270" width="38" height="50" rx="18" fill="#FF7EB3"/> <rect x="268" y="270" width="38" height="50" rx="18" fill="#FF7EB3"/> <rect x="158" y="304" width="38" height="16" rx="8" fill="#E0568A" opacity="0.35"/> <rect x="268" y="304" width="38" height="16" rx="8" fill="#E0568A" opacity="0.35"/> <ellipse cx="210" cy="205" rx="148" ry="112" fill="#FF7EB3"/> <ellipse cx="210" cy="205" rx="148" ry="112" fill="none" stroke="#E0568A" stroke-width="6"/> <ellipse cx="222" cy="238" rx="96" ry="58" fill="#FFB6D2" opacity="0.75"/> <g transform="rotate(-22 148 108)"> <ellipse cx="148" cy="108" rx="30" ry="40" fill="#FF7EB3" stroke="#E0568A" stroke-width="5"/> <ellipse cx="148" cy="114" rx="14" ry="22" fill="#FFC1E0"/> </g> <g transform="rotate(20 260 100)"> <ellipse cx="260" cy="100" rx="30" ry="40" fill="#FF7EB3" stroke="#E0568A" stroke-width="5"/> <ellipse cx="260" cy="106" rx="14" ry="22" fill="#FFC1E0"/> </g> <rect x="186" y="92" width="62" height="14" rx="7" fill="#6A2040"/> <rect x="192" y="90" width="50" height="7" rx="3.5" fill="#2A1018"/> <ellipse cx="198" cy="184" rx="17" ry="19" fill="#fff"/> <ellipse cx="270" cy="178" rx="17" ry="19" fill="#fff"/> <circle cx="204" cy="188" r="8.5" fill="#243044"/> <circle cx="276" cy="182" r="8.5" fill="#243044"/> <circle cx="208" cy="183" r="3.2" fill="#fff"/> <circle cx="280" cy="177" r="3.2" fill="#fff"/> <path d="M184 166 Q198 160 212 166" fill="none" stroke="#243044" stroke-width="3.2" stroke-linecap="round"/> <path d="M256 160 Q270 154 284 160" fill="none" stroke="#243044" stroke-width="3.2" stroke-linecap="round"/> <ellipse cx="176" cy="214" rx="18" ry="11" fill="#FF4D88" opacity="0.38"/> <ellipse cx="304" cy="206" rx="18" ry="11" fill="#FF4D88" opacity="0.38"/> <ellipse cx="248" cy="224" rx="46" ry="34" fill="#FF6B9D" stroke="#E0568A" stroke-width="4"/> <ellipse cx="248" cy="218" rx="38" ry="16" fill="#FF8FB3" opacity="0.45"/> <ellipse cx="232" cy="226" rx="8" ry="12" fill="#C44A7A"/> <ellipse cx="266" cy="224" rx="8" ry="12" fill="#C44A7A"/> </svg>';
+  var GELD_KASSA_SVG = '<svg class="geld-kassa-svg" viewBox="0 0 300 260"> <ellipse cx="150" cy="250" rx="118" ry="8" fill="#000" opacity="0.12"/>  <path d="M40 178 L260 178 L270 236 L30 236 Z" fill="#F3E2C0" stroke="#C4A36A" stroke-width="3" stroke-linejoin="round"/> <rect x="52" y="188" width="196" height="8" rx="3" fill="#E2C48A"/> <path d="M90 198 L90 228" stroke="#C4A36A" stroke-width="2"/> <path d="M150 198 L150 228" stroke="#C4A36A" stroke-width="2"/> <path d="M210 198 L210 228" stroke="#C4A36A" stroke-width="2"/>  <rect x="44" y="96" width="212" height="88" rx="14" fill="#FF8A4C" stroke="#D26520" stroke-width="4"/>  <rect x="58" y="10" width="184" height="92" rx="12" fill="#E56B28" stroke="#C45414" stroke-width="3"/> <rect x="70" y="20" width="160" height="72" rx="8" fill="#1A3A28"/> <rect x="76" y="26" width="148" height="60" rx="5" fill="#143324"/>  <rect x="62" y="112" width="30" height="24" rx="5" fill="#FFF3E0"/> <rect x="100" y="112" width="30" height="24" rx="5" fill="#FFF3E0"/> <rect x="138" y="112" width="30" height="24" rx="5" fill="#FFF3E0"/> <rect x="176" y="112" width="30" height="24" rx="5" fill="#FFF3E0"/> <rect x="214" y="112" width="26" height="24" rx="5" fill="#FFC93A"/> <rect x="62" y="144" width="30" height="24" rx="5" fill="#FFF3E0"/> <rect x="100" y="144" width="30" height="24" rx="5" fill="#FFF3E0"/> <rect x="138" y="144" width="30" height="24" rx="5" fill="#FFF3E0"/> <rect x="176" y="144" width="30" height="24" rx="5" fill="#FFF3E0"/> <rect x="214" y="144" width="26" height="24" rx="5" fill="#4CC86E"/> </svg>';
+  var GELD_PRODUCT_SVG = {
+    'auto': '<svg class="geld-product-svg" viewBox="0 0 240 170"> <ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/> <path d="M28 108 Q24 86 48 82 L70 82 L88 50 Q94 42 106 42 L168 42 Q180 42 186 54 L204 82 L214 82 Q230 84 228 108 Z" fill="#2FB3F0" stroke="#1A7FB3" stroke-width="4" stroke-linejoin="round"/> <path d="M92 82 L104 54 Q108 48 118 48 L162 48 Q172 48 176 58 L190 82 Z" fill="#B8E8F8" stroke="#1A7FB3" stroke-width="3.5" stroke-linejoin="round"/> <path d="M118 54 L118 82" stroke="#1A7FB3" stroke-width="3"/> <rect x="48" y="92" width="164" height="10" rx="4" fill="#FFC93A"/> <path d="M44 100 Q70 118 110 110" fill="none" stroke="#1A4A6A" stroke-width="3" stroke-linecap="round"/> <ellipse cx="36" cy="100" rx="8" ry="7" fill="#FFE08A" stroke="#E0A020" stroke-width="2"/> <ellipse cx="220" cy="100" rx="7" ry="6" fill="#FF8A80" stroke="#C62828" stroke-width="2"/> <circle cx="74" cy="122" r="22" fill="#243044"/> <circle cx="74" cy="122" r="12" fill="#C5CCD4"/> <circle cx="74" cy="122" r="5" fill="#243044"/> <circle cx="176" cy="122" r="22" fill="#243044"/> <circle cx="176" cy="122" r="12" fill="#C5CCD4"/> <circle cx="176" cy="122" r="5" fill="#243044"/> <circle cx="150" cy="66" r="6" fill="#fff"/> <circle cx="152" cy="67" r="3.2" fill="#243044"/> </svg>',
+    'bal': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><circle cx="120" cy="86" r="54" fill="#E53935" stroke="#8B1515" stroke-width="4"/><path d="M120 32 C150 50 168 78 174 110" fill="none" stroke="#fff" stroke-width="4"/><path d="M120 32 C90 50 72 78 66 110" fill="none" stroke="#fff" stroke-width="4"/><path d="M70 70 Q120 100 170 70" fill="none" stroke="#fff" stroke-width="4"/><circle cx="120" cy="86" r="14" fill="#fff" stroke="#8B1515" stroke-width="3"/></svg>',
+    'teddy': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><circle cx="70" cy="52" r="22" fill="#C28B4E" stroke="#8A5A22" stroke-width="3"/><circle cx="170" cy="52" r="22" fill="#C28B4E" stroke="#8A5A22" stroke-width="3"/><circle cx="70" cy="52" r="12" fill="#E8C090"/><circle cx="170" cy="52" r="12" fill="#E8C090"/><ellipse cx="120" cy="108" rx="58" ry="48" fill="#C28B4E" stroke="#8A5A22" stroke-width="3"/><circle cx="120" cy="70" r="38" fill="#C28B4E" stroke="#8A5A22" stroke-width="3"/><ellipse cx="120" cy="86" rx="22" ry="16" fill="#E8C090"/><circle cx="106" cy="64" r="5" fill="#243044"/><circle cx="134" cy="64" r="5" fill="#243044"/><ellipse cx="120" cy="80" rx="8" ry="6" fill="#8A5A22"/><path d="M108 92 Q120 102 132 92" fill="none" stroke="#8A5A22" stroke-width="3" stroke-linecap="round"/></svg>',
+    'ijsje': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><path d="M120 168 L86 88 L154 88 Z" fill="#E2A86A" stroke="#B07838" stroke-width="3" stroke-linejoin="round"/><path d="M100 110 L140 110 M108 128 L132 128 M114 146 L126 146" stroke="#C48A4A" stroke-width="2"/><circle cx="100" cy="70" r="28" fill="#FF7EB3" stroke="#E0568A" stroke-width="3"/><circle cx="140" cy="72" r="26" fill="#FFF59D" stroke="#F0C020" stroke-width="3"/><circle cx="120" cy="50" r="24" fill="#81D4FA" stroke="#28A3D4" stroke-width="3"/></svg>',
+    'boek': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><rect x="58" y="36" width="124" height="110" rx="6" fill="#2E7D32" stroke="#1B5E20" stroke-width="3"/><rect x="70" y="36" width="14" height="110" fill="#1B5E20"/><rect x="92" y="52" width="76" height="10" rx="4" fill="#C8E6C9"/><rect x="92" y="72" width="60" height="8" rx="4" fill="#A5D6A7"/><rect x="92" y="90" width="70" height="8" rx="4" fill="#A5D6A7"/><circle cx="130" cy="122" r="10" fill="#FFC93A"/></svg>',
+    'bloem': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><rect x="114" y="90" width="12" height="62" rx="5" fill="#4CAF50" stroke="#2E7D32" stroke-width="2"/><ellipse cx="96" cy="120" rx="18" ry="8" fill="#66BB6A" transform="rotate(-30 96 120)"/><circle cx="92" cy="64" r="22" fill="#FF8A80"/><circle cx="148" cy="64" r="22" fill="#FF8A80"/><circle cx="120" cy="42" r="22" fill="#FF8A80"/><circle cx="100" cy="88" r="22" fill="#FF8A80"/><circle cx="140" cy="88" r="22" fill="#FF8A80"/><circle cx="120" cy="68" r="18" fill="#FFC93A" stroke="#E0A020" stroke-width="2"/></svg>',
+    'eend': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><ellipse cx="120" cy="108" rx="54" ry="36" fill="#FFD54F" stroke="#F9A825" stroke-width="3"/><circle cx="168" cy="86" r="28" fill="#FFD54F" stroke="#F9A825" stroke-width="3"/><path d="M190 90 L226 84 L190 102 Z" fill="#FF8A4C" stroke="#E56B28" stroke-width="2" stroke-linejoin="round"/><circle cx="176" cy="80" r="5" fill="#243044"/><path d="M78 108 Q64 86 84 80" fill="none" stroke="#F9A825" stroke-width="6" stroke-linecap="round"/><ellipse cx="104" cy="140" rx="14" ry="8" fill="#FF8A4C"/><ellipse cx="140" cy="140" rx="14" ry="8" fill="#FF8A4C"/></svg>',
+    'ballon': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><ellipse cx="120" cy="78" rx="40" ry="52" fill="#EF5350" stroke="#C62828" stroke-width="3"/><ellipse cx="108" cy="60" rx="12" ry="18" fill="#FFCDD2" opacity="0.7"/><path d="M120 130 L112 140 L128 140 Z" fill="#C62828"/><path d="M120 140 C108 160 136 150 120 168" fill="none" stroke="#6A3E00" stroke-width="3" fill="none"/></svg>',
+    'potlood': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><g transform="rotate(-30 120 90)"><rect x="70" y="78" width="110" height="24" rx="4" fill="#F0B429" stroke="#C48A12" stroke-width="3"/><path d="M180 78 L214 90 L180 102 Z" fill="#FFE0B2" stroke="#C48A12" stroke-width="3" stroke-linejoin="round"/><path d="M200 84 L214 90 L200 96 Z" fill="#5D4037"/><rect x="58" y="78" width="16" height="24" rx="3" fill="#E53935" stroke="#B71C1C" stroke-width="3"/></g></svg>',
+    'blokken': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><rect x="70" y="100" width="50" height="50" rx="6" fill="#F0B429" stroke="#C48A12" stroke-width="3"/><rect x="122" y="100" width="50" height="50" rx="6" fill="#2FB3F0" stroke="#1A7FB3" stroke-width="3"/><rect x="96" y="52" width="50" height="50" rx="6" fill="#E53935" stroke="#B71C1C" stroke-width="3"/><text x="95" y="134" font-size="22" font-weight="700" fill="#6A3E00" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">A</text><text x="147" y="134" font-size="22" font-weight="700" fill="#fff" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">B</text><text x="121" y="86" font-size="22" font-weight="700" fill="#fff" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">C</text></svg>',
+    'boot': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><path d="M40 110 L70 70 L170 70 L200 110 Z" fill="#FF8A4C" stroke="#D4692C" stroke-width="3" stroke-linejoin="round"/><rect x="110" y="40" width="10" height="36" fill="#8D6E63"/><path d="M120 38 L120 78 L170 78 Z" fill="#FFF8E1" stroke="#D4692C" stroke-width="3" stroke-linejoin="round"/><path d="M36 110 L210 110 L190 140 L50 140 Z" fill="#2FB3F0" stroke="#1A7FB3" stroke-width="3" stroke-linejoin="round"/><circle cx="80" cy="124" r="5" fill="#B8E8F8"/><circle cx="120" cy="124" r="5" fill="#B8E8F8"/><circle cx="160" cy="124" r="5" fill="#B8E8F8"/></svg>',
+    'trein': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><rect x="40" y="78" width="70" height="50" rx="8" fill="#E53935" stroke="#B71C1C" stroke-width="3"/><rect x="118" y="90" width="86" height="38" rx="8" fill="#2FB3F0" stroke="#1A7FB3" stroke-width="3"/><rect x="52" y="88" width="28" height="22" rx="4" fill="#B8E8F8"/><rect x="130" y="100" width="22" height="16" rx="3" fill="#FFF8E1"/><rect x="160" y="100" width="22" height="16" rx="3" fill="#FFF8E1"/><circle cx="62" cy="136" r="14" fill="#243044"/><circle cx="100" cy="136" r="14" fill="#243044"/><circle cx="150" cy="136" r="12" fill="#243044"/><circle cx="186" cy="136" r="12" fill="#243044"/><rect x="78" y="58" width="14" height="24" fill="#90A4AE"/><circle cx="85" cy="52" r="8" fill="#90A4AE"/></svg>',
+    'trommel': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><ellipse cx="120" cy="70" rx="64" ry="22" fill="#FFF8E1" stroke="#C48A12" stroke-width="3"/><path d="M56 70 L56 120 Q120 150 184 120 L184 70" fill="#E53935" stroke="#B71C1C" stroke-width="3"/><ellipse cx="120" cy="120" rx="64" ry="22" fill="#C62828" stroke="#B71C1C" stroke-width="3"/><path d="M80 78 L80 128 M120 84 L120 140 M160 78 L160 128" stroke="#FFC93A" stroke-width="3"/><line x1="40" y1="40" x2="90" y2="70" stroke="#8D6E63" stroke-width="5" stroke-linecap="round"/><line x1="200" y1="40" x2="150" y2="70" stroke="#8D6E63" stroke-width="5" stroke-linecap="round"/><circle cx="40" cy="40" r="8" fill="#F0B429"/><circle cx="200" cy="40" r="8" fill="#F0B429"/></svg>',
+    'pop': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><circle cx="120" cy="48" r="22" fill="#FFE0B2" stroke="#D4A017" stroke-width="3"/><path d="M96 40 Q120 20 144 40" fill="#F0B429" stroke="#C48A12" stroke-width="3"/><circle cx="112" cy="46" r="3" fill="#243044"/><circle cx="128" cy="46" r="3" fill="#243044"/><path d="M112 56 Q120 62 128 56" fill="none" stroke="#E0568A" stroke-width="2"/><path d="M86 80 Q120 70 154 80 L148 140 Q120 154 92 140 Z" fill="#FF7EB3" stroke="#E0568A" stroke-width="3"/><rect x="72" y="80" width="18" height="44" rx="8" fill="#FFE0B2" stroke="#D4A017" stroke-width="2"/><rect x="150" y="80" width="18" height="44" rx="8" fill="#FFE0B2" stroke="#D4A017" stroke-width="2"/></svg>',
+    'vliegtuig': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><ellipse cx="130" cy="90" rx="80" ry="20" fill="#90CAF9" stroke="#1565C0" stroke-width="3"/><path d="M130 80 L200 40 L186 86 Z" fill="#42A5F5" stroke="#1565C0" stroke-width="3" stroke-linejoin="round"/><path d="M130 100 L200 140 L186 96 Z" fill="#42A5F5" stroke="#1565C0" stroke-width="3" stroke-linejoin="round"/><path d="M70 80 L36 54 L60 86 Z" fill="#FFC93A" stroke="#C48A12" stroke-width="3" stroke-linejoin="round"/><circle cx="100" cy="86" r="6" fill="#fff"/><circle cx="122" cy="84" r="6" fill="#fff"/><circle cx="144" cy="84" r="6" fill="#fff"/></svg>',
+    'tol': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><path d="M80 70 L160 70 L120 150 Z" fill="#FF8A4C" stroke="#D4692C" stroke-width="3" stroke-linejoin="round"/><ellipse cx="120" cy="70" rx="50" ry="16" fill="#F0B429" stroke="#C48A12" stroke-width="3"/><rect x="114" y="36" width="12" height="36" rx="4" fill="#8D6E63"/><circle cx="120" cy="32" r="10" fill="#E53935" stroke="#B71C1C" stroke-width="3"/><path d="M100 90 L140 90" stroke="#fff" stroke-width="3" opacity="0.6"/></svg>',
+    'voetbal': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><circle cx="120" cy="86" r="54" fill="#F5F5F5" stroke="#243044" stroke-width="4"/><polygon points="120,62 136,74 130,92 110,92 104,74" fill="#243044"/><path d="M120 32 L136 74 M104 74 L70 60 M130 92 L170 80 M110 92 L80 120 M136 74 L174 60" fill="none" stroke="#243044" stroke-width="3"/></svg>',
+    'basketbal': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><circle cx="120" cy="86" r="54" fill="#EF6C00" stroke="#BF360C" stroke-width="4"/><path d="M120 32 L120 140 M66 86 L174 86" fill="none" stroke="#4E342E" stroke-width="3.5"/><path d="M80 42 Q120 86 80 130 M160 42 Q120 86 160 130" fill="none" stroke="#4E342E" stroke-width="3.5"/></svg>',
+    'skateboard': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><rect x="36" y="90" width="168" height="18" rx="9" fill="#FF8A4C" stroke="#D4692C" stroke-width="3"/><rect x="70" y="94" width="28" height="10" rx="3" fill="#F0B429"/><rect x="142" y="94" width="28" height="10" rx="3" fill="#2FB3F0"/><circle cx="70" cy="122" r="12" fill="#243044"/><circle cx="70" cy="122" r="6" fill="#90A4AE"/><circle cx="170" cy="122" r="12" fill="#243044"/><circle cx="170" cy="122" r="6" fill="#90A4AE"/><path d="M50 90 Q70 60 100 78" fill="none" stroke="#4CC86E" stroke-width="5" stroke-linecap="round"/></svg>',
+    'knuffel': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><circle cx="70" cy="52" r="22" fill="#C28B4E" stroke="#8A5A22" stroke-width="3"/><circle cx="170" cy="52" r="22" fill="#C28B4E" stroke="#8A5A22" stroke-width="3"/><circle cx="70" cy="52" r="12" fill="#E8C090"/><circle cx="170" cy="52" r="12" fill="#E8C090"/><ellipse cx="120" cy="108" rx="58" ry="48" fill="#C28B4E" stroke="#8A5A22" stroke-width="3"/><circle cx="120" cy="70" r="38" fill="#C28B4E" stroke="#8A5A22" stroke-width="3"/><ellipse cx="120" cy="86" rx="22" ry="16" fill="#E8C090"/><circle cx="106" cy="64" r="5" fill="#243044"/><circle cx="134" cy="64" r="5" fill="#243044"/><ellipse cx="120" cy="80" rx="8" ry="6" fill="#8A5A22"/><path d="M108 92 Q120 102 132 92" fill="none" stroke="#8A5A22" stroke-width="3" stroke-linecap="round"/></svg>',
+    'helm': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><path d="M50 100 Q50 40 120 36 Q190 40 190 100 L170 108 Q120 96 70 108 Z" fill="#F0B429" stroke="#C48A12" stroke-width="3"/><path d="M48 100 L192 100 L200 118 L40 118 Z" fill="#FFC93A" stroke="#C48A12" stroke-width="3" stroke-linejoin="round"/><rect x="70" y="70" width="100" height="22" rx="8" fill="#81D4FA" stroke="#1565C0" stroke-width="2" opacity="0.85"/><path d="M120 36 L120 100" stroke="#E0A020" stroke-width="3"/></svg>',
+    'rugzak': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><rect x="70" y="50" width="100" height="100" rx="16" fill="#2E7D32" stroke="#1B5E20" stroke-width="3"/><rect x="86" y="70" width="68" height="44" rx="8" fill="#66BB6A" stroke="#1B5E20" stroke-width="2"/><path d="M70 70 C48 70 48 120 70 130" fill="none" stroke="#1B5E20" stroke-width="8" stroke-linecap="round"/><path d="M170 70 C192 70 192 120 170 130" fill="none" stroke="#1B5E20" stroke-width="8" stroke-linecap="round"/><rect x="108" y="50" width="24" height="16" rx="6" fill="#FFC93A"/></svg>',
+    'step': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><rect x="50" y="124" width="150" height="12" rx="6" fill="#2FB3F0" stroke="#1A7FB3" stroke-width="3"/><circle cx="70" cy="140" r="14" fill="#243044"/><circle cx="180" cy="140" r="14" fill="#243044"/><path d="M160 124 L160 50 L124 50" fill="none" stroke="#90A4AE" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><rect x="110" y="42" width="36" height="14" rx="6" fill="#E53935" stroke="#B71C1C" stroke-width="2"/></svg>',
+    'rolschaatsen': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><path d="M70 70 L150 70 L160 110 L60 110 Z" fill="#9B6BFF" stroke="#6E45D1" stroke-width="3" stroke-linejoin="round"/><path d="M70 86 L84 70" stroke="#6E45D1" stroke-width="3"/><rect x="56" y="110" width="112" height="12" rx="4" fill="#243044"/><circle cx="74" cy="136" r="12" fill="#90A4AE" stroke="#243044" stroke-width="3"/><circle cx="108" cy="136" r="12" fill="#90A4AE" stroke="#243044" stroke-width="3"/><circle cx="142" cy="136" r="12" fill="#90A4AE" stroke="#243044" stroke-width="3"/><circle cx="168" cy="136" r="12" fill="#90A4AE" stroke="#243044" stroke-width="3"/></svg>',
+    'tent': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><path d="M40 140 L120 40 L200 140 Z" fill="#4CC86E" stroke="#2E9A4F" stroke-width="3" stroke-linejoin="round"/><path d="M120 40 L120 140" stroke="#2E9A4F" stroke-width="3"/><path d="M88 140 L120 86 L152 140 Z" fill="#FFF8E1" stroke="#2E9A4F" stroke-width="3" stroke-linejoin="round"/><path d="M40 140 L200 140" stroke="#2E9A4F" stroke-width="4" stroke-linecap="round"/></svg>',
+    'springtouw': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><circle cx="52" cy="80" r="16" fill="#E53935" stroke="#B71C1C" stroke-width="3"/><circle cx="188" cy="80" r="16" fill="#E53935" stroke="#B71C1C" stroke-width="3"/><rect x="44" y="72" width="16" height="16" rx="3" fill="#FFC93A"/><rect x="180" y="72" width="16" height="16" rx="3" fill="#FFC93A"/><path d="M66 80 C90 140 150 140 174 80" fill="none" stroke="#2FB3F0" stroke-width="6" stroke-linecap="round"/></svg>',
+    'frisbee': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><ellipse cx="120" cy="90" rx="80" ry="28" fill="#FF8A4C" stroke="#D4692C" stroke-width="3"/><ellipse cx="120" cy="90" rx="44" ry="14" fill="#FFE0B2" stroke="#D4692C" stroke-width="2"/><ellipse cx="100" cy="82" rx="18" ry="6" fill="#fff" opacity="0.35"/></svg>',
+    'waterpistool': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><rect x="50" y="80" width="120" height="28" rx="10" fill="#2FB3F0" stroke="#1A7FB3" stroke-width="3"/><rect x="160" y="86" width="40" height="16" rx="6" fill="#81D4FA" stroke="#1A7FB3" stroke-width="2"/><rect x="70" y="108" width="16" height="28" rx="4" fill="#F0B429" stroke="#C48A12" stroke-width="2"/><path d="M90 80 L110 52 L140 52 L128 80 Z" fill="#4CC86E" stroke="#2E9A4F" stroke-width="3" stroke-linejoin="round"/><circle cx="64" cy="94" r="6" fill="#fff"/></svg>',
+    'schepnet': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><line x1="52" y1="148" x2="130" y2="50" stroke="#8D6E63" stroke-width="8" stroke-linecap="round"/><ellipse cx="160" cy="58" rx="42" ry="30" fill="none" stroke="#2FB3F0" stroke-width="6"/><path d="M130 70 Q150 120 190 70" fill="none" stroke="#81D4FA" stroke-width="3"/><path d="M140 80 Q160 110 180 78" fill="none" stroke="#81D4FA" stroke-width="3"/></svg>',
+    'zaklamp': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><rect x="70" y="78" width="100" height="28" rx="8" fill="#F0B429" stroke="#C48A12" stroke-width="3"/><rect x="162" y="70" width="28" height="44" rx="6" fill="#90A4AE" stroke="#546E7A" stroke-width="3"/><ellipse cx="200" cy="92" rx="10" ry="18" fill="#FFF59D" stroke="#F0C020" stroke-width="2"/><circle cx="86" cy="92" r="6" fill="#E53935"/></svg>',
+    'hockey': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><path d="M80 40 L100 40 L108 120 L70 148 L58 136 L90 116 Z" fill="#FF8A4C" stroke="#D4692C" stroke-width="3" stroke-linejoin="round"/><rect x="80" y="32" width="24" height="18" rx="4" fill="#2E7D32" stroke="#1B5E20" stroke-width="2"/><circle cx="170" cy="124" r="16" fill="#243044"/><circle cx="170" cy="124" r="8" fill="#90A4AE"/></svg>',
+    'treinbaan': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><rect x="36" y="120" width="168" height="10" rx="3" fill="#8D6E63"/><rect x="44" y="116" width="16" height="18" fill="#6D4C41"/><rect x="90" y="116" width="16" height="18" fill="#6D4C41"/><rect x="136" y="116" width="16" height="18" fill="#6D4C41"/><rect x="180" y="116" width="16" height="18" fill="#6D4C41"/><rect x="60" y="70" width="50" height="40" rx="6" fill="#E53935" stroke="#B71C1C" stroke-width="3"/><rect x="118" y="80" width="62" height="30" rx="6" fill="#2FB3F0" stroke="#1A7FB3" stroke-width="3"/><circle cx="76" cy="118" r="10" fill="#243044"/><circle cx="148" cy="118" r="10" fill="#243044"/><rect x="68" y="78" width="16" height="14" rx="2" fill="#B8E8F8"/></svg>',
+    'telescoop': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><rect x="70" y="70" width="110" height="28" rx="8" fill="#90A4AE" stroke="#546E7A" stroke-width="3"/><rect x="170" y="64" width="28" height="40" rx="6" fill="#455A64" stroke="#243044" stroke-width="3"/><circle cx="210" cy="84" r="12" fill="#81D4FA" stroke="#1565C0" stroke-width="3"/><path d="M100 98 L80 140 M140 98 L160 140" stroke="#8D6E63" stroke-width="6" stroke-linecap="round"/><path d="M70 140 L170 140" stroke="#6D4C41" stroke-width="6" stroke-linecap="round"/></svg>',
+    'racebaan': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><path d="M40 60 Q120 20 200 60 Q120 100 40 60" fill="#90A4AE" stroke="#546E7A" stroke-width="3"/><path d="M60 60 Q120 36 180 60 Q120 84 60 60" fill="#455A64"/><path d="M70 60 Q120 44 170 60" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="8 6"/><rect x="100" y="96" width="56" height="28" rx="8" fill="#E53935" stroke="#B71C1C" stroke-width="3"/><circle cx="112" cy="128" r="8" fill="#243044"/><circle cx="144" cy="128" r="8" fill="#243044"/></svg>',
+    'ring': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><rect x="108" y="36" width="14" height="70" fill="#90A4AE" stroke="#546E7A" stroke-width="3"/><path d="M108 36 L40 36 L40 50" fill="none" stroke="#546E7A" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="120" cy="114" rx="40" ry="16" fill="none" stroke="#EF6C00" stroke-width="8"/><ellipse cx="120" cy="150" rx="50" ry="8" fill="#4CC86E" opacity="0.7"/></svg>',
+    'poppenhuis': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><path d="M40 80 L120 30 L200 80 Z" fill="#E53935" stroke="#B71C1C" stroke-width="3" stroke-linejoin="round"/><rect x="58" y="80" width="124" height="70" fill="#FFE0B2" stroke="#D4A017" stroke-width="3"/><rect x="72" y="100" width="28" height="28" fill="#81D4FA" stroke="#1565C0" stroke-width="2"/><rect x="140" y="100" width="28" height="28" fill="#81D4FA" stroke="#1565C0" stroke-width="2"/><rect x="108" y="108" width="24" height="42" fill="#8D6E63" stroke="#5D4037" stroke-width="2"/></svg>',
+    'kasteel': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><rect x="50" y="80" width="140" height="70" fill="#B0BEC5" stroke="#546E7A" stroke-width="3"/><rect x="40" y="50" width="36" height="100" fill="#90A4AE" stroke="#546E7A" stroke-width="3"/><rect x="164" y="50" width="36" height="100" fill="#90A4AE" stroke="#546E7A" stroke-width="3"/><path d="M40 50 L58 28 L76 50 Z" fill="#E53935" stroke="#B71C1C" stroke-width="2"/><path d="M164 50 L182 28 L200 50 Z" fill="#E53935" stroke="#B71C1C" stroke-width="2"/><rect x="58" y="110" width="28" height="40" fill="#5D4037"/><rect x="106" y="100" width="28" height="20" fill="#81D4FA"/><path d="M90 80 L120 50 L150 80 Z" fill="#CFD8DC" stroke="#546E7A" stroke-width="3"/></svg>',
+    'fiets': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><circle cx="70" cy="120" r="28" fill="none" stroke="#243044" stroke-width="6"/><circle cx="70" cy="120" r="10" fill="#90A4AE"/><circle cx="176" cy="120" r="28" fill="none" stroke="#243044" stroke-width="6"/><circle cx="176" cy="120" r="10" fill="#90A4AE"/><path d="M70 120 L110 80 L154 120 L110 80 L176 120" fill="none" stroke="#E53935" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><path d="M154 120 L188 70 L210 70" fill="none" stroke="#243044" stroke-width="5" stroke-linecap="round"/><circle cx="110" cy="80" r="8" fill="#FFC93A"/></svg>',
+    'bouwdoos': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><rect x="50" y="70" width="140" height="70" rx="8" fill="#F0B429" stroke="#C48A12" stroke-width="3"/><rect x="50" y="58" width="140" height="20" rx="6" fill="#FFC93A" stroke="#C48A12" stroke-width="3"/><rect x="70" y="88" width="28" height="28" rx="4" fill="#E53935"/><rect x="106" y="88" width="28" height="28" rx="4" fill="#2FB3F0"/><rect x="142" y="88" width="28" height="28" rx="4" fill="#4CC86E"/><rect x="88" y="120" width="64" height="10" rx="3" fill="#6A3E00" opacity="0.3"/></svg>',
+    'drumstel': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><ellipse cx="90" cy="110" rx="36" ry="28" fill="#E53935" stroke="#B71C1C" stroke-width="3"/><ellipse cx="90" cy="96" rx="36" ry="14" fill="#FFF8E1" stroke="#B71C1C" stroke-width="3"/><ellipse cx="160" cy="100" rx="28" ry="22" fill="#2FB3F0" stroke="#1A7FB3" stroke-width="3"/><ellipse cx="160" cy="90" rx="28" ry="10" fill="#FFF8E1" stroke="#1A7FB3" stroke-width="3"/><rect x="114" y="40" width="10" height="50" fill="#90A4AE"/><ellipse cx="119" cy="40" rx="22" ry="10" fill="#FFC93A" stroke="#C48A12" stroke-width="3"/><line x1="50" y1="50" x2="80" y2="90" stroke="#8D6E63" stroke-width="5" stroke-linecap="round"/><line x1="200" y1="50" x2="170" y2="86" stroke="#8D6E63" stroke-width="5" stroke-linecap="round"/></svg>',
+    'gitaar': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><ellipse cx="100" cy="110" rx="44" ry="36" fill="#C48A12" stroke="#6A3E00" stroke-width="3"/><circle cx="100" cy="110" r="16" fill="#4E342E"/><rect x="140" y="70" width="16" height="70" rx="4" fill="#E2A86A" stroke="#6A3E00" stroke-width="2"/><rect x="144" y="36" width="8" height="40" fill="#8D6E63"/><rect x="136" y="28" width="24" height="12" rx="3" fill="#243044"/><path d="M84 90 L90 80 M110 80 L116 90" stroke="#6A3E00" stroke-width="2"/></svg>',
+    'trampoline': '<svg class="geld-product-svg" viewBox="0 0 240 170" width="230" height="163" aria-hidden="true"><ellipse cx="120" cy="156" rx="90" ry="10" fill="#000" opacity="0.12"/><ellipse cx="120" cy="90" rx="90" ry="30" fill="#2FB3F0" stroke="#1A7FB3" stroke-width="4"/><ellipse cx="120" cy="90" rx="70" ry="20" fill="#B8E8F8"/><line x1="40" y1="96" x2="30" y2="140" stroke="#90A4AE" stroke-width="6" stroke-linecap="round"/><line x1="200" y1="96" x2="210" y2="140" stroke="#90A4AE" stroke-width="6" stroke-linecap="round"/><line x1="120" y1="110" x2="120" y2="148" stroke="#90A4AE" stroke-width="6" stroke-linecap="round"/><path d="M30 140 L210 140" stroke="#546E7A" stroke-width="5" stroke-linecap="round"/></svg>'
+  };
+  var GELD_PRODUCT_NAME = {
+    'auto': 'Speelgoedauto',
+    'bal': 'Bal',
+    'teddy': 'Teddybeer',
+    'ijsje': 'IJsje',
+    'boek': 'Boek',
+    'bloem': 'Bloem',
+    'eend': 'Eendje',
+    'ballon': 'Ballon',
+    'potlood': 'Potlood',
+    'blokken': 'Blokken',
+    'boot': 'Bootje',
+    'trein': 'Trein',
+    'trommel': 'Trommel',
+    'pop': 'Pop',
+    'vliegtuig': 'Vliegtuig',
+    'tol': 'Tol',
+    'voetbal': 'Voetbal',
+    'basketbal': 'Basketbal',
+    'skateboard': 'Skateboard',
+    'knuffel': 'Knuffel',
+    'helm': 'Helm',
+    'rugzak': 'Rugzak',
+    'step': 'Step',
+    'rolschaatsen': 'Rolschaatsen',
+    'tent': 'Tent',
+    'springtouw': 'Springtouw',
+    'frisbee': 'Frisbee',
+    'waterpistool': 'Waterpistool',
+    'schepnet': 'Schepnet',
+    'zaklamp': 'Zaklamp',
+    'hockey': 'Hockeyset',
+    'treinbaan': 'Treinbaan',
+    'telescoop': 'Telescoop',
+    'racebaan': 'Racebaan',
+    'ring': 'Basketbalring',
+    'poppenhuis': 'Poppenhuis',
+    'kasteel': 'Kasteel',
+    'fiets': 'Fiets',
+    'bouwdoos': 'Bouwdoos',
+    'drumstel': 'Drumstel',
+    'gitaar': 'Gitaar',
+    'trampoline': 'Trampoline'
+  };
+
+  var GELD_KIND_CENTS = { '1c': 1, '2c': 2, '5c': 5, '10c': 10, '20c': 20, '50c': 50, '1e': 100, '2e': 200, '5n': 500, '10n': 1000, '20n': 2000 };
+  var GELD_CENTS_KIND = { 1: '1c', 2: '2c', 5: '5c', 10: '10c', 20: '20c', 50: '50c', 100: '1e', 200: '2e', 500: '5n', 1000: '10n', 2000: '20n' };
+  var GELD_TRAY_PX = { '1c': 57, '2c': 66, '5c': 74, '10c': 69, '20c': 78, '50c': 85, '1e': 81, '2e': 90 };
+  var GELD_DROP_PX = { '1c': 44, '2c': 50, '5c': 56, '10c': 52, '20c': 58, '50c': 64, '1e': 60, '2e': 66 };
+  var GELD_POT_10 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  var GELD_POT_50 = [12, 15, 16, 18, 20, 23, 25, 30, 32, 35, 40, 42, 45, 48, 50];
+
+  var GELD_WINKEL_1 = [
+    { id: 'potlood', cents: 15 },
+    { id: 'ballon', cents: 20 },
+    { id: 'bal', cents: 25 },
+    { id: 'bloem', cents: 30 },
+    { id: 'ijsje', cents: 40 },
+    { id: 'eend', cents: 45 },
+    { id: 'boek', cents: 50 },
+    { id: 'trommel', cents: 60 },
+    { id: 'blokken', cents: 70 },
+    { id: 'pop', cents: 75 },
+    { id: 'teddy', cents: 80 },
+    { id: 'tol', cents: 85 },
+    { id: 'boot', cents: 90 },
+    { id: 'trein', cents: 100 }
+  ];
+  var GELD_WINKEL_5 = [
+    { id: 'bloem', cents: 125 },
+    { id: 'bal', cents: 120 },
+    { id: 'ballon', cents: 140 },
+    { id: 'boek', cents: 150 },
+    { id: 'ijsje', cents: 175 },
+    { id: 'blokken', cents: 180 },
+    { id: 'eend', cents: 200 },
+    { id: 'auto', cents: 228 },
+    { id: 'pop', cents: 250 },
+    { id: 'boot', cents: 275 },
+    { id: 'trommel', cents: 320 },
+    { id: 'teddy', cents: 350 },
+    { id: 'trein', cents: 400 },
+    { id: 'vliegtuig', cents: 500 }
+  ];
+  var GELD_BRIEF_20 = [
+    { id: 'springtouw', cents: 550 },
+    { id: 'frisbee', cents: 650 },
+    { id: 'basketbal', cents: 700 },
+    { id: 'voetbal', cents: 850 },
+    { id: 'helm', cents: 980 },
+    { id: 'waterpistool', cents: 1100 },
+    { id: 'knuffel', cents: 1200 },
+    { id: 'schepnet', cents: 1350 },
+    { id: 'skateboard', cents: 1450 },
+    { id: 'zaklamp', cents: 1550 },
+    { id: 'rugzak', cents: 1620 },
+    { id: 'step', cents: 1730 },
+    { id: 'rolschaatsen', cents: 1800 },
+    { id: 'tent', cents: 2000 }
+  ];
+  var GELD_BRIEF_50 = [
+    { id: 'hockey', cents: 2200 },
+    { id: 'treinbaan', cents: 2500 },
+    { id: 'tent', cents: 2650 },
+    { id: 'telescoop', cents: 2800 },
+    { id: 'racebaan', cents: 2890 },
+    { id: 'ring', cents: 3050 },
+    { id: 'poppenhuis', cents: 3200 },
+    { id: 'kasteel', cents: 3350 },
+    { id: 'boot', cents: 3600 },
+    { id: 'fiets', cents: 3720 },
+    { id: 'bouwdoos', cents: 3850 },
+    { id: 'drumstel', cents: 4100 },
+    { id: 'gitaar', cents: 4500 },
+    { id: 'trampoline', cents: 5000 }
+  ];
+
+  function geldNextUid() {
+    geldCoinUid += 1;
+    return geldCoinUid;
+  }
+
+  function formatEuro(cents) {
+    var e, c, cs;
+    if (cents < 0) cents = 0;
+    e = Math.floor(cents / 100);
+    c = cents - e * 100;
+    cs = (c < 10) ? ('0' + c) : String(c);
+    return '€' + e + ',' + cs;
+  }
+
+  function geldIsNote(kind) {
+    return kind === '5n' || kind === '10n' || kind === '20n';
+  }
+
+  function geldNoteSvg(kind, w) {
+    var pal, value, h, star, i, a, sx, sy, cx, cy;
+    h = Math.round(w * 0.52);
+    if (kind === '5n') {
+      pal = { bg: '#D0CFC9', bg2: '#B4B3AC', edge: '#6E6D68', ink: '#3F3E3B', num: '#5C5B57', band: '#9A9993', hi: '#E8E7E2' };
+      value = '5';
+    } else if (kind === '10n') {
+      pal = { bg: '#E8A3A3', bg2: '#C85A5A', edge: '#8B2E2E', ink: '#5A1818', num: '#8B2020', band: '#D47474', hi: '#F6D0D0' };
+      value = '10';
+    } else {
+      pal = { bg: '#8BB3DC', bg2: '#3E73B3', edge: '#1E4A80', ink: '#16355C', num: '#1A4A80', band: '#5B8DC4', hi: '#C5DDF0' };
+      value = '20';
+    }
+    star = '';
+    cx = 44;
+    cy = 50;
+    for (i = 0; i < 12; i++) {
+      a = (i * 30 - 90) * Math.PI / 180;
+      sx = cx + Math.cos(a) * 16;
+      sy = cy + Math.sin(a) * 16;
+      star += '<circle cx="' + sx.toFixed(1) + '" cy="' + sy.toFixed(1) + '" r="1.7" fill="' + pal.hi + '"/>';
+    }
+    return '<svg class="geld-note-svg" viewBox="0 0 200 100" width="' + w + '" height="' + h + '" aria-hidden="true">' +
+      '<rect x="3" y="6" width="194" height="88" rx="10" fill="' + pal.edge + '" opacity="0.25"/>' +
+      '<rect x="2" y="4" width="196" height="88" rx="10" fill="' + pal.bg + '" stroke="' + pal.edge + '" stroke-width="3"/>' +
+      '<rect x="10" y="12" width="180" height="72" rx="6" fill="' + pal.hi + '" opacity="0.35"/>' +
+      '<rect x="2" y="4" width="28" height="88" rx="10" fill="' + pal.band + '"/>' +
+      '<rect x="22" y="4" width="10" height="88" fill="' + pal.bg2 + '" opacity="0.5"/>' +
+      '<ellipse cx="44" cy="50" rx="22" ry="26" fill="' + pal.bg2 + '" opacity="0.55" stroke="' + pal.edge + '" stroke-width="1.5"/>' +
+      star +
+      '<text x="118" y="62" text-anchor="middle" font-size="44" font-weight="800" fill="' + pal.num + '" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">' + value + '</text>' +
+      '<text x="118" y="80" text-anchor="middle" font-size="11" font-weight="700" fill="' + pal.ink + '" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">EURO</text>' +
+      '<text x="184" y="28" text-anchor="middle" font-size="14" font-weight="800" fill="' + pal.ink + '" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">€</text>' +
+      '<path d="M70 22 Q118 10 166 22" fill="none" stroke="' + pal.band + '" stroke-width="2"/>' +
+      '<path d="M70 82 Q118 94 166 82" fill="none" stroke="' + pal.band + '" stroke-width="2"/>' +
+      '</svg>';
+  }
+
+  function geldCoinWrap(kind, px, extraClass, extraAttrs) {
+    var uid, inner, cents, cls;
+    cents = GELD_KIND_CENTS[kind] || 0;
+    cls = 'geld-coin-wrap' + (extraClass ? (' ' + extraClass) : '');
+    if (geldIsNote(kind)) {
+      cls = 'geld-note-wrap' + (extraClass ? (' ' + extraClass) : '');
+      inner = geldNoteSvg(kind, px);
+      return '<div class="' + cls + '" style="width:' + px + 'px;height:' + Math.round(px * 0.52) + 'px" data-kind="' + kind + '" data-cents="' + cents + '"' + (extraAttrs || '') + '>' + inner + '</div>';
+    }
+    uid = geldNextUid();
+    inner = (GELD_COIN_SVG[kind] || '').replace(/GCOIN_/g, 'gc' + uid + '_');
+    inner = inner.replace('<svg ', '<svg width="' + px + '" height="' + px + '" ');
+    return '<div class="' + cls + '" style="width:' + px + 'px;height:' + px + 'px" data-kind="' + kind + '" data-cents="' + cents + '"' + (extraAttrs || '') + '>' + inner + '</div>';
+  }
+
+  function geldTrayKinds() {
+    if (geldState.game === 'pot' && geldState.max <= 10) return ['1c', '2c', '5c', '10c'];
+    if (geldState.game === 'pot') return ['1c', '2c', '5c', '10c', '20c', '50c'];
+    if (geldState.game === 'brief') return ['1c', '2c', '5c', '10c', '20c', '50c', '1e', '2e', '5n', '10n', '20n'];
+    return ['1c', '2c', '5c', '10c', '20c', '50c', '1e', '2e'];
+  }
+
+  function geldDenoms() {
+    var kinds, i, out;
+    kinds = geldTrayKinds();
+    out = [];
+    for (i = kinds.length - 1; i >= 0; i--) out.push(GELD_KIND_CENTS[kinds[i]]);
+    return out;
+  }
+
+  function geldGreedy(target, denoms) {
+    var i, n, left, out;
+    out = [];
+    left = target;
+    if (!denoms) denoms = geldDenoms();
+    for (i = 0; i < denoms.length; i++) {
+      n = Math.floor(left / denoms[i]);
+      left -= n * denoms[i];
+      while (n > 0) {
+        out.push(denoms[i]);
+        n -= 1;
+      }
+    }
+    return (left === 0) ? out : null;
+  }
+
+  function geldPaidSum() {
+    var i, t;
+    t = 0;
+    for (i = 0; i < geldState.coins.length; i++) t += geldState.coins[i];
+    return t;
+  }
+
+  function showGeldMenu() {
+    state.level = null;
+    state.locked = false;
+    state.question = null;
+    hideReward();
+    showScreen('geld');
+    updateStarsUI();
+  }
+
+  function showGeldLevel(game) {
+    var a, b, la, lb, sa, sb;
+    if (game) state.geldGame = game;
+    game = state.geldGame || 'pot';
+    state.level = 'geld';
+    state.locked = false;
+    state.question = null;
+    hideReward();
+    a = $('geld-lvl-a');
+    b = $('geld-lvl-b');
+    la = $('geld-lvl-a-label');
+    lb = $('geld-lvl-b-label');
+    sa = $('geld-lvl-a-sub');
+    sb = $('geld-lvl-b-sub');
+    if (game === 'pot') {
+      if (la) la.innerHTML = 'Tot 10 cent';
+      if (lb) lb.innerHTML = 'Tot 50 cent';
+      if (sa) sa.innerHTML = '1, 2, 5 en 10 cent';
+      if (sb) sb.innerHTML = 'Tot de 50 cent';
+      if (a) a.setAttribute('data-max', '10');
+      if (b) b.setAttribute('data-max', '50');
+      if ($('geldlevel-title')) $('geldlevel-title').innerHTML = 'Spaarpot';
+    } else if (game === 'brief') {
+      if (la) la.innerHTML = 'Tot €20';
+      if (lb) lb.innerHTML = 'Tot €50';
+      if (sa) sa.innerHTML = 'Met briefjes';
+      if (sb) sb.innerHTML = 'Met briefjes';
+      if (a) a.setAttribute('data-max', '2000');
+      if (b) b.setAttribute('data-max', '5000');
+      if ($('geldlevel-title')) $('geldlevel-title').innerHTML = 'Winkel met briefjes';
+    } else {
+      if (la) la.innerHTML = 'Tot €1';
+      if (lb) lb.innerHTML = 'Tot €5';
+      if (sa) sa.innerHTML = 'Alle muntjes';
+      if (sb) sb.innerHTML = 'Alle muntjes';
+      if (a) a.setAttribute('data-max', '100');
+      if (b) b.setAttribute('data-max', '500');
+      if ($('geldlevel-title')) $('geldlevel-title').innerHTML = 'Winkeltje';
+    }
+    showScreen('geldlevel');
+    updateStarsUI();
+  }
+
+  function geldPool() {
+    if (geldState.game === 'pot' && geldState.max <= 10) return null;
+    if (geldState.game === 'pot') return GELD_POT_50;
+    if (geldState.game === 'brief' && geldState.max <= 2000) return GELD_BRIEF_20;
+    if (geldState.game === 'brief') return GELD_BRIEF_50;
+    if (geldState.max <= 100) return GELD_WINKEL_1;
+    return GELD_WINKEL_5;
+  }
+
+  function pickGeldItem() {
+    var pool, keys, i, key, item, amount, product;
+    if (geldState.game === 'pot' && geldState.max <= 10) {
+      keys = [];
+      for (i = 0; i < GELD_POT_10.length; i++) keys.push(String(GELD_POT_10[i]));
+      key = pickAvoiding(keys) || '8';
+      rememberRoundKey(key);
+      return { key: key, target: parseInt(key, 10), product: '' };
+    }
+    if (geldState.game === 'pot') {
+      keys = [];
+      for (i = 0; i < GELD_POT_50.length; i++) keys.push(String(GELD_POT_50[i]));
+      key = pickAvoiding(keys) || '25';
+      rememberRoundKey(key);
+      return { key: key, target: parseInt(key, 10), product: '' };
+    }
+    pool = geldPool();
+    keys = [];
+    for (i = 0; i < pool.length; i++) keys.push(pool[i].id + ':' + pool[i].cents);
+    key = pickAvoiding(keys) || keys[0];
+    rememberRoundKey(key);
+    product = key.split(':')[0];
+    amount = parseInt(key.split(':')[1], 10);
+    return { key: key, target: amount, product: product };
+  }
+
+  function startGeld(game, max, fresh) {
+    var item;
+    if (typeof game === 'boolean') {
+      fresh = game;
+      game = '';
+      max = 0;
+    }
+    if (game) state.geldGame = game;
+    if (max) state.geldMax = max;
+    game = state.geldGame || 'pot';
+    max = state.geldMax || 10;
+    state.level = 'geld';
+    state.locked = false;
+    if (fresh) {
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+      resetVoiceCycle();
+      state.lastWasPersonal = false;
+    }
+    stopGeldDrag();
+    geldState.game = game;
+    geldState.max = max;
+    item = pickGeldItem();
+    geldState.key = item.key;
+    geldState.target = item.target;
+    geldState.product = item.product;
+    geldState.coins = [];
+    geldState.paid = 0;
+    hideReward();
+    hideToast();
+    showScreen('geldplay');
+    updateStarsUI();
+    renderGeld();
+    beginQuestionVoice();
+    if (game === 'pot') speak('spaarpot-' + geldState.target);
+    else speak('winkel-' + geldState.target);
+  }
+
+  function geldPromptText() {
+    if (geldState.game === 'pot') return 'Leg ' + geldState.target + ' cent in de spaarpot';
+    if (geldState.game === 'brief') {
+      return 'Dit kost ' + formatEuro(geldState.target) + '. Betaal met munten en briefjes!';
+    }
+    return 'Dit kost ' + formatEuro(geldState.target) + '. Betaal met de muntjes!';
+  }
+
+  function renderGeld() {
+    var prompt, pot, wink, kinds, i, html, tray, kind, px, el;
+    prompt = $('geld-prompt');
+    if (prompt) prompt.innerHTML = geldPromptText();
+    pot = $('geld-pot-view');
+    wink = $('geld-winkel-view');
+    if ($('geld-piggy') && !$('geld-piggy').getAttribute('data-ready')) {
+      $('geld-piggy').innerHTML = GELD_PIGGY_SVG;
+      $('geld-piggy').setAttribute('data-ready', '1');
+    }
+    if ($('geld-kassa-art') && !$('geld-kassa-art').getAttribute('data-ready')) {
+      $('geld-kassa-art').innerHTML = GELD_KASSA_SVG;
+      $('geld-kassa-art').setAttribute('data-ready', '1');
+    }
+    if (geldState.game === 'pot') {
+      if (pot) pot.className = '';
+      if (wink) wink.className = 'is-hidden';
+    } else {
+      if (pot) pot.className = 'is-hidden';
+      if (wink) wink.className = '';
+      geldRenderProduct();
+    }
+    tray = $('geld-tray');
+    if (tray) {
+      kinds = geldTrayKinds();
+      html = '';
+      for (i = 0; i < kinds.length; i++) {
+        kind = kinds[i];
+        px = geldIsNote(kind) ? 108 : GELD_TRAY_PX[kind];
+        html += geldCoinWrap(kind, px, 'geld-tray-item', ' data-geld-tray="1"');
+      }
+      tray.innerHTML = html;
+    }
+    geldRenderDropped();
+    geldUpdateTotal();
+    geldWriteData();
+  }
+
+  function geldRenderProduct() {
+    var card, svg, name, tag, nameEl;
+    svg = GELD_PRODUCT_SVG[geldState.product] || GELD_PRODUCT_SVG.auto;
+    name = GELD_PRODUCT_NAME[geldState.product] || geldState.product;
+    tag = $('geld-price-tag');
+    if (tag) tag.innerHTML = formatEuro(geldState.target);
+    card = $('geld-product-art');
+    if (card) card.innerHTML = svg;
+    nameEl = $('geld-product-name');
+    if (nameEl) nameEl.innerHTML = name;
+  }
+
+  function geldRenderDropped() {
+    var host, i, kind, px, html, cents;
+    if (geldState.game === 'pot') host = $('geld-dropped');
+    else host = $('geld-kassa-coins');
+    if (!host) return;
+    html = '';
+    for (i = 0; i < geldState.coins.length; i++) {
+      cents = geldState.coins[i];
+      kind = GELD_CENTS_KIND[cents] || '1c';
+      if (geldState.game === 'pot') px = geldIsNote(kind) ? 70 : GELD_DROP_PX[kind];
+      else px = geldIsNote(kind) ? 58 : Math.min(46, GELD_DROP_PX[kind] || 46);
+      html += geldCoinWrap(kind, px, 'geld-paid-item', ' data-act="geld-return" data-i="' + i + '"');
+    }
+    host.innerHTML = html;
+  }
+
+  function geldUpdateTotal() {
+    var paid, exact, el, amt, drop, kdrop, klab;
+    paid = geldPaidSum();
+    geldState.paid = paid;
+    exact = paid === geldState.target && paid > 0;
+    if (geldState.game === 'pot') {
+      el = $('geld-total');
+      if (el) {
+        el.innerHTML = 'Nu: ' + paid + ' cent';
+        el.className = 'geld-total' + (exact ? ' is-ok' : '');
+      }
+      drop = $('geld-dropzone');
+      if (drop) drop.className = 'geld-dropzone' + (exact ? ' is-ok' : '');
+    } else {
+      amt = $('geld-ks-amt');
+      if (amt) amt.innerHTML = formatEuro(paid);
+      klab = $('geld-kassa-label');
+      if (klab) {
+        klab.innerHTML = 'Je hebt: ' + formatEuro(paid);
+        klab.className = 'geld-kassa-label' + (exact ? ' is-ok' : '');
+      }
+      kdrop = $('geld-kassa-drop');
+      if (kdrop) kdrop.className = 'geld-kassa-drop' + (exact ? ' is-ok' : '');
+    }
+    geldWriteData();
+  }
+
+  function geldWriteData() {
+    var el;
+    el = $('geld-play');
+    if (!el) return;
+    el.setAttribute('data-game', geldState.game);
+    el.setAttribute('data-max', String(geldState.max));
+    el.setAttribute('data-key', geldState.key || '');
+    el.setAttribute('data-target', String(geldState.target));
+    el.setAttribute('data-paid', String(geldPaidSum()));
+    el.setAttribute('data-busy', state.locked ? '1' : '0');
+  }
+
+  function geldDropHost() {
+    if (geldState.game === 'pot') return $('geld-dropzone');
+    return $('geld-kassa-drop');
+  }
+
+  function geldOverDrop(p) {
+    var el, r;
+    el = geldDropHost();
+    if (!el || !p) return false;
+    r = el.getBoundingClientRect();
+    return p.x >= (r.left - 12) && p.x <= (r.right + 12) && p.y >= (r.top - 12) && p.y <= (r.bottom + 12);
+  }
+
+  function geldEventPoint(e) {
+    var src;
+    if (e.touches && e.touches.length) src = e.touches[0];
+    else if (e.changedTouches && e.changedTouches.length) src = e.changedTouches[0];
+    else src = e;
+    return { x: src.clientX, y: src.clientY };
+  }
+
+  function geldFindTray(e) {
+    var el;
+    el = e.target;
+    while (el && el !== document.body) {
+      if (el.getAttribute && el.getAttribute('data-geld-tray') === '1') return el;
+      el = el.parentNode;
+    }
+    return null;
+  }
+
+  function stopGeldDrag() {
+    if (geldDrag.ghost && geldDrag.ghost.parentNode) {
+      geldDrag.ghost.parentNode.removeChild(geldDrag.ghost);
+    }
+    geldDrag.on = false;
+    geldDrag.ghost = null;
+    geldDrag.moved = false;
+    geldMarkHot(false);
+  }
+
+  function geldMarkHot(on) {
+    var el;
+    el = geldDropHost();
+    if (!el) return;
+    if (on) {
+      if ((' ' + el.className + ' ').indexOf(' is-hot ') === -1) el.className += ' is-hot';
+    } else {
+      el.className = el.className.replace(/\s*is-hot/g, '');
+    }
+  }
+
+  function geldDragStart(e) {
+    var tile, p, r, ghost, kind, cents;
+    if (state.screen !== 'geldplay' || state.locked) return false;
+    tile = geldFindTray(e);
+    if (!tile) return false;
+    kind = tile.getAttribute('data-kind') || '';
+    cents = parseInt(tile.getAttribute('data-cents'), 10) || 0;
+    if (!kind || !cents) return false;
+    p = geldEventPoint(e);
+    r = tile.getBoundingClientRect();
+    geldDrag.on = true;
+    geldDrag.kind = kind;
+    geldDrag.cents = cents;
+    geldDrag.startX = p.x;
+    geldDrag.startY = p.y;
+    geldDrag.offX = p.x - r.left;
+    geldDrag.offY = p.y - r.top;
+    geldDrag.w = r.width;
+    geldDrag.h = r.height;
+    geldDrag.moved = false;
+    ghost = document.createElement('div');
+    ghost.className = 'geld-drag-ghost';
+    ghost.innerHTML = tile.innerHTML;
+    ghost.style.width = r.width + 'px';
+    ghost.style.height = r.height + 'px';
+    ghost.style.left = r.left + 'px';
+    ghost.style.top = r.top + 'px';
+    ghost.style.display = 'none';
+    document.body.appendChild(ghost);
+    geldDrag.ghost = ghost;
+    return true;
+  }
+
+  function geldDragMove(e) {
+    var p, g;
+    if (!geldDrag.on) return false;
+    p = geldEventPoint(e);
+    if (Math.abs(p.x - geldDrag.startX) > 8 || Math.abs(p.y - geldDrag.startY) > 8) {
+      geldDrag.moved = true;
+    }
+    if (!geldDrag.moved) return true;
+    g = geldDrag.ghost;
+    if (g) {
+      g.style.display = 'block';
+      g.style.left = (p.x - geldDrag.offX) + 'px';
+      g.style.top = (p.y - geldDrag.offY) + 'px';
+    }
+    geldMarkHot(geldOverDrop(p));
+    return true;
+  }
+
+  function geldDragEnd(e) {
+    var p, dropped;
+    if (!geldDrag.on) return false;
+    p = geldEventPoint(e);
+    dropped = geldDrag.moved && geldOverDrop(p);
+    if (dropped) {
+      geldState.coins.push(geldDrag.cents);
+      geldRenderDropped();
+      geldUpdateTotal();
+    }
+    stopGeldDrag();
+    return true;
+  }
+
+  function geldReturnCoin(i) {
+    if (state.locked) return;
+    i = parseInt(i, 10);
+    if (isNaN(i) || i < 0 || i >= geldState.coins.length) return;
+    geldState.coins.splice(i, 1);
+    geldRenderDropped();
+    geldUpdateTotal();
+  }
+
+  function geldKlaar() {
+    var paid;
+    if (state.screen !== 'geldplay' || state.locked) return;
+    paid = geldPaidSum();
+    if (paid === geldState.target && geldState.target > 0) {
+      awardCorrect();
+      geldWriteData();
+      return;
+    }
+    playWrong();
+    if (geldState.game !== 'pot' && paid > geldState.target) {
+      showToast('Te veel!', false);
+      speak('geld-teveel');
+    } else if (geldState.game !== 'pot' && paid < geldState.target) {
+      showToast('Nog niet genoeg!', false);
+      speak('geld-teweinig');
+    } else {
+      showToast('Oeps!', false);
+      speak('geld-fout');
+    }
+  }
+
+  function geldPayExact() {
+    var parts, i;
+    parts = geldGreedy(geldState.target, geldDenoms());
+    geldState.coins = [];
+    if (parts) {
+      for (i = 0; i < parts.length; i++) geldState.coins.push(parts[i]);
+    }
+    geldRenderDropped();
+    geldUpdateTotal();
+    geldKlaar();
+  }
+
+  window.__geldTest = {
+    formatEuro: formatEuro,
+    greedy: geldGreedy,
+    denoms: geldDenoms,
+    payExact: geldPayExact,
+    render: renderGeld,
+    start: startGeld,
+    state: function () { return geldState; },
+    pools: {
+      pot10: GELD_POT_10,
+      pot50: GELD_POT_50,
+      winkel1: GELD_WINKEL_1,
+      winkel5: GELD_WINKEL_5,
+      brief20: GELD_BRIEF_20,
+      brief50: GELD_BRIEF_50
+    }
+  };
+
+
   function decorateStatic() {
     $('sun-icon').innerHTML = sunHtml();
     if ($('icon-tekenen-start')) {
@@ -13712,6 +15024,10 @@
         '<path d="M30 14 L36 6 L44 10 L42 18 Z" fill="#E53935" stroke="#6A3E00" stroke-width="3" stroke-linejoin="round"/>' +
         '<path d="M18 54 L14 66 L30 58 Z" fill="#FF8A4C" stroke="#6A3E00" stroke-width="3" stroke-linejoin="round"/>' +
         '</svg>';
+    }
+    if ($('icon-geld-start')) {
+      $('icon-geld-start').innerHTML =
+        '<svg viewBox="0 0 72 56" width="72" height="56" aria-hidden="true"><circle cx="22" cy="34" r="16" fill="#C9853A" stroke="#6B3510" stroke-width="2"/><text x="22" y="40" text-anchor="middle" font-size="11" font-weight="700" fill="#5A3010" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">5</text><circle cx="40" cy="30" r="18" fill="#F0B429" stroke="#7A5A0A" stroke-width="2"/><text x="40" y="36" text-anchor="middle" font-size="12" font-weight="700" fill="#5A4408" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">10</text><circle cx="56" cy="28" r="14" fill="#E8E4D8" stroke="#7A5A0A" stroke-width="2"/><circle cx="56" cy="28" r="8" fill="#F0B429"/><text x="56" y="32" text-anchor="middle" font-size="8" font-weight="700" fill="#5A4408" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">1</text></svg>';
     }
     elSet('start-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('games-star-icon', starSvg('#FFD54F', '#F9A825'));
@@ -13751,6 +15067,9 @@
     elSet('klinkers-home-icon', homeIconHtml());
     elSet('lijnlevel-home-icon', homeIconHtml());
     elSet('lijn-home-icon', homeIconHtml());
+    elSet('geld-home-icon', homeIconHtml());
+    elSet('geldlevel-home-icon', homeIconHtml());
+    elSet('geldplay-home-icon', homeIconHtml());
     elSet('play-back-icon', backIconHtml());
     elSet('picker-back-icon', backIconHtml());
     elSet('trace-back-icon', backIconHtml());
@@ -13781,6 +15100,9 @@
     elSet('klinkers-back-icon', backIconHtml());
     elSet('lijnlevel-back-icon', backIconHtml());
     elSet('lijn-back-icon', backIconHtml());
+    elSet('geld-back-icon', backIconHtml());
+    elSet('geldlevel-back-icon', backIconHtml());
+    elSet('geldplay-back-icon', backIconHtml());
     elSet('letters-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('trace-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('names-star-icon', starSvg('#FFD54F', '#F9A825'));
@@ -13809,6 +15131,9 @@
     elSet('klinkers-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('lijnlevel-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('lijn-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('geld-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('geldlevel-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('geldplay-star-icon', starSvg('#FFD54F', '#F9A825'));
     if ($('icon-vormen')) {
       $('icon-vormen').innerHTML =
         vormSvg('circle', '#2FB3F0', '#1A7FB3', 0) +
@@ -13838,6 +15163,18 @@
         '<circle cx="36" cy="6" r="2.2" fill="#FFD54F" stroke="#4E342E" stroke-width="1.3"/>' +
         '<polygon points="56,10 59,18 68,18 61,24 64,33 56,27 48,33 51,24 44,18 53,18" fill="#FFD54F" stroke="#F9A825" stroke-width="1.3" stroke-linejoin="round"/>' +
         '</svg>';
+    }
+    if ($('icon-geld-pot')) {
+      $('icon-geld-pot').innerHTML =
+        '<svg viewBox="0 0 72 48" width="72" height="48" aria-hidden="true"><ellipse cx="36" cy="30" rx="22" ry="14" fill="#FF7EB3" stroke="#E0568A" stroke-width="2"/><ellipse cx="24" cy="18" rx="7" ry="9" fill="#FF7EB3" stroke="#E0568A" stroke-width="2"/><ellipse cx="48" cy="18" rx="7" ry="9" fill="#FF7EB3" stroke="#E0568A" stroke-width="2"/><rect x="30" y="14" width="12" height="4" rx="2" fill="#6A2040"/><circle cx="30" cy="28" r="2" fill="#243044"/><circle cx="42" cy="28" r="2" fill="#243044"/><ellipse cx="40" cy="34" rx="6" ry="4" fill="#FF6B9D" stroke="#E0568A" stroke-width="1.2"/></svg>';
+    }
+    if ($('icon-geld-winkel')) {
+      $('icon-geld-winkel').innerHTML =
+        '<svg viewBox="0 0 72 48" width="72" height="48" aria-hidden="true"><rect x="16" y="20" width="40" height="18" rx="4" fill="#FF8A4C" stroke="#D4692C" stroke-width="2"/><rect x="22" y="6" width="28" height="16" rx="3" fill="#E56B28" stroke="#C45414" stroke-width="1.6"/><rect x="26" y="9" width="20" height="10" rx="2" fill="#143324"/><rect x="20" y="24" width="6" height="5" rx="1" fill="#FFF3E0"/><rect x="28" y="24" width="6" height="5" rx="1" fill="#FFF3E0"/><rect x="36" y="24" width="6" height="5" rx="1" fill="#FFC93A"/><rect x="44" y="24" width="6" height="5" rx="1" fill="#4CC86E"/><path d="M18 38 L54 38 L56 46 L16 46 Z" fill="#F3E2C0" stroke="#C4A36A" stroke-width="1.5"/></svg>';
+    }
+    if ($('icon-geld-brief')) {
+      $('icon-geld-brief').innerHTML =
+        '<svg viewBox="0 0 72 48" width="72" height="48" aria-hidden="true"><rect x="6" y="20" width="36" height="20" rx="3" fill="#D0CFC9" stroke="#6E6D68" stroke-width="1.6"/><text x="24" y="35" text-anchor="middle" font-size="12" font-weight="800" fill="#5C5B57" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">5</text><rect x="18" y="12" width="36" height="20" rx="3" fill="#E8A3A3" stroke="#8B2E2E" stroke-width="1.6"/><text x="36" y="27" text-anchor="middle" font-size="12" font-weight="800" fill="#8B2020" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">10</text><rect x="30" y="4" width="36" height="20" rx="3" fill="#8BB3DC" stroke="#1E4A80" stroke-width="1.6"/><text x="48" y="19" text-anchor="middle" font-size="12" font-weight="800" fill="#1A4A80" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">20</text></svg>';
     }
     $('icon-count').innerHTML =
       '<span class="mini">' + appleSvg() + '</span>' +
