@@ -529,7 +529,7 @@ async function waitSpiegelNext(page) {
     await tap(page, '#btn-goto-program');
     await tap(page, '#btn-program-home');
     await expectScreen(page, 'start', 'program menu home');
-    ok('Programmeren-menu terug/home → start');
+    ok('Logica-menu terug/home → start');
 
     await fresh(page);
     await tap(page, '#btn-goto-program');
@@ -540,7 +540,7 @@ async function waitSpiegelNext(page) {
     await tap(page, '#program-grid [data-game="robot"]');
     await tap(page, '#btn-robotlevel-home');
     await expectScreen(page, 'start', 'robotlevel home');
-    ok('Robot-kiezer terug → Programmeren, home → start');
+    ok('Robot-kiezer terug → Logica, home → start');
 
     await fresh(page);
     await tap(page, '#btn-goto-program');
@@ -563,7 +563,7 @@ async function waitSpiegelNext(page) {
     await tap(page, '#program-grid [data-game="herhaal"]');
     await tap(page, '#btn-robotlevel-home');
     await expectScreen(page, 'start', 'herhaal level home');
-    ok('Herhalen-kiezer terug → Programmeren, home → start');
+    ok('Herhalen-kiezer terug → Logica, home → start');
 
     await fresh(page);
     await tap(page, '#btn-goto-program');
@@ -586,7 +586,7 @@ async function waitSpiegelNext(page) {
     await tap(page, '#program-grid [data-game="volg"]');
     await tap(page, '#btn-robotlevel-home');
     await expectScreen(page, 'start', 'volg level home');
-    ok('Volg de code-kiezer terug → Programmeren, home → start');
+    ok('Volg de code-kiezer terug → Logica, home → start');
 
     await fresh(page);
     await tap(page, '#btn-goto-program');
@@ -609,7 +609,7 @@ async function waitSpiegelNext(page) {
     await tap(page, '#program-grid [data-game="fout"]');
     await tap(page, '#btn-robotlevel-home');
     await expectScreen(page, 'start', 'fout level home');
-    ok('Zoek de fout-kiezer terug → Programmeren, home → start');
+    ok('Zoek de fout-kiezer terug → Logica, home → start');
 
     await fresh(page);
     await tap(page, '#btn-goto-program');

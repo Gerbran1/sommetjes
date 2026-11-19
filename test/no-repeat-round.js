@@ -701,7 +701,7 @@ function intersection(a, b) {
       if (onPuzzR) break;
       await wait(150);
     }
-    if (!onPuzzR) throw new Error('robot did not return to Programmeren after reward');
+    if (!onPuzzR) throw new Error('robot did not return to Logica after reward');
     await page.click('#program-grid [data-game="robot"]');
     await wait(280);
     await page.click('[data-kind="easy"]');

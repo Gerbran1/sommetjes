@@ -527,6 +527,7 @@
       -webkit-flex: 0 0 21%;
       flex: 0 0 21%;
       max-width: 230px;
+      min-width: 0;
     }
 
     #tijd-grid, #tijdlevel-grid {
@@ -3636,6 +3637,46 @@
       .word-box .word-svg { width: 200px; height: 200px; }
       .name-box { width: 72px; height: 86px; font-size: 48px; }
       .name-pick { height: 100px; font-size: 42px; }
+
+      #choice-grid.choices-8 {
+        width: 100%;
+        max-width: 100%;
+      }
+      #choice-grid.choices-8 .choice-btn {
+        -webkit-flex: 0 0 22%;
+        flex: 0 0 22%;
+        width: 22%;
+        max-width: 22%;
+        min-width: 0;
+        margin: 1.2% 1%;
+        min-height: 150px;
+        padding: 10px 4px;
+      }
+      #choice-grid.choices-8 .choice-label {
+        font-size: 17px;
+        line-height: 1.15;
+        max-width: 100%;
+        text-align: center;
+      }
+      #choice-grid.choices-8 .choice-glyph { font-size: 40px; margin-bottom: 6px; }
+      #choice-grid.choices-8 .program-glyph,
+      #choice-grid.choices-8 .program-glyph svg,
+      #choice-grid.choices-8 .tijd-glyph,
+      #choice-grid.choices-8 .tijd-glyph svg,
+      #choice-grid.choices-8 .geld-glyph,
+      #choice-grid.choices-8 .geld-glyph svg { width: 52px; height: 40px; }
+      #player-bar, #player-grid {
+        width: 100%;
+        max-width: 100%;
+      }
+      #player-grid .player-btn {
+        margin: 0 5px;
+        font-size: 20px;
+        min-height: 52px;
+        padding: 8px 6px;
+        max-width: none;
+        min-width: 0;
+      }
     }
     @media screen and (max-height: 800px) {
       .sun { width: 72px; height: 72px; }
@@ -4216,7 +4257,7 @@
         </button>
         <button type="button" class="tap choice-btn choice-program" id="btn-goto-program" data-act="goto-program">
           <div class="choice-glyph program-glyph" id="icon-program-start"></div>
-          <div class="choice-label">Programmeren</div>
+          <div class="choice-label">Logica</div>
         </button>
         <button type="button" class="tap choice-btn choice-memory" id="btn-goto-memory" data-act="goto-memory">
           <div class="choice-glyph mem-glyph">
@@ -4896,7 +4937,7 @@
           </div>
         </div>
       </div>
-      <div class="prompt">Programmeren</div>
+      <div class="prompt">Logica</div>
       <div id="program-grid">
         <button type="button" class="tap level-btn lvl-program-robot" data-act="program-game" data-game="robot">
           <div class="level-icon" id="icon-program-robot"></div>
