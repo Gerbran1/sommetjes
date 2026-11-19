@@ -645,6 +645,46 @@
       -webkit-animation: shake 0.45s ease-in-out;
       animation: shake 0.45s ease-in-out;
     }
+    #tijd-clock.shake {
+      -webkit-animation: shake 0.45s ease-in-out;
+      animation: shake 0.45s ease-in-out;
+    }
+    #tijd-klaar-wrap {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+      width: 92%;
+      max-width: 420px;
+      margin: 8px auto 12px auto;
+    }
+    #tijd-klaar-wrap.is-hidden { display: none; }
+    #btn-tijd-klaar {
+      display: inline-block;
+      background: #4CC86E;
+      color: #fff;
+      font-size: 32px;
+      font-weight: 800;
+      padding: 16px 42px;
+      border-radius: 28px;
+      -webkit-box-shadow: 0 8px 0 #2E9A4F;
+      box-shadow: 0 8px 0 #2E9A4F;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    #btn-tijd-klaar.pressed, #btn-tijd-klaar:active {
+      -webkit-box-shadow: 0 2px 0 #2E9A4F;
+      box-shadow: 0 2px 0 #2E9A4F;
+    }
+    #tijd-stage.is-zet #tijd-choices { display: none; }
+    #tijd-stage.is-klok #tijd-klaar-wrap { display: none; }
+    #tijd-prompt {
+      font-size: 42px;
+    }
     @media screen and (max-height: 800px) {
       #choice-grid.choices-8 .choice-btn { min-height: 108px; }
       #choice-grid.choices-8 .choice-label { font-size: 18px; }
@@ -672,6 +712,10 @@
         margin: 0 12px 0 0;
       }
       .tijd-choice { min-height: 54px; font-size: 22px; margin: 0 0 8px 0; }
+      #tijd-prompt { font-size: 32px; }
+      #tijd-stage.is-zet #tijd-clock-wrap { width: 52%; max-width: 400px; }
+      #tijd-stage.is-zet #tijd-klaar-wrap { width: 36%; margin: 0 16px 0 0; }
+      #btn-tijd-klaar { font-size: 30px; padding: 16px 36px; }
     }
 
     #program-grid {
@@ -4869,6 +4913,10 @@
           <div class="level-icon" id="icon-tijd-klok"></div>
           <div class="level-label">Klok kijken</div>
         </button>
+        <button type="button" class="tap level-btn lvl-klok-halve" data-act="tijd-game" data-game="zet">
+          <div class="level-icon" id="icon-tijd-zet"></div>
+          <div class="level-label">Zet de klok</div>
+        </button>
       </div>
     </div>
 
@@ -4889,7 +4937,7 @@
           </div>
         </div>
       </div>
-      <div class="prompt">Klok kijken</div>
+      <div class="prompt" id="tijdlevel-prompt">Klok kijken</div>
       <div id="tijdlevel-grid">
         <button type="button" class="tap level-btn lvl-klok-hele" data-act="tijd-kind" data-kind="hele">
           <div class="level-icon" id="icon-klok-hele"></div>
@@ -4929,11 +4977,14 @@
       </div>
       <div class="prompt" id="tijd-prompt">Hoe laat is het?</div>
       <div class="progress-row"></div>
-      <div id="tijd-stage">
+      <div id="tijd-stage" class="is-klok">
         <div id="tijd-clock-wrap">
           <div id="tijd-clock"></div>
         </div>
         <div id="tijd-choices"></div>
+        <div id="tijd-klaar-wrap" class="is-hidden">
+          <button type="button" class="tap" id="btn-tijd-klaar" data-act="tijd-klaar">Klaar!</button>
+        </div>
       </div>
     </div>
 
@@ -5661,6 +5712,7 @@
     if (level === 'robot' || level === 'herhaal' || level === 'volg' || level === 'fout') return level + '-' + (state.robotKind || 'easy');
     if (level === 'geld') return 'geld-' + (state.geldGame || 'pot') + '-' + String(state.geldMax || 0);
     if (level === 'klok') return 'klok-' + (state.tijdKind || 'hele');
+    if (level === 'zet') return 'zet-' + (state.tijdKind || 'hele');
     return level || 'game';
   }
 
@@ -7056,6 +7108,10 @@
     }
     else if (state.level === 'klok') {
       startKlok(false);
+      return;
+    }
+    else if (state.level === 'zet') {
+      startZet(false);
       return;
     }
     else if (state.level === 'weg') {
@@ -10659,6 +10715,10 @@
       if (geldDragStart(e)) {
         if (e.preventDefault) e.preventDefault();
       }
+    } else if (state.screen === 'tijdplay') {
+      if (zetDragStart(e)) {
+        if (e.preventDefault) e.preventDefault();
+      }
     }
   }
 
@@ -10698,6 +10758,11 @@
         geldDragMove(e);
         if (e.preventDefault) e.preventDefault();
       }
+    } else if (state.screen === 'tijdplay') {
+      if (zetDrag.on) {
+        zetDragMove(e);
+        if (e.preventDefault) e.preventDefault();
+      }
     }
   }
 
@@ -10735,6 +10800,11 @@
     } else if (state.screen === 'geldplay') {
       if (geldDrag.on) {
         geldDragEnd(e);
+        if (e.preventDefault) e.preventDefault();
+      }
+    } else if (state.screen === 'tijdplay') {
+      if (zetDrag.on) {
+        zetDragEnd(e);
         if (e.preventDefault) e.preventDefault();
       }
     }
@@ -14781,6 +14851,7 @@
     if (typeof stopLijnDrag === 'function') stopLijnDrag();
     if (typeof clearRobotTimer === 'function') clearRobotTimer();
     if (typeof stopGeldDrag === 'function') stopGeldDrag();
+    if (typeof stopZetDrag === 'function') stopZetDrag();
     clearMemoryTimer();
     clearGeheugenTimer();
     clearSimonFlash();
@@ -15019,15 +15090,20 @@
       return;
     }
     if (act === 'tijd-game') {
-      showTijdLevel();
+      showTijdLevel(el.getAttribute('data-game') || 'klok');
       return;
     }
     if (act === 'tijd-kind') {
-      startKlok(el.getAttribute('data-kind') || 'hele', true);
+      if ((state.tijdGame || 'klok') === 'zet') startZet(el.getAttribute('data-kind') || 'hele', true);
+      else startKlok(el.getAttribute('data-kind') || 'hele', true);
       return;
     }
     if (act === 'tijd-answer') {
       klokAnswer(el);
+      return;
+    }
+    if (act === 'tijd-klaar') {
+      zetKlaar();
       return;
     }
     if (act === 'geld-game') {
@@ -15333,6 +15409,8 @@
       e.preventDefault();
     } else if (state.screen === 'geldplay' && geldDragStart(e)) {
       e.preventDefault();
+    } else if (state.screen === 'tijdplay' && zetDragStart(e)) {
+      e.preventDefault();
     }
   }
 
@@ -15373,6 +15451,10 @@
       return;
     }
     if (state.screen === 'geldplay' && geldDragMove(e)) {
+      e.preventDefault();
+      return;
+    }
+    if (state.screen === 'tijdplay' && zetDragMove(e)) {
       e.preventDefault();
       return;
     }
@@ -15431,6 +15513,12 @@
       lastTouchEnd = now;
       return;
     }
+    if (state.screen === 'tijdplay' && zetDragEnd(e)) {
+      clearPressed();
+      e.preventDefault();
+      lastTouchEnd = now;
+      return;
+    }
     el = findClickableFromEvent(e);
     clearPressed();
     if (el && (now - touchStartTime) < 700 && (!touchMoved || isNavAct(el))) {
@@ -15447,6 +15535,7 @@
     if (state.screen === 'klinkers') stopKlinkDrag();
     if (state.screen === 'lijn') stopLijnDrag();
     if (state.screen === 'geldplay') stopGeldDrag();
+    if (state.screen === 'tijdplay') stopZetDrag();
   }
 
   function onClick(e) {
@@ -16354,9 +16443,9 @@
       '<circle cx="' + n(cx) + '" cy="' + n(cy) + '" r="' + n(r * 0.93) + '" fill="#C5CAE9"/>' +
       '<circle cx="' + n(cx) + '" cy="' + n(cy) + '" r="' + n(r * 0.89) + '" fill="url(#' + gid + 'Face)"/>' +
       ticks + nums +
-      '<line x1="' + n(htx) + '" y1="' + n(hty) + '" x2="' + n(hx) + '" y2="' + n(hy) +
+      '<line id="' + gid + 'Hour" x1="' + n(htx) + '" y1="' + n(hty) + '" x2="' + n(hx) + '" y2="' + n(hy) +
       '" stroke="#1565C0" stroke-width="' + n(r * 0.1) + '" stroke-linecap="round"/>' +
-      '<line x1="' + n(mtx) + '" y1="' + n(mty) + '" x2="' + n(mx) + '" y2="' + n(my) +
+      '<line id="' + gid + 'Min" x1="' + n(mtx) + '" y1="' + n(mty) + '" x2="' + n(mx) + '" y2="' + n(my) +
       '" stroke="#E53935" stroke-width="' + n(r * 0.06) + '" stroke-linecap="round"/>' +
       '<circle cx="' + n(cx) + '" cy="' + n(cy) + '" r="' + n(r * 0.08) + '" fill="#FFD54F" stroke="#F9A825" stroke-width="' + n(r * 0.025) + '"/>' +
       '<circle cx="' + n(cx) + '" cy="' + n(cy) + '" r="' + n(r * 0.03) + '" fill="#5D4037"/>' +
@@ -16373,17 +16462,23 @@
     updateStarsUI();
   }
 
-  function showTijdLevel() {
-    state.level = 'klok';
+  function showTijdLevel(game) {
+    var title, el;
+    if (game) state.tijdGame = game;
+    game = state.tijdGame || 'klok';
+    state.level = game;
     state.locked = false;
     state.question = null;
     hideReward();
+    title = (game === 'zet') ? 'Zet de klok' : 'Klok kijken';
+    el = $('tijdlevel-prompt');
+    if (el) el.innerHTML = title;
     showScreen('tijdlevel');
     updateStarsUI();
   }
 
   function startKlok(kind, fresh) {
-    var item, wrap, i, btns, btn, promptEl;
+    var item, wrap, i, btns, btn, promptEl, klaarEl, stageEl;
     if (typeof kind === 'boolean') {
       fresh = kind;
       kind = '';
@@ -16405,6 +16500,8 @@
     klokState.phrase = item.phrase;
     klokState.options = item.options;
     klokState.key = item.key;
+    state.tijdGame = 'klok';
+    if (typeof stopZetDrag === 'function') stopZetDrag();
     hideReward();
     hideToast();
     showScreen('tijdplay');
@@ -16413,8 +16510,13 @@
     if (wrap) wrap.innerHTML = tijdClockSvg('clkPlay', item.h, item.m, 200, 200);
     promptEl = $('tijd-prompt');
     if (promptEl) promptEl.innerHTML = 'Hoe laat is het?';
+    klaarEl = $('tijd-klaar-wrap');
+    if (klaarEl) klaarEl.className = 'is-hidden';
+    stageEl = $('tijd-stage');
+    if (stageEl) stageEl.className = 'is-klok';
     btns = document.getElementById('tijd-choices');
     if (btns) {
+      btns.className = '';
       btns.innerHTML = '';
       for (i = 0; i < item.options.length; i++) {
         btn = document.createElement('button');
@@ -16459,12 +16561,258 @@
     }
   }
 
+
+  var zetState = { kind: 'hele', h: 12, m: 0, targetH: 3, targetM: 0, phrase: '', key: '' };
+  var zetDrag = { on: false, hand: '' };
+
+  function stopZetDrag() {
+    zetDrag.on = false;
+    zetDrag.hand = '';
+  }
+
+  function startZet(kind, fresh, forced) {
+    var item, wrap, promptEl, choices, klaar, stage;
+    if (typeof kind === 'boolean') {
+      forced = fresh;
+      fresh = kind;
+      kind = '';
+    }
+    if (kind) state.tijdKind = kind;
+    kind = state.tijdKind || 'hele';
+    state.tijdGame = 'zet';
+    state.level = 'zet';
+    state.locked = false;
+    if (fresh) {
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+      resetVoiceCycle();
+      state.lastWasPersonal = false;
+    }
+    stopZetDrag();
+    if (forced && forced.h) {
+      item = {
+        h: forced.h,
+        m: forced.m || 0,
+        phrase: formatNlTime(forced.h, forced.m || 0),
+        key: String(forced.h) + '-' + String(forced.m || 0)
+      };
+      rememberRoundKey(item.key);
+    } else {
+      item = pickKlokItem(kind);
+    }
+    zetState.kind = kind;
+    zetState.targetH = item.h;
+    zetState.targetM = item.m;
+    zetState.phrase = item.phrase;
+    zetState.key = item.key;
+    if (item.h === 12 && item.m === 0) {
+      zetState.h = 3;
+      zetState.m = 0;
+    } else {
+      zetState.h = 12;
+      zetState.m = 0;
+    }
+    hideReward();
+    hideToast();
+    showScreen('tijdplay');
+    updateStarsUI();
+    promptEl = $('tijd-prompt');
+    if (promptEl) promptEl.innerHTML = 'Zet de klok op ' + item.phrase;
+    choices = $('tijd-choices');
+    if (choices) {
+      choices.innerHTML = '';
+      choices.className = 'is-hidden';
+    }
+    klaar = $('tijd-klaar-wrap');
+    if (klaar) klaar.className = '';
+    stage = $('tijd-stage');
+    if (stage) {
+      stage.className = 'is-zet';
+      stage.setAttribute('data-mode', 'zet');
+      stage.setAttribute('data-kind', kind);
+      stage.setAttribute('data-phrase', item.phrase);
+      stage.setAttribute('data-h', String(item.h));
+      stage.setAttribute('data-m', String(item.m));
+      stage.setAttribute('data-key', item.key);
+    }
+    renderZetClock();
+    beginQuestionVoice();
+    speak('zet-' + item.h + '-' + item.m);
+  }
+
+  function renderZetClock() {
+    var wrap, stage;
+    wrap = $('tijd-clock');
+    if (wrap) wrap.innerHTML = tijdClockSvg('clkPlay', zetState.h, zetState.m, 200, 200);
+    stage = $('tijd-stage');
+    if (stage) {
+      stage.setAttribute('data-sh', String(zetState.h));
+      stage.setAttribute('data-sm', String(zetState.m));
+    }
+  }
+
+  function zetNormHour(h) {
+    h = h % 12;
+    if (h <= 0) h += 12;
+    return h;
+  }
+
+  function zetSetMinutes(m) {
+    var prev, next;
+    prev = zetState.m;
+    next = m % 60;
+    if (next < 0) next += 60;
+    if (prev >= 45 && next <= 15) zetState.h = zetNormHour(zetState.h + 1);
+    else if (prev <= 15 && next >= 45) zetState.h = zetNormHour(zetState.h - 1);
+    zetState.m = next;
+  }
+
+  function zetSetHour(h) {
+    zetState.h = zetNormHour(h);
+  }
+
+  function zetSnapMinuteFromAngle(ang) {
+    var slot;
+    ang = ang % 360;
+    if (ang < 0) ang += 360;
+    slot = Math.round(ang / 30) % 12;
+    return slot * 5;
+  }
+
+  function zetHourFromAngle(ang) {
+    var slot;
+    ang = ang % 360;
+    if (ang < 0) ang += 360;
+    slot = Math.round(ang / 30) % 12;
+    return slot === 0 ? 12 : slot;
+  }
+
+  function zetEventPoint(e) {
+    var src;
+    src = (e.touches && e.touches.length) ? e.touches[0] : ((e.changedTouches && e.changedTouches.length) ? e.changedTouches[0] : e);
+    return { x: src.clientX, y: src.clientY };
+  }
+
+  function zetClockGeom() {
+    var el, svg, r;
+    el = $('tijd-clock');
+    if (!el) return null;
+    svg = el.getElementsByTagName('svg')[0];
+    r = (svg || el).getBoundingClientRect();
+    return { cx: r.left + r.width / 2, cy: r.top + r.height / 2, rad: Math.min(r.width, r.height) / 2 };
+  }
+
+  function zetAngleFromPoint(p, g) {
+    var ang;
+    ang = Math.atan2(p.x - g.cx, -(p.y - g.cy)) * 180 / Math.PI;
+    if (ang < 0) ang += 360;
+    return ang;
+  }
+
+  function zetAngDist(a, b) {
+    var d;
+    d = Math.abs(a - b) % 360;
+    if (d > 180) d = 360 - d;
+    return d;
+  }
+
+  function zetPickHand(p, g) {
+    var ang, dist, hourAng, minAng, dHour, dMin;
+    ang = zetAngleFromPoint(p, g);
+    dist = Math.sqrt((p.x - g.cx) * (p.x - g.cx) + (p.y - g.cy) * (p.y - g.cy));
+    hourAng = ((zetState.h % 12) + zetState.m / 60) * 30;
+    minAng = zetState.m * 6;
+    dHour = zetAngDist(ang, hourAng);
+    dMin = zetAngDist(ang, minAng);
+    if (dHour < 28 && dHour + 8 < dMin) return 'hour';
+    if (dMin < 28 && dMin + 8 < dHour) return 'min';
+    if (dist < g.rad * 0.42) return 'hour';
+    return 'min';
+  }
+
+  function zetApplyAngle(hand, ang) {
+    if (hand === 'min') zetSetMinutes(zetSnapMinuteFromAngle(ang));
+    else zetSetHour(zetHourFromAngle(ang));
+    renderZetClock();
+  }
+
+  function zetDragStart(e) {
+    var p, g, dist;
+    if (state.screen !== 'tijdplay' || state.level !== 'zet' || state.locked) return false;
+    p = zetEventPoint(e);
+    g = zetClockGeom();
+    if (!g || !g.rad) return false;
+    dist = Math.sqrt((p.x - g.cx) * (p.x - g.cx) + (p.y - g.cy) * (p.y - g.cy));
+    if (dist > g.rad * 1.18) return false;
+    zetDrag.on = true;
+    zetDrag.hand = zetPickHand(p, g);
+    zetApplyAngle(zetDrag.hand, zetAngleFromPoint(p, g));
+    return true;
+  }
+
+  function zetDragMove(e) {
+    var p, g;
+    if (!zetDrag.on) return false;
+    p = zetEventPoint(e);
+    g = zetClockGeom();
+    if (!g) return true;
+    zetApplyAngle(zetDrag.hand, zetAngleFromPoint(p, g));
+    return true;
+  }
+
+  function zetDragEnd(e) {
+    if (!zetDrag.on) return false;
+    if (e) zetDragMove(e);
+    stopZetDrag();
+    return true;
+  }
+
+  function zetHandsOk() {
+    return zetState.h === zetState.targetH && zetState.m === zetState.targetM;
+  }
+
+  function zetKlaar() {
+    var stage;
+    if (state.locked) return;
+    if (state.level !== 'zet') return;
+    if (zetHandsOk()) {
+      stage = $('tijd-stage');
+      if (stage) stage.setAttribute('data-ok', '1');
+      awardCorrect();
+    } else {
+      playWrong();
+      showToast('Probeer nog eens', false);
+      speak('klok-fout');
+      stage = $('tijd-clock');
+      if (stage) {
+        stage.className = (stage.className + ' shake').replace(/^\s+/, '');
+        window.setTimeout(function () {
+          if (stage) stage.className = stage.className.replace(/\s*shake/g, '');
+        }, 450);
+      }
+    }
+  }
+
+
   window.__tijdTest = {
     format: formatNlTime,
     pool: tijdPool,
     start: startKlok,
+    startZet: startZet,
     clockSvg: tijdClockSvg,
-    state: function () { return klokState; }
+    state: function () { return klokState; },
+    zetState: function () { return zetState; },
+    setHands: function (h, m) {
+      zetState.h = zetNormHour(h);
+      zetState.m = ((m % 60) + 60) % 60;
+      renderZetClock();
+    },
+    setMinutes: zetSetMinutes,
+    setHour: zetSetHour,
+    snapMinute: zetSnapMinuteFromAngle,
+    hourFromAngle: zetHourFromAngle,
+    handsOk: zetHandsOk,
+    klaar: zetKlaar
   };
 
 
@@ -16510,6 +16858,9 @@
     }
     if ($('icon-tijd-klok')) {
       $('icon-tijd-klok').innerHTML = tijdClockSvg('clkMenu', 3, 0, 72, 56);
+    }
+    if ($('icon-tijd-zet')) {
+      $('icon-tijd-zet').innerHTML = tijdClockSvg('clkZetMenu', 6, 15, 72, 56);
     }
     if ($('icon-klok-hele')) {
       $('icon-klok-hele').innerHTML = tijdClockSvg('clkHele', 3, 0, 72, 56);

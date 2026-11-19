@@ -55,6 +55,7 @@ Op het startscherm kies je **Getallen**, **Letters**, **Puzzels**, **Programmere
 
 **Tijd**
 24. **Klok kijken** — je ziet een analoge klok en tikt de juiste tijd uit drie keuzes, in het Nederlands (Nederland): "zes uur", "kwart over zes", "half zeven" (dat is 6:30), "tien voor half zeven" (6:20), "vijf over half zeven" (6:35). Je kiest hele uren, halve uren, kwartieren of per vijf minuten. Een ronde is vijf klokken, daarna ga je terug naar Tijd.
+25. **Zet de klok** — je hoort en leest "Zet de klok op kwart over zes" (dezelfde niveaus en Nederlandse tijden) en sleept de wijzers zelf. De minuutwijzer springt per vijf minuten; de uurwijzer volgt mee zoals op een echte klok, en als je de uurwijzer versleept kiest hij het uur (de minuten blijven staan). Tik op Klaar! om te kijken of het klopt. Een ronde is vijf klokken, daarna ga je terug naar Tijd.
 
 Bij de getallen- en letterspellen heeft elke vraag drie grote antwoordknoppen. Bij een goed antwoord of een voltooide puzzel krijg je een ster. Na vijf sterren volgt een klein feestje; daarna ga je terug naar het menu van dat spel. Een fout antwoord is niet erg: je mag het gewoon nog eens proberen.
 
