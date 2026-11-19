@@ -597,6 +597,121 @@ function intersection(a, b) {
     if (dOverlap.length) throw new Error('doolhof r2 herhaalt r1: ' + dOverlap.join(','));
     ok('Doolhofje klein ronde 2 uniek en niet uit ronde 1: ' + d2.join(' | '));
 
+    async function waitRobotReady(page, prev, ms) {
+      var deadline = Date.now() + (ms || 8000);
+      while (Date.now() < deadline) {
+        const ready = await page.evaluate((p) => {
+          var w = document.getElementById('robot-wrap');
+          var scr = document.getElementById('screen-robot');
+          if (!w || !scr || scr.className.indexOf('is-hidden') !== -1) return false;
+          var k = w.getAttribute('data-key') || '';
+          var sol = w.getAttribute('data-sol') || '';
+          var busy = w.getAttribute('data-busy') === '1';
+          var done = w.getAttribute('data-done') === '1';
+          if (!k || !sol || busy || done) return false;
+          if (p && k === p) return false;
+          return true;
+        }, prev || '');
+        if (ready) return true;
+        await wait(120);
+      }
+      return false;
+    }
+    async function playRobotPuzzle(page) {
+      var info, i, dirs;
+      info = await page.evaluate(() => {
+        var w = document.getElementById('robot-wrap');
+        return {
+          key: w ? (w.getAttribute('data-key') || '') : '',
+          sol: w ? (w.getAttribute('data-sol') || '') : ''
+        };
+      });
+      dirs = info.sol ? info.sol.split(',') : [];
+      if (!dirs.length) throw new Error('robot missing sol for ' + info.key);
+      for (i = 0; i < dirs.length; i++) {
+        await page.evaluate((d) => {
+          var b = document.querySelector('.robot-cmd[data-dir="' + d + '"]');
+          if (b) b.click();
+        }, dirs[i]);
+        await wait(40);
+      }
+      await page.evaluate(() => {
+        var b = document.querySelector('[data-act="robot-play"]');
+        if (b) b.click();
+      });
+      return info.key;
+    }
+    async function playRobotRound(page, n) {
+      var keys = [], i, key, moved, deadline, rewarded;
+      for (i = 0; i < n; i++) {
+        if (!(await waitRobotReady(page, i ? keys[i - 1] : '', 12000))) {
+          throw new Error('robot not ready item ' + (i + 1) + ' after ' + keys.join(','));
+        }
+        key = await playRobotPuzzle(page);
+        keys.push(key);
+        if (i < n - 1) {
+          deadline = Date.now() + 16000;
+          moved = false;
+          while (Date.now() < deadline) {
+            moved = await page.evaluate((prev) => {
+              var w = document.getElementById('robot-wrap');
+              var k = w ? w.getAttribute('data-key') : '';
+              var busy = w && w.getAttribute('data-busy') === '1';
+              var done = w && w.getAttribute('data-done') === '1';
+              return !!(k && k !== prev && !busy && !done);
+            }, key);
+            if (moved) break;
+            await wait(150);
+          }
+          if (!moved) throw new Error('robot next puzzle did not appear after ' + key);
+        }
+      }
+      deadline = Date.now() + 16000;
+      rewarded = false;
+      while (Date.now() < deadline) {
+        rewarded = await page.evaluate(() => {
+          var rew = document.getElementById('overlay-reward');
+          return !!(rew && rew.className.indexOf('is-hidden') === -1);
+        });
+        if (rewarded) break;
+        await wait(150);
+      }
+      if (!rewarded) throw new Error('robot expected reward after 5, keys=' + keys.join('|'));
+      return keys;
+    }
+
+    await fresh(page);
+    await page.click('#btn-goto-puzzles');
+    await wait(280);
+    await page.click('[data-game="robot"]');
+    await wait(280);
+    await page.click('[data-kind="easy"]');
+    await wait(400);
+    var rob1 = await playRobotRound(page, 5);
+    assertUnique(rob1, 'robot r1');
+    ok('De robot makkelijk ronde 1 uniek: ' + rob1.join(' | '));
+
+    var robMenu = Date.now() + 15000;
+    var onPuzzR = false;
+    while (Date.now() < robMenu) {
+      onPuzzR = await page.evaluate(() => {
+        var el = document.getElementById('screen-puzzles');
+        return !!(el && el.className.indexOf('is-hidden') === -1);
+      });
+      if (onPuzzR) break;
+      await wait(150);
+    }
+    if (!onPuzzR) throw new Error('robot did not return to Puzzels after reward');
+    await page.click('[data-game="robot"]');
+    await wait(280);
+    await page.click('[data-kind="easy"]');
+    await wait(400);
+    var rob2 = await playRobotRound(page, 5);
+    assertUnique(rob2, 'robot r2');
+    var robOverlap = intersection(rob1, rob2);
+    if (robOverlap.length) throw new Error('robot r2 herhaalt r1: ' + robOverlap.join(','));
+    ok('De robot makkelijk ronde 2 uniek en niet uit ronde 1: ' + rob2.join(' | '));
+
     async function waitVersReady(page, prev, ms) {
       var deadline = Date.now() + (ms || 8000);
       while (Date.now() < deadline) {

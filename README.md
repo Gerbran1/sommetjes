@@ -28,6 +28,7 @@ Op het startscherm kies je **Getallen**, **Letters**, **Puzzels**, **Geheugen** 
 13. **Wat hoort waar?** — kies het plaatje waarop de beer op, onder, naast, achter, voor of in de tafel of doos zit.
 14. **Doolhofje** — zoek met je vinger de weg van het kind naar het huis. Je kiest klein (5×5), middel (7×7) of groot (9×9). Een ronde is vijf nieuwe doolhoven, daarna ga je terug naar Puzzels. Teruglopen wist het pad; muren houden je tegen.
 15. **Zoek de verschillen** — twee vrolijke plaatjes naast elkaar (onder elkaar in portret). Zoek de vijf verschillen; tik je er één aan, dan komt er een cirkel omheen op beide plaatjes. Een fout tikje schudt even, zonder straf. Een ronde is drie plaatjes, daarna ga je terug naar Puzzels.
+16. **De robot** — stuur de robot naar de ster met pijltjes omhoog, omlaag, naar links en naar rechts (zoals je ze op het bord ziet). Tik ze in de rij, haal er een weg door erop te tikken, en druk op afspelen. Je kiest makkelijk (4×4, vaak rechtuit), middel (5×5, een paar bochten en muurtjes) of moeilijk (6×6, zigzaggen tussen muren). Een ronde is vijf puzzels, daarna ga je terug naar Puzzels. Bots je of kom je niet op de ster, dan mag je het programma aanpassen.
 
 **Tekenen**
 15. **Vrij tekenen** — teken zelf met dikke kleuren, drie lijndiktes, een spuitbus en een gum. Met het pijltje terug maak je de laatste streek ongedaan. Wissen vraagt eerst even of het echt mag. Geen sterren, je tekent zo lang je wilt.

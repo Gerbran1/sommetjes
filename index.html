@@ -197,7 +197,7 @@
       line-height: 1;
     }
 
-    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-doolhoflevel, #screen-verschillen, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij, #screen-cups, #screen-veranderd, #screen-tekenmenu, #screen-kleurkies, #screen-teken, #screen-klinkers, #screen-lijnlevel, #screen-lijn {
+    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-doolhoflevel, #screen-verschillen, #screen-robotlevel, #screen-robot, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij, #screen-cups, #screen-veranderd, #screen-tekenmenu, #screen-kleurkies, #screen-teken, #screen-klinkers, #screen-lijnlevel, #screen-lijn {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -2365,6 +2365,186 @@
     @media screen and (max-height: 800px) {
       #doolhoflevel-grid .level-btn { min-height: 120px; }
     }
+    .lvl-robot {
+      background: #26A69A;
+      -webkit-box-shadow: 0 8px 0 #00897B, 0 12px 16px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 0 #00897B, 0 12px 16px rgba(0,0,0,0.15);
+    }
+    .lvl-robot.pressed, .lvl-robot:active {
+      -webkit-box-shadow: 0 2px 0 #00897B, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #00897B, 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .robot-mini {
+      width: 72px;
+      height: 48px;
+    }
+    .robot-mini svg { width: 72px; height: 48px; display: block; }
+    #robotlevel-grid {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: stretch;
+      align-items: stretch;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      max-width: 860px;
+      margin: 8px auto 0 auto;
+      -webkit-align-content: center;
+      align-content: center;
+    }
+    #robotlevel-grid .level-btn {
+      -webkit-flex: 0 0 30%;
+      flex: 0 0 30%;
+      max-width: 280px;
+      margin: 1.5%;
+      min-height: 160px;
+    }
+    @media screen and (max-height: 800px) {
+      #robotlevel-grid .level-btn { min-height: 120px; }
+    }
+    #robot-wrap {
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      min-height: 0;
+      width: 100%;
+    }
+    #robot-board-wrap {
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      position: relative;
+      min-height: 0;
+      width: 100%;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+    }
+    #robot-board {
+      position: relative;
+      background: #E8F6F3;
+      border: 5px solid #4E342E;
+      border-radius: 12px;
+      -webkit-box-sizing: content-box;
+      box-sizing: content-box;
+      overflow: hidden;
+    }
+    .robot-cell {
+      position: absolute;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      background: #F1FAF8;
+      border: 1px solid rgba(0,137,123,0.18);
+    }
+    .robot-wall {
+      position: absolute;
+      z-index: 4;
+      background: #5D4037;
+      border-radius: 3px;
+      pointer-events: none;
+    }
+    .robot-goal {
+      position: absolute;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .robot-sprite {
+      position: absolute;
+      z-index: 5;
+      pointer-events: none;
+      -webkit-transform-origin: 50% 50%;
+      transform-origin: 50% 50%;
+    }
+    #robot-seq {
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      min-height: 52px;
+      padding: 4px 8px;
+    }
+    .robot-seq-empty {
+      color: #1A4A6A;
+      font-size: 20px;
+      font-weight: 800;
+      opacity: 0.7;
+    }
+    .robot-tile {
+      width: 44px;
+      height: 44px;
+      margin: 3px;
+      padding: 4px;
+      border: 0;
+      border-radius: 12px;
+      background: #FFFDF7;
+      -webkit-box-shadow: 0 3px 0 rgba(0,0,0,0.12);
+      box-shadow: 0 3px 0 rgba(0,0,0,0.12);
+    }
+    .robot-tile.is-on {
+      background: #FFE082;
+      -webkit-box-shadow: 0 0 0 3px #F9A825, 0 3px 0 rgba(0,0,0,0.12);
+      box-shadow: 0 0 0 3px #F9A825, 0 3px 0 rgba(0,0,0,0.12);
+    }
+    #robot-controls {
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      padding: 2px 8px 10px 8px;
+    }
+    .robot-cmd, .robot-wis, .robot-go {
+      width: 70px;
+      height: 70px;
+      margin: 5px;
+      padding: 8px;
+      border: 0;
+      border-radius: 18px;
+      background: #FFFDF7;
+      color: #1A4A6A;
+      font-size: 24px;
+      font-weight: 800;
+      -webkit-box-shadow: 0 5px 0 rgba(0,0,0,0.14);
+      box-shadow: 0 5px 0 rgba(0,0,0,0.14);
+    }
+    .robot-cmd { background: #B2EBF2; }
+    .robot-wis { background: #FFCDD2; width: auto; min-width: 88px; padding: 0 16px; }
+    .robot-go { background: #66BB6A; width: 86px; }
+    .robot-go svg, .robot-cmd svg { width: 100%; height: 100%; display: block; }
+    @media screen and (max-height: 800px) {
+      #robot-seq { min-height: 42px; padding: 2px 6px; }
+      .robot-tile { width: 36px; height: 36px; margin: 2px; border-radius: 10px; }
+      .robot-cmd, .robot-wis, .robot-go { width: 58px; height: 58px; margin: 4px; border-radius: 16px; }
+      .robot-wis { width: auto; min-width: 72px; font-size: 20px; }
+      .robot-go { width: 70px; }
+      .robot-seq-empty { font-size: 16px; }
+    }
+    @media screen and (max-width: 800px) {
+      .robot-cmd, .robot-wis, .robot-go { width: 64px; height: 64px; }
+      .robot-wis { width: auto; }
+      .robot-go { width: 78px; }
+    }
+
     .lvl-vers {
       background: #7E57C2;
       -webkit-box-shadow: 0 8px 0 #5E35B1, 0 12px 16px rgba(0,0,0,0.15);
@@ -3637,6 +3817,12 @@
           </div>
           <div class="level-label">Zoek de verschillen</div>
         </button>
+        <button type="button" class="tap level-btn lvl-robot" data-act="puzzle-game" data-game="robot">
+          <div class="act-icon">
+            <div class="robot-mini" id="icon-robot"></div>
+          </div>
+          <div class="level-label">De robot</div>
+        </button>
       </div>
     </div>
 
@@ -3897,6 +4083,74 @@
           <div class="vers-frame tap" id="vers-frame-r" data-act="vers-miss" data-side="R">
             <div class="vers-inner" id="vers-right"></div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="screen-robotlevel" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-robotlevel-back" data-act="back" title="Terug">
+            <span id="robotlevel-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-robotlevel-home" data-act="home" title="Start">
+            <span id="robotlevel-home-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="robotlevel-star-icon"></span>
+            <span class="star-count" id="robotlevel-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt">De robot</div>
+      <div id="robotlevel-grid">
+        <button type="button" class="tap level-btn lvl-count" data-act="robot-kind" data-kind="easy">
+          <div class="level-label">Makkelijk</div>
+          <div class="level-sub">4 × 4</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-plus10" data-act="robot-kind" data-kind="mid">
+          <div class="level-label">Middel</div>
+          <div class="level-sub">5 × 5</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-plus30" data-act="robot-kind" data-kind="hard">
+          <div class="level-label">Moeilijk</div>
+          <div class="level-sub">6 × 6</div>
+        </button>
+      </div>
+    </div>
+
+    <div id="screen-robot" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-robot-back" data-act="back" title="Terug">
+            <span id="robot-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-robot-home" data-act="home" title="Start" style="margin-left:8px;">
+            <span id="robot-home-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="robot-star-icon"></span>
+            <span class="star-count" id="robot-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt" id="robot-prompt">Help de robot naar de ster!</div>
+      <div id="robot-wrap">
+        <div id="robot-board-wrap">
+          <div id="robot-board"></div>
+        </div>
+        <div id="robot-seq"></div>
+        <div id="robot-controls">
+          <button type="button" class="tap robot-cmd" data-act="robot-cmd" data-dir="0" title="Omhoog"><svg viewBox="0 0 48 48" width="100%" height="100%" aria-hidden="true"><g transform="rotate(0 24 24)"><path d="M24 5 L42 26 H32 V43 H16 V26 H6 Z" fill="#00838F" stroke="#1A4A6A" stroke-width="2.4" stroke-linejoin="round"/></g></svg></button>
+          <button type="button" class="tap robot-cmd" data-act="robot-cmd" data-dir="1" title="Rechts"><svg viewBox="0 0 48 48" width="100%" height="100%" aria-hidden="true"><g transform="rotate(90 24 24)"><path d="M24 5 L42 26 H32 V43 H16 V26 H6 Z" fill="#00838F" stroke="#1A4A6A" stroke-width="2.4" stroke-linejoin="round"/></g></svg></button>
+          <button type="button" class="tap robot-cmd" data-act="robot-cmd" data-dir="2" title="Omlaag"><svg viewBox="0 0 48 48" width="100%" height="100%" aria-hidden="true"><g transform="rotate(180 24 24)"><path d="M24 5 L42 26 H32 V43 H16 V26 H6 Z" fill="#00838F" stroke="#1A4A6A" stroke-width="2.4" stroke-linejoin="round"/></g></svg></button>
+          <button type="button" class="tap robot-cmd" data-act="robot-cmd" data-dir="3" title="Links"><svg viewBox="0 0 48 48" width="100%" height="100%" aria-hidden="true"><g transform="rotate(270 24 24)"><path d="M24 5 L42 26 H32 V43 H16 V26 H6 Z" fill="#00838F" stroke="#1A4A6A" stroke-width="2.4" stroke-linejoin="round"/></g></svg></button>
+          <button type="button" class="tap robot-wis" data-act="robot-clear" title="Wissen">Wis</button>
+          <button type="button" class="tap robot-go" data-act="robot-play" title="Start"><svg viewBox="0 0 48 48" width="100%" height="100%" aria-hidden="true"><circle cx="24" cy="24" r="22" fill="#2E7D32"/><path d="M18 12 L38 24 L18 36 Z" fill="#FFFDF7"/></svg></button>
         </div>
       </div>
     </div>
@@ -4428,6 +4682,7 @@
     if (level === 'memory') return 'memory-' + String(state.memoryN || 0);
     if (level === 'lijn') return 'lijn-' + String(state.lijnMax || lijnState.max || 0);
     if (level === 'doolhof') return 'doolhof-' + String(state.doolhofN || 0);
+    if (level === 'robot') return 'robot-' + (state.robotKind || 'easy');
     return level || 'game';
   }
 
@@ -5813,6 +6068,10 @@
       startVers(false);
       return;
     }
+    else if (state.level === 'robot') {
+      startRobot(false);
+      return;
+    }
     else if (state.level === 'weg') {
       startWeg(false);
       return;
@@ -7137,7 +7396,7 @@
   /* ---------- UI ---------- */
   function updateStarsUI() {
     var i, row, html, filled, el, rows;
-    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'vers-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars', 'cups-stars', 'veranderd-stars', 'klinkers-stars', 'lijnlevel-stars', 'lijn-stars', 'doolhoflevel-stars'], String(state.stars));
+    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'vers-stars', 'robot-stars', 'robotlevel-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars', 'cups-stars', 'veranderd-stars', 'klinkers-stars', 'lijnlevel-stars', 'lijn-stars', 'doolhoflevel-stars'], String(state.stars));
     filled = state.towardsReward;
     if (filled > 5) filled = 5;
     html = '';
@@ -7170,7 +7429,7 @@
   function showScreen(name) {
     var ids, i, el;
     state.screen = name;
-    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn'];
+    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn'];
     for (i = 0; i < ids.length; i++) {
       el = $('screen-' + ids[i]);
       if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
@@ -7242,7 +7501,7 @@
     state.towardsReward = 0;
     updateStarsUI();
     s = state.screen;
-    if (s === 'doolhof' || s === 'verschillen') {
+    if (s === 'doolhof' || s === 'verschillen' || s === 'robot') {
       leavePlay();
       showPuzzlesMenu();
       return;
@@ -11650,6 +11909,747 @@
     }, 450);
   }
 
+  /* ---------- Puzzels: De robot ---------- */
+  var ROBOT_MAX_CMDS = 16;
+  var ROBOT_DR = [-1, 0, 1, 0];
+  var ROBOT_DC = [0, 1, 0, -1];
+  var robotTimer = null;
+  var robotState = {
+    kind: 'easy',
+    n: 4,
+    sr: 0,
+    sc: 0,
+    sdir: 1,
+    gr: 0,
+    gc: 0,
+    walls: null,
+    cmds: [],
+    r: 0,
+    c: 0,
+    dir: 1,
+    step: 0,
+    busy: false,
+    key: '',
+    sol: [],
+    cell: 0,
+    ox: 0,
+    oy: 0
+  };
+
+  function clearRobotTimer() {
+    if (robotTimer) {
+      window.clearTimeout(robotTimer);
+      robotTimer = null;
+    }
+  }
+
+  function robotEmptyWalls(n) {
+    var h, v, r, c;
+    h = [];
+    v = [];
+    for (r = 0; r < n - 1; r++) {
+      h[r] = [];
+      for (c = 0; c < n; c++) h[r][c] = 0;
+    }
+    for (r = 0; r < n; r++) {
+      v[r] = [];
+      for (c = 0; c < n - 1; c++) v[r][c] = 0;
+    }
+    return { h: h, v: v };
+  }
+
+  function robotCountWalls(walls, n) {
+    var r, c, nW;
+    nW = 0;
+    for (r = 0; r < n - 1; r++) {
+      for (c = 0; c < n; c++) if (walls.h[r][c]) nW += 1;
+    }
+    for (r = 0; r < n; r++) {
+      for (c = 0; c < n - 1; c++) if (walls.v[r][c]) nW += 1;
+    }
+    return nW;
+  }
+
+  function robotWallKey(walls, n) {
+    var s, r, c;
+    s = '';
+    for (r = 0; r < n - 1; r++) {
+      for (c = 0; c < n; c++) s += walls.h[r][c] ? '1' : '0';
+    }
+    s += '.';
+    for (r = 0; r < n; r++) {
+      for (c = 0; c < n - 1; c++) s += walls.v[r][c] ? '1' : '0';
+    }
+    return s;
+  }
+
+  function robotBlocked(n, walls, r, c, dir) {
+    var nr, nc;
+    nr = r + ROBOT_DR[dir];
+    nc = c + ROBOT_DC[dir];
+    if (nr < 0 || nc < 0 || nr >= n || nc >= n) return true;
+    if (dir === 0 && walls.h[r - 1] && walls.h[r - 1][c]) return true;
+    if (dir === 2 && walls.h[r] && walls.h[r][c]) return true;
+    if (dir === 3 && walls.v[r] && walls.v[r][c - 1]) return true;
+    if (dir === 1 && walls.v[r] && walls.v[r][c]) return true;
+    return false;
+  }
+
+  function robotSetWall(walls, r1, c1, r2, c2, on) {
+    var t;
+    if (r1 === r2 && Math.abs(c1 - c2) === 1) {
+      t = c1 < c2 ? c1 : c2;
+      if (walls.v[r1] && t >= 0 && t < walls.v[r1].length) walls.v[r1][t] = on ? 1 : 0;
+      return true;
+    }
+    if (c1 === c2 && Math.abs(r1 - r2) === 1) {
+      t = r1 < r2 ? r1 : r2;
+      if (walls.h[t] && c1 >= 0 && c1 < walls.h[t].length) walls.h[t][c1] = on ? 1 : 0;
+      return true;
+    }
+    return false;
+  }
+
+  function robotEdgeKey(r1, c1, r2, c2) {
+    if (r1 < r2 || (r1 === r2 && c1 < c2)) return r1 + ',' + c1 + '-' + r2 + ',' + c2;
+    return r2 + ',' + c2 + '-' + r1 + ',' + c1;
+  }
+
+  function robotPathEdges(path) {
+    var i, set;
+    set = {};
+    for (i = 0; i < path.length - 1; i++) {
+      set[robotEdgeKey(path[i].r, path[i].c, path[i + 1].r, path[i + 1].c)] = 1;
+    }
+    return set;
+  }
+
+  function robotCountTurns(cmds) {
+    var i, t;
+    t = 0;
+    for (i = 1; i < cmds.length; i++) {
+      if (cmds[i] !== cmds[i - 1]) t += 1;
+    }
+    return t;
+  }
+
+  function robotShortest(n, walls, sr, sc, gr, gc) {
+    var q, seen, prev, cur, dir, nr, nc, key, path, cmds, k, from, i;
+    if (sr === gr && sc === gc) return { len: 0, cmds: [], path: [{ r: sr, c: sc }], turns: 0 };
+    q = [{ r: sr, c: sc }];
+    seen = {};
+    seen[sr + ',' + sc] = 1;
+    prev = {};
+    while (q.length) {
+      cur = q.shift();
+      if (cur.r === gr && cur.c === gc) {
+        path = [{ r: cur.r, c: cur.c }];
+        k = cur.r + ',' + cur.c;
+        while (k !== sr + ',' + sc) {
+          from = prev[k];
+          path.unshift({ r: from.r, c: from.c });
+          k = from.r + ',' + from.c;
+        }
+        cmds = [];
+        for (i = 1; i < path.length; i++) {
+          for (dir = 0; dir < 4; dir++) {
+            if (path[i - 1].r + ROBOT_DR[dir] === path[i].r && path[i - 1].c + ROBOT_DC[dir] === path[i].c) {
+              cmds.push(dir);
+              break;
+            }
+          }
+        }
+        return { len: cmds.length, cmds: cmds, path: path, turns: robotCountTurns(cmds) };
+      }
+      for (dir = 0; dir < 4; dir++) {
+        if (robotBlocked(n, walls, cur.r, cur.c, dir)) continue;
+        nr = cur.r + ROBOT_DR[dir];
+        nc = cur.c + ROBOT_DC[dir];
+        key = nr + ',' + nc;
+        if (seen[key]) continue;
+        seen[key] = 1;
+        prev[key] = { r: cur.r, c: cur.c };
+        q.push({ r: nr, c: nc });
+      }
+    }
+    return null;
+  }
+
+  function robotSimulate(level, cmds) {
+    var r, c, dir, i, n, walls;
+    n = level.n;
+    walls = level.walls;
+    r = level.sr;
+    c = level.sc;
+    for (i = 0; i < cmds.length; i++) {
+      dir = cmds[i];
+      if (robotBlocked(n, walls, r, c, dir)) {
+        return { ok: 0, hit: 1, r: r, c: c, step: i, atGoal: 0 };
+      }
+      r += ROBOT_DR[dir];
+      c += ROBOT_DC[dir];
+      if (r === level.gr && c === level.gc) {
+        return { ok: 1, hit: 0, r: r, c: c, step: i, atGoal: 1 };
+      }
+    }
+    return { ok: (r === level.gr && c === level.gc) ? 1 : 0, hit: 0, r: r, c: c, step: cmds.length, atGoal: (r === level.gr && c === level.gc) ? 1 : 0 };
+  }
+
+  function robotRandomPath(n, minLen, maxLen, minTurns) {
+    var tries, len, r, c, path, used, found, i, dirs, d, nr, nc, cmds, turns, startR, startC;
+    for (tries = 0; tries < 160; tries++) {
+      len = randInt(minLen, maxLen);
+      startR = randInt(0, n - 1);
+      startC = randInt(0, n - 1);
+      r = startR;
+      c = startC;
+      path = [{ r: r, c: c }];
+      used = {};
+      used[r + ',' + c] = 1;
+      cmds = [];
+      while (cmds.length < len) {
+        dirs = shuffle([0, 1, 2, 3]);
+        found = false;
+        for (i = 0; i < 4; i++) {
+          d = dirs[i];
+          nr = r + ROBOT_DR[d];
+          nc = c + ROBOT_DC[d];
+          if (nr < 0 || nc < 0 || nr >= n || nc >= n) continue;
+          if (used[nr + ',' + nc]) continue;
+          path.push({ r: nr, c: nc });
+          used[nr + ',' + nc] = 1;
+          cmds.push(d);
+          r = nr;
+          c = nc;
+          found = true;
+          break;
+        }
+        if (!found) break;
+      }
+      if (cmds.length < minLen) continue;
+      turns = robotCountTurns(cmds);
+      if (turns < minTurns) continue;
+      return { path: path, cmds: cmds, sr: startR, sc: startC, gr: r, gc: c, turns: turns };
+    }
+    return null;
+  }
+
+  function robotForceShortest(n, walls, wantPath, wantCmds) {
+    var sr, sc, gr, gc, sol, guard, i, ek, wantSet, changed, a, b;
+    sr = wantPath[0].r;
+    sc = wantPath[0].c;
+    gr = wantPath[wantPath.length - 1].r;
+    gc = wantPath[wantPath.length - 1].c;
+    wantSet = robotPathEdges(wantPath);
+    sol = robotShortest(n, walls, sr, sc, gr, gc);
+    guard = 0;
+    while (sol && sol.len < wantCmds.length && guard < 70) {
+      guard += 1;
+      changed = false;
+      for (i = 0; i < sol.path.length - 1; i++) {
+        a = sol.path[i];
+        b = sol.path[i + 1];
+        ek = robotEdgeKey(a.r, a.c, b.r, b.c);
+        if (wantSet[ek]) continue;
+        robotSetWall(walls, a.r, a.c, b.r, b.c, 1);
+        sol = robotShortest(n, walls, sr, sc, gr, gc);
+        if (!sol) {
+          robotSetWall(walls, a.r, a.c, b.r, b.c, 0);
+          sol = robotShortest(n, walls, sr, sc, gr, gc);
+        } else {
+          changed = true;
+          break;
+        }
+      }
+      if (!changed) break;
+    }
+    return sol;
+  }
+
+  function robotAddExtraWalls(n, walls, wantPath, extra) {
+    var cands, r, c, i, a, b, sr, sc, gr, gc, sol, wantSet, ek;
+    wantSet = robotPathEdges(wantPath);
+    sr = wantPath[0].r;
+    sc = wantPath[0].c;
+    gr = wantPath[wantPath.length - 1].r;
+    gc = wantPath[wantPath.length - 1].c;
+    cands = [];
+    for (r = 0; r < n; r++) {
+      for (c = 0; c < n; c++) {
+        if (c + 1 < n) {
+          ek = robotEdgeKey(r, c, r, c + 1);
+          if (!wantSet[ek]) cands.push({ r1: r, c1: c, r2: r, c2: c + 1 });
+        }
+        if (r + 1 < n) {
+          ek = robotEdgeKey(r, c, r + 1, c);
+          if (!wantSet[ek]) cands.push({ r1: r, c1: c, r2: r + 1, c2: c });
+        }
+      }
+    }
+    cands = shuffle(cands);
+    for (i = 0; i < cands.length && extra > 0; i++) {
+      a = cands[i];
+      robotSetWall(walls, a.r1, a.c1, a.r2, a.c2, 1);
+      sol = robotShortest(n, walls, sr, sc, gr, gc);
+      if (!sol) {
+        robotSetWall(walls, a.r1, a.c1, a.r2, a.c2, 0);
+      } else {
+        extra -= 1;
+      }
+    }
+  }
+
+  function robotPackLevel(kind, n, walls, sr, sc, gr, gc, sol) {
+    var sdir;
+    sdir = (sol.cmds && sol.cmds.length) ? sol.cmds[0] : 1;
+    return {
+      kind: kind,
+      n: n,
+      walls: walls,
+      sr: sr,
+      sc: sc,
+      sdir: sdir,
+      gr: gr,
+      gc: gc,
+      sol: sol.cmds.slice(0),
+      turns: sol.turns,
+      key: kind + ':' + n + ':' + sr + ',' + sc + ',' + gr + ',' + gc + ':' + robotWallKey(walls, n)
+    };
+  }
+
+  function makeRobotEasy() {
+    var n, tries, sr, sc, gr, gc, man, preferStraight, sol, walls;
+    n = 4;
+    walls = robotEmptyWalls(n);
+    preferStraight = Math.random() < 0.6;
+    for (tries = 0; tries < 240; tries++) {
+      sr = randInt(0, n - 1);
+      sc = randInt(0, n - 1);
+      gr = randInt(0, n - 1);
+      gc = randInt(0, n - 1);
+      man = Math.abs(sr - gr) + Math.abs(sc - gc);
+      if (man < 2 || man > 5) continue;
+      if (preferStraight && tries < 80) {
+        if (sr !== gr && sc !== gc) continue;
+      } else if (sr !== gr && sc !== gc) {
+        /* one turn, ok */
+      }
+      sol = robotShortest(n, walls, sr, sc, gr, gc);
+      if (!sol || sol.len < 2 || sol.len > 5) continue;
+      if (sol.turns > 1) continue;
+      return robotPackLevel('easy', n, walls, sr, sc, gr, gc, sol);
+    }
+    walls = robotEmptyWalls(n);
+    sol = robotShortest(n, walls, 0, 0, 0, 3);
+    return robotPackLevel('easy', n, walls, 0, 0, 0, 3, sol);
+  }
+
+  function makeRobotWalled(kind, n, minLen, maxLen, minTurns, extraWalls) {
+    var tries, walk, walls, sol;
+    for (tries = 0; tries < 80; tries++) {
+      walk = robotRandomPath(n, minLen, maxLen, minTurns);
+      if (!walk) continue;
+      walls = robotEmptyWalls(n);
+      sol = robotForceShortest(n, walls, walk.path, walk.cmds);
+      if (!sol || sol.len < minLen || sol.len > maxLen) continue;
+      if (sol.turns < minTurns) continue;
+      robotAddExtraWalls(n, walls, walk.path, extraWalls);
+      sol = robotShortest(n, walls, walk.sr, walk.sc, walk.gr, walk.gc);
+      if (!sol || sol.len < minLen || sol.len > maxLen) continue;
+      if (sol.turns < minTurns) continue;
+      return robotPackLevel(kind, n, walls, walk.sr, walk.sc, walk.gr, walk.gc, sol);
+    }
+    return null;
+  }
+
+  function makeRobotLevel(kind) {
+    var level;
+    if (kind === 'mid') {
+      level = makeRobotWalled('mid', 5, 4, 8, 2, 6);
+      if (level) return level;
+      level = makeRobotWalled('mid', 5, 4, 8, 1, 4);
+      if (level) return level;
+    } else if (kind === 'hard') {
+      level = makeRobotWalled('hard', 6, 6, 12, 3, 14);
+      if (level) return level;
+      level = makeRobotWalled('hard', 6, 6, 12, 2, 10);
+      if (level) return level;
+    }
+    return makeRobotEasy();
+  }
+
+  function pickRobotLevel(kind) {
+    var level, key, tries, hist, id;
+    id = currentGameId();
+    hist = (state.recentByGame && state.recentByGame[id]) ? state.recentByGame[id] : [];
+    tries = 0;
+    level = makeRobotLevel(kind);
+    key = level.key;
+    while (tries < 24 && ((state.roundKeys && contains(state.roundKeys, key)) || contains(hist, key))) {
+      level = makeRobotLevel(kind);
+      key = level.key;
+      tries += 1;
+    }
+    rememberRoundKey(key);
+    return level;
+  }
+
+  function robotArrowSvg(dir, fill) {
+    var rot;
+    rot = dir * 90;
+    fill = fill || '#1A4A6A';
+    return '<svg viewBox="0 0 48 48" width="100%" height="100%" aria-hidden="true">' +
+      '<g transform="rotate(' + rot + ' 24 24)">' +
+      '<path d="M24 5 L42 26 H32 V43 H16 V26 H6 Z" fill="' + fill + '" stroke="#1A4A6A" stroke-width="2.4" stroke-linejoin="round"/>' +
+      '</g></svg>';
+  }
+
+  function robotSpriteSvg() {
+    return '<svg viewBox="0 0 64 64" width="100%" height="100%" aria-hidden="true">' +
+      '<circle cx="32" cy="6" r="4" fill="#FFD54F" stroke="#4E342E" stroke-width="2"/>' +
+      '<line x1="32" y1="10" x2="32" y2="16" stroke="#4E342E" stroke-width="2.4" stroke-linecap="round"/>' +
+      '<path d="M32 13 L39 21 L25 21 Z" fill="#E53935" stroke="#4E342E" stroke-width="1.8" stroke-linejoin="round"/>' +
+      '<rect x="8" y="26" width="8" height="14" rx="3" fill="#90A4AE" stroke="#4E342E" stroke-width="2"/>' +
+      '<rect x="48" y="26" width="8" height="14" rx="3" fill="#90A4AE" stroke="#4E342E" stroke-width="2"/>' +
+      '<rect x="14" y="18" width="36" height="32" rx="10" fill="#26C6DA" stroke="#4E342E" stroke-width="2.4"/>' +
+      '<rect x="20" y="26" width="24" height="14" rx="6" fill="#FFF8E1" stroke="#4E342E" stroke-width="2"/>' +
+      '<circle cx="27" cy="33" r="3.2" fill="#1A4A6A"/>' +
+      '<circle cx="37" cy="33" r="3.2" fill="#1A4A6A"/>' +
+      '<path d="M26 37 Q32 42 38 37" fill="none" stroke="#1A4A6A" stroke-width="2" stroke-linecap="round"/>' +
+      '<rect x="16" y="48" width="12" height="9" rx="3" fill="#455A64" stroke="#4E342E" stroke-width="2"/>' +
+      '<rect x="36" y="48" width="12" height="9" rx="3" fill="#455A64" stroke="#4E342E" stroke-width="2"/>' +
+      '</svg>';
+  }
+
+  function robotStarSvg() {
+    return '<svg class="robot-star" viewBox="0 0 64 64" width="100%" height="100%" aria-hidden="true">' +
+      '<polygon points="32,4 39,22 58,22 43,34 49,54 32,42 15,54 21,34 6,22 25,22" fill="#FFD54F" stroke="#F9A825" stroke-width="2.2" stroke-linejoin="round"/>' +
+      '</svg>';
+  }
+
+  function showRobotLevel() {
+    state.level = 'robot';
+    state.locked = false;
+    state.question = null;
+    hideReward();
+    showScreen('robotlevel');
+    updateStarsUI();
+  }
+
+  function startRobot(kind, fresh) {
+    var level;
+    if (typeof kind === 'boolean') {
+      fresh = kind;
+      kind = '';
+    }
+    if (kind) state.robotKind = kind;
+    kind = state.robotKind || 'easy';
+    state.level = 'robot';
+    state.locked = false;
+    if (fresh) {
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+      resetVoiceCycle();
+      state.lastWasPersonal = false;
+    }
+    clearRobotTimer();
+    level = pickRobotLevel(kind);
+    robotState.kind = kind;
+    robotState.n = level.n;
+    robotState.sr = level.sr;
+    robotState.sc = level.sc;
+    robotState.sdir = level.sdir;
+    robotState.gr = level.gr;
+    robotState.gc = level.gc;
+    robotState.walls = level.walls;
+    robotState.sol = level.sol;
+    robotState.key = level.key;
+    robotState.cmds = [];
+    robotState.busy = false;
+    robotState.r = level.sr;
+    robotState.c = level.sc;
+    robotState.dir = level.sdir;
+    robotState.step = 0;
+    hideReward();
+    hideToast();
+    showScreen('robot');
+    updateStarsUI();
+    renderRobot();
+    window.setTimeout(function () {
+      layoutRobot();
+      placeRobot(false);
+      beginQuestionVoice();
+      speak('robot-kies');
+    }, 40);
+  }
+
+  function robotWriteData() {
+    var wrap;
+    wrap = $('robot-wrap');
+    if (!wrap) return;
+    wrap.setAttribute('data-key', robotState.key || '');
+    wrap.setAttribute('data-n', String(robotState.n));
+    wrap.setAttribute('data-sol', (robotState.sol || []).join(','));
+    wrap.setAttribute('data-start', robotState.sr + ',' + robotState.sc + ',' + robotState.sdir);
+    wrap.setAttribute('data-goal', robotState.gr + ',' + robotState.gc);
+    wrap.setAttribute('data-busy', robotState.busy ? '1' : '0');
+    wrap.setAttribute('data-done', '0');
+    wrap.setAttribute('data-kind', robotState.kind || '');
+  }
+
+  function renderRobot() {
+    var board, html, r, c, n, walls;
+    n = robotState.n;
+    walls = robotState.walls;
+    board = $('robot-board');
+    if (!board) return;
+    html = '';
+    for (r = 0; r < n; r++) {
+      for (c = 0; c < n; c++) {
+        html += '<div class="robot-cell" data-r="' + r + '" data-c="' + c + '"></div>';
+      }
+    }
+    html += '<div class="robot-goal" id="robot-goal">' + robotStarSvg() + '</div>';
+    html += '<div class="robot-sprite" id="robot-sprite">' + robotSpriteSvg() + '</div>';
+    board.innerHTML = html;
+    renderRobotSeq();
+    robotWriteData();
+    layoutRobot();
+    placeRobot(false);
+  }
+
+  function layoutRobot() {
+    var wrap, board, n, side, cell, wall, r, c, el, goal, i, cells, walls, htmlWalls;
+    wrap = $('robot-board-wrap');
+    board = $('robot-board');
+    if (!wrap || !board) return;
+    n = robotState.n || 4;
+    side = Math.min(wrap.clientWidth, wrap.clientHeight) - 8;
+    if (side < 80) side = 80;
+    cell = Math.floor(side / n);
+    side = cell * n;
+    wall = Math.max(5, Math.round(cell * 0.14));
+    robotState.cell = cell;
+    robotState.ox = 0;
+    robotState.oy = 0;
+    board.style.width = side + 'px';
+    board.style.height = side + 'px';
+    cells = board.querySelectorAll('.robot-cell');
+    for (i = 0; i < cells.length; i++) {
+      el = cells[i];
+      r = parseInt(el.getAttribute('data-r'), 10);
+      c = parseInt(el.getAttribute('data-c'), 10);
+      el.style.left = (c * cell) + 'px';
+      el.style.top = (r * cell) + 'px';
+      el.style.width = cell + 'px';
+      el.style.height = cell + 'px';
+    }
+    /* wall overlays */
+    while (board.querySelector('.robot-wall')) {
+      el = board.querySelector('.robot-wall');
+      if (el && el.parentNode) el.parentNode.removeChild(el);
+    }
+    walls = robotState.walls;
+    htmlWalls = '';
+    if (walls) {
+      for (r = 0; r < n - 1; r++) {
+        for (c = 0; c < n; c++) {
+          if (walls.h[r][c]) {
+            htmlWalls += '<div class="robot-wall robot-wall-h" style="left:' + (c * cell) + 'px;top:' + ((r + 1) * cell - Math.floor(wall / 2)) + 'px;width:' + cell + 'px;height:' + wall + 'px;"></div>';
+          }
+        }
+      }
+      for (r = 0; r < n; r++) {
+        for (c = 0; c < n - 1; c++) {
+          if (walls.v[r][c]) {
+            htmlWalls += '<div class="robot-wall robot-wall-v" style="left:' + ((c + 1) * cell - Math.floor(wall / 2)) + 'px;top:' + (r * cell) + 'px;width:' + wall + 'px;height:' + cell + 'px;"></div>';
+          }
+        }
+      }
+      board.insertAdjacentHTML('beforeend', htmlWalls);
+    }
+    goal = $('robot-goal');
+    if (goal) {
+      goal.style.width = Math.round(cell * 0.62) + 'px';
+      goal.style.height = Math.round(cell * 0.62) + 'px';
+      goal.style.left = (robotState.gc * cell + (cell - Math.round(cell * 0.62)) / 2) + 'px';
+      goal.style.top = (robotState.gr * cell + (cell - Math.round(cell * 0.62)) / 2) + 'px';
+    }
+    el = $('robot-sprite');
+    if (el) {
+      el.style.width = Math.round(cell * 0.82) + 'px';
+      el.style.height = Math.round(cell * 0.82) + 'px';
+    }
+    placeRobot(false);
+  }
+
+
+  function placeRobot(animate) {
+    var el, cell, size, x, y, rot;
+    el = $('robot-sprite');
+    cell = robotState.cell;
+    if (!el || !cell) return;
+    size = el.offsetWidth || Math.round(cell * 0.82);
+    x = robotState.c * cell + (cell - size) / 2;
+    y = robotState.r * cell + (cell - size) / 2;
+    rot = robotState.dir * 90;
+    if (!animate) {
+      el.style.webkitTransition = 'none';
+      el.style.transition = 'none';
+    } else {
+      el.style.webkitTransition = 'left 0.42s linear, top 0.42s linear, -webkit-transform 0.2s ease';
+      el.style.transition = 'left 0.42s linear, top 0.42s linear, transform 0.2s ease';
+    }
+    el.style.left = x + 'px';
+    el.style.top = y + 'px';
+    el.style.webkitTransform = 'rotate(' + rot + 'deg)';
+    el.style.transform = 'rotate(' + rot + 'deg)';
+  }
+
+  function renderRobotSeq() {
+    var box, html, i, cls;
+    box = $('robot-seq');
+    if (!box) return;
+    html = '';
+    if (!robotState.cmds.length) {
+      html = '<div class="robot-seq-empty">Tik de pijltjes</div>';
+    } else {
+      for (i = 0; i < robotState.cmds.length; i++) {
+        cls = 'tap robot-tile';
+        if (robotState.busy && i === robotState.step) cls += ' is-on';
+        html += '<button type="button" class="' + cls + '" data-act="robot-del" data-i="' + i + '" title="Wissen">' +
+          robotArrowSvg(robotState.cmds[i], '#26C6DA') + '</button>';
+      }
+    }
+    box.innerHTML = html;
+  }
+
+  function robotAddCmd(dir) {
+    if (state.locked || robotState.busy) return;
+    if (robotState.cmds.length >= ROBOT_MAX_CMDS) return;
+    robotState.cmds.push(dir);
+    renderRobotSeq();
+  }
+
+  function robotDelCmd(i) {
+    if (state.locked || robotState.busy) return;
+    if (i < 0 || i >= robotState.cmds.length) return;
+    robotState.cmds.splice(i, 1);
+    renderRobotSeq();
+  }
+
+  function robotClearCmds() {
+    if (state.locked || robotState.busy) return;
+    robotState.cmds = [];
+    renderRobotSeq();
+  }
+
+  function robotSetBusy(on) {
+    var wrap;
+    robotState.busy = !!on;
+    state.locked = !!on;
+    wrap = $('robot-wrap');
+    if (wrap) wrap.setAttribute('data-busy', on ? '1' : '0');
+  }
+
+  function robotPlay() {
+    if (state.locked || robotState.busy) return;
+    if (!robotState.cmds.length) return;
+    clearRobotTimer();
+    robotState.r = robotState.sr;
+    robotState.c = robotState.sc;
+    robotState.dir = robotState.sdir;
+    robotState.step = 0;
+    robotSetBusy(true);
+    placeRobot(false);
+    renderRobotSeq();
+    robotWriteData();
+    robotTimer = window.setTimeout(robotTick, 180);
+  }
+
+  function robotTick() {
+    var cmd;
+    if (!robotState.busy) return;
+    if (robotState.step >= robotState.cmds.length) {
+      if (robotState.r === robotState.gr && robotState.c === robotState.gc) robotWin();
+      else robotFail();
+      return;
+    }
+    cmd = robotState.cmds[robotState.step];
+    renderRobotSeq();
+    if (cmd !== robotState.dir) {
+      robotState.dir = cmd;
+      placeRobot(true);
+      robotTimer = window.setTimeout(robotDoMove, 220);
+      return;
+    }
+    robotDoMove();
+  }
+
+  function robotDoMove() {
+    var cmd;
+    if (!robotState.busy) return;
+    cmd = robotState.cmds[robotState.step];
+    if (robotBlocked(robotState.n, robotState.walls, robotState.r, robotState.c, cmd)) {
+      robotFail();
+      return;
+    }
+    robotState.r += ROBOT_DR[cmd];
+    robotState.c += ROBOT_DC[cmd];
+    placeRobot(true);
+    if (robotState.r === robotState.gr && robotState.c === robotState.gc) {
+      robotState.step += 1;
+      renderRobotSeq();
+      robotTimer = window.setTimeout(robotWin, 430);
+      return;
+    }
+    robotState.step += 1;
+    robotTimer = window.setTimeout(robotTick, 460);
+  }
+
+  function robotFail() {
+    var el;
+    clearRobotTimer();
+    el = $('robot-sprite');
+    if (el) {
+      el.className = 'robot-sprite shake';
+      window.setTimeout(function () {
+        if (el) el.className = 'robot-sprite';
+      }, 500);
+    }
+    playWrong();
+    showToast('Oeps!', false);
+    speak('robot-fout');
+    robotTimer = window.setTimeout(function () {
+      robotState.r = robotState.sr;
+      robotState.c = robotState.sc;
+      robotState.dir = robotState.sdir;
+      robotState.step = 0;
+      placeRobot(true);
+      robotSetBusy(false);
+      renderRobotSeq();
+      robotWriteData();
+    }, 700);
+  }
+
+  function robotWin() {
+    var wrap;
+    clearRobotTimer();
+    wrap = $('robot-wrap');
+    if (wrap) wrap.setAttribute('data-done', '1');
+    robotSetBusy(true);
+    awardCorrect();
+  }
+
+  window.__robotTest = {
+    make: makeRobotLevel,
+    shortest: robotShortest,
+    simulate: robotSimulate,
+    countWalls: robotCountWalls,
+    countTurns: robotCountTurns,
+    blocked: robotBlocked
+  };
+
   function showPuzzlesMenu() {
     state.level = null;
     state.locked = false;
@@ -12107,6 +13107,7 @@
     if (typeof stopTekenDrag === 'function') stopTekenDrag();
     if (typeof stopKlinkDrag === 'function') stopKlinkDrag();
     if (typeof stopLijnDrag === 'function') stopLijnDrag();
+    if (typeof clearRobotTimer === 'function') clearRobotTimer();
     clearMemoryTimer();
     clearGeheugenTimer();
     clearSimonFlash();
@@ -12147,10 +13148,12 @@
     } else if (s === 'puzzle') {
       showPuzzleLevel();
     } else if (s === 'puzzlelevel' || s === 'vormen' || s === 'spiegel' || s === 'nateken' ||
-               s === 'tangram' || s === 'waar' || s === 'doolhoflevel' || s === 'verschillen') {
+               s === 'tangram' || s === 'waar' || s === 'doolhoflevel' || s === 'verschillen' || s === 'robotlevel') {
       showPuzzlesMenu();
     } else if (s === 'doolhof') {
       showDoolhofLevel();
+    } else if (s === 'robot') {
+      showRobotLevel();
     } else if (s === 'memoryplay') {
       showMemoryLevel();
     } else if (s === 'memorylevel' || s === 'weg' || s === 'simon' || s === 'rij' || s === 'cups' || s === 'veranderd') {
@@ -12419,6 +13422,7 @@
       else if (el.getAttribute('data-game') === 'waar') startWaar(true);
       else if (el.getAttribute('data-game') === 'doolhof') showDoolhofLevel();
       else if (el.getAttribute('data-game') === 'verschillen') startVers(true);
+      else if (el.getAttribute('data-game') === 'robot') showRobotLevel();
       else showPuzzleLevel();
       return;
     }
@@ -12448,6 +13452,26 @@
     }
     if (act === 'vers-miss') {
       onVersMiss();
+      return;
+    }
+    if (act === 'robot-kind') {
+      startRobot(el.getAttribute('data-kind') || 'easy', true);
+      return;
+    }
+    if (act === 'robot-cmd') {
+      robotAddCmd(parseInt(el.getAttribute('data-dir'), 10));
+      return;
+    }
+    if (act === 'robot-del') {
+      robotDelCmd(parseInt(el.getAttribute('data-i'), 10));
+      return;
+    }
+    if (act === 'robot-clear') {
+      robotClearCmds();
+      return;
+    }
+    if (act === 'robot-play') {
+      robotPlay();
       return;
     }
     if (act === 'verder') {
@@ -12711,6 +13735,8 @@
     elSet('doolhof-home-icon', homeIconHtml());
     elSet('doolhoflevel-home-icon', homeIconHtml());
     elSet('vers-home-icon', homeIconHtml());
+    elSet('robot-home-icon', homeIconHtml());
+    elSet('robotlevel-home-icon', homeIconHtml());
     elSet('memory-home-icon', homeIconHtml());
     elSet('memorylevel-home-icon', homeIconHtml());
     elSet('memoryplay-home-icon', homeIconHtml());
@@ -12740,6 +13766,8 @@
     elSet('doolhof-back-icon', backIconHtml());
     elSet('doolhoflevel-back-icon', backIconHtml());
     elSet('vers-back-icon', backIconHtml());
+    elSet('robot-back-icon', backIconHtml());
+    elSet('robotlevel-back-icon', backIconHtml());
     elSet('memorylevel-back-icon', backIconHtml());
     elSet('memoryplay-back-icon', backIconHtml());
     elSet('weg-back-icon', backIconHtml());
@@ -12768,6 +13796,8 @@
     elSet('doolhof-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('doolhoflevel-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('vers-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('robot-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('robotlevel-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('memory-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('memorylevel-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('memoryplay-star-icon', starSvg('#FFD54F', '#F9A825'));
@@ -12795,6 +13825,18 @@
         '<rect x="8" y="28" width="14" height="6" rx="2" fill="#8BC34A" stroke="#4E342E" stroke-width="1.2"/>' +
         '<rect x="46" y="28" width="14" height="6" rx="2" fill="#8BC34A" stroke="#4E342E" stroke-width="1.2"/>' +
         '<circle cx="50" cy="16" r="10" fill="none" stroke="#E53935" stroke-width="2.4"/>' +
+        '</svg>';
+    }
+    if ($('icon-robot')) {
+      $('icon-robot').innerHTML =
+        '<svg viewBox="0 0 72 48" width="72" height="48" aria-hidden="true">' +
+        '<rect x="22" y="10" width="28" height="24" rx="7" fill="#26C6DA" stroke="#4E342E" stroke-width="2"/>' +
+        '<rect x="28" y="16" width="16" height="9" rx="4" fill="#FFF8E1" stroke="#4E342E" stroke-width="1.5"/>' +
+        '<circle cx="33" cy="20.5" r="1.8" fill="#1A4A6A"/>' +
+        '<circle cx="39" cy="20.5" r="1.8" fill="#1A4A6A"/>' +
+        '<path d="M36 8 L40 13 L32 13 Z" fill="#E53935" stroke="#4E342E" stroke-width="1.4" stroke-linejoin="round"/>' +
+        '<circle cx="36" cy="6" r="2.2" fill="#FFD54F" stroke="#4E342E" stroke-width="1.3"/>' +
+        '<polygon points="56,10 59,18 68,18 61,24 64,33 56,27 48,33 51,24 44,18 53,18" fill="#FFD54F" stroke="#F9A825" stroke-width="1.3" stroke-linejoin="round"/>' +
         '</svg>';
     }
     $('icon-count').innerHTML =
@@ -12888,6 +13930,7 @@
       if (state.screen === 'teken') sizeTekenCanvas();
       if (state.screen === 'lijn') layoutLijn();
       if (state.screen === 'verschillen') layoutVers();
+      if (state.screen === 'robot') layoutRobot();
     }, false);
     document.addEventListener('click', onClick, false);
     document.addEventListener('mousedown', onMouseDown, false);
@@ -12908,6 +13951,7 @@
         if (state.screen === 'doolhof') layoutDoolhof();
         if (state.screen === 'lijn') layoutLijn();
         if (state.screen === 'verschillen') layoutVers();
+        if (state.screen === 'robot') layoutRobot();
         if (state.screen === 'memoryplay') layoutMemory();
       }, 250);
     }, false);
