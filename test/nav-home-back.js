@@ -311,6 +311,29 @@ async function waitSpiegelNext(page) {
     ok('Zet de klok terug → kiezer, home → start');
 
     await fresh(page);
+    await tap(page, '#btn-goto-tijd');
+    await tap(page, '#tijd-grid [data-game="digi"]');
+    await expectScreen(page, 'tijdlevel', 'digi kiezer');
+    await tap(page, '#btn-tijdlevel-back');
+    await expectScreen(page, 'tijd', 'digi kiezer back');
+    await tap(page, '#tijd-grid [data-game="digi"]');
+    await tap(page, '#btn-tijdlevel-home');
+    await expectScreen(page, 'start', 'digi kiezer home');
+    ok('Analoog-en-digitaal-kiezer terug → Tijd, home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-tijd');
+    await tap(page, '#tijd-grid [data-game="digi"]');
+    await tap(page, '#tijdlevel-grid [data-kind="kwart"]');
+    await expectScreen(page, 'tijdplay', 'digi play');
+    await tap(page, '#btn-tijdplay-back');
+    await expectScreen(page, 'tijdlevel', 'digi play back');
+    await tap(page, '#tijdlevel-grid [data-kind="kwart"]');
+    await tap(page, '#btn-tijdplay-home');
+    await expectScreen(page, 'start', 'digi play home');
+    ok('Analoog en digitaal terug → kiezer, home → start');
+
+    await fresh(page);
     await tap(page, '#btn-goto-games');
     await tap(page, '[data-level="count"]');
     await expectScreen(page, 'play', 'count');

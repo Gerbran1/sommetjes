@@ -682,8 +682,32 @@
     }
     #tijd-stage.is-zet #tijd-choices { display: none; }
     #tijd-stage.is-klok #tijd-klaar-wrap { display: none; }
+    #tijd-stage.is-digi #tijd-klaar-wrap { display: none; }
     #tijd-prompt {
       font-size: 42px;
+    }
+    #tijd-stage.is-digi #tijd-clock, #tijd-stage.is-digi #tijd-clock svg {
+      width: 100%;
+      height: auto;
+      max-width: 380px;
+      max-height: 260px;
+    }
+    #tijd-stage.is-digi .tijd-choice {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      min-height: 86px;
+      padding: 6px 8px;
+      font-size: 16px;
+    }
+    #tijd-stage.is-digi .tijd-choice svg {
+      width: auto;
+      height: 80px;
+      max-width: 100%;
+      max-height: 100px;
     }
     @media screen and (max-height: 800px) {
       #choice-grid.choices-8 .choice-btn { min-height: 108px; }
@@ -716,6 +740,10 @@
       #tijd-stage.is-zet #tijd-clock-wrap { width: 52%; max-width: 400px; }
       #tijd-stage.is-zet #tijd-klaar-wrap { width: 36%; margin: 0 16px 0 0; }
       #btn-tijd-klaar { font-size: 30px; padding: 16px 36px; }
+      #tijd-stage.is-digi #tijd-clock-wrap { width: 46%; max-width: 380px; }
+      #tijd-stage.is-digi #tijd-choices { width: 48%; max-width: 440px; margin: 0 12px 0 0; }
+      #tijd-stage.is-digi .tijd-choice { min-height: 68px; margin: 0 0 8px 0; }
+      #tijd-stage.is-digi .tijd-choice svg { height: 68px; max-height: 80px; }
     }
 
     #program-grid {
@@ -4917,6 +4945,10 @@
           <div class="level-icon" id="icon-tijd-zet"></div>
           <div class="level-label">Zet de klok</div>
         </button>
+        <button type="button" class="tap level-btn lvl-klok-kwart" data-act="tijd-game" data-game="digi">
+          <div class="level-icon" id="icon-tijd-digi"></div>
+          <div class="level-label">Analoog en digitaal</div>
+        </button>
       </div>
     </div>
 
@@ -4939,19 +4971,19 @@
       </div>
       <div class="prompt" id="tijdlevel-prompt">Klok kijken</div>
       <div id="tijdlevel-grid">
-        <button type="button" class="tap level-btn lvl-klok-hele" data-act="tijd-kind" data-kind="hele">
+        <button type="button" class="tap level-btn lvl-klok-hele" id="tijd-kind-hele" data-act="tijd-kind" data-kind="hele">
           <div class="level-icon" id="icon-klok-hele"></div>
           <div class="level-label">Hele uren</div>
         </button>
-        <button type="button" class="tap level-btn lvl-klok-halve" data-act="tijd-kind" data-kind="halve">
+        <button type="button" class="tap level-btn lvl-klok-halve" id="tijd-kind-halve" data-act="tijd-kind" data-kind="halve">
           <div class="level-icon" id="icon-klok-halve"></div>
           <div class="level-label">Halve uren</div>
         </button>
-        <button type="button" class="tap level-btn lvl-klok-kwart" data-act="tijd-kind" data-kind="kwart">
+        <button type="button" class="tap level-btn lvl-klok-kwart" id="tijd-kind-kwart" data-act="tijd-kind" data-kind="kwart">
           <div class="level-icon" id="icon-klok-kwart"></div>
           <div class="level-label">Kwartieren</div>
         </button>
-        <button type="button" class="tap level-btn lvl-klok-vijf" data-act="tijd-kind" data-kind="vijf">
+        <button type="button" class="tap level-btn lvl-klok-vijf" id="tijd-kind-vijf" data-act="tijd-kind" data-kind="vijf">
           <div class="level-icon" id="icon-klok-vijf"></div>
           <div class="level-label">Per 5 minuten</div>
         </button>
@@ -5713,6 +5745,7 @@
     if (level === 'geld') return 'geld-' + (state.geldGame || 'pot') + '-' + String(state.geldMax || 0);
     if (level === 'klok') return 'klok-' + (state.tijdKind || 'hele');
     if (level === 'zet') return 'zet-' + (state.tijdKind || 'hele');
+    if (level === 'digi') return 'digi-' + (state.tijdKind || 'helehalve');
     return level || 'game';
   }
 
@@ -7112,6 +7145,10 @@
     }
     else if (state.level === 'zet') {
       startZet(false);
+      return;
+    }
+    else if (state.level === 'digi') {
+      startDigi(false);
       return;
     }
     else if (state.level === 'weg') {
@@ -15031,7 +15068,7 @@
   }
 
   function handleAct(el) {
-    var act, level, t;
+    var act, level, t, g, kind;
     act = el.getAttribute('data-act');
     if (act === 'home') {
       goToStart();
@@ -15094,8 +15131,11 @@
       return;
     }
     if (act === 'tijd-kind') {
-      if ((state.tijdGame || 'klok') === 'zet') startZet(el.getAttribute('data-kind') || 'hele', true);
-      else startKlok(el.getAttribute('data-kind') || 'hele', true);
+      g = state.tijdGame || 'klok';
+      kind = el.getAttribute('data-kind') || ((g === 'digi') ? 'helehalve' : 'hele');
+      if (g === 'zet') startZet(kind, true);
+      else if (g === 'digi') startDigi(kind, true);
+      else startKlok(kind, true);
       return;
     }
     if (act === 'tijd-answer') {
@@ -15104,6 +15144,10 @@
     }
     if (act === 'tijd-klaar') {
       zetKlaar();
+      return;
+    }
+    if (act === 'digi-answer') {
+      digiAnswer(el);
       return;
     }
     if (act === 'geld-game') {
@@ -16297,6 +16341,11 @@
         list.push({ h: h, m: 30 });
         list.push({ h: h, m: 45 });
       }
+    } else if (kind === 'helehalve') {
+      for (h = 1; h <= 12; h++) {
+        list.push({ h: h, m: 0 });
+        list.push({ h: h, m: 30 });
+      }
     } else {
       for (h = 1; h <= 12; h++) {
         for (m = 0; m < 60; m += 5) list.push({ h: h, m: m });
@@ -16470,9 +16519,12 @@
     state.locked = false;
     state.question = null;
     hideReward();
-    title = (game === 'zet') ? 'Zet de klok' : 'Klok kijken';
+    if (game === 'zet') title = 'Zet de klok';
+    else if (game === 'digi') title = 'Analoog en digitaal';
+    else title = 'Klok kijken';
     el = $('tijdlevel-prompt');
     if (el) el.innerHTML = title;
+    setTijdLevelButtons(game);
     showScreen('tijdlevel');
     updateStarsUI();
   }
@@ -16794,12 +16846,277 @@
   }
 
 
+
+  var digiState = { kind: 'helehalve', h: 6, m: 15, mode: 'digi2ana', options: [], phrase: '', key: '', plan: [] };
+
+  function formatDigiTime(h, m) {
+    var hh, mm;
+    hh = h % 12;
+    if (hh === 0) hh = 12;
+    mm = (m < 10) ? ('0' + m) : String(m);
+    return String(hh) + ':' + mm;
+  }
+
+  function tijdDigiSvg(gid, h, m, w, ht) {
+    var label;
+    w = w || 200;
+    ht = ht || 140;
+    label = formatDigiTime(h, m);
+    return '<svg viewBox="0 0 200 140" width="' + w + '" height="' + ht + '" aria-hidden="true">' +
+      '<rect x="70" y="8" width="60" height="10" rx="5" fill="#A1887F" stroke="#5D4037" stroke-width="2"/>' +
+      '<path d="M80 18 L80 30 M120 18 L120 30" stroke="#5D4037" stroke-width="3" stroke-linecap="round"/>' +
+      '<rect x="16" y="28" width="168" height="98" rx="18" fill="#D7B899" stroke="#6D4C41" stroke-width="3"/>' +
+      '<rect x="22" y="34" width="156" height="86" rx="14" fill="#F8EED8"/>' +
+      '<circle cx="36" cy="52" r="3.2" fill="#E53935"/>' +
+      '<rect x="48" y="44" width="112" height="54" rx="8" fill="#15261C" stroke="#0C1812" stroke-width="2"/>' +
+      '<text x="104" y="83" text-anchor="middle" font-size="36" font-weight="700" fill="#7CFF9A" font-family="Courier New, Courier, Monaco, monospace">' + label + '</text>' +
+      '<circle cx="32" cy="78" r="2.2" fill="#8D6E63"/>' +
+      '<circle cx="32" cy="90" r="2.2" fill="#8D6E63"/>' +
+      '<circle cx="168" cy="78" r="2.2" fill="#8D6E63"/>' +
+      '<circle cx="168" cy="90" r="2.2" fill="#8D6E63"/>' +
+      '<rect x="52" y="104" width="24" height="8" rx="3" fill="#BCAAA4" stroke="#6D4C41" stroke-width="1"/>' +
+      '<rect x="88" y="104" width="24" height="8" rx="3" fill="#BCAAA4" stroke="#6D4C41" stroke-width="1"/>' +
+      '<rect x="124" y="104" width="24" height="8" rx="3" fill="#BCAAA4" stroke="#6D4C41" stroke-width="1"/>' +
+      '<rect x="34" y="124" width="22" height="8" rx="3" fill="#8D6E63" stroke="#5D4037" stroke-width="1"/>' +
+      '<rect x="144" y="124" width="22" height="8" rx="3" fill="#8D6E63" stroke="#5D4037" stroke-width="1"/>' +
+      '</svg>';
+  }
+
+  function tijdFromTotal(total) {
+    var span, n, h, m;
+    span = 12 * 60;
+    n = total % span;
+    if (n < 0) n += span;
+    h = Math.floor(n / 60) + 1;
+    if (h > 12) h = 1;
+    m = n % 60;
+    return { h: h, m: m };
+  }
+
+  function digiSwapTime(h, m) {
+    var sh, sm;
+    sh = Math.round(m / 5);
+    if (sh === 0) sh = 12;
+    if (sh > 12) sh = 12;
+    sm = (h % 12) * 5;
+    if (sm >= 60) sm = 0;
+    if (sh === h && sm === m) return null;
+    return { h: sh, m: sm };
+  }
+
+  function digiInPool(item, pool) {
+    var i;
+    if (!item) return false;
+    for (i = 0; i < pool.length; i++) {
+      if (pool[i].h === item.h && pool[i].m === item.m) return true;
+    }
+    return false;
+  }
+
+  function pickDigiDistractors(target, pool, kind) {
+    var out, used, i, step, list, cand;
+    out = [];
+    used = {};
+    function add(it) {
+      var k;
+      if (!it || !digiInPool(it, pool)) return;
+      if (it.h === target.h && it.m === target.m) return;
+      k = String(it.h) + '-' + String(it.m);
+      if (used[k]) return;
+      used[k] = true;
+      out.push({ h: it.h, m: it.m });
+    }
+    used[String(target.h) + '-' + String(target.m)] = true;
+    add(digiSwapTime(target.h, target.m));
+    step = (kind === 'vijf') ? 5 : ((kind === 'helehalve') ? 30 : 15);
+    add(tijdFromTotal(tijdMinutes(target) + step));
+    add(tijdFromTotal(tijdMinutes(target) - step));
+    if (kind === 'vijf') {
+      add(tijdFromTotal(tijdMinutes(target) + 15));
+      add(tijdFromTotal(tijdMinutes(target) - 15));
+    }
+    add({ h: zetNormHour(target.h + 1), m: target.m });
+    add({ h: zetNormHour(target.h - 1), m: target.m });
+    for (i = 0; i < pool.length; i++) {
+      if (pool[i].h === target.h) add(pool[i]);
+    }
+    list = pool.slice();
+    tijdShuffle(list);
+    for (i = 0; i < list.length && out.length < 2; i++) add(list[i]);
+    return out.slice(0, 2);
+  }
+
+  function digiPlanModes() {
+    var extra;
+    extra = (Math.random() < 0.5) ? 'ana2digi' : 'digi2ana';
+    return tijdShuffle(['ana2digi', 'ana2digi', 'digi2ana', 'digi2ana', extra]);
+  }
+
+  function pickDigiItem(kind, forced) {
+    var pool, keys, key, item, mode, opts, i, options;
+    pool = tijdPool(kind);
+    if (forced && forced.h) {
+      item = { h: forced.h, m: forced.m || 0 };
+      key = String(item.h) + '-' + String(item.m);
+      rememberRoundKey(key);
+    } else {
+      keys = [];
+      for (i = 0; i < pool.length; i++) keys.push(tijdKey(pool[i]));
+      key = pickAvoiding(keys);
+      if (!key) key = keys[Math.floor(Math.random() * keys.length)];
+      rememberRoundKey(key);
+      item = tijdFromKey(key);
+    }
+    if (forced && forced.mode) mode = forced.mode;
+    else if (digiState.plan && digiState.plan.length) mode = digiState.plan.shift();
+    else mode = (Math.random() < 0.5) ? 'digi2ana' : 'ana2digi';
+    opts = pickDigiDistractors(item, pool, kind);
+    options = tijdShuffle([{ h: item.h, m: item.m, ok: 1 }].concat(opts.map(function (o) {
+      return { h: o.h, m: o.m, ok: 0 };
+    })));
+    return {
+      h: item.h,
+      m: item.m,
+      key: key,
+      mode: mode,
+      options: options,
+      phrase: formatNlTime(item.h, item.m),
+      digital: formatDigiTime(item.h, item.m)
+    };
+  }
+
+  function setTijdLevelButtons(game) {
+    var hele, halve, lab;
+    hele = $('tijd-kind-hele');
+    halve = $('tijd-kind-halve');
+    if (!hele) return;
+    lab = hele.querySelector ? hele.querySelector('.level-label') : null;
+    if (game === 'digi') {
+      hele.setAttribute('data-kind', 'helehalve');
+      if (lab) lab.innerHTML = 'Hele en halve uren';
+      if ($('icon-klok-hele')) $('icon-klok-hele').innerHTML = tijdClockSvg('clkHele', 6, 30, 72, 56);
+      if (halve && (' ' + halve.className + ' ').indexOf(' is-hidden ') === -1) halve.className += ' is-hidden';
+    } else {
+      hele.setAttribute('data-kind', 'hele');
+      if (lab) lab.innerHTML = 'Hele uren';
+      if ($('icon-klok-hele')) $('icon-klok-hele').innerHTML = tijdClockSvg('clkHele', 3, 0, 72, 56);
+      if (halve) halve.className = halve.className.replace(/\s*is-hidden/g, '');
+    }
+  }
+
+  function startDigi(kind, fresh, forced) {
+    var item, wrap, promptEl, choices, klaar, stage, i, btn, inner;
+    if (typeof kind === 'boolean') {
+      forced = fresh;
+      fresh = kind;
+      kind = '';
+    }
+    if (kind) state.tijdKind = kind;
+    kind = state.tijdKind || 'helehalve';
+    state.tijdGame = 'digi';
+    state.level = 'digi';
+    state.locked = false;
+    if (fresh) {
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+      resetVoiceCycle();
+      state.lastWasPersonal = false;
+      digiState.plan = digiPlanModes();
+    }
+    if (typeof stopZetDrag === 'function') stopZetDrag();
+    item = pickDigiItem(kind, forced);
+    digiState.kind = kind;
+    digiState.h = item.h;
+    digiState.m = item.m;
+    digiState.mode = item.mode;
+    digiState.options = item.options;
+    digiState.phrase = item.phrase;
+    digiState.key = item.key;
+    hideReward();
+    hideToast();
+    showScreen('tijdplay');
+    updateStarsUI();
+    promptEl = $('tijd-prompt');
+    if (promptEl) {
+      promptEl.innerHTML = (item.mode === 'digi2ana') ? 'Welke klok hoort hierbij?' : 'Welke tijd hoort bij deze klok?';
+    }
+    klaar = $('tijd-klaar-wrap');
+    if (klaar) klaar.className = 'is-hidden';
+    wrap = $('tijd-clock');
+    if (wrap) {
+      if (item.mode === 'digi2ana') wrap.innerHTML = tijdDigiSvg('digiPlay', item.h, item.m, 200, 140);
+      else wrap.innerHTML = tijdClockSvg('clkPlay', item.h, item.m, 200, 200);
+    }
+    choices = $('tijd-choices');
+    if (choices) {
+      choices.className = '';
+      choices.innerHTML = '';
+      for (i = 0; i < item.options.length; i++) {
+        btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tap tijd-choice tijd-choice-digi';
+        btn.setAttribute('data-act', 'digi-answer');
+        btn.setAttribute('data-h', String(item.options[i].h));
+        btn.setAttribute('data-m', String(item.options[i].m));
+        if (item.options[i].ok) btn.setAttribute('data-ok', '1');
+        if (item.mode === 'digi2ana') {
+          btn.innerHTML = tijdClockSvg('clkOpt' + i, item.options[i].h, item.options[i].m, 200, 200);
+        } else {
+          btn.innerHTML = tijdDigiSvg('digiOpt' + i, item.options[i].h, item.options[i].m, 200, 140);
+        }
+        choices.appendChild(btn);
+      }
+    }
+    stage = $('tijd-stage');
+    if (stage) {
+      stage.className = 'is-digi';
+      stage.setAttribute('data-mode', item.mode);
+      stage.setAttribute('data-kind', kind);
+      stage.setAttribute('data-h', String(item.h));
+      stage.setAttribute('data-m', String(item.m));
+      stage.setAttribute('data-phrase', item.phrase);
+      stage.setAttribute('data-digital', item.digital);
+      stage.setAttribute('data-key', item.key);
+    }
+    beginQuestionVoice();
+    speak((item.mode === 'digi2ana') ? 'digi-klok' : 'digi-tijd');
+  }
+
+  function digiAnswer(btn) {
+    var h, m;
+    if (state.locked) return;
+    if (state.level !== 'digi') return;
+    h = parseInt(btn.getAttribute('data-h'), 10);
+    m = parseInt(btn.getAttribute('data-m'), 10);
+    if (h === digiState.h && m === digiState.m) {
+      btn.className = 'tap tijd-choice tijd-choice-digi is-correct';
+      awardCorrect();
+    } else {
+      playWrong();
+      btn.className = 'tap tijd-choice tijd-choice-digi is-wrong shake';
+      showToast('Probeer nog eens', false);
+      speak('klok-fout');
+      window.setTimeout(function () {
+        if (btn && btn.className.indexOf('is-correct') === -1) {
+          btn.className = 'tap tijd-choice tijd-choice-digi is-wrong';
+        }
+      }, 450);
+    }
+  }
+
+
   window.__tijdTest = {
     format: formatNlTime,
     pool: tijdPool,
     start: startKlok,
     startZet: startZet,
+    startDigi: startDigi,
     clockSvg: tijdClockSvg,
+    digiSvg: tijdDigiSvg,
+    formatDigi: formatDigiTime,
+    swapTime: digiSwapTime,
+    distractors: pickDigiDistractors,
+    digiState: function () { return digiState; },
     state: function () { return klokState; },
     zetState: function () { return zetState; },
     setHands: function (h, m) {
@@ -16861,6 +17178,9 @@
     }
     if ($('icon-tijd-zet')) {
       $('icon-tijd-zet').innerHTML = tijdClockSvg('clkZetMenu', 6, 15, 72, 56);
+    }
+    if ($('icon-tijd-digi')) {
+      $('icon-tijd-digi').innerHTML = tijdDigiSvg('clkDigiMenu', 6, 15, 72, 56);
     }
     if ($('icon-klok-hele')) {
       $('icon-klok-hele').innerHTML = tijdClockSvg('clkHele', 3, 0, 72, 56);
