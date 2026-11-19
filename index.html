@@ -197,7 +197,7 @@
       line-height: 1;
     }
 
-    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-doolhoflevel, #screen-verschillen, #screen-robotlevel, #screen-robot, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij, #screen-cups, #screen-veranderd, #screen-tekenmenu, #screen-kleurkies, #screen-teken, #screen-klinkers, #screen-lijnlevel, #screen-lijn, #screen-geld, #screen-geldlevel, #screen-geldplay, #screen-program {
+    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-doolhoflevel, #screen-verschillen, #screen-robotlevel, #screen-robot, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij, #screen-cups, #screen-veranderd, #screen-tekenmenu, #screen-kleurkies, #screen-teken, #screen-klinkers, #screen-lijnlevel, #screen-lijn, #screen-geld, #screen-geldlevel, #screen-geldplay, #screen-program, #screen-tijd, #screen-tijdlevel, #screen-tijdplay {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -507,6 +507,173 @@
       flex: 0 0 21%;
       max-width: 230px;
     }
+
+    .choice-tijd {
+      background: #5C6BC0;
+      -webkit-box-shadow: 0 10px 0 #3949AB, 0 14px 20px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 0 #3949AB, 0 14px 20px rgba(0,0,0,0.15);
+    }
+    .choice-tijd.pressed, .choice-tijd:active {
+      -webkit-box-shadow: 0 2px 0 #3949AB, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #3949AB, 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .tijd-glyph {
+      width: 72px;
+      height: 56px;
+    }
+    .tijd-glyph svg { width: 72px; height: 56px; }
+
+    #choice-grid.choices-8 .choice-btn {
+      -webkit-flex: 0 0 21%;
+      flex: 0 0 21%;
+      max-width: 230px;
+    }
+
+    #tijd-grid, #tijdlevel-grid {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-align-content: center;
+      align-content: center;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      max-width: 980px;
+      margin: 8px auto 0 auto;
+    }
+    #tijd-grid .level-btn {
+      -webkit-flex: 0 0 30%;
+      flex: 0 0 30%;
+      max-width: 300px;
+      min-height: 220px;
+      max-height: 280px;
+    }
+    #tijdlevel-grid .level-btn {
+      -webkit-flex: 0 0 40%;
+      flex: 0 0 40%;
+      max-width: 360px;
+      min-height: 160px;
+      max-height: 230px;
+    }
+    #tijd-grid .level-icon, #tijd-grid .level-icon svg,
+    #tijdlevel-grid .level-icon, #tijdlevel-grid .level-icon svg {
+      width: 72px;
+      height: 56px;
+    }
+    .lvl-klok-hele { background: #5C6BC0; -webkit-box-shadow: 0 10px 0 #3949AB, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #3949AB, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-klok-hele.pressed, .lvl-klok-hele:active { -webkit-box-shadow: 0 2px 0 #3949AB, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #3949AB, 0 4px 8px rgba(0,0,0,0.15); }
+    .lvl-klok-halve { background: #42A5F5; -webkit-box-shadow: 0 10px 0 #1E88E5, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #1E88E5, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-klok-halve.pressed, .lvl-klok-halve:active { -webkit-box-shadow: 0 2px 0 #1E88E5, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #1E88E5, 0 4px 8px rgba(0,0,0,0.15); }
+    .lvl-klok-kwart { background: #26A69A; -webkit-box-shadow: 0 10px 0 #00897B, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #00897B, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-klok-kwart.pressed, .lvl-klok-kwart:active { -webkit-box-shadow: 0 2px 0 #00897B, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #00897B, 0 4px 8px rgba(0,0,0,0.15); }
+    .lvl-klok-vijf { background: #7E57C2; -webkit-box-shadow: 0 10px 0 #5E35B1, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #5E35B1, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-klok-vijf.pressed, .lvl-klok-vijf:active { -webkit-box-shadow: 0 2px 0 #5E35B1, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #5E35B1, 0 4px 8px rgba(0,0,0,0.15); }
+
+    #tijd-stage {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 0;
+    }
+    #tijd-clock-wrap {
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      max-width: 420px;
+      min-height: 0;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+    }
+    #tijd-clock, #tijd-clock svg {
+      width: 100%;
+      height: 100%;
+      max-width: 360px;
+      max-height: 360px;
+    }
+    #tijd-choices {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: stretch;
+      align-items: stretch;
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+      width: 92%;
+      max-width: 520px;
+      margin: 8px auto 10px auto;
+    }
+    .tijd-choice {
+      display: block;
+      width: 100%;
+      margin: 0 0 10px 0;
+      min-height: 58px;
+      padding: 10px 16px;
+      border-radius: 22px;
+      background: #FFFDF7;
+      color: #1A237E;
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.15;
+      -webkit-box-shadow: 0 6px 0 #E2D3A8, 0 10px 12px rgba(0,0,0,0.12);
+      box-shadow: 0 6px 0 #E2D3A8, 0 10px 12px rgba(0,0,0,0.12);
+    }
+    .tijd-choice.pressed, .tijd-choice:active {
+      -webkit-box-shadow: 0 2px 0 #E2D3A8, 0 4px 6px rgba(0,0,0,0.12);
+      box-shadow: 0 2px 0 #E2D3A8, 0 4px 6px rgba(0,0,0,0.12);
+    }
+    .tijd-choice.is-correct { background: #C8F0C8; }
+    .tijd-choice.is-wrong { background: #F8D0D0; }
+    .tijd-choice.shake {
+      -webkit-animation: shake 0.45s ease-in-out;
+      animation: shake 0.45s ease-in-out;
+    }
+    @media screen and (max-height: 800px) {
+      #choice-grid.choices-8 .choice-btn { min-height: 108px; }
+      #choice-grid.choices-8 .choice-label { font-size: 18px; }
+      #choice-grid.choices-8 .tijd-glyph,
+      #choice-grid.choices-8 .tijd-glyph svg { width: 52px; height: 40px; }
+      #tijd-grid .level-btn { min-height: 140px; max-height: 200px; }
+      #tijdlevel-grid .level-btn { min-height: 120px; max-height: 170px; }
+      #tijd-stage {
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        -webkit-align-items: center;
+        align-items: center;
+        -webkit-justify-content: space-around;
+        justify-content: space-around;
+      }
+      #tijd-clock-wrap {
+        width: 44%;
+        max-width: 340px;
+        -webkit-flex: 0 1 auto;
+        flex: 0 1 auto;
+      }
+      #tijd-choices {
+        width: 50%;
+        max-width: 460px;
+        margin: 0 12px 0 0;
+      }
+      .tijd-choice { min-height: 54px; font-size: 22px; margin: 0 0 8px 0; }
+    }
+
     #program-grid {
       display: -webkit-flex;
       display: flex;
@@ -3959,7 +4126,7 @@
         <div class="home-hint" id="home-hint"></div>
       </div>
 
-      <div id="choice-grid" class="choices-7">
+      <div id="choice-grid" class="choices-8">
         <button type="button" class="tap choice-btn choice-numbers" id="btn-goto-games" data-act="goto-games">
           <div class="choice-glyph">123</div>
           <div class="choice-label">Getallen</div>
@@ -3992,6 +4159,10 @@
         <button type="button" class="tap choice-btn choice-geld" id="btn-goto-geld" data-act="goto-geld">
           <div class="choice-glyph geld-glyph" id="icon-geld-start"></div>
           <div class="choice-label">Geld</div>
+        </button>
+        <button type="button" class="tap choice-btn choice-tijd" id="btn-goto-tijd" data-act="goto-tijd">
+          <div class="choice-glyph tijd-glyph" id="icon-tijd-start"></div>
+          <div class="choice-label">Tijd</div>
         </button>
       </div>
       <div id="player-bar">
@@ -4673,6 +4844,99 @@
         </button>
       </div>
     </div>
+
+
+    <div id="screen-tijd" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-tijd-back" data-act="back" title="Terug">
+            <span id="tijd-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-tijd-home" data-act="home" title="Start">
+            <span id="tijd-home-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="tijd-star-icon"></span>
+            <span class="star-count" id="tijd-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt">Tijd</div>
+      <div id="tijd-grid">
+        <button type="button" class="tap level-btn lvl-klok-hele" data-act="tijd-game" data-game="klok">
+          <div class="level-icon" id="icon-tijd-klok"></div>
+          <div class="level-label">Klok kijken</div>
+        </button>
+      </div>
+    </div>
+
+    <div id="screen-tijdlevel" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-tijdlevel-back" data-act="back" title="Terug">
+            <span id="tijdlevel-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-tijdlevel-home" data-act="home" title="Start">
+            <span id="tijdlevel-home-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="tijdlevel-star-icon"></span>
+            <span class="star-count" id="tijdlevel-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt">Klok kijken</div>
+      <div id="tijdlevel-grid">
+        <button type="button" class="tap level-btn lvl-klok-hele" data-act="tijd-kind" data-kind="hele">
+          <div class="level-icon" id="icon-klok-hele"></div>
+          <div class="level-label">Hele uren</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-klok-halve" data-act="tijd-kind" data-kind="halve">
+          <div class="level-icon" id="icon-klok-halve"></div>
+          <div class="level-label">Halve uren</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-klok-kwart" data-act="tijd-kind" data-kind="kwart">
+          <div class="level-icon" id="icon-klok-kwart"></div>
+          <div class="level-label">Kwartieren</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-klok-vijf" data-act="tijd-kind" data-kind="vijf">
+          <div class="level-icon" id="icon-klok-vijf"></div>
+          <div class="level-label">Per 5 minuten</div>
+        </button>
+      </div>
+    </div>
+
+    <div id="screen-tijdplay" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-tijdplay-back" data-act="back" title="Terug">
+            <span id="tijdplay-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-tijdplay-home" data-act="home" title="Start" style="margin-left:8px;">
+            <span id="tijdplay-home-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="tijdplay-star-icon"></span>
+            <span class="star-count" id="tijdplay-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt" id="tijd-prompt">Hoe laat is het?</div>
+      <div class="progress-row"></div>
+      <div id="tijd-stage">
+        <div id="tijd-clock-wrap">
+          <div id="tijd-clock"></div>
+        </div>
+        <div id="tijd-choices"></div>
+      </div>
+    </div>
+
 
     <div id="screen-robotlevel" class="is-hidden">
       <div class="topbar">
@@ -5396,6 +5660,7 @@
     if (level === 'doolhof') return 'doolhof-' + String(state.doolhofN || 0);
     if (level === 'robot' || level === 'herhaal' || level === 'volg' || level === 'fout') return level + '-' + (state.robotKind || 'easy');
     if (level === 'geld') return 'geld-' + (state.geldGame || 'pot') + '-' + String(state.geldMax || 0);
+    if (level === 'klok') return 'klok-' + (state.tijdKind || 'hele');
     return level || 'game';
   }
 
@@ -6789,6 +7054,10 @@
       startGeld(false);
       return;
     }
+    else if (state.level === 'klok') {
+      startKlok(false);
+      return;
+    }
     else if (state.level === 'weg') {
       startWeg(false);
       return;
@@ -8113,7 +8382,7 @@
   /* ---------- UI ---------- */
   function updateStarsUI() {
     var i, row, html, filled, el, rows;
-    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'vers-stars', 'robot-stars', 'robotlevel-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars', 'cups-stars', 'veranderd-stars', 'klinkers-stars', 'lijnlevel-stars', 'lijn-stars', 'doolhoflevel-stars', 'geld-stars', 'geldlevel-stars', 'geldplay-stars', 'program-stars'], String(state.stars));
+    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'vers-stars', 'robot-stars', 'robotlevel-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars', 'cups-stars', 'veranderd-stars', 'klinkers-stars', 'lijnlevel-stars', 'lijn-stars', 'doolhoflevel-stars', 'geld-stars', 'geldlevel-stars', 'geldplay-stars', 'program-stars', 'tijd-stars', 'tijdlevel-stars', 'tijdplay-stars'], String(state.stars));
     filled = state.towardsReward;
     if (filled > 5) filled = 5;
     html = '';
@@ -8146,7 +8415,7 @@
   function showScreen(name) {
     var ids, i, el;
     state.screen = name;
-    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay', 'program'];
+    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay', 'program', 'tijd', 'tijdlevel', 'tijdplay'];
     for (i = 0; i < ids.length; i++) {
       el = $('screen-' + ids[i]);
       if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
@@ -8231,6 +8500,11 @@
     if (s === 'geldplay') {
       leavePlay();
       showGeldMenu();
+      return;
+    }
+    if (s === 'tijdplay') {
+      leavePlay();
+      showTijdMenu();
       return;
     }
     if (s === 'memoryplay' || s === 'weg' || s === 'simon' || s === 'rij' || s === 'cups' || s === 'veranderd') {
@@ -14572,6 +14846,10 @@
       showGeldLevel(state.geldGame);
     } else if (s === 'geldlevel') {
       showGeldMenu();
+    } else if (s === 'tijdplay') {
+      showTijdLevel();
+    } else if (s === 'tijdlevel') {
+      showTijdMenu();
     } else {
       goToStart();
     }
@@ -14731,6 +15009,25 @@
       showGeldMenu();
       beginQuestionVoice();
       speak('geld-kies');
+      return;
+    }
+    if (act === 'goto-tijd') {
+      cancelAdvanceWait();
+      showTijdMenu();
+      beginQuestionVoice();
+      speak('tijd-kies');
+      return;
+    }
+    if (act === 'tijd-game') {
+      showTijdLevel();
+      return;
+    }
+    if (act === 'tijd-kind') {
+      startKlok(el.getAttribute('data-kind') || 'hele', true);
+      return;
+    }
+    if (act === 'tijd-answer') {
+      klokAnswer(el);
       return;
     }
     if (act === 'geld-game') {
@@ -15856,6 +16153,321 @@
     geldKlaar();
   }
 
+
+  var klokState = { kind: 'hele', h: 3, m: 0, phrase: '', options: [] };
+  var TIJD_HOURS = ['', 'één', 'twee', 'drie', 'vier', 'vijf', 'zes', 'zeven', 'acht', 'negen', 'tien', 'elf', 'twaalf'];
+
+  function tijdHourWord(h) {
+    var n;
+    n = h % 12;
+    if (n === 0) n = 12;
+    return TIJD_HOURS[n];
+  }
+
+  function formatNlTime(h, m) {
+    var hour, next, mm;
+    hour = tijdHourWord(h);
+    next = tijdHourWord(h + 1);
+    mm = m % 60;
+    if (mm === 0) return hour + ' uur';
+    if (mm === 15) return 'kwart over ' + hour;
+    if (mm === 30) return 'half ' + next;
+    if (mm === 45) return 'kwart voor ' + next;
+    if (mm === 5) return 'vijf over ' + hour;
+    if (mm === 10) return 'tien over ' + hour;
+    if (mm === 20) return 'tien voor half ' + next;
+    if (mm === 25) return 'vijf voor half ' + next;
+    if (mm === 35) return 'vijf over half ' + next;
+    if (mm === 40) return 'tien over half ' + next;
+    if (mm === 50) return 'tien voor ' + next;
+    if (mm === 55) return 'vijf voor ' + next;
+    return hour + ' uur';
+  }
+
+  function tijdKey(item) {
+    return String(item.h) + '-' + String(item.m);
+  }
+
+  function tijdFromKey(key) {
+    var p;
+    p = String(key).split('-');
+    return { h: parseInt(p[0], 10) || 12, m: parseInt(p[1], 10) || 0 };
+  }
+
+  function tijdPool(kind) {
+    var list, h, m;
+    list = [];
+    if (kind === 'hele') {
+      for (h = 1; h <= 12; h++) list.push({ h: h, m: 0 });
+    } else if (kind === 'halve') {
+      for (h = 1; h <= 12; h++) list.push({ h: h, m: 30 });
+    } else if (kind === 'kwart') {
+      for (h = 1; h <= 12; h++) {
+        list.push({ h: h, m: 0 });
+        list.push({ h: h, m: 15 });
+        list.push({ h: h, m: 30 });
+        list.push({ h: h, m: 45 });
+      }
+    } else {
+      for (h = 1; h <= 12; h++) {
+        for (m = 0; m < 60; m += 5) list.push({ h: h, m: m });
+      }
+    }
+    return list;
+  }
+
+  function tijdMinutes(item) {
+    var h;
+    h = item.h % 12;
+    if (h === 0) h = 12;
+    return (h - 1) * 60 + item.m;
+  }
+
+  function tijdDist(a, b) {
+    var d, span;
+    span = 12 * 60;
+    d = tijdMinutes(a) - tijdMinutes(b);
+    if (d < 0) d = -d;
+    if (d > span / 2) d = span - d;
+    return d;
+  }
+
+  function tijdShuffle(arr) {
+    var i, j, t;
+    for (i = arr.length - 1; i > 0; i--) {
+      j = Math.floor(Math.random() * (i + 1));
+      t = arr[i];
+      arr[i] = arr[j];
+      arr[j] = t;
+    }
+    return arr;
+  }
+
+  function pickKlokItem(kind) {
+    var pool, keys, key, item, phrase, others, i, cand, picked, options, used, far;
+    pool = tijdPool(kind);
+    keys = [];
+    for (i = 0; i < pool.length; i++) keys.push(tijdKey(pool[i]));
+    key = pickAvoiding(keys);
+    if (!key) key = keys[Math.floor(Math.random() * keys.length)];
+    rememberRoundKey(key);
+    item = tijdFromKey(key);
+    phrase = formatNlTime(item.h, item.m);
+    others = [];
+    for (i = 0; i < pool.length; i++) {
+      cand = pool[i];
+      if (tijdKey(cand) === key) continue;
+      if (formatNlTime(cand.h, cand.m) === phrase) continue;
+      others.push(cand);
+    }
+    others.sort(function (a, b) {
+      return tijdDist(a, item) - tijdDist(b, item);
+    });
+    picked = [];
+    used = {};
+    used[phrase] = true;
+    function take(cand) {
+      var p;
+      p = formatNlTime(cand.h, cand.m);
+      if (used[p]) return false;
+      used[p] = true;
+      picked.push(p);
+      return true;
+    }
+    for (i = 0; i < others.length && picked.length < 1; i++) take(others[i]);
+    far = others.slice();
+    tijdShuffle(far);
+    for (i = 0; i < far.length && picked.length < 2; i++) {
+      if (tijdDist(far[i], item) <= 20) continue;
+      take(far[i]);
+    }
+    for (i = 0; i < far.length && picked.length < 2; i++) take(far[i]);
+    options = tijdShuffle([phrase].concat(picked));
+    return { h: item.h, m: item.m, phrase: phrase, options: options, key: key };
+  }
+
+  function tijdClockSvg(gid, h, m, w, ht) {
+    var cx, cy, r, hourAng, minAng, ticks, nums, i, ang, rad, inner, outer, sw, col;
+    var hx, hy, htx, hty, mx, my, mtx, mty, nx, ny, html, hourLen, minLen, faceR;
+    w = w || 200;
+    ht = ht || 200;
+    cx = w / 2;
+    cy = ht / 2 + (ht < w ? 1 : 0);
+    r = Math.min(w, ht) * 0.46;
+    hourAng = ((h % 12) + m / 60) * 30;
+    minAng = m * 6;
+    function pt(ang, len) {
+      var a;
+      a = ang * Math.PI / 180;
+      return { x: cx + Math.sin(a) * len, y: cy - Math.cos(a) * len };
+    }
+    function n(v) {
+      return (Math.round(v * 10) / 10);
+    }
+    ticks = '';
+    faceR = r * 0.89;
+    for (i = 0; i < 60; i++) {
+      ang = i * 6;
+      if (i % 5 === 0) {
+        inner = r * 0.72;
+        outer = r * 0.84;
+        sw = Math.max(2, r * 0.035);
+        col = '#2C3A4F';
+      } else {
+        inner = r * 0.78;
+        outer = r * 0.84;
+        sw = Math.max(1, r * 0.016);
+        col = '#9A8F7C';
+      }
+      ticks += '<line x1="' + n(pt(ang, inner).x) + '" y1="' + n(pt(ang, inner).y) +
+        '" x2="' + n(pt(ang, outer).x) + '" y2="' + n(pt(ang, outer).y) +
+        '" stroke="' + col + '" stroke-width="' + n(sw) + '" stroke-linecap="round"/>';
+    }
+    nums = '';
+    for (i = 1; i <= 12; i++) {
+      ang = i * 30;
+      nx = pt(ang, r * 0.58).x;
+      ny = pt(ang, r * 0.58).y + r * 0.07;
+      nums += '<text x="' + n(nx) + '" y="' + n(ny) + '" text-anchor="middle" font-size="' +
+        n(r * 0.2) + '" font-weight="700" fill="#1A237E" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">' +
+        i + '</text>';
+    }
+    hourLen = r * 0.48;
+    minLen = r * 0.7;
+    hx = pt(hourAng, hourLen).x;
+    hy = pt(hourAng, hourLen).y;
+    htx = pt(hourAng + 180, r * 0.12).x;
+    hty = pt(hourAng + 180, r * 0.12).y;
+    mx = pt(minAng, minLen).x;
+    my = pt(minAng, minLen).y;
+    mtx = pt(minAng + 180, r * 0.14).x;
+    mty = pt(minAng + 180, r * 0.14).y;
+    html = '<svg viewBox="0 0 ' + w + ' ' + ht + '" width="' + w + '" height="' + ht + '" aria-hidden="true">' +
+      '<defs>' +
+      '<radialGradient id="' + gid + 'Face" cx="42%" cy="38%" r="70%">' +
+      '<stop offset="0%" stop-color="#FFFDF8"/>' +
+      '<stop offset="100%" stop-color="#F3E2B8"/>' +
+      '</radialGradient>' +
+      '</defs>' +
+      '<ellipse cx="' + n(cx) + '" cy="' + n(cy + r * 0.06) + '" rx="' + n(r) + '" ry="' + n(r) + '" fill="rgba(0,0,0,0.14)"/>' +
+      '<circle cx="' + n(cx) + '" cy="' + n(cy) + '" r="' + n(r) + '" fill="#283593"/>' +
+      '<circle cx="' + n(cx) + '" cy="' + n(cy) + '" r="' + n(r * 0.93) + '" fill="#C5CAE9"/>' +
+      '<circle cx="' + n(cx) + '" cy="' + n(cy) + '" r="' + n(r * 0.89) + '" fill="url(#' + gid + 'Face)"/>' +
+      ticks + nums +
+      '<line x1="' + n(htx) + '" y1="' + n(hty) + '" x2="' + n(hx) + '" y2="' + n(hy) +
+      '" stroke="#1565C0" stroke-width="' + n(r * 0.1) + '" stroke-linecap="round"/>' +
+      '<line x1="' + n(mtx) + '" y1="' + n(mty) + '" x2="' + n(mx) + '" y2="' + n(my) +
+      '" stroke="#E53935" stroke-width="' + n(r * 0.06) + '" stroke-linecap="round"/>' +
+      '<circle cx="' + n(cx) + '" cy="' + n(cy) + '" r="' + n(r * 0.08) + '" fill="#FFD54F" stroke="#F9A825" stroke-width="' + n(r * 0.025) + '"/>' +
+      '<circle cx="' + n(cx) + '" cy="' + n(cy) + '" r="' + n(r * 0.03) + '" fill="#5D4037"/>' +
+      '</svg>';
+    return html;
+  }
+
+  function showTijdMenu() {
+    state.level = null;
+    state.locked = false;
+    state.question = null;
+    hideReward();
+    showScreen('tijd');
+    updateStarsUI();
+  }
+
+  function showTijdLevel() {
+    state.level = 'klok';
+    state.locked = false;
+    state.question = null;
+    hideReward();
+    showScreen('tijdlevel');
+    updateStarsUI();
+  }
+
+  function startKlok(kind, fresh) {
+    var item, wrap, i, btns, btn, promptEl;
+    if (typeof kind === 'boolean') {
+      fresh = kind;
+      kind = '';
+    }
+    if (kind) state.tijdKind = kind;
+    kind = state.tijdKind || 'hele';
+    state.level = 'klok';
+    state.locked = false;
+    if (fresh) {
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+      resetVoiceCycle();
+      state.lastWasPersonal = false;
+    }
+    item = pickKlokItem(kind);
+    klokState.kind = kind;
+    klokState.h = item.h;
+    klokState.m = item.m;
+    klokState.phrase = item.phrase;
+    klokState.options = item.options;
+    klokState.key = item.key;
+    hideReward();
+    hideToast();
+    showScreen('tijdplay');
+    updateStarsUI();
+    wrap = $('tijd-clock');
+    if (wrap) wrap.innerHTML = tijdClockSvg('clkPlay', item.h, item.m, 200, 200);
+    promptEl = $('tijd-prompt');
+    if (promptEl) promptEl.innerHTML = 'Hoe laat is het?';
+    btns = document.getElementById('tijd-choices');
+    if (btns) {
+      btns.innerHTML = '';
+      for (i = 0; i < item.options.length; i++) {
+        btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tap tijd-choice';
+        btn.setAttribute('data-act', 'tijd-answer');
+        btn.setAttribute('data-phrase', item.options[i]);
+        btn.innerHTML = item.options[i];
+        btns.appendChild(btn);
+      }
+    }
+    wrap = $('tijd-stage');
+    if (wrap) {
+      wrap.setAttribute('data-h', String(item.h));
+      wrap.setAttribute('data-m', String(item.m));
+      wrap.setAttribute('data-phrase', item.phrase);
+      wrap.setAttribute('data-kind', kind);
+      wrap.setAttribute('data-key', item.key);
+    }
+    beginQuestionVoice();
+    speak('klok-vraag');
+  }
+
+  function klokAnswer(btn) {
+    var phrase;
+    if (state.locked) return;
+    if (!klokState || !klokState.phrase) return;
+    phrase = btn.getAttribute('data-phrase');
+    if (phrase === klokState.phrase) {
+      btn.className = 'tap tijd-choice is-correct';
+      awardCorrect();
+    } else {
+      playWrong();
+      btn.className = 'tap tijd-choice is-wrong shake';
+      showToast('Probeer nog eens', false);
+      speak('klok-fout');
+      window.setTimeout(function () {
+        if (btn && btn.className.indexOf('is-correct') === -1) {
+          btn.className = 'tap tijd-choice is-wrong';
+        }
+      }, 450);
+    }
+  }
+
+  window.__tijdTest = {
+    format: formatNlTime,
+    pool: tijdPool,
+    start: startKlok,
+    clockSvg: tijdClockSvg,
+    state: function () { return klokState; }
+  };
+
+
   window.__geldTest = {
     formatEuro: formatEuro,
     greedy: geldGreedy,
@@ -15893,6 +16505,25 @@
       $('icon-geld-start').innerHTML =
         '<svg viewBox="0 0 72 56" width="72" height="56" aria-hidden="true"><circle cx="22" cy="34" r="16" fill="#C9853A" stroke="#6B3510" stroke-width="2"/><text x="22" y="40" text-anchor="middle" font-size="11" font-weight="700" fill="#5A3010" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">5</text><circle cx="40" cy="30" r="18" fill="#F0B429" stroke="#7A5A0A" stroke-width="2"/><text x="40" y="36" text-anchor="middle" font-size="12" font-weight="700" fill="#5A4408" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">10</text><circle cx="56" cy="28" r="14" fill="#E8E4D8" stroke="#7A5A0A" stroke-width="2"/><circle cx="56" cy="28" r="8" fill="#F0B429"/><text x="56" y="32" text-anchor="middle" font-size="8" font-weight="700" fill="#5A4408" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">1</text></svg>';
     }
+    if ($('icon-tijd-start')) {
+      $('icon-tijd-start').innerHTML = tijdClockSvg('clkStart', 10, 10, 72, 56);
+    }
+    if ($('icon-tijd-klok')) {
+      $('icon-tijd-klok').innerHTML = tijdClockSvg('clkMenu', 3, 0, 72, 56);
+    }
+    if ($('icon-klok-hele')) {
+      $('icon-klok-hele').innerHTML = tijdClockSvg('clkHele', 3, 0, 72, 56);
+    }
+    if ($('icon-klok-halve')) {
+      $('icon-klok-halve').innerHTML = tijdClockSvg('clkHalve', 6, 30, 72, 56);
+    }
+    if ($('icon-klok-kwart')) {
+      $('icon-klok-kwart').innerHTML = tijdClockSvg('clkKwart', 3, 15, 72, 56);
+    }
+    if ($('icon-klok-vijf')) {
+      $('icon-klok-vijf').innerHTML = tijdClockSvg('clkVijf', 4, 25, 72, 56);
+    }
+
     elSet('start-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('games-star-icon', starSvg('#FFD54F', '#F9A825'));
     $('play-star-icon').innerHTML = starSvg('#FFD54F', '#F9A825');
@@ -15935,6 +16566,9 @@
     elSet('geldlevel-home-icon', homeIconHtml());
     elSet('geldplay-home-icon', homeIconHtml());
     elSet('program-home-icon', homeIconHtml());
+    elSet('tijd-home-icon', homeIconHtml());
+    elSet('tijdlevel-home-icon', homeIconHtml());
+    elSet('tijdplay-home-icon', homeIconHtml());
     elSet('play-back-icon', backIconHtml());
     elSet('picker-back-icon', backIconHtml());
     elSet('trace-back-icon', backIconHtml());
@@ -15969,6 +16603,9 @@
     elSet('geldlevel-back-icon', backIconHtml());
     elSet('geldplay-back-icon', backIconHtml());
     elSet('program-back-icon', backIconHtml());
+    elSet('tijd-back-icon', backIconHtml());
+    elSet('tijdlevel-back-icon', backIconHtml());
+    elSet('tijdplay-back-icon', backIconHtml());
     elSet('letters-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('trace-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('names-star-icon', starSvg('#FFD54F', '#F9A825'));
@@ -16001,6 +16638,9 @@
     elSet('geldlevel-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('geldplay-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('program-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('tijd-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('tijdlevel-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('tijdplay-star-icon', starSvg('#FFD54F', '#F9A825'));
     if ($('icon-vormen')) {
       $('icon-vormen').innerHTML =
         vormSvg('circle', '#2FB3F0', '#1A7FB3', 0) +

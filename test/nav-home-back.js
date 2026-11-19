@@ -13,7 +13,7 @@ const wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms)
 const SCREENS = [
   'start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay',
   'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken',
-  'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay', 'program'
+  'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay', 'program', 'tijd', 'tijdlevel', 'tijdplay'
 ];
 
 async function visibleScreen(page) {
@@ -254,6 +254,38 @@ async function waitSpiegelNext(page) {
     await expectScreen(page, 'geldlevel', 'briefjes play back');
     ok('Winkel met briefjes terug → kiezer');
 
+    await fresh(page);
+    await tap(page, '#btn-goto-tijd');
+    await expectScreen(page, 'tijd', 'tijd menu');
+    await tap(page, '#btn-tijd-back');
+    await expectScreen(page, 'start', 'tijd menu back');
+    await tap(page, '#btn-goto-tijd');
+    await tap(page, '#btn-tijd-home');
+    await expectScreen(page, 'start', 'tijd menu home');
+    ok('Tijd-menu terug/home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-tijd');
+    await tap(page, '#tijd-grid [data-game="klok"]');
+    await expectScreen(page, 'tijdlevel', 'klok kiezer');
+    await tap(page, '#btn-tijdlevel-back');
+    await expectScreen(page, 'tijd', 'klok kiezer back');
+    await tap(page, '#tijd-grid [data-game="klok"]');
+    await tap(page, '#btn-tijdlevel-home');
+    await expectScreen(page, 'start', 'klok kiezer home');
+    ok('Klok-kiezer terug → Tijd, home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-tijd');
+    await tap(page, '#tijd-grid [data-game="klok"]');
+    await tap(page, '#tijdlevel-grid [data-kind="kwart"]');
+    await expectScreen(page, 'tijdplay', 'klok play');
+    await tap(page, '#btn-tijdplay-back');
+    await expectScreen(page, 'tijdlevel', 'klok play back');
+    await tap(page, '#tijdlevel-grid [data-kind="hele"]');
+    await tap(page, '#btn-tijdplay-home');
+    await expectScreen(page, 'start', 'klok play home');
+    ok('Klok kijken terug → kiezer, home → start');
 
     await fresh(page);
     await tap(page, '#btn-goto-games');

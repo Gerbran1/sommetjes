@@ -4,7 +4,7 @@ Een eenvoudige oefenapp voor kinderen van 4 tot 6 jaar, met getallen, letters, p
 
 ## Wat kun je oefenen?
 
-Op het startscherm kies je **Getallen**, **Letters**, **Puzzels**, **Programmeren**, **Geheugen**, **Tekenen** of **Geld**.
+Op het startscherm kies je **Getallen**, **Letters**, **Puzzels**, **Programmeren**, **Geheugen**, **Tekenen**, **Geld** of **Tijd**.
 
 **Getallen**
 1. **Tellen** — tel 1 tot 10 plaatjes en tik het goede getal
@@ -52,6 +52,9 @@ Op het startscherm kies je **Getallen**, **Letters**, **Puzzels**, **Programmere
 21. **Spaarpot** — sleep muntjes in het spaarvarken tot het gevraagde bedrag (tot 10 cent of tot 50 cent) en tik op Klaar!. Tik op een muntje in de pot om het terug te doen.
 22. **Winkeltje** — een speelgoedje heeft een prijskaartje; sleep muntjes naar de kassa (tot €1 of tot €5). Te veel betalen mag nog niet: je hoort "Dat is te veel!" (nog geen wisselgeld).
 23. **Winkel met briefjes** — hetzelfde winkeltje, maar nu ook met briefjes van €5 (grijs), €10 (rood) en €20 (blauw). Je kiest tot €20 of tot €50, met duurdere dingen zoals een fiets of een skateboard.
+
+**Tijd**
+24. **Klok kijken** — je ziet een analoge klok en tikt de juiste tijd uit drie keuzes, in het Nederlands (Nederland): "zes uur", "kwart over zes", "half zeven" (dat is 6:30), "tien voor half zeven" (6:20), "vijf over half zeven" (6:35). Je kiest hele uren, halve uren, kwartieren of per vijf minuten. Een ronde is vijf klokken, daarna ga je terug naar Tijd.
 
 Bij de getallen- en letterspellen heeft elke vraag drie grote antwoordknoppen. Bij een goed antwoord of een voltooide puzzel krijg je een ster. Na vijf sterren volgt een klein feestje; daarna ga je terug naar het menu van dat spel. Een fout antwoord is niet erg: je mag het gewoon nog eens proberen.
 
