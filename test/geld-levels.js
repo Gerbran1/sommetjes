@@ -78,6 +78,19 @@ async function main() {
     checkPool(t.pools.winkel5, 101, 500, 'winkeltje tot 5');
     checkPool(t.pools.brief20, 501, 2000, 'briefjes tot 20');
     checkPool(t.pools.brief50, 2001, 5000, 'briefjes tot 50');
+
+    if (!t.uniqueHtml) out.push('FAIL no uniqueHtml hook');
+    else {
+      var sample = '<svg><defs><radialGradient id="GCOIN_gold"></radialGradient></defs><circle fill="url(#GCOIN_gold)"/></svg>';
+      var u1 = t.uniqueHtml(sample);
+      var u2 = t.uniqueHtml(sample);
+      assert(u1.indexOf('id="gdg') !== -1 && u1.indexOf('url(#gdg') !== -1, 'uniqueHtml prefix id en url');
+      assert(u1 !== u2, 'twee klonen krijgen verschillende ids');
+      assert(u1.indexOf('id="GCOIN_gold"') === -1, 'originele id verdwijnt in de kloon');
+      var id1 = u1.match(/id="([^"]+)"/)[1];
+      var url1 = u1.match(/url\(#([^)]+)\)/)[1];
+      eq(id1, url1, 'url verwijst naar de nieuwe id');
+    }
     return out;
   });
   var failed = 0, i;

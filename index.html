@@ -17063,6 +17063,16 @@
     return null;
   }
 
+  function geldUniqueHtml(html) {
+    var uid;
+    uid = 'gdg' + geldNextUid() + '_';
+    html = String(html);
+    html = html.replace(/id=(["'])([^"']+)\1/g, 'id=$1' + uid + '$2$1');
+    html = html.replace(/url\(#([^)]+)\)/g, 'url(#' + uid + '$1)');
+    html = html.replace(/\b(xlink:href|href)=(["'])#([^"']+)\2/g, '$1=$2#' + uid + '$3$2');
+    return html;
+  }
+
   function geldDragStart(e) {
     var tile, p, r, ghost, kind, cents, fromPaid;
     if (state.screen !== 'geldplay' || state.locked) return false;
@@ -17092,7 +17102,7 @@
     geldDrag.moved = false;
     ghost = document.createElement('div');
     ghost.className = 'geld-drag-ghost';
-    ghost.innerHTML = tile.innerHTML;
+    ghost.innerHTML = geldUniqueHtml(tile.innerHTML);
     ghost.style.width = r.width + 'px';
     ghost.style.height = r.height + 'px';
     ghost.style.left = r.left + 'px';
@@ -20436,6 +20446,7 @@
     render: renderGeld,
     start: startGeld,
     state: function () { return geldState; },
+    uniqueHtml: geldUniqueHtml,
     returnCoin: geldReturnCoin,
     klaar: geldKlaar,
     updateTotal: geldUpdateTotal,
