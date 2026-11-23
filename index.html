@@ -561,6 +561,245 @@
       -webkit-box-shadow: 0 4px 0 #00897B, 0 6px 8px rgba(0,0,0,0.12);
       box-shadow: 0 4px 0 #00897B, 0 6px 8px rgba(0,0,0,0.12);
     }
+    .lvl-tijd-md { background: #7E57C2; -webkit-box-shadow: 0 10px 0 #5E35B1, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #5E35B1, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-tijd-md.pressed, .lvl-tijd-md:active {
+      -webkit-box-shadow: 0 4px 0 #5E35B1, 0 6px 8px rgba(0,0,0,0.12);
+      box-shadow: 0 4px 0 #5E35B1, 0 6px 8px rgba(0,0,0,0.12);
+    }
+    #tijd-md-wrap { display: none; }
+    #tijd-stage.is-md-sort #tijd-md-wrap,
+    #tijd-stage.is-md-quiz #tijd-md-wrap {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+      width: 96%;
+      max-width: 980px;
+      min-height: 0;
+    }
+    #tijd-stage.is-md-sort #tijd-md-wrap {
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+    }
+    #tijd-stage.is-md-sort #tijd-clock-wrap,
+    #tijd-stage.is-md-sort #tijd-choices { display: none; }
+    #tijd-stage.is-md-quiz #tijd-md-bins,
+    #tijd-stage.is-md-quiz #tijd-md-tray { display: none; }
+    #tijd-stage.is-md-quiz #tijd-klaar-wrap { display: none; }
+    #tijd-stage.is-md-sort,
+    #tijd-stage.is-md-quiz {
+      -webkit-flex-direction: column;
+      flex-direction: column;
+    }
+    #tijd-stage.is-md #tijd-prompt { font-size: 30px; }
+    #tijd-stage.is-md-quiz #tijd-clock-wrap {
+      -webkit-flex: 0 1 auto;
+      flex: 0 1 auto;
+      width: 96%;
+      max-width: 520px;
+    }
+    #tijd-stage.is-md-quiz #tijd-clock,
+    #tijd-stage.is-md-quiz #tijd-clock svg {
+      width: 100%;
+      height: auto;
+      max-width: 520px;
+      max-height: none;
+    }
+    #tijd-stage.is-md-quiz .tijd-choice {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      min-height: 64px;
+      font-size: 28px;
+      text-align: center;
+    }
+    #tijd-md-bins {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-justify-content: center;
+      justify-content: center;
+      width: 100%;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+    .md-bin {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-flex: 1 1 0;
+      flex: 1 1 0;
+      margin: 4px;
+      padding: 6px;
+      border-radius: 16px;
+      border: 2px dashed #B39DDB;
+      background: rgba(255,253,247,0.8);
+      min-width: 0;
+      min-height: 120px;
+    }
+    .md-bin-31 { border-color: #EF9A9A; }
+    .md-bin-30 { border-color: #90CAF9; }
+    .md-bin-28 { border-color: #CE93D8; }
+    .md-bin-lab {
+      font-size: 16px;
+      font-weight: 800;
+      color: #4A148C;
+      text-align: center;
+      margin: 0 0 4px 0;
+    }
+    .md-bin-chips {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      -webkit-align-content: flex-start;
+      align-content: flex-start;
+    }
+    .md-chip {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      margin: 3px;
+      padding: 5px 8px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.1;
+      text-align: center;
+      min-width: 72px;
+      min-height: 32px;
+      -webkit-box-shadow: 0 2px 0 rgba(0,0,0,0.18);
+      box-shadow: 0 2px 0 rgba(0,0,0,0.18);
+      cursor: pointer;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    .md-chip.is-ghost {
+      -webkit-box-shadow: 0 10px 18px rgba(0,0,0,0.28);
+      box-shadow: 0 10px 18px rgba(0,0,0,0.28);
+    }
+    #tijd-md-tray {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      width: 100%;
+      margin: 6px 0;
+      min-height: 44px;
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+    }
+    #tijd-md-hint {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+      width: 100%;
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+      margin: 2px 0 4px 0;
+    }
+    #tijd-md-hint.is-hidden { display: none; }
+    #btn-md-knuckle {
+      display: inline-block;
+      background: #7E57C2;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 800;
+      padding: 8px 16px;
+      border-radius: 18px;
+      -webkit-box-shadow: 0 4px 0 #5E35B1;
+      box-shadow: 0 4px 0 #5E35B1;
+      margin: 0 0 4px 0;
+    }
+    #btn-md-knuckle.pressed, #btn-md-knuckle:active {
+      -webkit-box-shadow: 0 2px 0 #5E35B1;
+      box-shadow: 0 2px 0 #5E35B1;
+    }
+    #tijd-md-fists {
+      display: none;
+      width: 100%;
+      max-width: 520px;
+      height: 120px;
+    }
+    #tijd-md-hint.is-on #tijd-md-fists { display: block; }
+    #tijd-md-fistcap {
+      display: none;
+      font-size: 20px;
+      font-weight: 800;
+      color: #4A148C;
+      text-align: center;
+      min-height: 24px;
+      margin: 0 0 4px 0;
+    }
+    #tijd-md-hint.is-on #tijd-md-fistcap { display: block; }
+    .md-month-vis, .md-year-vis {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+    }
+    .md-cal-leaf {
+      width: 160px;
+      min-height: 120px;
+      border-radius: 16px;
+      border: 3px solid #7E57C2;
+      background: #FFFDF7;
+      overflow: hidden;
+    }
+    .md-cal-top { height: 22px; }
+    .md-cal-name {
+      font-size: 28px;
+      font-weight: 800;
+      color: #1A237E;
+      text-align: center;
+      padding: 28px 8px 16px 8px;
+    }
+    .md-year-lab {
+      font-size: 28px;
+      font-weight: 800;
+      color: #1A237E;
+    }
+    #tijd-stage.is-md-sort #tijd-klaar-wrap { margin: 4px 0 8px 0; }
+    @media screen and (max-height: 800px) {
+      #tijd-stage.is-md #tijd-prompt { font-size: 26px; }
+      .md-bin { min-height: 90px; margin: 3px; padding: 4px; }
+      .md-bin-lab { font-size: 14px; }
+      .md-chip { font-size: 12px; min-width: 64px; min-height: 28px; padding: 3px 6px; }
+      #tijd-md-fists { height: 100px; }
+      .md-cal-leaf { width: 130px; min-height: 90px; }
+      .md-cal-name { font-size: 22px; padding: 16px 6px 10px 6px; }
+      #tijd-stage.is-md-quiz .tijd-choice { min-height: 50px; font-size: 24px; }
+      #tijd-stage.is-md-sort,
+      #tijd-stage.is-md-quiz {
+        -webkit-flex-direction: column;
+        flex-direction: column;
+      }
+    }
+
     #tijd-cal-wrap { display: none; }
     #tijd-stage.is-dagen-order,
     #tijd-stage.is-dagen-quiz {
@@ -982,7 +1221,9 @@
       #tijd-stage.is-lang .tijd-choice { min-height: 58px; font-size: 24px; margin: 0 0 8px 0; }
       #tijd-choices.is-n4 .tijd-choice { min-height: 64px; font-size: 24px; }
       #tijd-stage.is-dagen-order,
-      #tijd-stage.is-dagen-quiz {
+      #tijd-stage.is-dagen-quiz,
+      #tijd-stage.is-md-sort,
+      #tijd-stage.is-md-quiz {
         -webkit-flex-direction: column;
         flex-direction: column;
       }
@@ -5241,6 +5482,10 @@
           <div class="level-icon" id="icon-tijd-dagen"></div>
           <div class="level-label">Dagen en maanden</div>
         </button>
+        <button type="button" class="tap level-btn lvl-tijd-md" data-act="tijd-game" data-game="maanddagen">
+          <div class="level-icon" id="icon-tijd-md"></div>
+          <div class="level-label">Hoeveel dagen heeft…?</div>
+        </button>
       </div>
     </div>
 
@@ -5309,6 +5554,15 @@
         <div id="tijd-cal-wrap">
           <div id="tijd-cal-board"></div>
           <div id="tijd-cal-tray"></div>
+        </div>
+        <div id="tijd-md-wrap">
+          <div id="tijd-md-bins"></div>
+          <div id="tijd-md-tray"></div>
+          <div id="tijd-md-hint">
+            <button type="button" class="tap" id="btn-md-knuckle" data-act="md-knuckle">Knokkels</button>
+            <div id="tijd-md-fists"></div>
+            <div id="tijd-md-fistcap"></div>
+          </div>
         </div>
         <div id="tijd-klaar-wrap" class="is-hidden">
           <button type="button" class="tap" id="btn-tijd-klaar" data-act="tijd-klaar">Klaar!</button>
@@ -6044,6 +6298,7 @@
     if (level === 'digi') return 'digi-' + (state.tijdKind || 'helehalve');
     if (level === 'lang') return 'lang-' + (state.tijdKind || 'easy');
     if (level === 'dagen') return 'dagen-' + (state.tijdKind || 'week');
+    if (level === 'maanddagen') return 'maanddagen-' + (state.tijdKind || 'quiz');
     return level || 'game';
   }
 
@@ -7455,6 +7710,10 @@
     }
     else if (state.level === 'dagen') {
       startDagen(false);
+      return;
+    }
+    else if (state.level === 'maanddagen') {
+      startMaanddagen(false);
       return;
     }
     else if (state.level === 'weg') {
@@ -11059,7 +11318,7 @@
         if (e.preventDefault) e.preventDefault();
       }
     } else if (state.screen === 'tijdplay') {
-      if (dagenDragStart(e) || zetDragStart(e)) {
+      if (mdDragStart(e) || dagenDragStart(e) || zetDragStart(e)) {
         if (e.preventDefault) e.preventDefault();
       }
     }
@@ -11102,7 +11361,10 @@
         if (e.preventDefault) e.preventDefault();
       }
     } else if (state.screen === 'tijdplay') {
-      if (dagenDrag.on) {
+      if (mdDrag.on) {
+        mdDragMove(e);
+        if (e.preventDefault) e.preventDefault();
+      } else if (dagenDrag.on) {
         dagenDragMove(e);
         if (e.preventDefault) e.preventDefault();
       } else if (zetDrag.on) {
@@ -11149,7 +11411,10 @@
         if (e.preventDefault) e.preventDefault();
       }
     } else if (state.screen === 'tijdplay') {
-      if (dagenDrag.on) {
+      if (mdDrag.on) {
+        mdDragEnd(e);
+        if (e.preventDefault) e.preventDefault();
+      } else if (dagenDrag.on) {
         dagenDragEnd(e);
         if (e.preventDefault) e.preventDefault();
       } else if (zetDrag.on) {
@@ -15202,6 +15467,7 @@
     if (typeof stopGeldDrag === 'function') stopGeldDrag();
     if (typeof stopZetDrag === 'function') stopZetDrag();
     if (typeof stopDagenDrag === 'function') stopDagenDrag();
+    if (typeof stopMdDrag === 'function') stopMdDrag();
     clearMemoryTimer();
     clearGeheugenTimer();
     clearSimonFlash();
@@ -15445,11 +15711,12 @@
     }
     if (act === 'tijd-kind') {
       g = state.tijdGame || 'klok';
-      kind = el.getAttribute('data-kind') || (g === 'digi' ? 'helehalve' : (g === 'lang' ? 'easy' : (g === 'dagen' ? 'week' : 'hele')));
+      kind = el.getAttribute('data-kind') || (g === 'digi' ? 'helehalve' : (g === 'lang' ? 'easy' : (g === 'dagen' ? 'week' : (g === 'maanddagen' ? 'quiz' : 'hele'))));
       if (g === 'zet') startZet(kind, true);
       else if (g === 'digi') startDigi(kind, true);
       else if (g === 'lang') startLang(kind, true);
       else if (g === 'dagen') startDagen(kind, true);
+      else if (g === 'maanddagen') startMaanddagen(kind, true);
       else startKlok(kind, true);
       return;
     }
@@ -15459,6 +15726,7 @@
     }
     if (act === 'tijd-klaar') {
       if (state.level === 'dagen') dagenKlaar();
+      else if (state.level === 'maanddagen') mdKlaar();
       else zetKlaar();
       return;
     }
@@ -15472,6 +15740,14 @@
     }
     if (act === 'dagen-answer') {
       dagenAnswer(el);
+      return;
+    }
+    if (act === 'md-answer') {
+      mdAnswer(el);
+      return;
+    }
+    if (act === 'md-knuckle') {
+      mdPlayKnuckle();
       return;
     }
     if (act === 'geld-game') {
@@ -15777,7 +16053,7 @@
       e.preventDefault();
     } else if (state.screen === 'geldplay' && geldDragStart(e)) {
       e.preventDefault();
-    } else if (state.screen === 'tijdplay' && (dagenDragStart(e) || zetDragStart(e))) {
+    } else if (state.screen === 'tijdplay' && (mdDragStart(e) || dagenDragStart(e) || zetDragStart(e))) {
       e.preventDefault();
     }
   }
@@ -15822,7 +16098,7 @@
       e.preventDefault();
       return;
     }
-    if (state.screen === 'tijdplay' && (dagenDragMove(e) || zetDragMove(e))) {
+    if (state.screen === 'tijdplay' && (mdDragMove(e) || dagenDragMove(e) || zetDragMove(e))) {
       e.preventDefault();
       return;
     }
@@ -15881,7 +16157,7 @@
       lastTouchEnd = now;
       return;
     }
-    if (state.screen === 'tijdplay' && (dagenDragEnd(e) || zetDragEnd(e))) {
+    if (state.screen === 'tijdplay' && (mdDragEnd(e) || dagenDragEnd(e) || zetDragEnd(e))) {
       clearPressed();
       e.preventDefault();
       lastTouchEnd = now;
@@ -15903,7 +16179,7 @@
     if (state.screen === 'klinkers') stopKlinkDrag();
     if (state.screen === 'lijn') stopLijnDrag();
     if (state.screen === 'geldplay') stopGeldDrag();
-    if (state.screen === 'tijdplay') { stopZetDrag(); stopDagenDrag(); }
+    if (state.screen === 'tijdplay') { stopZetDrag(); stopDagenDrag(); stopMdDrag(); }
   }
 
   function onClick(e) {
@@ -16872,6 +17148,7 @@
     else if (game === 'digi') title = 'Analoog en digitaal';
     else if (game === 'lang') title = 'Hoe lang is…?';
     else if (game === 'dagen') title = 'Dagen en maanden';
+    else if (game === 'maanddagen') title = 'Hoeveel dagen heeft…?';
     else title = 'Klok kijken';
     el = $('tijdlevel-prompt');
     if (el) el.innerHTML = title;
@@ -16906,6 +17183,7 @@
     state.tijdGame = 'klok';
     if (typeof stopZetDrag === 'function') stopZetDrag();
     if (typeof stopDagenDrag === 'function') stopDagenDrag();
+    if (typeof stopMdDrag === 'function') stopMdDrag();
     hideReward();
     hideToast();
     showScreen('tijdplay');
@@ -16994,6 +17272,7 @@
     }
     stopZetDrag();
     if (typeof stopDagenDrag === 'function') stopDagenDrag();
+    if (typeof stopMdDrag === 'function') stopMdDrag();
     if (forced && forced.h) {
       item = {
         h: forced.h,
@@ -17384,6 +17663,20 @@
       langHideBtn(vijf, true);
       return;
     }
+    if (game === 'maanddagen') {
+      hele.setAttribute('data-kind', 'quiz');
+      if (lab) lab.innerHTML = 'Vragen';
+      if ($('icon-klok-hele')) $('icon-klok-hele').innerHTML = mdIcon(72, 56);
+      if (halve) {
+        halve.setAttribute('data-kind', 'sorteer');
+        if (lab2) lab2.innerHTML = 'Sorteer';
+      }
+      if ($('icon-klok-halve')) $('icon-klok-halve').innerHTML = mdFistsIcon(72, 56);
+      langHideBtn(halve, false);
+      langHideBtn(kwart, true);
+      langHideBtn(vijf, true);
+      return;
+    }
     langHideBtn(halve, false);
     langHideBtn(kwart, false);
     langHideBtn(vijf, false);
@@ -17423,6 +17716,7 @@
     }
     if (typeof stopZetDrag === 'function') stopZetDrag();
     if (typeof stopDagenDrag === 'function') stopDagenDrag();
+    if (typeof stopMdDrag === 'function') stopMdDrag();
     item = pickDigiItem(kind, forced);
     digiState.kind = kind;
     digiState.h = item.h;
@@ -17686,6 +17980,7 @@
     }
     if (typeof stopZetDrag === 'function') stopZetDrag();
     if (typeof stopDagenDrag === 'function') stopDagenDrag();
+    if (typeof stopMdDrag === 'function') stopMdDrag();
     item = pickLangItem(kind, forcedId);
     langState.kind = kind;
     langState.id = item.id;
@@ -18370,6 +18665,617 @@
   }
 
 
+  var MD_LEN = {
+    jan: 31, feb: 28, mrt: 31, apr: 30, mei: 31, jun: 30,
+    jul: 31, aug: 31, sep: 30, okt: 31, nov: 30, dec: 31
+  };
+  var MD_BIN = {
+    jan: '31', feb: '28', mrt: '31', apr: '30', mei: '31', jun: '30',
+    jul: '31', aug: '31', sep: '30', okt: '31', nov: '30', dec: '31'
+  };
+  var MD_SORTS = [
+    { id: 'sort-all', months: ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'] },
+    { id: 'sort-a', months: ['jan', 'apr', 'mei', 'jun', 'sep', 'nov'] },
+    { id: 'sort-b', months: ['feb', 'mrt', 'jul', 'aug', 'okt', 'dec'] },
+    { id: 'sort-c', months: ['feb', 'apr', 'mei', 'sep', 'okt', 'dec'] },
+    { id: 'sort-d', months: ['jan', 'feb', 'jun', 'jul', 'nov', 'dec'] }
+  ];
+  var MD_KNUCKLE = [
+    { id: 'jan', hand: 'L', i: 0, kn: 1 },
+    { id: 'feb', hand: 'L', i: 1, kn: 0 },
+    { id: 'mrt', hand: 'L', i: 2, kn: 1 },
+    { id: 'apr', hand: 'L', i: 3, kn: 0 },
+    { id: 'mei', hand: 'L', i: 4, kn: 1 },
+    { id: 'jun', hand: 'L', i: 5, kn: 0 },
+    { id: 'jul', hand: 'L', i: 6, kn: 1 },
+    { id: 'aug', hand: 'R', i: 0, kn: 1 },
+    { id: 'sep', hand: 'R', i: 1, kn: 0 },
+    { id: 'okt', hand: 'R', i: 2, kn: 1 },
+    { id: 'nov', hand: 'R', i: 3, kn: 0 },
+    { id: 'dec', hand: 'R', i: 4, kn: 1 }
+  ];
+  var mdState = {
+    kind: 'quiz', mode: 'quiz', id: '', answer: '', options: [],
+    months: [], bins: { '31': [], '30': [], '28': [] }, tray: [],
+    prompt: '', speak: '', monthId: ''
+  };
+  var mdDrag = {
+    on: false, id: '', ghost: null, moved: false,
+    offX: 0, offY: 0, startX: 0, startY: 0, srcEl: null
+  };
+  var mdKnuckleTimer = null;
+  var mdKnuckleStep = -1;
+
+  function mdBinLabel(bin) {
+    if (bin === '28') return '28 of 29';
+    return bin;
+  }
+
+  function mdDaysLabel(id) {
+    if (id === 'feb') return '28 of 29';
+    return String(MD_LEN[id]);
+  }
+
+  function mdQuizOptions(id) {
+    var correct, opts;
+    if (id === 'jaar') {
+      correct = '365';
+      opts = ['365', '360', '12'];
+    } else {
+      correct = mdDaysLabel(id);
+      opts = ['31', '30', '28 of 29'];
+    }
+    return { answer: correct, options: opts };
+  }
+
+  function mdBuildPool(kind) {
+    var pool, i, it, q, list, id;
+    pool = [];
+    list = DAGEN_MONTHS;
+    if (kind === 'sorteer') {
+      for (i = 0; i < MD_SORTS.length; i++) {
+        it = MD_SORTS[i];
+        pool.push({
+          id: it.id,
+          mode: 'sort',
+          kind: 'sorteer',
+          prompt: 'Sleep de maanden naar 28, 30 of 31 dagen',
+          speak: 'md-sorteer',
+          months: it.months.slice()
+        });
+      }
+    }
+    for (i = 0; i < list.length; i++) {
+      id = list[i].id;
+      q = mdQuizOptions(id);
+      pool.push({
+        id: 'md-q-' + id,
+        mode: 'quiz',
+        kind: kind,
+        prompt: 'Hoeveel dagen heeft ' + list[i].name + '?',
+        speak: 'md-q-' + id,
+        answer: q.answer,
+        options: q.options.slice(),
+        monthId: id
+      });
+    }
+    q = mdQuizOptions('jaar');
+    pool.push({
+      id: 'md-q-jaar',
+      mode: 'quiz',
+      kind: kind,
+      prompt: 'Hoeveel dagen heeft een jaar?',
+      speak: 'md-q-jaar',
+      answer: q.answer,
+      options: q.options.slice(),
+      monthId: 'jaar'
+    });
+    return pool;
+  }
+
+  function mdFindItem(kind, id) {
+    var pool, i;
+    pool = mdBuildPool(kind);
+    for (i = 0; i < pool.length; i++) {
+      if (pool[i].id === id) return pool[i];
+    }
+    return null;
+  }
+
+  function pickMdItem(kind, forcedId) {
+    var pool, keys, key, i, item, opts;
+    pool = mdBuildPool(kind);
+    item = null;
+    if (forcedId) {
+      item = mdFindItem(kind, forcedId);
+      if (item) rememberRoundKey(item.id);
+    }
+    if (!item) {
+      keys = [];
+      for (i = 0; i < pool.length; i++) keys.push(pool[i].id);
+      key = pickAvoiding(keys);
+      if (!key) key = keys[Math.floor(Math.random() * keys.length)];
+      rememberRoundKey(key);
+      item = mdFindItem(kind, key);
+    }
+    if (item.mode === 'quiz') {
+      opts = item.options.slice();
+      tijdShuffle(opts);
+      item = {
+        id: item.id, mode: 'quiz', kind: item.kind, prompt: item.prompt,
+        speak: item.speak, answer: item.answer, options: opts, monthId: item.monthId
+      };
+    }
+    return item;
+  }
+
+  function mdIcon(w, h) {
+    w = w || 72;
+    h = h || 56;
+    return '<svg viewBox="0 0 72 56" width="' + w + '" height="' + h + '" aria-hidden="true">' +
+      '<rect x="10" y="6" width="52" height="44" rx="8" fill="#FFF8E1" stroke="#5E35B1" stroke-width="2"/>' +
+      '<rect x="10" y="6" width="52" height="12" rx="8" fill="#7E57C2"/>' +
+      '<rect x="10" y="12" width="52" height="6" fill="#7E57C2"/>' +
+      '<text x="36" y="40" text-anchor="middle" font-size="18" font-weight="700" fill="#5E35B1" font-family="sans-serif">31</text>' +
+      '</svg>';
+  }
+
+  function mdFistsIcon(w, h) {
+    w = w || 72;
+    h = h || 56;
+    return '<svg viewBox="0 0 72 56" width="' + w + '" height="' + h + '" aria-hidden="true">' +
+      '<ellipse cx="22" cy="32" rx="16" ry="14" fill="#F4C7A1" stroke="#C48A6A" stroke-width="1.5"/>' +
+      '<circle cx="10" cy="20" r="4.5" fill="#F4C7A1" stroke="#C48A6A" stroke-width="1.5"/>' +
+      '<circle cx="18" cy="16" r="4.5" fill="#F4C7A1" stroke="#C48A6A" stroke-width="1.5"/>' +
+      '<circle cx="26" cy="16" r="4.5" fill="#F4C7A1" stroke="#C48A6A" stroke-width="1.5"/>' +
+      '<circle cx="33" cy="20" r="4.5" fill="#F4C7A1" stroke="#C48A6A" stroke-width="1.5"/>' +
+      '<ellipse cx="52" cy="32" rx="16" ry="14" fill="#F4C7A1" stroke="#C48A6A" stroke-width="1.5"/>' +
+      '<circle cx="41" cy="20" r="4.5" fill="#F4C7A1" stroke="#C48A6A" stroke-width="1.5"/>' +
+      '<circle cx="48" cy="16" r="4.5" fill="#F4C7A1" stroke="#C48A6A" stroke-width="1.5"/>' +
+      '<circle cx="56" cy="16" r="4.5" fill="#F4C7A1" stroke="#C48A6A" stroke-width="1.5"/>' +
+      '<circle cx="63" cy="22" r="4.2" fill="#E0E0E0" stroke="#BDBDBD" stroke-width="1"/>' +
+      '</svg>';
+  }
+
+  function mdFistsSvg(activeId) {
+    var html, i, x, y, rec, on, fill, stroke, lab, item, sw;
+    html = '<svg viewBox="0 0 400 140" width="100%" height="100%" aria-hidden="true">';
+    html += '<ellipse cx="110" cy="100" rx="86" ry="48" fill="#F4C7A1" stroke="#C48A6A" stroke-width="2"/>';
+    html += '<ellipse cx="290" cy="100" rx="86" ry="48" fill="#F4C7A1" stroke="#C48A6A" stroke-width="2"/>';
+    /* left pinky..index: x 40, 62, 84, 106, 128, 150, 172 */
+    for (i = 0; i < MD_KNUCKLE.length; i++) {
+      rec = MD_KNUCKLE[i];
+      if (rec.hand === 'L') x = 40 + rec.i * 22;
+      else x = 232 + rec.i * 22;
+      if (rec.kn) {
+        y = 48;
+        on = rec.id === activeId;
+        fill = on ? '#FFD54F' : '#F4C7A1';
+        stroke = on ? '#F9A825' : '#C48A6A';
+        sw = on ? 3 : 1.5;
+        html += '<circle cx="' + x + '" cy="' + y + '" r="14" fill="' + fill + '" stroke="' + stroke + '" stroke-width="' + sw + '"/>';
+      } else {
+        y = 74;
+        on = rec.id === activeId;
+        fill = on ? '#FFD54F' : '#E8B892';
+        stroke = on ? '#F9A825' : 'none';
+        sw = on ? 3 : 0;
+        html += '<ellipse cx="' + x + '" cy="' + y + '" rx="11" ry="8" fill="' + fill + '"' + (sw ? (' stroke="' + stroke + '" stroke-width="' + sw + '"') : '') + '/>';
+      }
+    }
+    html += '</svg>';
+    return html;
+  }
+
+  function mdMonthVisual(id) {
+    var item, name, html;
+    if (id === 'jaar') {
+      return '<div class="md-year-vis">' +
+        '<div class="md-year-lab">een jaar</div>' +
+        '</div>';
+    }
+    item = dagenFindIn(DAGEN_MONTHS, id);
+    name = item ? item.name : id;
+    html = '<div class="md-month-vis">';
+    html += '<div class="md-cal-leaf" style="border-color:' + (item ? item.color : '#7E57C2') + '">';
+    html += '<div class="md-cal-top" style="background:' + (item ? item.color : '#7E57C2') + '"></div>';
+    html += '<div class="md-cal-name">' + name + '</div>';
+    html += '</div></div>';
+    return html;
+  }
+
+  function stopMdKnuckle() {
+    if (mdKnuckleTimer) {
+      window.clearInterval(mdKnuckleTimer);
+      mdKnuckleTimer = null;
+    }
+    mdKnuckleStep = -1;
+  }
+
+  function mdRenderFists(activeId) {
+    var el, cap, item, days;
+    el = $('tijd-md-fists');
+    if (el) el.innerHTML = mdFistsSvg(activeId || '');
+    cap = $('tijd-md-fistcap');
+    if (cap) {
+      if (activeId) {
+        item = dagenFindIn(DAGEN_MONTHS, activeId);
+        days = mdDaysLabel(activeId);
+        cap.innerHTML = (item ? item.name : activeId) + ' — ' + days + ' dagen';
+      } else {
+        cap.innerHTML = '';
+      }
+    }
+  }
+
+  function mdPlayKnuckle() {
+    var host;
+    stopMdKnuckle();
+    host = $('tijd-md-hint');
+    if (host) host.className = 'is-on';
+    mdKnuckleStep = 0;
+    mdRenderFists(MD_KNUCKLE[0].id);
+    speak('md-knokkel');
+    mdKnuckleTimer = window.setInterval(function () {
+      mdKnuckleStep += 1;
+      if (mdKnuckleStep >= MD_KNUCKLE.length) {
+        stopMdKnuckle();
+        mdRenderFists('');
+        return;
+      }
+      mdRenderFists(MD_KNUCKLE[mdKnuckleStep].id);
+    }, 700);
+  }
+
+  function mdChipHtml(item, extraClass, extraAttr) {
+    var cls;
+    cls = 'md-chip' + (extraClass ? (' ' + extraClass) : '');
+    return '<div class="' + cls + '" data-md-id="' + item.id + '"' +
+      (extraAttr || '') +
+      ' style="background:' + item.color + ';color:' + item.ink + '">' +
+      item.name + '</div>';
+  }
+
+  function mdResetSort(item) {
+    var i, id, tray;
+    tray = item.months.slice();
+    tijdShuffle(tray);
+    mdState.months = item.months.slice();
+    mdState.bins = { '31': [], '30': [], '28': [] };
+    mdState.tray = tray;
+  }
+
+  function renderMdSort() {
+    var bins, tray, html, i, b, list, item, ids;
+    bins = $('tijd-md-bins');
+    tray = $('tijd-md-tray');
+    if (!bins || !tray) return;
+    list = DAGEN_MONTHS;
+    html = '';
+    ids = ['31', '30', '28'];
+    for (i = 0; i < ids.length; i++) {
+      b = ids[i];
+      html += '<div class="md-bin md-bin-' + b + '" data-md-bin="' + b + '">';
+      html += '<div class="md-bin-lab">' + mdBinLabel(b) + ' dagen</div>';
+      html += '<div class="md-bin-chips">';
+      for (var j = 0; j < mdState.bins[b].length; j++) {
+        item = dagenFindIn(list, mdState.bins[b][j]);
+        if (item) html += mdChipHtml(item, '', ' data-md-bin="' + b + '"');
+      }
+      html += '</div></div>';
+    }
+    bins.innerHTML = html;
+    html = '';
+    for (i = 0; i < mdState.tray.length; i++) {
+      item = dagenFindIn(list, mdState.tray[i]);
+      if (item) html += mdChipHtml(item, '', ' data-md-tray="1"');
+    }
+    tray.innerHTML = html;
+  }
+
+  function renderMdQuiz(item) {
+    var wrap, choices, i, btn;
+    wrap = $('tijd-clock');
+    if (wrap) wrap.innerHTML = mdMonthVisual(item.monthId);
+    choices = $('tijd-choices');
+    if (choices) {
+      choices.className = '';
+      choices.innerHTML = '';
+      for (i = 0; i < item.options.length; i++) {
+        btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tap tijd-choice tijd-choice-lang';
+        btn.setAttribute('data-act', 'md-answer');
+        btn.setAttribute('data-value', item.options[i]);
+        if (item.options[i] === item.answer) btn.setAttribute('data-ok', '1');
+        btn.innerHTML = item.options[i];
+        choices.appendChild(btn);
+      }
+    }
+  }
+
+  function startMaanddagen(kind, fresh, forcedId) {
+    var item, promptEl, klaar, stage, choices, wrap, hint;
+    if (typeof kind === 'boolean') {
+      forcedId = fresh;
+      fresh = kind;
+      kind = '';
+    }
+    if (kind) state.tijdKind = kind;
+    kind = state.tijdKind || 'quiz';
+    state.tijdGame = 'maanddagen';
+    state.level = 'maanddagen';
+    state.locked = false;
+    if (fresh) {
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+      resetVoiceCycle();
+      state.lastWasPersonal = false;
+    }
+    if (typeof stopZetDrag === 'function') stopZetDrag();
+    if (typeof stopDagenDrag === 'function') stopDagenDrag();
+    stopMdDrag();
+    stopMdKnuckle();
+    item = pickMdItem(kind, forcedId);
+    mdState.kind = kind;
+    mdState.mode = item.mode;
+    mdState.id = item.id;
+    mdState.answer = item.answer || '';
+    mdState.options = item.options || [];
+    mdState.prompt = item.prompt;
+    mdState.speak = item.speak;
+    mdState.monthId = item.monthId || '';
+    if (item.mode === 'sort') mdResetSort(item);
+    else {
+      mdState.months = [];
+      mdState.bins = { '31': [], '30': [], '28': [] };
+      mdState.tray = [];
+    }
+    hideReward();
+    hideToast();
+    showScreen('tijdplay');
+    updateStarsUI();
+    promptEl = $('tijd-prompt');
+    if (promptEl) promptEl.innerHTML = item.prompt;
+    klaar = $('tijd-klaar-wrap');
+    choices = $('tijd-choices');
+    wrap = $('tijd-clock');
+    hint = $('tijd-md-hint');
+    if (item.mode === 'sort') {
+      if (klaar) klaar.className = '';
+      if (choices) {
+        choices.className = '';
+        choices.innerHTML = '';
+      }
+      if (wrap) wrap.innerHTML = '';
+      renderMdSort();
+      if (hint) hint.className = '';
+      mdRenderFists('');
+    } else {
+      if (klaar) klaar.className = 'is-hidden';
+      renderMdQuiz(item);
+      if (hint) hint.className = (item.monthId && item.monthId !== 'jaar') ? '' : 'is-hidden';
+      mdRenderFists(item.monthId === 'jaar' ? '' : item.monthId);
+    }
+    stage = $('tijd-stage');
+    if (stage) {
+      stage.className = 'is-md ' + (item.mode === 'sort' ? 'is-md-sort' : 'is-md-quiz');
+      stage.setAttribute('data-mode', item.mode);
+      stage.setAttribute('data-kind', kind);
+      stage.setAttribute('data-id', item.id);
+      if (item.answer) stage.setAttribute('data-answer', item.answer);
+      else stage.removeAttribute('data-answer');
+    }
+    beginQuestionVoice();
+    speak(item.speak);
+  }
+
+  function mdRemoveFromAll(id) {
+    var i, b, arr, keys;
+    i = mdState.tray.indexOf(id);
+    if (i >= 0) mdState.tray.splice(i, 1);
+    keys = ['31', '30', '28'];
+    for (b = 0; b < keys.length; b++) {
+      arr = mdState.bins[keys[b]];
+      i = arr.indexOf(id);
+      if (i >= 0) arr.splice(i, 1);
+    }
+  }
+
+  function mdPlace(id, bin) {
+    if (bin !== '31' && bin !== '30' && bin !== '28') return false;
+    mdRemoveFromAll(id);
+    mdState.bins[bin].push(id);
+    return true;
+  }
+
+  function mdReturnToTray(id) {
+    mdRemoveFromAll(id);
+    if (!contains(mdState.tray, id)) mdState.tray.push(id);
+    return true;
+  }
+
+  function mdAllPlaced() {
+    var i, id, b;
+    if (!mdState.months.length) return false;
+    for (i = 0; i < mdState.months.length; i++) {
+      id = mdState.months[i];
+      if (contains(mdState.tray, id)) return false;
+      if (!contains(mdState.bins['31'], id) && !contains(mdState.bins['30'], id) && !contains(mdState.bins['28'], id)) return false;
+    }
+    return true;
+  }
+
+  function mdBinsCorrect() {
+    var i, id, bin;
+    if (!mdAllPlaced()) return false;
+    for (i = 0; i < mdState.months.length; i++) {
+      id = mdState.months[i];
+      bin = MD_BIN[id];
+      if (!contains(mdState.bins[bin], id)) return false;
+    }
+    return true;
+  }
+
+  function mdKlaar() {
+    var bins;
+    if (state.screen !== 'tijdplay' || state.level !== 'maanddagen' || state.locked) return;
+    if (mdState.mode !== 'sort') return;
+    if (!mdAllPlaced()) {
+      playWrong();
+      showToast('Nog niet af!', false);
+      return;
+    }
+    if (mdBinsCorrect()) {
+      awardCorrect();
+      return;
+    }
+    playWrong();
+    showToast('Oeps, kijk nog eens!', false);
+    bins = $('tijd-md-bins');
+    if (bins) {
+      bins.className = (bins.className || '').replace(/\s*shake/g, '') + ' shake';
+      window.setTimeout(function () {
+        if (bins) bins.className = bins.className.replace(/\s*shake/g, '');
+      }, 500);
+    }
+  }
+
+  function mdAnswer(btn) {
+    var val;
+    if (state.locked) return;
+    if (state.level !== 'maanddagen') return;
+    if (mdState.mode !== 'quiz') return;
+    val = btn.getAttribute('data-value');
+    if (val === mdState.answer) {
+      btn.className = 'tap tijd-choice tijd-choice-lang is-correct';
+      awardCorrect();
+    } else {
+      playWrong();
+      btn.className = 'tap tijd-choice tijd-choice-lang is-wrong shake';
+    }
+  }
+
+  function stopMdDrag() {
+    if (mdDrag.ghost && mdDrag.ghost.parentNode) {
+      mdDrag.ghost.parentNode.removeChild(mdDrag.ghost);
+    }
+    if (mdDrag.srcEl) mdDrag.srcEl.style.opacity = '';
+    mdDrag.on = false;
+    mdDrag.id = '';
+    mdDrag.ghost = null;
+    mdDrag.moved = false;
+    mdDrag.srcEl = null;
+  }
+
+  function mdEventPoint(e) {
+    var src;
+    if (e.touches && e.touches.length) src = e.touches[0];
+    else if (e.changedTouches && e.changedTouches.length) src = e.changedTouches[0];
+    else src = e;
+    return { x: src.clientX, y: src.clientY };
+  }
+
+  function mdFindChip(e) {
+    var el;
+    el = e.target;
+    while (el && el !== document.body) {
+      if (el.getAttribute && el.getAttribute('data-md-id')) return el;
+      el = el.parentNode;
+    }
+    return null;
+  }
+
+  function mdBinAt(p) {
+    var bins, i, r, tray;
+    bins = document.querySelectorAll ? document.querySelectorAll('#tijd-md-bins .md-bin') : [];
+    for (i = 0; i < bins.length; i++) {
+      r = bins[i].getBoundingClientRect();
+      if (p.x >= r.left && p.x <= r.right && p.y >= r.top && p.y <= r.bottom) {
+        return bins[i].getAttribute('data-md-bin');
+      }
+    }
+    tray = $('tijd-md-tray');
+    if (tray) {
+      r = tray.getBoundingClientRect();
+      if (p.x >= r.left - 8 && p.x <= r.right + 8 && p.y >= r.top - 8 && p.y <= r.bottom + 8) return 'tray';
+    }
+    return '';
+  }
+
+  function mdDragStart(e) {
+    var tile, p, r, ghost, id;
+    if (state.screen !== 'tijdplay' || state.level !== 'maanddagen' || state.locked) return false;
+    if (mdState.mode !== 'sort') return false;
+    tile = mdFindChip(e);
+    if (!tile) return false;
+    id = tile.getAttribute('data-md-id') || '';
+    if (!id) return false;
+    p = mdEventPoint(e);
+    r = tile.getBoundingClientRect();
+    stopMdDrag();
+    ghost = tile.cloneNode(true);
+    ghost.className = (ghost.className || '') + ' is-ghost';
+    ghost.style.position = 'fixed';
+    ghost.style.left = r.left + 'px';
+    ghost.style.top = r.top + 'px';
+    ghost.style.width = r.width + 'px';
+    ghost.style.height = r.height + 'px';
+    ghost.style.margin = '0';
+    ghost.style.zIndex = '80';
+    ghost.style.pointerEvents = 'none';
+    document.body.appendChild(ghost);
+    tile.style.opacity = '0.35';
+    mdDrag.on = true;
+    mdDrag.id = id;
+    mdDrag.ghost = ghost;
+    mdDrag.moved = false;
+    mdDrag.offX = p.x - r.left;
+    mdDrag.offY = p.y - r.top;
+    mdDrag.startX = p.x;
+    mdDrag.startY = p.y;
+    mdDrag.srcEl = tile;
+    if (id) speak('nm-' + id);
+    return true;
+  }
+
+  function mdDragMove(e) {
+    var p;
+    if (!mdDrag.on) return false;
+    p = mdEventPoint(e);
+    if (!mdDrag.moved) {
+      if (Math.abs(p.x - mdDrag.startX) < 8 && Math.abs(p.y - mdDrag.startY) < 8) return true;
+      mdDrag.moved = true;
+    }
+    if (mdDrag.ghost) {
+      mdDrag.ghost.style.left = (p.x - mdDrag.offX) + 'px';
+      mdDrag.ghost.style.top = (p.y - mdDrag.offY) + 'px';
+    }
+    return true;
+  }
+
+  function mdDragEnd(e) {
+    var p, bin, id;
+    if (!mdDrag.on) return false;
+    id = mdDrag.id;
+    if (!mdDrag.moved) {
+      stopMdDrag();
+      lastTouchEnd = new Date().getTime();
+      if (id) speak('nm-' + id);
+      return true;
+    }
+    p = mdEventPoint(e);
+    bin = mdBinAt(p);
+    if (bin === 'tray' || bin === '') mdReturnToTray(id);
+    else mdPlace(id, bin);
+    stopMdDrag();
+    lastTouchEnd = new Date().getTime();
+    renderMdSort();
+    if (mdAllPlaced()) mdKlaar();
+    return true;
+  }
+
+
   window.__tijdTest = {
     format: formatNlTime,
     pool: tijdPool,
@@ -18378,6 +19284,16 @@
     startDigi: startDigi,
     startLang: startLang,
     startDagen: startDagen,
+    startMaanddagen: startMaanddagen,
+    mdState: function () { return mdState; },
+    mdPool: mdBuildPool,
+    mdFind: mdFindItem,
+    mdPlace: mdPlace,
+    mdReturn: mdReturnToTray,
+    mdKlaar: mdKlaar,
+    mdRender: renderMdSort,
+    mdPlayKnuckle: mdPlayKnuckle,
+    MD_BIN: MD_BIN,
     dagenState: function () { return dagenState; },
     dagenPool: dagenBuildPool,
     dagenFind: dagenFindItem,
@@ -18473,6 +19389,9 @@
     }
     if ($('icon-tijd-dagen')) {
       $('icon-tijd-dagen').innerHTML = dagenWeekIcon(72, 56);
+    }
+    if ($('icon-tijd-md')) {
+      $('icon-tijd-md').innerHTML = mdIcon(72, 56);
     }
     if ($('icon-klok-hele')) {
       $('icon-klok-hele').innerHTML = tijdClockSvg('clkHele', 3, 0, 72, 56);
