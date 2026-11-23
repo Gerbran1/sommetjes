@@ -403,6 +403,29 @@ async function waitSpiegelNext(page) {
     ok('Hoeveel dagen heeft…? terug → kiezer, home → start');
 
     await fresh(page);
+    await tap(page, '#btn-goto-tijd');
+    await tap(page, '#tijd-grid [data-game="seizoen"]');
+    await expectScreen(page, 'tijdlevel', 'seizoen kiezer');
+    await tap(page, '#btn-tijdlevel-back');
+    await expectScreen(page, 'tijd', 'seizoen kiezer back');
+    await tap(page, '#tijd-grid [data-game="seizoen"]');
+    await tap(page, '#btn-tijdlevel-home');
+    await expectScreen(page, 'start', 'seizoen kiezer home');
+    ok('Seizoenen-kiezer terug → Tijd, home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-tijd');
+    await tap(page, '#tijd-grid [data-game="seizoen"]');
+    await tap(page, '#tijdlevel-grid [data-kind="vragen"]');
+    await expectScreen(page, 'tijdplay', 'seizoen play');
+    await tap(page, '#btn-tijdplay-back');
+    await expectScreen(page, 'tijdlevel', 'seizoen play back');
+    await tap(page, '#tijdlevel-grid [data-kind="vragen"]');
+    await tap(page, '#btn-tijdplay-home');
+    await expectScreen(page, 'start', 'seizoen play home');
+    ok('Seizoenen terug → kiezer, home → start');
+
+    await fresh(page);
     await tap(page, '#btn-goto-games');
     await tap(page, '[data-level="count"]');
     await expectScreen(page, 'play', 'count');

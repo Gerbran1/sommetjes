@@ -566,6 +566,249 @@
       -webkit-box-shadow: 0 4px 0 #5E35B1, 0 6px 8px rgba(0,0,0,0.12);
       box-shadow: 0 4px 0 #5E35B1, 0 6px 8px rgba(0,0,0,0.12);
     }
+    .lvl-tijd-sez { background: #42A5F5; -webkit-box-shadow: 0 10px 0 #1565C0, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #1565C0, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-tijd-sez.pressed, .lvl-tijd-sez:active {
+      -webkit-box-shadow: 0 4px 0 #1565C0, 0 6px 8px rgba(0,0,0,0.12);
+      box-shadow: 0 4px 0 #1565C0, 0 6px 8px rgba(0,0,0,0.12);
+    }
+    #tijd-sez-wrap { display: none; }
+    #tijd-stage.is-sez-circle #tijd-sez-wrap,
+    #tijd-stage.is-sez-kleding #tijd-sez-wrap {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 96%;
+      max-width: 980px;
+      min-height: 0;
+    }
+    #tijd-stage.is-sez-circle #tijd-clock-wrap,
+    #tijd-stage.is-sez-circle #tijd-choices,
+    #tijd-stage.is-sez-kleding #tijd-clock-wrap,
+    #tijd-stage.is-sez-kleding #tijd-choices,
+    #tijd-stage.is-sez-circle #tijd-sez-bins,
+    #tijd-stage.is-sez-kleding #tijd-sez-circle { display: none; }
+    #tijd-stage.is-sez-scene #tijd-sez-wrap,
+    #tijd-stage.is-sez-maand #tijd-sez-wrap,
+    #tijd-stage.is-sez-scene #tijd-klaar-wrap,
+    #tijd-stage.is-sez-maand #tijd-klaar-wrap { display: none; }
+    #tijd-stage.is-sez-scene,
+    #tijd-stage.is-sez-maand,
+    #tijd-stage.is-sez-circle,
+    #tijd-stage.is-sez-kleding {
+      -webkit-flex-direction: column;
+      flex-direction: column;
+    }
+    #tijd-stage.is-sez #tijd-prompt { font-size: 30px; }
+    #tijd-stage.is-sez-scene #tijd-clock-wrap,
+    #tijd-stage.is-sez-maand #tijd-clock-wrap {
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 96%;
+      max-width: 520px;
+    }
+    #tijd-stage.is-sez-scene #tijd-clock,
+    #tijd-stage.is-sez-scene #tijd-clock svg,
+    #tijd-stage.is-sez-maand #tijd-clock {
+      width: 100%;
+      height: auto;
+      max-width: 480px;
+      max-height: 280px;
+    }
+    #tijd-stage.is-sez-scene .tijd-choice,
+    #tijd-stage.is-sez-maand .tijd-choice {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      min-height: 58px;
+      font-size: 24px;
+    }
+    #tijd-sez-circle {
+      position: relative;
+      width: 340px;
+      height: 340px;
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+      margin: 4px auto;
+    }
+    .sez-circle-ring {
+      position: absolute;
+      left: 30%;
+      top: 30%;
+      width: 40%;
+      height: 40%;
+      border-radius: 50%;
+      border: 6px solid rgba(21,101,192,0.25);
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    .sez-cslot {
+      position: absolute;
+      width: 110px;
+      height: 52px;
+      margin-left: -55px;
+      margin-top: -26px;
+      border-radius: 16px;
+      border: 2px dashed #90CAF9;
+      background: rgba(255,253,247,0.85);
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    .sez-cslot.is-filled { border-style: solid; }
+    .sez-cnum {
+      display: block;
+      text-align: center;
+      line-height: 48px;
+      font-size: 22px;
+      font-weight: 800;
+      color: #90A4AE;
+    }
+    .sez-chip {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      border-radius: 14px;
+      font-size: 18px;
+      font-weight: 800;
+      -webkit-box-shadow: 0 3px 0 rgba(0,0,0,0.18);
+      box-shadow: 0 3px 0 rgba(0,0,0,0.18);
+      cursor: pointer;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .sez-chip.is-locked { cursor: default; -webkit-box-shadow: none; box-shadow: none; }
+    .sez-chip.is-ghost { -webkit-box-shadow: 0 10px 18px rgba(0,0,0,0.28); box-shadow: 0 10px 18px rgba(0,0,0,0.28); }
+    #tijd-sez-tray {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      width: 100%;
+      margin: 6px 0;
+      min-height: 52px;
+    }
+    #tijd-sez-tray .sez-chip {
+      width: auto;
+      min-width: 100px;
+      height: 48px;
+      margin: 4px;
+      padding: 0 12px;
+    }
+    #tijd-sez-bins {
+      display: -webkit-flex;
+      display: flex;
+      width: 100%;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+    .sez-bin {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-flex: 1 1 0;
+      flex: 1 1 0;
+      margin: 4px;
+      border-radius: 16px;
+      border: 3px dashed #90CAF9;
+      background: rgba(255,253,247,0.85);
+      min-width: 0;
+      min-height: 120px;
+    }
+    .sez-bin-lab {
+      font-size: 16px;
+      font-weight: 800;
+      text-align: center;
+      padding: 6px 4px;
+      border-radius: 13px 13px 0 0;
+    }
+    .sez-bin-items {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+    }
+    .sez-cloth {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+      margin: 4px;
+      padding: 4px;
+      min-width: 72px;
+      cursor: pointer;
+      -webkit-user-select: none;
+      user-select: none;
+      background: #FFFDF7;
+      border-radius: 12px;
+      -webkit-box-shadow: 0 2px 0 rgba(0,0,0,0.12);
+      box-shadow: 0 2px 0 rgba(0,0,0,0.12);
+    }
+    .sez-cloth span { font-size: 12px; font-weight: 800; color: #1A237E; }
+    .sez-cloth.is-ghost { -webkit-box-shadow: 0 10px 18px rgba(0,0,0,0.28); box-shadow: 0 10px 18px rgba(0,0,0,0.28); }
+    .sez-month-vis { text-align: center; }
+    .sez-month-name { font-size: 32px; font-weight: 800; color: #1A237E; margin: 6px 0 10px 0; }
+    .sez-year-row {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+    }
+    .sez-mini {
+      display: inline-block;
+      margin: 2px;
+      padding: 4px 6px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .sez-mini.is-ref {
+      -webkit-box-shadow: 0 0 0 3px #FFF8E1, 0 0 0 6px #1565C0;
+      box-shadow: 0 0 0 3px #FFF8E1, 0 0 0 6px #1565C0;
+    }
+    #tijd-stage.is-sez-circle #tijd-klaar-wrap,
+    #tijd-stage.is-sez-kleding #tijd-klaar-wrap { margin: 4px 0 8px 0; }
+    @media screen and (max-height: 800px) {
+      #tijd-stage.is-sez #tijd-prompt { font-size: 26px; }
+      #tijd-sez-circle { width: 260px; height: 260px; }
+      .sez-cslot { width: 90px; height: 44px; margin-left: -45px; margin-top: -22px; }
+      .sez-chip { font-size: 16px; }
+      .sez-bin { min-height: 90px; }
+      .sez-bin-lab { font-size: 14px; }
+      #tijd-stage.is-sez-scene .tijd-choice,
+      #tijd-stage.is-sez-maand .tijd-choice { min-height: 48px; font-size: 20px; }
+      #tijd-stage.is-sez-scene,
+      #tijd-stage.is-sez-maand,
+      #tijd-stage.is-sez-circle,
+      #tijd-stage.is-sez-kleding {
+        -webkit-flex-direction: column;
+        flex-direction: column;
+      }
+    }
+
     #tijd-md-wrap { display: none; }
     #tijd-stage.is-md-sort #tijd-md-wrap,
     #tijd-stage.is-md-quiz #tijd-md-wrap {
@@ -1223,7 +1466,11 @@
       #tijd-stage.is-dagen-order,
       #tijd-stage.is-dagen-quiz,
       #tijd-stage.is-md-sort,
-      #tijd-stage.is-md-quiz {
+      #tijd-stage.is-md-quiz,
+      #tijd-stage.is-sez-scene,
+      #tijd-stage.is-sez-maand,
+      #tijd-stage.is-sez-circle,
+      #tijd-stage.is-sez-kleding {
         -webkit-flex-direction: column;
         flex-direction: column;
       }
@@ -5486,6 +5733,10 @@
           <div class="level-icon" id="icon-tijd-md"></div>
           <div class="level-label">Hoeveel dagen heeft…?</div>
         </button>
+        <button type="button" class="tap level-btn lvl-tijd-sez" data-act="tijd-game" data-game="seizoen">
+          <div class="level-icon" id="icon-tijd-sez"></div>
+          <div class="level-label">Seizoenen</div>
+        </button>
       </div>
     </div>
 
@@ -5563,6 +5814,11 @@
             <div id="tijd-md-fists"></div>
             <div id="tijd-md-fistcap"></div>
           </div>
+        </div>
+        <div id="tijd-sez-wrap">
+          <div id="tijd-sez-circle"></div>
+          <div id="tijd-sez-bins"></div>
+          <div id="tijd-sez-tray"></div>
         </div>
         <div id="tijd-klaar-wrap" class="is-hidden">
           <button type="button" class="tap" id="btn-tijd-klaar" data-act="tijd-klaar">Klaar!</button>
@@ -6299,6 +6555,7 @@
     if (level === 'lang') return 'lang-' + (state.tijdKind || 'easy');
     if (level === 'dagen') return 'dagen-' + (state.tijdKind || 'week');
     if (level === 'maanddagen') return 'maanddagen-' + (state.tijdKind || 'quiz');
+    if (level === 'seizoen') return 'seizoen-' + (state.tijdKind || 'vragen');
     return level || 'game';
   }
 
@@ -7714,6 +7971,10 @@
     }
     else if (state.level === 'maanddagen') {
       startMaanddagen(false);
+      return;
+    }
+    else if (state.level === 'seizoen') {
+      startSeizoen(false);
       return;
     }
     else if (state.level === 'weg') {
@@ -11318,7 +11579,7 @@
         if (e.preventDefault) e.preventDefault();
       }
     } else if (state.screen === 'tijdplay') {
-      if (mdDragStart(e) || dagenDragStart(e) || zetDragStart(e)) {
+      if (sezDragStart(e) || mdDragStart(e) || dagenDragStart(e) || zetDragStart(e)) {
         if (e.preventDefault) e.preventDefault();
       }
     }
@@ -11361,7 +11622,10 @@
         if (e.preventDefault) e.preventDefault();
       }
     } else if (state.screen === 'tijdplay') {
-      if (mdDrag.on) {
+      if (sezDrag.on) {
+        sezDragMove(e);
+        if (e.preventDefault) e.preventDefault();
+      } else if (mdDrag.on) {
         mdDragMove(e);
         if (e.preventDefault) e.preventDefault();
       } else if (dagenDrag.on) {
@@ -11411,7 +11675,10 @@
         if (e.preventDefault) e.preventDefault();
       }
     } else if (state.screen === 'tijdplay') {
-      if (mdDrag.on) {
+      if (sezDrag.on) {
+        sezDragEnd(e);
+        if (e.preventDefault) e.preventDefault();
+      } else if (mdDrag.on) {
         mdDragEnd(e);
         if (e.preventDefault) e.preventDefault();
       } else if (dagenDrag.on) {
@@ -15468,6 +15735,7 @@
     if (typeof stopZetDrag === 'function') stopZetDrag();
     if (typeof stopDagenDrag === 'function') stopDagenDrag();
     if (typeof stopMdDrag === 'function') stopMdDrag();
+    if (typeof stopSezDrag === 'function') stopSezDrag();
     clearMemoryTimer();
     clearGeheugenTimer();
     clearSimonFlash();
@@ -15711,12 +15979,13 @@
     }
     if (act === 'tijd-kind') {
       g = state.tijdGame || 'klok';
-      kind = el.getAttribute('data-kind') || (g === 'digi' ? 'helehalve' : (g === 'lang' ? 'easy' : (g === 'dagen' ? 'week' : (g === 'maanddagen' ? 'quiz' : 'hele'))));
+      kind = el.getAttribute('data-kind') || (g === 'digi' ? 'helehalve' : (g === 'lang' ? 'easy' : (g === 'dagen' ? 'week' : (g === 'maanddagen' ? 'quiz' : (g === 'seizoen' ? 'vragen' : 'hele')))));
       if (g === 'zet') startZet(kind, true);
       else if (g === 'digi') startDigi(kind, true);
       else if (g === 'lang') startLang(kind, true);
       else if (g === 'dagen') startDagen(kind, true);
       else if (g === 'maanddagen') startMaanddagen(kind, true);
+      else if (g === 'seizoen') startSeizoen(kind, true);
       else startKlok(kind, true);
       return;
     }
@@ -15727,6 +15996,7 @@
     if (act === 'tijd-klaar') {
       if (state.level === 'dagen') dagenKlaar();
       else if (state.level === 'maanddagen') mdKlaar();
+      else if (state.level === 'seizoen') sezKlaar();
       else zetKlaar();
       return;
     }
@@ -15748,6 +16018,10 @@
     }
     if (act === 'md-knuckle') {
       mdPlayKnuckle();
+      return;
+    }
+    if (act === 'sez-answer') {
+      sezAnswer(el);
       return;
     }
     if (act === 'geld-game') {
@@ -16053,7 +16327,7 @@
       e.preventDefault();
     } else if (state.screen === 'geldplay' && geldDragStart(e)) {
       e.preventDefault();
-    } else if (state.screen === 'tijdplay' && (mdDragStart(e) || dagenDragStart(e) || zetDragStart(e))) {
+    } else if (state.screen === 'tijdplay' && (sezDragStart(e) || mdDragStart(e) || dagenDragStart(e) || zetDragStart(e))) {
       e.preventDefault();
     }
   }
@@ -16098,7 +16372,7 @@
       e.preventDefault();
       return;
     }
-    if (state.screen === 'tijdplay' && (mdDragMove(e) || dagenDragMove(e) || zetDragMove(e))) {
+    if (state.screen === 'tijdplay' && (sezDragMove(e) || mdDragMove(e) || dagenDragMove(e) || zetDragMove(e))) {
       e.preventDefault();
       return;
     }
@@ -16157,7 +16431,7 @@
       lastTouchEnd = now;
       return;
     }
-    if (state.screen === 'tijdplay' && (mdDragEnd(e) || dagenDragEnd(e) || zetDragEnd(e))) {
+    if (state.screen === 'tijdplay' && (sezDragEnd(e) || mdDragEnd(e) || dagenDragEnd(e) || zetDragEnd(e))) {
       clearPressed();
       e.preventDefault();
       lastTouchEnd = now;
@@ -16179,7 +16453,7 @@
     if (state.screen === 'klinkers') stopKlinkDrag();
     if (state.screen === 'lijn') stopLijnDrag();
     if (state.screen === 'geldplay') stopGeldDrag();
-    if (state.screen === 'tijdplay') { stopZetDrag(); stopDagenDrag(); stopMdDrag(); }
+    if (state.screen === 'tijdplay') { stopZetDrag(); stopDagenDrag(); stopMdDrag(); stopSezDrag(); }
   }
 
   function onClick(e) {
@@ -17149,6 +17423,7 @@
     else if (game === 'lang') title = 'Hoe lang is…?';
     else if (game === 'dagen') title = 'Dagen en maanden';
     else if (game === 'maanddagen') title = 'Hoeveel dagen heeft…?';
+    else if (game === 'seizoen') title = 'Seizoenen';
     else title = 'Klok kijken';
     el = $('tijdlevel-prompt');
     if (el) el.innerHTML = title;
@@ -17184,6 +17459,7 @@
     if (typeof stopZetDrag === 'function') stopZetDrag();
     if (typeof stopDagenDrag === 'function') stopDagenDrag();
     if (typeof stopMdDrag === 'function') stopMdDrag();
+    if (typeof stopSezDrag === 'function') stopSezDrag();
     hideReward();
     hideToast();
     showScreen('tijdplay');
@@ -17273,6 +17549,7 @@
     stopZetDrag();
     if (typeof stopDagenDrag === 'function') stopDagenDrag();
     if (typeof stopMdDrag === 'function') stopMdDrag();
+    if (typeof stopSezDrag === 'function') stopSezDrag();
     if (forced && forced.h) {
       item = {
         h: forced.h,
@@ -17677,6 +17954,20 @@
       langHideBtn(vijf, true);
       return;
     }
+    if (game === 'seizoen') {
+      hele.setAttribute('data-kind', 'vragen');
+      if (lab) lab.innerHTML = 'Vragen';
+      if ($('icon-klok-hele')) $('icon-klok-hele').innerHTML = sezIcon(72, 56);
+      if (halve) {
+        halve.setAttribute('data-kind', 'sorteer');
+        if (lab2) lab2.innerHTML = 'Sorteer';
+      }
+      if ($('icon-klok-halve')) $('icon-klok-halve').innerHTML = sezIcon(72, 56);
+      langHideBtn(halve, false);
+      langHideBtn(kwart, true);
+      langHideBtn(vijf, true);
+      return;
+    }
     langHideBtn(halve, false);
     langHideBtn(kwart, false);
     langHideBtn(vijf, false);
@@ -17717,6 +18008,7 @@
     if (typeof stopZetDrag === 'function') stopZetDrag();
     if (typeof stopDagenDrag === 'function') stopDagenDrag();
     if (typeof stopMdDrag === 'function') stopMdDrag();
+    if (typeof stopSezDrag === 'function') stopSezDrag();
     item = pickDigiItem(kind, forced);
     digiState.kind = kind;
     digiState.h = item.h;
@@ -17981,6 +18273,7 @@
     if (typeof stopZetDrag === 'function') stopZetDrag();
     if (typeof stopDagenDrag === 'function') stopDagenDrag();
     if (typeof stopMdDrag === 'function') stopMdDrag();
+    if (typeof stopSezDrag === 'function') stopSezDrag();
     item = pickLangItem(kind, forcedId);
     langState.kind = kind;
     langState.id = item.id;
@@ -19276,6 +19569,799 @@
   }
 
 
+  var SEZ_LIST = [
+    { id: 'lente', name: 'lente', color: '#81C784', ink: '#1B5E20', months: ['mrt', 'apr', 'mei'] },
+    { id: 'zomer', name: 'zomer', color: '#FFCA28', ink: '#3E2723', months: ['jun', 'jul', 'aug'] },
+    { id: 'herfst', name: 'herfst', color: '#FF7043', ink: '#fff', months: ['sep', 'okt', 'nov'] },
+    { id: 'winter', name: 'winter', color: '#42A5F5', ink: '#0D47A1', months: ['dec', 'jan', 'feb'] }
+  ];
+  var SEZ_MONTH = {
+    jan: 'winter', feb: 'winter', mrt: 'lente', apr: 'lente', mei: 'lente',
+    jun: 'zomer', jul: 'zomer', aug: 'zomer', sep: 'herfst', okt: 'herfst',
+    nov: 'herfst', dec: 'winter'
+  };
+  var SEZ_SCENES = [
+    { id: 'sc-lente-bloemen', seizoen: 'lente', vis: 'bloemen' },
+    { id: 'sc-lente-kuiken', seizoen: 'lente', vis: 'kuiken' },
+    { id: 'sc-zomer-zon', seizoen: 'zomer', vis: 'zon' },
+    { id: 'sc-zomer-ijs', seizoen: 'zomer', vis: 'ijs' },
+    { id: 'sc-herfst-blad', seizoen: 'herfst', vis: 'blad' },
+    { id: 'sc-herfst-pad', seizoen: 'herfst', vis: 'pad' },
+    { id: 'sc-winter-sneeuw', seizoen: 'winter', vis: 'sneeuw' },
+    { id: 'sc-winter-pop', seizoen: 'winter', vis: 'pop' }
+  ];
+  var SEZ_CLOTHES = [
+    { id: 'jas', name: 'winterjas', seizoen: 'winter', vis: 'jas' },
+    { id: 'muts', name: 'muts', seizoen: 'winter', vis: 'muts' },
+    { id: 'wanten', name: 'wanten', seizoen: 'winter', vis: 'wanten' },
+    { id: 'shirt', name: 'T-shirt', seizoen: 'zomer', vis: 'shirt' },
+    { id: 'hoed', name: 'zonnehoed', seizoen: 'zomer', vis: 'hoed' },
+    { id: 'kort', name: 'korte broek', seizoen: 'zomer', vis: 'kort' },
+    { id: 'regenjas', name: 'regenjas', seizoen: 'lente', vis: 'regenjas' },
+    { id: 'laarzen', name: 'laarzen', seizoen: 'lente', vis: 'laarzen' },
+    { id: 'trui', name: 'trui', seizoen: 'herfst', vis: 'trui' },
+    { id: 'sjaal', name: 'sjaal', seizoen: 'herfst', vis: 'sjaal' }
+  ];
+  var SEZ_SETS = [
+    { id: 'kled-a', items: ['jas', 'hoed', 'regenjas', 'trui'] },
+    { id: 'kled-b', items: ['muts', 'kort', 'laarzen', 'sjaal'] },
+    { id: 'kled-c', items: ['wanten', 'shirt', 'regenjas', 'trui', 'jas', 'hoed'] }
+  ];
+  var sezState = {
+    kind: 'vragen', mode: 'quiz', id: '', answer: '', options: [],
+    prompt: '', speak: '', vis: '', items: [], slots: [], locked: [], tray: [],
+    bins: { lente: [], zomer: [], herfst: [], winter: [] }, placed: {}
+  };
+  var sezDrag = {
+    on: false, id: '', typ: '', ghost: null, moved: false,
+    offX: 0, offY: 0, startX: 0, startY: 0, srcEl: null
+  };
+
+  function sezFind(list, id) {
+    var i;
+    for (i = 0; i < list.length; i++) {
+      if (list[i].id === id) return list[i];
+    }
+    return null;
+  }
+
+  function sezById(id) { return sezFind(SEZ_LIST, id); }
+  function sezCloth(id) { return sezFind(SEZ_CLOTHES, id); }
+
+  function sezBuildPool(kind) {
+    var pool, i, it, sez, mon, opts, qid;
+    pool = [];
+    if (kind === 'sorteer') {
+      for (i = 0; i < SEZ_SETS.length; i++) {
+        it = SEZ_SETS[i];
+        pool.push({
+          id: it.id, mode: 'kleding', kind: 'sorteer',
+          prompt: 'Sleep de kleding naar het goede seizoen',
+          speak: 'sez-kleding', items: it.items.slice()
+        });
+      }
+      pool.push({
+        id: 'circle-lente', mode: 'circle', kind: 'sorteer',
+        prompt: 'Zet de seizoenen in de goede volgorde',
+        speak: 'sez-zet', pre: ['lente']
+      });
+      pool.push({
+        id: 'circle-all', mode: 'circle', kind: 'sorteer',
+        prompt: 'Zet de seizoenen in de goede volgorde',
+        speak: 'sez-zet', pre: []
+      });
+    }
+    for (i = 0; i < SEZ_SCENES.length; i++) {
+      it = SEZ_SCENES[i];
+      sez = sezById(it.seizoen);
+      opts = ['lente', 'zomer', 'herfst', 'winter'];
+      pool.push({
+        id: it.id, mode: 'scene', kind: kind,
+        prompt: 'Welk seizoen is dit?',
+        speak: 'sez-welk',
+        answer: sez.name, answerId: sez.id,
+        options: opts.slice(), vis: it.vis, seizoen: it.seizoen
+      });
+    }
+    for (i = 0; i < DAGEN_MONTHS.length; i++) {
+      mon = DAGEN_MONTHS[i];
+      sez = sezById(SEZ_MONTH[mon.id]);
+      pool.push({
+        id: 'sez-m-' + mon.id, mode: 'maand', kind: kind,
+        prompt: 'In welk seizoen valt ' + mon.name + '?',
+        speak: 'sez-m-' + mon.id,
+        answer: sez.name, answerId: sez.id,
+        options: ['lente', 'zomer', 'herfst', 'winter'],
+        monthId: mon.id
+      });
+    }
+    return pool;
+  }
+
+  function sezFindItem(kind, id) {
+    var pool, i;
+    pool = sezBuildPool(kind);
+    for (i = 0; i < pool.length; i++) {
+      if (pool[i].id === id) return pool[i];
+    }
+    return null;
+  }
+
+  function pickSezItem(kind, forcedId) {
+    var pool, keys, key, i, item, opts;
+    pool = sezBuildPool(kind);
+    item = null;
+    if (forcedId) {
+      item = sezFindItem(kind, forcedId);
+      if (item) rememberRoundKey(item.id);
+    }
+    if (!item) {
+      keys = [];
+      for (i = 0; i < pool.length; i++) keys.push(pool[i].id);
+      key = pickAvoiding(keys);
+      if (!key) key = keys[Math.floor(Math.random() * keys.length)];
+      rememberRoundKey(key);
+      item = sezFindItem(kind, key);
+    }
+    if (item.mode === 'scene' || item.mode === 'maand') {
+      opts = item.options.slice();
+      tijdShuffle(opts);
+      item = {
+        id: item.id, mode: item.mode, kind: item.kind, prompt: item.prompt,
+        speak: item.speak, answer: item.answer, answerId: item.answerId,
+        options: opts, vis: item.vis, seizoen: item.seizoen, monthId: item.monthId
+      };
+    }
+    return item;
+  }
+
+  function sezIcon(w, h) {
+    w = w || 72;
+    h = h || 56;
+    return '<svg viewBox="0 0 72 56" width="' + w + '" height="' + h + '" aria-hidden="true">' +
+      '<circle cx="36" cy="28" r="22" fill="#FFF8E1" stroke="#1565C0" stroke-width="2"/>' +
+      '<path d="M36 6 A22 22 0 0 1 58 28 L36 28 Z" fill="#81C784"/>' +
+      '<path d="M58 28 A22 22 0 0 1 36 50 L36 28 Z" fill="#FFCA28"/>' +
+      '<path d="M36 50 A22 22 0 0 1 14 28 L36 28 Z" fill="#FF7043"/>' +
+      '<path d="M14 28 A22 22 0 0 1 36 6 L36 28 Z" fill="#42A5F5"/>' +
+      '</svg>';
+  }
+
+  function sezSceneSvg(vis) {
+    var html;
+    html = '<svg viewBox="0 0 240 160" width="100%" height="100%" aria-hidden="true">';
+    if (vis === 'bloemen' || vis === 'kuiken') {
+      html += '<rect width="240" height="160" fill="#C8E6C9"/>';
+      html += '<rect x="0" y="110" width="240" height="50" fill="#81C784"/>';
+      html += '<circle cx="190" cy="36" r="22" fill="#FFF59D"/>';
+      html += '<circle cx="70" cy="108" r="14" fill="#EC407A"/>';
+      html += '<circle cx="70" cy="108" r="6" fill="#FFD54F"/>';
+      html += '<rect x="68" y="120" width="4" height="22" fill="#2E7D32"/>';
+      html += '<circle cx="110" cy="100" r="12" fill="#AB47BC"/>';
+      html += '<circle cx="110" cy="100" r="5" fill="#FFD54F"/>';
+      html += '<rect x="108" y="111" width="4" height="20" fill="#2E7D32"/>';
+      if (vis === 'kuiken') {
+        html += '<ellipse cx="50" cy="128" rx="16" ry="12" fill="#FFD54F"/>';
+        html += '<circle cx="60" cy="124" r="8" fill="#FFD54F"/>';
+        html += '<polygon points="68,124 78,128 68,132" fill="#FF8F00"/>';
+        html += '<circle cx="63" cy="122" r="1.6" fill="#5D4037"/>';
+      } else {
+        html += '<circle cx="160" cy="104" r="13" fill="#42A5F5"/>';
+        html += '<circle cx="160" cy="104" r="5" fill="#FFD54F"/>';
+        html += '<rect x="158" y="116" width="4" height="18" fill="#2E7D32"/>';
+      }
+    } else if (vis === 'zon' || vis === 'ijs') {
+      html += '<rect width="240" height="160" fill="#81D4FA"/>';
+      html += '<rect x="0" y="118" width="240" height="42" fill="#FFE082"/>';
+      html += '<circle cx="52" cy="36" r="24" fill="#FFD54F"/>';
+      if (vis === 'ijs') {
+        html += '<rect x="150" y="78" width="22" height="42" rx="6" fill="#FFF8E1" stroke="#90CAF9" stroke-width="2"/>';
+        html += '<path d="M150 86 Q161 70 172 86" fill="#EF5350"/>';
+        html += '<ellipse cx="80" cy="138" rx="28" ry="10" fill="#FF8A65"/>';
+        html += '<circle cx="188" cy="50" r="10" fill="#FFF8E1" opacity="0.8"/>';
+      } else {
+        html += '<ellipse cx="120" cy="70" rx="18" ry="8" fill="#FFF8E1"/>';
+        html += '<rect x="160" y="70" width="12" height="50" fill="#6D4C41"/>';
+        html += '<circle cx="166" cy="66" r="26" fill="#43A047"/>';
+      }
+    } else if (vis === 'blad' || vis === 'pad') {
+      html += '<rect width="240" height="160" fill="#FFE0B2"/>';
+      html += '<rect x="0" y="118" width="240" height="42" fill="#A1887F"/>';
+      html += '<circle cx="200" cy="30" r="16" fill="#FFCC80"/>';
+      html += '<rect x="40" y="70" width="12" height="50" fill="#6D4C41"/>';
+      html += '<circle cx="36" cy="66" r="18" fill="#EF6C00"/>';
+      html += '<circle cx="56" cy="70" r="16" fill="#D84315"/>';
+      html += '<ellipse cx="90" cy="124" rx="10" ry="6" fill="#FF7043" transform="rotate(-30 90 124)"/>';
+      html += '<ellipse cx="130" cy="136" rx="10" ry="6" fill="#F9A825"/>';
+      if (vis === 'pad') {
+        html += '<ellipse cx="170" cy="130" rx="16" ry="8" fill="#EFEBE9"/>';
+        html += '<rect x="166" y="112" width="8" height="18" fill="#ECEFF1"/>';
+        html += '<ellipse cx="170" cy="108" rx="12" ry="8" fill="#E53935"/>';
+      }
+    } else {
+      html += '<rect width="240" height="160" fill="#BBDEFB"/>';
+      html += '<rect x="0" y="118" width="240" height="42" fill="#E3F2FD"/>';
+      html += '<circle cx="40" cy="28" r="14" fill="#FFF8E1"/>';
+      html += '<circle cx="70" cy="24" r="10" fill="#FFF8E1"/>';
+      html += '<circle cx="55" cy="18" r="9" fill="#FFFDE7"/>';
+      html += '<rect x="170" y="78" width="10" height="42" fill="#6D4C41"/>';
+      html += '<path d="M160 78 L175 48 L190 78 Z" fill="#90A4AE"/>';
+      html += '<circle cx="90" cy="40" r="5" fill="#fff"/>';
+      html += '<circle cx="130" cy="50" r="4" fill="#fff"/>';
+      html += '<circle cx="200" cy="44" r="5" fill="#fff"/>';
+      if (vis === 'pop') {
+        html += '<circle cx="80" cy="128" r="16" fill="#ECEFF1"/>';
+        html += '<circle cx="80" cy="106" r="12" fill="#ECEFF1"/>';
+        html += '<circle cx="80" cy="90" r="8" fill="#ECEFF1"/>';
+        html += '<circle cx="77" cy="88" r="1.4" fill="#5D4037"/>';
+        html += '<circle cx="83" cy="88" r="1.4" fill="#5D4037"/>';
+        html += '<polygon points="80,90 88,92 80,94" fill="#FF8F00"/>';
+      }
+    }
+    html += '</svg>';
+    return html;
+  }
+
+  function sezClothSvg(vis) {
+    var html;
+    html = '<svg viewBox="0 0 64 64" width="48" height="48" aria-hidden="true">';
+    if (vis === 'jas') {
+      html += '<path d="M16 16 L24 14 L32 22 L40 14 L48 16 L46 52 L18 52 Z" fill="#1565C0" stroke="#0D47A1" stroke-width="2"/>';
+      html += '<rect x="28" y="24" width="8" height="28" fill="#0D47A1"/>';
+    } else if (vis === 'muts') {
+      html += '<ellipse cx="32" cy="40" rx="18" ry="12" fill="#E53935"/>';
+      html += '<path d="M16 38 Q32 8 48 38" fill="#C62828"/>';
+      html += '<circle cx="32" cy="12" r="5" fill="#FFF8E1"/>';
+    } else if (vis === 'wanten') {
+      html += '<ellipse cx="24" cy="36" rx="10" ry="16" fill="#1565C0"/>';
+      html += '<circle cx="34" cy="28" r="6" fill="#1565C0"/>';
+      html += '<rect x="14" y="46" width="20" height="8" rx="3" fill="#0D47A1"/>';
+    } else if (vis === 'shirt') {
+      html += '<path d="M12 18 L24 14 L32 18 L40 14 L52 18 L46 26 L46 52 L18 52 L18 26 Z" fill="#29B6F6" stroke="#0277BD" stroke-width="2"/>';
+    } else if (vis === 'hoed') {
+      html += '<ellipse cx="32" cy="42" rx="24" ry="8" fill="#F9A825"/>';
+      html += '<path d="M16 42 Q32 10 48 42" fill="#FFD54F"/>';
+    } else if (vis === 'kort') {
+      html += '<path d="M18 16 H46 V30 L58 52 H40 L32 32 L24 52 H6 Z" fill="#1565C0"/>';
+    } else if (vis === 'regenjas') {
+      html += '<path d="M16 16 L24 14 L32 22 L40 14 L48 16 L46 52 L18 52 Z" fill="#43A047" stroke="#2E7D32" stroke-width="2"/>';
+      html += '<circle cx="18" cy="8" r="7" fill="none" stroke="#42A5F5" stroke-width="2"/>';
+    } else if (vis === 'laarzen') {
+      html += '<path d="M22 8 H34 V36 H42 L44 56 H16 V36 H22 Z" fill="#FDD835" stroke="#F9A825" stroke-width="2"/>';
+    } else if (vis === 'trui') {
+      html += '<path d="M12 18 L24 14 L32 18 L40 14 L52 18 L46 26 L46 54 L18 54 L18 26 Z" fill="#EF6C00" stroke="#E65100" stroke-width="2"/>';
+      html += '<rect x="18" y="48" width="28" height="8" fill="#E65100"/>';
+    } else if (vis === 'sjaal') {
+      html += '<path d="M14 20 Q32 8 50 20 Q32 32 14 20 Z" fill="#8D6E63"/>';
+      html += '<rect x="28" y="24" width="8" height="30" fill="#A1887F"/>';
+      html += '<path d="M28 52 h8 l4 8 h-6 z" fill="#8D6E63"/>';
+    } else {
+      html += '<rect x="16" y="16" width="32" height="32" rx="8" fill="#90A4AE"/>';
+    }
+    html += '</svg>';
+    return html;
+  }
+
+  function sezChipHtml(item, extraClass, extraAttr) {
+    var cls;
+    cls = 'sez-chip' + (extraClass ? (' ' + extraClass) : '');
+    return '<div class="' + cls + '" data-sez-id="' + item.id + '"' +
+      (extraAttr || '') +
+      ' style="background:' + item.color + ';color:' + item.ink + '">' +
+      item.name + '</div>';
+  }
+
+  function sezClothHtml(item) {
+    return '<div class="sez-cloth" data-sez-id="' + item.id + '" data-sez-cloth="1">' +
+      sezClothSvg(item.vis) +
+      '<span>' + item.name + '</span></div>';
+  }
+
+  function sezMonthVisual(monthId) {
+    var mon, sez, html, i, it;
+    mon = dagenFindIn(DAGEN_MONTHS, monthId);
+    html = '<div class="sez-month-vis">';
+    html += '<div class="sez-month-name">' + (mon ? mon.name : '') + '</div>';
+    html += '<div class="sez-year-row">';
+    for (i = 0; i < DAGEN_MONTHS.length; i++) {
+      it = DAGEN_MONTHS[i];
+      sez = sezById(SEZ_MONTH[it.id]);
+      html += '<span class="sez-mini' + (it.id === monthId ? ' is-ref' : '') +
+        '" style="background:' + sez.color + ';color:' + sez.ink + '">' + it.name.slice(0, 3) + '</span>';
+    }
+    html += '</div></div>';
+    return html;
+  }
+
+  function sezResetCircle(item) {
+    var i, sez, pre, slots, locked, tray;
+    pre = item.pre || [];
+    slots = [];
+    locked = [];
+    tray = [];
+    for (i = 0; i < SEZ_LIST.length; i++) {
+      sez = SEZ_LIST[i];
+      if (contains(pre, sez.id)) {
+        slots.push(sez.id);
+        locked.push(true);
+      } else {
+        slots.push(null);
+        locked.push(false);
+        tray.push(sez.id);
+      }
+    }
+    tijdShuffle(tray);
+    sezState.slots = slots;
+    sezState.locked = locked;
+    sezState.tray = tray;
+  }
+
+  function sezResetKleding(item) {
+    var tray;
+    tray = item.items.slice();
+    tijdShuffle(tray);
+    sezState.items = item.items.slice();
+    sezState.bins = { lente: [], zomer: [], herfst: [], winter: [] };
+    sezState.tray = tray;
+  }
+
+  function renderSezCircle() {
+    var board, tray, html, i, id, item, pos, lab;
+    board = $('tijd-sez-circle');
+    tray = $('tijd-sez-tray');
+    if (!board || !tray) return;
+    pos = [
+      { x: 50, y: 12, lab: '1' },
+      { x: 88, y: 50, lab: '2' },
+      { x: 50, y: 88, lab: '3' },
+      { x: 12, y: 50, lab: '4' }
+    ];
+    html = '<div class="sez-circle-ring"></div>';
+    for (i = 0; i < 4; i++) {
+      html += '<div class="sez-cslot' + (sezState.slots[i] ? ' is-filled' : '') +
+        (sezState.locked[i] ? ' is-locked' : '') +
+        '" data-sez-slot="' + i + '" style="left:' + pos[i].x + '%;top:' + pos[i].y + '%">';
+      id = sezState.slots[i];
+      if (id) {
+        item = sezById(id);
+        if (item) html += sezChipHtml(item, sezState.locked[i] ? 'is-locked' : '', ' data-sez-slot="' + i + '"');
+      } else {
+        html += '<span class="sez-cnum">' + pos[i].lab + '</span>';
+      }
+      html += '</div>';
+    }
+    board.innerHTML = html;
+    html = '';
+    for (i = 0; i < sezState.tray.length; i++) {
+      item = sezById(sezState.tray[i]);
+      if (item) html += sezChipHtml(item, '', ' data-sez-tray="1"');
+    }
+    tray.innerHTML = html;
+  }
+
+  function renderSezKleding() {
+    var bins, tray, html, i, s, item, j;
+    bins = $('tijd-sez-bins');
+    tray = $('tijd-sez-tray');
+    if (!bins || !tray) return;
+    html = '';
+    for (i = 0; i < SEZ_LIST.length; i++) {
+      s = SEZ_LIST[i];
+      html += '<div class="sez-bin" data-sez-bin="' + s.id + '" style="border-color:' + s.color + '">';
+      html += '<div class="sez-bin-lab" style="background:' + s.color + ';color:' + s.ink + '">' + s.name + '</div>';
+      html += '<div class="sez-bin-items">';
+      for (j = 0; j < sezState.bins[s.id].length; j++) {
+        item = sezCloth(sezState.bins[s.id][j]);
+        if (item) html += sezClothHtml(item);
+      }
+      html += '</div></div>';
+    }
+    bins.innerHTML = html;
+    html = '';
+    for (i = 0; i < sezState.tray.length; i++) {
+      item = sezCloth(sezState.tray[i]);
+      if (item) html += sezClothHtml(item);
+    }
+    tray.innerHTML = html;
+  }
+
+  function renderSezQuiz(item) {
+    var wrap, choices, i, btn, inner;
+    wrap = $('tijd-clock');
+    if (wrap) {
+      if (item.mode === 'scene') inner = sezSceneSvg(item.vis);
+      else inner = sezMonthVisual(item.monthId);
+      wrap.innerHTML = inner;
+    }
+    choices = $('tijd-choices');
+    if (choices) {
+      choices.className = 'is-n4';
+      choices.innerHTML = '';
+      for (i = 0; i < item.options.length; i++) {
+        btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tap tijd-choice tijd-choice-lang';
+        btn.setAttribute('data-act', 'sez-answer');
+        btn.setAttribute('data-value', item.options[i]);
+        if (item.options[i] === item.answer) btn.setAttribute('data-ok', '1');
+        btn.innerHTML = item.options[i];
+        choices.appendChild(btn);
+      }
+    }
+  }
+
+  function startSeizoen(kind, fresh, forcedId) {
+    var item, promptEl, klaar, stage, choices, wrap, modeClass;
+    if (typeof kind === 'boolean') {
+      forcedId = fresh;
+      fresh = kind;
+      kind = '';
+    }
+    if (kind) state.tijdKind = kind;
+    kind = state.tijdKind || 'vragen';
+    state.tijdGame = 'seizoen';
+    state.level = 'seizoen';
+    state.locked = false;
+    if (fresh) {
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+      resetVoiceCycle();
+      state.lastWasPersonal = false;
+    }
+    if (typeof stopZetDrag === 'function') stopZetDrag();
+    if (typeof stopDagenDrag === 'function') stopDagenDrag();
+    if (typeof stopMdDrag === 'function') stopMdDrag();
+    stopSezDrag();
+    item = pickSezItem(kind, forcedId);
+    sezState.kind = kind;
+    sezState.mode = item.mode;
+    sezState.id = item.id;
+    sezState.answer = item.answer || '';
+    sezState.options = item.options || [];
+    sezState.prompt = item.prompt;
+    sezState.speak = item.speak;
+    sezState.vis = item.vis || '';
+    if (item.mode === 'circle') sezResetCircle(item);
+    else if (item.mode === 'kleding') sezResetKleding(item);
+    else {
+      sezState.slots = [];
+      sezState.locked = [];
+      sezState.tray = [];
+      sezState.items = [];
+      sezState.bins = { lente: [], zomer: [], herfst: [], winter: [] };
+    }
+    hideReward();
+    hideToast();
+    showScreen('tijdplay');
+    updateStarsUI();
+    promptEl = $('tijd-prompt');
+    if (promptEl) promptEl.innerHTML = item.prompt;
+    klaar = $('tijd-klaar-wrap');
+    choices = $('tijd-choices');
+    wrap = $('tijd-clock');
+    if (item.mode === 'circle' || item.mode === 'kleding') {
+      if (klaar) klaar.className = '';
+      if (choices) {
+        choices.className = '';
+        choices.innerHTML = '';
+      }
+      if (wrap) wrap.innerHTML = '';
+      if (item.mode === 'circle') renderSezCircle();
+      else renderSezKleding();
+    } else {
+      if (klaar) klaar.className = 'is-hidden';
+      renderSezQuiz(item);
+    }
+    stage = $('tijd-stage');
+    modeClass = 'is-sez is-sez-' + item.mode;
+    if (stage) {
+      stage.className = modeClass;
+      stage.setAttribute('data-mode', item.mode);
+      stage.setAttribute('data-kind', kind);
+      stage.setAttribute('data-id', item.id);
+      if (item.answer) stage.setAttribute('data-answer', item.answer);
+      else stage.removeAttribute('data-answer');
+    }
+    beginQuestionVoice();
+    speak(item.speak);
+  }
+
+  function sezCircleFull() {
+    var i;
+    for (i = 0; i < 4; i++) {
+      if (!sezState.slots[i]) return false;
+    }
+    return true;
+  }
+
+  function sezCircleCorrect() {
+    var i;
+    if (!sezCircleFull()) return false;
+    for (i = 0; i < 4; i++) {
+      if (sezState.slots[i] !== SEZ_LIST[i].id) return false;
+    }
+    return true;
+  }
+
+  function sezKledingAll() {
+    var i;
+    if (!sezState.items.length) return false;
+    for (i = 0; i < sezState.items.length; i++) {
+      if (contains(sezState.tray, sezState.items[i])) return false;
+    }
+    return true;
+  }
+
+  function sezKledingCorrect() {
+    var i, id, item, b, found;
+    if (!sezKledingAll()) return false;
+    for (i = 0; i < sezState.items.length; i++) {
+      id = sezState.items[i];
+      item = sezCloth(id);
+      found = false;
+      if (item && contains(sezState.bins[item.seizoen], id)) found = true;
+      if (!found) return false;
+    }
+    return true;
+  }
+
+  function sezKlaar() {
+    var el;
+    if (state.screen !== 'tijdplay' || state.level !== 'seizoen' || state.locked) return;
+    if (sezState.mode === 'circle') {
+      if (!sezCircleFull()) {
+        playWrong();
+        showToast('Nog niet af!', false);
+        return;
+      }
+      if (sezCircleCorrect()) {
+        awardCorrect();
+        return;
+      }
+      playWrong();
+      showToast('Oeps, kijk nog eens!', false);
+      el = $('tijd-sez-circle');
+    } else if (sezState.mode === 'kleding') {
+      if (!sezKledingAll()) {
+        playWrong();
+        showToast('Nog niet af!', false);
+        return;
+      }
+      if (sezKledingCorrect()) {
+        awardCorrect();
+        return;
+      }
+      playWrong();
+      showToast('Oeps, kijk nog eens!', false);
+      el = $('tijd-sez-bins');
+    } else return;
+    if (el) {
+      el.className = (el.className || '').replace(/\s*shake/g, '') + ' shake';
+      window.setTimeout(function () {
+        if (el) el.className = el.className.replace(/\s*shake/g, '');
+      }, 500);
+    }
+  }
+
+  function sezAnswer(btn) {
+    var val;
+    if (state.locked) return;
+    if (state.level !== 'seizoen') return;
+    if (sezState.mode !== 'scene' && sezState.mode !== 'maand') return;
+    val = btn.getAttribute('data-value');
+    if (val === sezState.answer) {
+      btn.className = 'tap tijd-choice tijd-choice-lang is-correct';
+      awardCorrect();
+    } else {
+      playWrong();
+      btn.className = 'tap tijd-choice tijd-choice-lang is-wrong shake';
+    }
+  }
+
+  function sezPlaceCircle(id, slotI) {
+    var cur, i, from;
+    if (slotI < 0 || slotI > 3) return false;
+    if (sezState.locked[slotI]) return false;
+    from = -1;
+    for (i = 0; i < 4; i++) {
+      if (sezState.slots[i] === id) from = i;
+    }
+    cur = sezState.slots[slotI];
+    if (from >= 0) {
+      sezState.slots[from] = cur;
+      sezState.slots[slotI] = id;
+    } else {
+      i = sezState.tray.indexOf(id);
+      if (i >= 0) sezState.tray.splice(i, 1);
+      if (cur) sezState.tray.push(cur);
+      sezState.slots[slotI] = id;
+    }
+    return true;
+  }
+
+  function sezReturnCircle(id) {
+    var i;
+    for (i = 0; i < 4; i++) {
+      if (sezState.slots[i] === id) {
+        if (sezState.locked[i]) return false;
+        sezState.slots[i] = null;
+      }
+    }
+    if (!contains(sezState.tray, id)) sezState.tray.push(id);
+    return true;
+  }
+
+  function sezRemoveCloth(id) {
+    var i, k, arr, keys;
+    i = sezState.tray.indexOf(id);
+    if (i >= 0) sezState.tray.splice(i, 1);
+    keys = ['lente', 'zomer', 'herfst', 'winter'];
+    for (k = 0; k < keys.length; k++) {
+      arr = sezState.bins[keys[k]];
+      i = arr.indexOf(id);
+      if (i >= 0) arr.splice(i, 1);
+    }
+  }
+
+  function sezPlaceCloth(id, bin) {
+    if (!sezById(bin)) return false;
+    sezRemoveCloth(id);
+    sezState.bins[bin].push(id);
+    return true;
+  }
+
+  function sezReturnCloth(id) {
+    sezRemoveCloth(id);
+    if (!contains(sezState.tray, id)) sezState.tray.push(id);
+    return true;
+  }
+
+  function stopSezDrag() {
+    if (sezDrag.ghost && sezDrag.ghost.parentNode) {
+      sezDrag.ghost.parentNode.removeChild(sezDrag.ghost);
+    }
+    if (sezDrag.srcEl) sezDrag.srcEl.style.opacity = '';
+    sezDrag.on = false;
+    sezDrag.id = '';
+    sezDrag.typ = '';
+    sezDrag.ghost = null;
+    sezDrag.moved = false;
+    sezDrag.srcEl = null;
+  }
+
+  function sezEventPoint(e) {
+    var src;
+    if (e.touches && e.touches.length) src = e.touches[0];
+    else if (e.changedTouches && e.changedTouches.length) src = e.changedTouches[0];
+    else src = e;
+    return { x: src.clientX, y: src.clientY };
+  }
+
+  function sezFindDragEl(e) {
+    var el;
+    el = e.target;
+    while (el && el !== document.body) {
+      if (el.getAttribute && el.getAttribute('data-sez-id')) {
+        if ((' ' + el.className + ' ').indexOf(' is-locked ') !== -1) return null;
+        return el;
+      }
+      el = el.parentNode;
+    }
+    return null;
+  }
+
+  function sezTargetAt(p) {
+    var els, i, r, tray;
+    if (sezState.mode === 'circle') {
+      els = document.querySelectorAll ? document.querySelectorAll('#tijd-sez-circle .sez-cslot') : [];
+      for (i = 0; i < els.length; i++) {
+        r = els[i].getBoundingClientRect();
+        if (p.x >= r.left && p.x <= r.right && p.y >= r.top && p.y <= r.bottom) {
+          return { typ: 'slot', i: parseInt(els[i].getAttribute('data-sez-slot'), 10) };
+        }
+      }
+    } else {
+      els = document.querySelectorAll ? document.querySelectorAll('#tijd-sez-bins .sez-bin') : [];
+      for (i = 0; i < els.length; i++) {
+        r = els[i].getBoundingClientRect();
+        if (p.x >= r.left && p.x <= r.right && p.y >= r.top && p.y <= r.bottom) {
+          return { typ: 'bin', id: els[i].getAttribute('data-sez-bin') };
+        }
+      }
+    }
+    tray = $('tijd-sez-tray');
+    if (tray) {
+      r = tray.getBoundingClientRect();
+      if (p.x >= r.left - 8 && p.x <= r.right + 8 && p.y >= r.top - 8 && p.y <= r.bottom + 8) {
+        return { typ: 'tray' };
+      }
+    }
+    return { typ: '' };
+  }
+
+  function sezDragStart(e) {
+    var tile, p, r, ghost, id;
+    if (state.screen !== 'tijdplay' || state.level !== 'seizoen' || state.locked) return false;
+    if (sezState.mode !== 'circle' && sezState.mode !== 'kleding') return false;
+    tile = sezFindDragEl(e);
+    if (!tile) return false;
+    id = tile.getAttribute('data-sez-id') || '';
+    if (!id) return false;
+    p = sezEventPoint(e);
+    r = tile.getBoundingClientRect();
+    stopSezDrag();
+    ghost = tile.cloneNode(true);
+    ghost.className = (ghost.className || '') + ' is-ghost';
+    ghost.style.position = 'fixed';
+    ghost.style.left = r.left + 'px';
+    ghost.style.top = r.top + 'px';
+    ghost.style.width = r.width + 'px';
+    ghost.style.height = r.height + 'px';
+    ghost.style.margin = '0';
+    ghost.style.zIndex = '80';
+    ghost.style.pointerEvents = 'none';
+    document.body.appendChild(ghost);
+    tile.style.opacity = '0.35';
+    sezDrag.on = true;
+    sezDrag.id = id;
+    sezDrag.typ = sezState.mode;
+    sezDrag.ghost = ghost;
+    sezDrag.moved = false;
+    sezDrag.offX = p.x - r.left;
+    sezDrag.offY = p.y - r.top;
+    sezDrag.startX = p.x;
+    sezDrag.startY = p.y;
+    sezDrag.srcEl = tile;
+    if (sezState.mode === 'circle') speak('nm-' + id);
+    return true;
+  }
+
+  function sezDragMove(e) {
+    var p;
+    if (!sezDrag.on) return false;
+    p = sezEventPoint(e);
+    if (!sezDrag.moved) {
+      if (Math.abs(p.x - sezDrag.startX) < 8 && Math.abs(p.y - sezDrag.startY) < 8) return true;
+      sezDrag.moved = true;
+    }
+    if (sezDrag.ghost) {
+      sezDrag.ghost.style.left = (p.x - sezDrag.offX) + 'px';
+      sezDrag.ghost.style.top = (p.y - sezDrag.offY) + 'px';
+    }
+    return true;
+  }
+
+  function sezDragEnd(e) {
+    var p, tgt, id;
+    if (!sezDrag.on) return false;
+    id = sezDrag.id;
+    if (!sezDrag.moved) {
+      stopSezDrag();
+      lastTouchEnd = new Date().getTime();
+      if (sezState.mode === 'circle' && id) speak('nm-' + id);
+      return true;
+    }
+    p = sezEventPoint(e);
+    tgt = sezTargetAt(p);
+    if (sezState.mode === 'circle') {
+      if (tgt.typ === 'slot') sezPlaceCircle(id, tgt.i);
+      else sezReturnCircle(id);
+      stopSezDrag();
+      lastTouchEnd = new Date().getTime();
+      renderSezCircle();
+      if (sezCircleFull()) sezKlaar();
+    } else {
+      if (tgt.typ === 'bin') sezPlaceCloth(id, tgt.id);
+      else sezReturnCloth(id);
+      stopSezDrag();
+      lastTouchEnd = new Date().getTime();
+      renderSezKleding();
+      if (sezKledingAll()) sezKlaar();
+    }
+    return true;
+  }
+
+
   window.__tijdTest = {
     format: formatNlTime,
     pool: tijdPool,
@@ -19285,6 +20371,17 @@
     startLang: startLang,
     startDagen: startDagen,
     startMaanddagen: startMaanddagen,
+    startSeizoen: startSeizoen,
+    sezState: function () { return sezState; },
+    sezPool: sezBuildPool,
+    sezFind: sezFindItem,
+    sezPlaceCircle: sezPlaceCircle,
+    sezPlaceCloth: sezPlaceCloth,
+    sezKlaar: sezKlaar,
+    sezRenderCircle: renderSezCircle,
+    sezRenderKleding: renderSezKleding,
+    SEZ_LIST: SEZ_LIST,
+    SEZ_MONTH: SEZ_MONTH,
     mdState: function () { return mdState; },
     mdPool: mdBuildPool,
     mdFind: mdFindItem,
@@ -19392,6 +20489,9 @@
     }
     if ($('icon-tijd-md')) {
       $('icon-tijd-md').innerHTML = mdIcon(72, 56);
+    }
+    if ($('icon-tijd-sez')) {
+      $('icon-tijd-sez').innerHTML = sezIcon(72, 56);
     }
     if ($('icon-klok-hele')) {
       $('icon-klok-hele').innerHTML = tijdClockSvg('clkHele', 3, 0, 72, 56);
