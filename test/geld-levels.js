@@ -136,6 +136,160 @@ async function main() {
   if (brief.target < 501 || brief.target > 2000) throw new Error('brief 20 target out of range ' + brief.target);
   ok('briefjes tot €20 tray has 8 coins + 3 notes, target ' + brief.target);
 
+  // Return coins/notes from kassa and spaarpot (tap + counter)
+  const retReport = await page.evaluate(() => {
+    var t = window.__geldTest;
+    var out = [];
+    function assert(cond, msg) { out.push((cond ? 'OK ' : 'FAIL ') + msg); }
+    var st, paid, amt, items, i, cls, act;
+
+    t.start('winkel', 100, true);
+    st = t.state();
+    st.target = 50;
+    st.coins = [50, 20];
+    t.render();
+    items = document.querySelectorAll('#geld-kassa-coins [data-act="geld-return"]');
+    assert(items.length === 2, 'winkeltje kassa toont 2 betaalde munten');
+    for (i = 0; i < items.length; i++) {
+      cls = ' ' + items[i].className + ' ';
+      assert(cls.indexOf(' tap ') !== -1, 'winkeltje munt ' + i + ' heeft class tap');
+    }
+    amt = document.getElementById('geld-ks-amt');
+    assert(amt && amt.textContent === '€0,70', 'winkeltje Je hebt start €0,70 (got ' + (amt && amt.textContent) + ')');
+    t.returnCoin(1);
+    assert(t.state().coins.length === 1 && t.state().coins[0] === 50, 'winkeltje terug: 20 cent eruit, 50 blijft');
+    assert(amt.textContent === '€0,50', 'winkeltje teller na terug €0,50 (got ' + amt.textContent + ')');
+    items = document.querySelectorAll('#geld-kassa-coins [data-act="geld-return"]');
+    assert(items.length === 1, 'winkeltje kassa heeft 1 munt na terug');
+
+    t.start('pot', 10, true);
+    st = t.state();
+    st.target = 5;
+    st.coins = [5, 2];
+    t.render();
+    items = document.querySelectorAll('#geld-dropped [data-act="geld-return"]');
+    assert(items.length === 2, 'spaarpot toont 2 betaalde munten');
+    cls = ' ' + items[0].className + ' ';
+    assert(cls.indexOf(' tap ') !== -1, 'spaarpot munt heeft class tap');
+    amt = document.getElementById('geld-total');
+    assert(amt && amt.textContent === 'Nu: 7 cent', 'spaarpot Nu: 7 cent (got ' + (amt && amt.textContent) + ')');
+    t.returnCoin(0);
+    assert(t.state().coins.length === 1 && t.state().coins[0] === 2, 'spaarpot terug: 5 eruit, 2 blijft');
+    assert(amt.textContent === 'Nu: 2 cent', 'spaarpot teller na terug Nu: 2 cent (got ' + amt.textContent + ')');
+
+    t.start('brief', 2000, true);
+    st = t.state();
+    st.target = 1000;
+    st.coins = [1000, 500];
+    t.render();
+    items = document.querySelectorAll('#geld-kassa-coins [data-act="geld-return"]');
+    assert(items.length === 2, 'briefjes kassa toont 2 briefjes');
+    cls = ' ' + items[0].className + ' ';
+    assert(cls.indexOf(' tap ') !== -1 && items[0].className.indexOf('geld-note-wrap') !== -1, 'briefje heeft tap + note-wrap');
+    amt = document.getElementById('geld-ks-amt');
+    assert(amt && amt.textContent === '€15,00', 'briefjes Je hebt start €15,00 (got ' + (amt && amt.textContent) + ')');
+    t.returnCoin(1);
+    assert(t.state().coins.length === 1 && t.state().coins[0] === 1000, 'briefje van €5 terug');
+    assert(amt.textContent === '€10,00', 'briefjes teller na terug €10,00 (got ' + amt.textContent + ')');
+
+    return out;
+  });
+  for (i = 0; i < retReport.length; i++) {
+    console.log(retReport[i]);
+    if (retReport[i].indexOf('FAIL') === 0) failed += 1;
+  }
+
+  // Click a kassa coin (DOM tap) and confirm the counter updates
+  await page.evaluate(() => {
+    var t = window.__geldTest;
+    t.start('winkel', 100, true);
+    var st = t.state();
+    st.target = 50;
+    st.coins = [50, 20, 10];
+    st.product = st.product || 'appel';
+    t.render();
+  });
+  await wait(200);
+  var beforeClick = await page.evaluate(() => {
+    return {
+      n: document.querySelectorAll('#geld-kassa-coins [data-act="geld-return"]').length,
+      amt: document.getElementById('geld-ks-amt').textContent
+    };
+  });
+  if (beforeClick.n !== 3 || beforeClick.amt !== '€0,80') {
+    throw new Error('pre-click kassa unexpected ' + JSON.stringify(beforeClick));
+  }
+  await page.click('#geld-kassa-coins [data-act="geld-return"]');
+  await wait(150);
+  var afterClick = await page.evaluate(() => {
+    return {
+      n: document.querySelectorAll('#geld-kassa-coins [data-act="geld-return"]').length,
+      amt: document.getElementById('geld-ks-amt').textContent,
+      coins: window.__geldTest.state().coins.slice()
+    };
+  });
+  if (afterClick.n !== 2) throw new Error('tap return should leave 2 coins, got ' + JSON.stringify(afterClick));
+  if (afterClick.amt !== '€0,30' && afterClick.amt !== '€0,70' && afterClick.amt !== '€0,60') {
+    throw new Error('tap return amount unexpected ' + JSON.stringify(afterClick));
+  }
+  ok('tik op kassa-munt haalt hem terug, teller ' + afterClick.amt);
+
+  // Drag a remaining kassa coin out of the drop zone
+  var dragInfo = await page.evaluate(() => {
+    var el = document.querySelector('#geld-kassa-coins [data-act="geld-return"]');
+    var r = el.getBoundingClientRect();
+    var tray = document.getElementById('geld-tray');
+    var tr = tray.getBoundingClientRect();
+    return {
+      x: r.left + r.width / 2,
+      y: r.top + r.height / 2,
+      tx: tr.left + tr.width / 2,
+      ty: tr.top + tr.height / 2,
+      before: window.__geldTest.state().coins.length
+    };
+  });
+  await page.mouse.move(dragInfo.x, dragInfo.y);
+  await page.mouse.down();
+  await page.mouse.move(dragInfo.tx, dragInfo.ty, { steps: 8 });
+  await page.mouse.up();
+  await wait(150);
+  var afterDrag = await page.evaluate(() => {
+    return {
+      n: document.querySelectorAll('#geld-kassa-coins [data-act="geld-return"]').length,
+      amt: document.getElementById('geld-ks-amt').textContent,
+      coins: window.__geldTest.state().coins.slice()
+    };
+  });
+  if (afterDrag.n !== 1) throw new Error('drag return should leave 1 coin, got ' + JSON.stringify(afterDrag));
+  ok('sleep kassa-munt terug, teller ' + afterDrag.amt);
+
+  // Screenshot: overpay in winkeltje with toast hint
+  await wait(700);
+  await page.evaluate(() => {
+    var t = window.__geldTest;
+    t.start('winkel', 100, true);
+    var st = t.state();
+    st.target = 40;
+    st.coins = [50, 20];
+    t.render();
+    t.klaar();
+  });
+  await wait(280);
+  var toastTxt = await page.evaluate(() => {
+    var el = document.getElementById('toast');
+    return el ? (el.textContent || '') : '';
+  });
+  if (toastTxt.indexOf('Haal er wat uit') === -1) {
+    throw new Error('expected teveel toast hint, got ' + JSON.stringify(toastTxt));
+  }
+  ok('toast na te veel: ' + toastTxt);
+  var shotDir = '/workspace/rekenapp/screenshots';
+  var fs = require('fs');
+  if (!fs.existsSync(shotDir)) fs.mkdirSync(shotDir, { recursive: true });
+  var shotPath = shotDir + '/55-kassa-terug.png';
+  await page.screenshot({ path: shotPath, type: 'png' });
+  ok('screenshot ' + shotPath);
+
   await browser.close();
   if (failed) {
     console.log('\nGELD LEVEL CHECKS FAILED (' + failed + ')');

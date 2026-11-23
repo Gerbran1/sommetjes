@@ -1244,7 +1244,7 @@
     .geld-coin-wrap, .geld-note-wrap { display: block; line-height: 0; }
     .geld-coin-wrap svg, .geld-note-wrap svg { display: block; pointer-events: none; }
     .geld-tray-item { cursor: default; }
-    .geld-paid-item { cursor: default; }
+    .geld-paid-item { cursor: pointer; }
     .geld-drag-ghost {
       position: fixed;
       z-index: 80;
@@ -15698,7 +15698,7 @@
 
   /* ---------- Geld ---------- */
   var geldCoinUid = 1;
-  var geldDrag = { on: false, kind: '', cents: 0, offX: 0, offY: 0, w: 0, h: 0, startX: 0, startY: 0, moved: false, ghost: null };
+  var geldDrag = { on: false, kind: '', cents: 0, offX: 0, offY: 0, w: 0, h: 0, startX: 0, startY: 0, moved: false, ghost: null, fromPaid: -1 };
   var geldState = { game: 'pot', max: 10, target: 0, coins: [], product: '', key: '', paid: 0 };
 
   var GELD_COIN_SVG = {
@@ -16177,7 +16177,7 @@
       kind = GELD_CENTS_KIND[cents] || '1c';
       if (geldState.game === 'pot') px = geldIsNote(kind) ? 70 : GELD_DROP_PX[kind];
       else px = geldIsNote(kind) ? 58 : Math.min(46, GELD_DROP_PX[kind] || 46);
-      html += geldCoinWrap(kind, px, 'geld-paid-item', ' data-act="geld-return" data-i="' + i + '"');
+      html += geldCoinWrap(kind, px, 'geld-paid-item tap', ' data-act="geld-return" data-i="' + i + '"');
     }
     host.innerHTML = html;
   }
@@ -16259,6 +16259,7 @@
     geldDrag.on = false;
     geldDrag.ghost = null;
     geldDrag.moved = false;
+    geldDrag.fromPaid = -1;
     geldMarkHot(false);
   }
 
@@ -16273,14 +16274,31 @@
     }
   }
 
+  function geldFindPaid(e) {
+    var el;
+    el = e.target;
+    while (el && el !== document.body) {
+      if (el.getAttribute && el.getAttribute('data-act') === 'geld-return') return el;
+      el = el.parentNode;
+    }
+    return null;
+  }
+
   function geldDragStart(e) {
-    var tile, p, r, ghost, kind, cents;
+    var tile, p, r, ghost, kind, cents, fromPaid;
     if (state.screen !== 'geldplay' || state.locked) return false;
     tile = geldFindTray(e);
-    if (!tile) return false;
+    fromPaid = -1;
+    if (!tile) {
+      tile = geldFindPaid(e);
+      if (!tile) return false;
+      fromPaid = parseInt(tile.getAttribute('data-i'), 10);
+      if (isNaN(fromPaid) || fromPaid < 0) return false;
+    }
     kind = tile.getAttribute('data-kind') || '';
     cents = parseInt(tile.getAttribute('data-cents'), 10) || 0;
     if (!kind || !cents) return false;
+    geldDrag.fromPaid = fromPaid;
     p = geldEventPoint(e);
     r = tile.getBoundingClientRect();
     geldDrag.on = true;
@@ -16325,9 +16343,16 @@
   }
 
   function geldDragEnd(e) {
-    var p, dropped;
+    var p, dropped, fromPaid;
     if (!geldDrag.on) return false;
     p = geldEventPoint(e);
+    fromPaid = geldDrag.fromPaid;
+    if (fromPaid >= 0) {
+      if (!geldDrag.moved || !geldOverDrop(p)) geldReturnCoin(fromPaid);
+      lastTouchEnd = new Date().getTime();
+      stopGeldDrag();
+      return true;
+    }
     dropped = geldDrag.moved && geldOverDrop(p);
     if (dropped) {
       geldState.coins.push(geldDrag.cents);
@@ -16358,7 +16383,7 @@
     }
     playWrong();
     if (geldState.game !== 'pot' && paid > geldState.target) {
-      showToast('Te veel!', false);
+      showToast('Te veel! Haal er wat uit', false);
       speak('geld-teveel');
     } else if (geldState.game !== 'pot' && paid < geldState.target) {
       showToast('Nog niet genoeg!', false);
@@ -17522,6 +17547,10 @@
     render: renderGeld,
     start: startGeld,
     state: function () { return geldState; },
+    returnCoin: geldReturnCoin,
+    klaar: geldKlaar,
+    updateTotal: geldUpdateTotal,
+    renderDropped: geldRenderDropped,
     pools: {
       pot10: GELD_POT_10,
       pot50: GELD_POT_50,
