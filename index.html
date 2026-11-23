@@ -548,14 +548,210 @@
       margin: 8px auto 0 auto;
     }
     #tijd-grid .level-btn {
-      -webkit-flex: 0 0 40%;
-      flex: 0 0 40%;
+      -webkit-flex: 0 0 30%;
+      flex: 0 0 30%;
       max-width: 300px;
-      min-height: 180px;
-      max-height: 240px;
+      min-height: 140px;
+      max-height: 220px;
     }
     .lvl-tijd-lang { background: #FFA000; -webkit-box-shadow: 0 10px 0 #F57C00, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #F57C00, 0 14px 16px rgba(0,0,0,0.12); }
     .lvl-tijd-lang.pressed, .lvl-tijd-lang:active { -webkit-box-shadow: 0 2px 0 #F57C00, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #F57C00, 0 4px 8px rgba(0,0,0,0.15); }
+    .lvl-tijd-dagen { background: #26A69A; -webkit-box-shadow: 0 10px 0 #00897B, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #00897B, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-tijd-dagen.pressed, .lvl-tijd-dagen:active {
+      -webkit-box-shadow: 0 4px 0 #00897B, 0 6px 8px rgba(0,0,0,0.12);
+      box-shadow: 0 4px 0 #00897B, 0 6px 8px rgba(0,0,0,0.12);
+    }
+    #tijd-cal-wrap { display: none; }
+    #tijd-stage.is-dagen-order,
+    #tijd-stage.is-dagen-quiz {
+      -webkit-flex-direction: column;
+      flex-direction: column;
+    }
+    #tijd-stage.is-dagen-order #tijd-klaar-wrap { margin: 8px 0 10px 0; }
+    #tijd-stage.is-dagen-order #tijd-cal-wrap {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 96%;
+      max-width: 980px;
+      min-height: 0;
+    }
+    #tijd-stage.is-dagen-order #tijd-clock-wrap,
+    #tijd-stage.is-dagen-order #tijd-choices { display: none; }
+    #tijd-stage.is-dagen-quiz #tijd-cal-wrap { display: none; }
+    #tijd-stage.is-dagen-quiz #tijd-klaar-wrap { display: none; }
+    #tijd-stage.is-dagen #tijd-prompt { font-size: 32px; }
+    #tijd-stage.is-dagen-quiz #tijd-clock-wrap {
+      -webkit-flex: 0 1 auto;
+      flex: 0 1 auto;
+      width: 96%;
+      max-width: 980px;
+    }
+    #tijd-stage.is-dagen-quiz #tijd-clock,
+    #tijd-stage.is-dagen-quiz #tijd-clock svg {
+      width: 100%;
+      height: auto;
+      max-width: 980px;
+      max-height: none;
+    }
+    #tijd-stage.is-dagen-quiz .tijd-choice {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      min-height: 70px;
+      padding: 10px 14px;
+      font-size: 28px;
+      text-align: center;
+    }
+    #tijd-cal-board {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      width: 100%;
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+    }
+    #tijd-cal-board.is-week { max-width: 980px; }
+    #tijd-cal-board.is-month { max-width: 760px; }
+    .dagen-slot {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex: 1 1 0;
+      flex: 1 1 0;
+      -webkit-align-items: stretch;
+      align-items: stretch;
+      -webkit-justify-content: center;
+      justify-content: center;
+      min-width: 0;
+      min-height: 54px;
+      margin: 4px;
+      padding: 3px;
+      border-radius: 16px;
+      border: 2px dashed #C5CAE9;
+      background: rgba(255,253,247,0.75);
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    #tijd-cal-board.is-month .dagen-slot {
+      -webkit-flex: 0 0 22%;
+      flex: 0 0 22%;
+      width: 22%;
+      min-height: 48px;
+    }
+    .dagen-slot.is-filled { border-style: solid; border-color: #9FA8DA; background: rgba(255,255,255,0.9); }
+    .dagen-slot.is-locked { border-color: #81C784; }
+    .dagen-chip {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      width: 100%;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.1;
+      text-align: center;
+      padding: 6px 4px;
+      -webkit-box-shadow: 0 3px 0 rgba(0,0,0,0.18);
+      box-shadow: 0 3px 0 rgba(0,0,0,0.18);
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      cursor: pointer;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .dagen-chip.is-locked { cursor: default; -webkit-box-shadow: none; box-shadow: none; }
+    .dagen-chip.is-ghost {
+      -webkit-box-shadow: 0 10px 18px rgba(0,0,0,0.28);
+      box-shadow: 0 10px 18px rgba(0,0,0,0.28);
+    }
+    #tijd-cal-tray {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      width: 100%;
+      margin: 10px 0 6px 0;
+      min-height: 56px;
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+    }
+    #tijd-cal-tray .dagen-chip {
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+      width: auto;
+      min-width: 92px;
+      margin: 4px;
+      min-height: 48px;
+      padding: 8px 10px;
+    }
+    .dagen-quiz-vis {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      width: 100%;
+      margin: 4px 0;
+    }
+    .dagen-pill {
+      display: inline-block;
+      margin: 3px;
+      padding: 6px 8px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+    .dagen-pill.is-ref {
+      -webkit-box-shadow: 0 0 0 3px #FFF8E1, 0 0 0 6px #5C6BC0;
+      box-shadow: 0 0 0 3px #FFF8E1, 0 0 0 6px #5C6BC0;
+      font-size: 16px;
+      padding: 7px 10px;
+    }
+    @media screen and (max-height: 800px) {
+      #tijd-stage.is-dagen #tijd-prompt { font-size: 28px; }
+      .dagen-slot { min-height: 42px; margin: 3px; }
+      #tijd-cal-board.is-month .dagen-slot { min-height: 40px; }
+      .dagen-chip { font-size: 14px; padding: 4px 3px; }
+      #tijd-cal-tray { margin: 6px 0 4px 0; min-height: 44px; }
+      #tijd-cal-tray .dagen-chip { min-width: 80px; min-height: 40px; padding: 6px 8px; font-size: 14px; }
+      #tijd-stage.is-dagen-quiz .tijd-choice { min-height: 54px; font-size: 24px; }
+      .dagen-pill { font-size: 12px; padding: 4px 6px; }
+    }
+    @media screen and (max-width: 800px) {
+      #tijd-stage.is-dagen #tijd-prompt { font-size: 26px; }
+      #tijd-cal-board.is-week .dagen-slot {
+        -webkit-flex: 0 0 22%;
+        flex: 0 0 22%;
+        width: 22%;
+      }
+      .dagen-chip { font-size: 13px; }
+      #tijd-cal-tray .dagen-chip { min-width: 86px; }
+    }
+
     #tijdlevel-grid .level-btn {
       -webkit-flex: 0 0 40%;
       flex: 0 0 40%;
@@ -785,6 +981,13 @@
       #tijd-stage.is-lang #tijd-choices { width: 50%; max-width: 480px; margin: 0 12px 0 0; }
       #tijd-stage.is-lang .tijd-choice { min-height: 58px; font-size: 24px; margin: 0 0 8px 0; }
       #tijd-choices.is-n4 .tijd-choice { min-height: 64px; font-size: 24px; }
+      #tijd-stage.is-dagen-order,
+      #tijd-stage.is-dagen-quiz {
+        -webkit-flex-direction: column;
+        flex-direction: column;
+      }
+      #tijd-stage.is-dagen-quiz #tijd-clock-wrap { width: 96%; max-width: 980px; }
+      #tijd-stage.is-dagen-quiz #tijd-choices { width: 92%; max-width: 520px; margin: 8px auto 10px auto; }
     }
 
     #program-grid {
@@ -5034,6 +5237,10 @@
           <div class="level-icon" id="icon-tijd-lang"></div>
           <div class="level-label">Hoe lang is…?</div>
         </button>
+        <button type="button" class="tap level-btn lvl-tijd-dagen" data-act="tijd-game" data-game="dagen">
+          <div class="level-icon" id="icon-tijd-dagen"></div>
+          <div class="level-label">Dagen en maanden</div>
+        </button>
       </div>
     </div>
 
@@ -5099,6 +5306,10 @@
           <div id="tijd-clock"></div>
         </div>
         <div id="tijd-choices"></div>
+        <div id="tijd-cal-wrap">
+          <div id="tijd-cal-board"></div>
+          <div id="tijd-cal-tray"></div>
+        </div>
         <div id="tijd-klaar-wrap" class="is-hidden">
           <button type="button" class="tap" id="btn-tijd-klaar" data-act="tijd-klaar">Klaar!</button>
         </div>
@@ -5832,6 +6043,7 @@
     if (level === 'zet') return 'zet-' + (state.tijdKind || 'hele');
     if (level === 'digi') return 'digi-' + (state.tijdKind || 'helehalve');
     if (level === 'lang') return 'lang-' + (state.tijdKind || 'easy');
+    if (level === 'dagen') return 'dagen-' + (state.tijdKind || 'week');
     return level || 'game';
   }
 
@@ -7239,6 +7451,10 @@
     }
     else if (state.level === 'lang') {
       startLang(false);
+      return;
+    }
+    else if (state.level === 'dagen') {
+      startDagen(false);
       return;
     }
     else if (state.level === 'weg') {
@@ -10843,7 +11059,7 @@
         if (e.preventDefault) e.preventDefault();
       }
     } else if (state.screen === 'tijdplay') {
-      if (zetDragStart(e)) {
+      if (dagenDragStart(e) || zetDragStart(e)) {
         if (e.preventDefault) e.preventDefault();
       }
     }
@@ -10886,7 +11102,10 @@
         if (e.preventDefault) e.preventDefault();
       }
     } else if (state.screen === 'tijdplay') {
-      if (zetDrag.on) {
+      if (dagenDrag.on) {
+        dagenDragMove(e);
+        if (e.preventDefault) e.preventDefault();
+      } else if (zetDrag.on) {
         zetDragMove(e);
         if (e.preventDefault) e.preventDefault();
       }
@@ -10930,7 +11149,10 @@
         if (e.preventDefault) e.preventDefault();
       }
     } else if (state.screen === 'tijdplay') {
-      if (zetDrag.on) {
+      if (dagenDrag.on) {
+        dagenDragEnd(e);
+        if (e.preventDefault) e.preventDefault();
+      } else if (zetDrag.on) {
         zetDragEnd(e);
         if (e.preventDefault) e.preventDefault();
       }
@@ -14979,6 +15201,7 @@
     if (typeof clearRobotTimer === 'function') clearRobotTimer();
     if (typeof stopGeldDrag === 'function') stopGeldDrag();
     if (typeof stopZetDrag === 'function') stopZetDrag();
+    if (typeof stopDagenDrag === 'function') stopDagenDrag();
     clearMemoryTimer();
     clearGeheugenTimer();
     clearSimonFlash();
@@ -15222,10 +15445,11 @@
     }
     if (act === 'tijd-kind') {
       g = state.tijdGame || 'klok';
-      kind = el.getAttribute('data-kind') || (g === 'digi' ? 'helehalve' : (g === 'lang' ? 'easy' : 'hele'));
+      kind = el.getAttribute('data-kind') || (g === 'digi' ? 'helehalve' : (g === 'lang' ? 'easy' : (g === 'dagen' ? 'week' : 'hele')));
       if (g === 'zet') startZet(kind, true);
       else if (g === 'digi') startDigi(kind, true);
       else if (g === 'lang') startLang(kind, true);
+      else if (g === 'dagen') startDagen(kind, true);
       else startKlok(kind, true);
       return;
     }
@@ -15234,7 +15458,8 @@
       return;
     }
     if (act === 'tijd-klaar') {
-      zetKlaar();
+      if (state.level === 'dagen') dagenKlaar();
+      else zetKlaar();
       return;
     }
     if (act === 'digi-answer') {
@@ -15243,6 +15468,10 @@
     }
     if (act === 'lang-answer') {
       langAnswer(el);
+      return;
+    }
+    if (act === 'dagen-answer') {
+      dagenAnswer(el);
       return;
     }
     if (act === 'geld-game') {
@@ -15548,7 +15777,7 @@
       e.preventDefault();
     } else if (state.screen === 'geldplay' && geldDragStart(e)) {
       e.preventDefault();
-    } else if (state.screen === 'tijdplay' && zetDragStart(e)) {
+    } else if (state.screen === 'tijdplay' && (dagenDragStart(e) || zetDragStart(e))) {
       e.preventDefault();
     }
   }
@@ -15593,7 +15822,7 @@
       e.preventDefault();
       return;
     }
-    if (state.screen === 'tijdplay' && zetDragMove(e)) {
+    if (state.screen === 'tijdplay' && (dagenDragMove(e) || zetDragMove(e))) {
       e.preventDefault();
       return;
     }
@@ -15652,7 +15881,7 @@
       lastTouchEnd = now;
       return;
     }
-    if (state.screen === 'tijdplay' && zetDragEnd(e)) {
+    if (state.screen === 'tijdplay' && (dagenDragEnd(e) || zetDragEnd(e))) {
       clearPressed();
       e.preventDefault();
       lastTouchEnd = now;
@@ -15674,7 +15903,7 @@
     if (state.screen === 'klinkers') stopKlinkDrag();
     if (state.screen === 'lijn') stopLijnDrag();
     if (state.screen === 'geldplay') stopGeldDrag();
-    if (state.screen === 'tijdplay') stopZetDrag();
+    if (state.screen === 'tijdplay') { stopZetDrag(); stopDagenDrag(); }
   }
 
   function onClick(e) {
@@ -16642,6 +16871,7 @@
     if (game === 'zet') title = 'Zet de klok';
     else if (game === 'digi') title = 'Analoog en digitaal';
     else if (game === 'lang') title = 'Hoe lang is…?';
+    else if (game === 'dagen') title = 'Dagen en maanden';
     else title = 'Klok kijken';
     el = $('tijdlevel-prompt');
     if (el) el.innerHTML = title;
@@ -16675,6 +16905,7 @@
     klokState.key = item.key;
     state.tijdGame = 'klok';
     if (typeof stopZetDrag === 'function') stopZetDrag();
+    if (typeof stopDagenDrag === 'function') stopDagenDrag();
     hideReward();
     hideToast();
     showScreen('tijdplay');
@@ -16762,6 +16993,7 @@
       state.lastWasPersonal = false;
     }
     stopZetDrag();
+    if (typeof stopDagenDrag === 'function') stopDagenDrag();
     if (forced && forced.h) {
       item = {
         h: forced.h,
@@ -17138,6 +17370,20 @@
       langHideBtn(vijf, true);
       return;
     }
+    if (game === 'dagen') {
+      hele.setAttribute('data-kind', 'week');
+      if (lab) lab.innerHTML = 'Dagen';
+      if ($('icon-klok-hele')) $('icon-klok-hele').innerHTML = dagenWeekIcon(72, 56);
+      if (halve) {
+        halve.setAttribute('data-kind', 'maand');
+        if (lab2) lab2.innerHTML = 'Maanden';
+      }
+      if ($('icon-klok-halve')) $('icon-klok-halve').innerHTML = dagenYearIcon(72, 56);
+      langHideBtn(halve, false);
+      langHideBtn(kwart, true);
+      langHideBtn(vijf, true);
+      return;
+    }
     langHideBtn(halve, false);
     langHideBtn(kwart, false);
     langHideBtn(vijf, false);
@@ -17176,6 +17422,7 @@
       digiState.plan = digiPlanModes();
     }
     if (typeof stopZetDrag === 'function') stopZetDrag();
+    if (typeof stopDagenDrag === 'function') stopDagenDrag();
     item = pickDigiItem(kind, forced);
     digiState.kind = kind;
     digiState.h = item.h;
@@ -17438,6 +17685,7 @@
       state.lastWasPersonal = false;
     }
     if (typeof stopZetDrag === 'function') stopZetDrag();
+    if (typeof stopDagenDrag === 'function') stopDagenDrag();
     item = pickLangItem(kind, forcedId);
     langState.kind = kind;
     langState.id = item.id;
@@ -17505,6 +17753,623 @@
   }
 
 
+  var DAGEN_DAYS = [
+    { id: 'ma', name: 'maandag', color: '#EF5350', ink: '#fff' },
+    { id: 'di', name: 'dinsdag', color: '#FF8A65', ink: '#3E2723' },
+    { id: 'wo', name: 'woensdag', color: '#FFCA28', ink: '#3E2723' },
+    { id: 'do', name: 'donderdag', color: '#66BB6A', ink: '#1B3A1B' },
+    { id: 'vr', name: 'vrijdag', color: '#26A69A', ink: '#fff' },
+    { id: 'za', name: 'zaterdag', color: '#5C6BC0', ink: '#fff' },
+    { id: 'zo', name: 'zondag', color: '#AB47BC', ink: '#fff' }
+  ];
+  var DAGEN_MONTHS = [
+    { id: 'jan', name: 'januari', color: '#42A5F5', ink: '#0D47A1' },
+    { id: 'feb', name: 'februari', color: '#1E88E5', ink: '#fff' },
+    { id: 'mrt', name: 'maart', color: '#81C784', ink: '#1B5E20' },
+    { id: 'apr', name: 'april', color: '#66BB6A', ink: '#1B3A1B' },
+    { id: 'mei', name: 'mei', color: '#43A047', ink: '#fff' },
+    { id: 'jun', name: 'juni', color: '#FFCA28', ink: '#3E2723' },
+    { id: 'jul', name: 'juli', color: '#FFA726', ink: '#3E2723' },
+    { id: 'aug', name: 'augustus', color: '#FF8F00', ink: '#fff' },
+    { id: 'sep', name: 'september', color: '#FFA726', ink: '#3E2723' },
+    { id: 'okt', name: 'oktober', color: '#FF7043', ink: '#fff' },
+    { id: 'nov', name: 'november', color: '#8D6E63', ink: '#fff' },
+    { id: 'dec', name: 'december', color: '#1565C0', ink: '#fff' }
+  ];
+  var DAGEN_ORDER = [
+    { id: 'order-odd', pre: ['ma', 'wo', 'vr', 'zo'] },
+    { id: 'order-first', pre: ['ma', 'di', 'wo'] },
+    { id: 'order-ends', pre: ['ma', 'zo'] },
+    { id: 'order-all', pre: [] }
+  ];
+  var DAGEN_GAPS = [
+    { id: 'gap-mrt-jun-okt', miss: ['mrt', 'jun', 'okt'] },
+    { id: 'gap-feb-mei-aug-nov', miss: ['feb', 'mei', 'aug', 'nov'] },
+    { id: 'gap-jan-jul-dec', miss: ['jan', 'jul', 'dec'] },
+    { id: 'gap-apr-mei-jun', miss: ['apr', 'mei', 'jun'] },
+    { id: 'gap-feb-apr-sep-nov', miss: ['feb', 'apr', 'sep', 'nov'] },
+    { id: 'gap-mrt-jul-nov', miss: ['mrt', 'jul', 'nov'] },
+    { id: 'gap-jan-apr-aug-okt', miss: ['jan', 'apr', 'aug', 'okt'] },
+    { id: 'gap-mei-sep-dec', miss: ['mei', 'sep', 'dec'] }
+  ];
+  var dagenState = {
+    kind: 'week', mode: 'order', id: '', answer: '', options: [],
+    items: [], slots: [], locked: [], tray: [], prompt: '', speak: '',
+    refId: '', dir: ''
+  };
+  var dagenDrag = {
+    on: false, id: '', fromSlot: -1, ghost: null, moved: false,
+    offX: 0, offY: 0, startX: 0, startY: 0, w: 0, h: 0, srcEl: null
+  };
+
+  function dagenList(kind) {
+    return kind === 'maand' ? DAGEN_MONTHS : DAGEN_DAYS;
+  }
+
+  function dagenFindIn(list, id) {
+    var i;
+    for (i = 0; i < list.length; i++) {
+      if (list[i].id === id) return list[i];
+    }
+    return null;
+  }
+
+  function dagenNeighbor(list, id, dir) {
+    var i, n;
+    n = list.length;
+    for (i = 0; i < n; i++) {
+      if (list[i].id === id) break;
+    }
+    if (i >= n) return null;
+    if (dir === 'na') return list[(i + 1) % n];
+    return list[(i + n - 1) % n];
+  }
+
+  function dagenQuizOptions(list, refId, dir) {
+    var correct, otherDir, further, opts, i, cand;
+    correct = dagenNeighbor(list, refId, dir);
+    otherDir = dagenNeighbor(list, refId, dir === 'na' ? 'voor' : 'na');
+    further = correct ? dagenNeighbor(list, correct.id, dir) : null;
+    opts = [correct.name];
+    if (otherDir && otherDir.id !== correct.id && otherDir.id !== refId) opts.push(otherDir.name);
+    if (further && further.id !== correct.id && further.id !== refId && !contains(opts, further.name)) opts.push(further.name);
+    i = 0;
+    while (opts.length < 3 && i < list.length) {
+      cand = list[i];
+      i += 1;
+      if (cand.id === refId || contains(opts, cand.name)) continue;
+      opts.push(cand.name);
+    }
+    return { answer: correct.name, answerId: correct.id, options: opts };
+  }
+
+  function dagenBuildPool(kind) {
+    var pool, i, list, it, q, dir, item;
+    pool = [];
+    list = dagenList(kind);
+    if (kind === 'week') {
+      for (i = 0; i < DAGEN_ORDER.length; i++) {
+        it = DAGEN_ORDER[i];
+        pool.push({
+          id: it.id,
+          mode: 'order',
+          kind: 'week',
+          prompt: 'Zet de dagen in de goede volgorde',
+          speak: 'dagen-zet',
+          pre: it.pre.slice()
+        });
+      }
+    } else {
+      for (i = 0; i < DAGEN_GAPS.length; i++) {
+        it = DAGEN_GAPS[i];
+        pool.push({
+          id: it.id,
+          mode: 'order',
+          kind: 'maand',
+          prompt: 'Sleep de ontbrekende maanden erin',
+          speak: 'maanden-zet',
+          miss: it.miss.slice()
+        });
+      }
+    }
+    for (i = 0; i < list.length; i++) {
+      for (dir = 0; dir < 2; dir++) {
+        q = dagenQuizOptions(list, list[i].id, dir === 0 ? 'na' : 'voor');
+        item = {
+          id: (kind === 'week' ? 'qv-' : 'qm-') + (dir === 0 ? 'na-' : 'voor-') + list[i].id,
+          mode: 'quiz',
+          kind: kind,
+          prompt: (kind === 'week' ? 'Welke dag komt ' : 'Welke maand komt ') + (dir === 0 ? 'na ' : 'voor ') + list[i].name + '?',
+          speak: (kind === 'week' ? 'qv-' : 'qm-') + (dir === 0 ? 'na-' : 'voor-') + list[i].id,
+          answer: q.answer,
+          answerId: q.answerId,
+          options: q.options,
+          refId: list[i].id,
+          dir: dir === 0 ? 'na' : 'voor'
+        };
+        pool.push(item);
+      }
+    }
+    return pool;
+  }
+
+  function dagenFindItem(kind, id) {
+    var pool, i;
+    pool = dagenBuildPool(kind);
+    for (i = 0; i < pool.length; i++) {
+      if (pool[i].id === id) return pool[i];
+    }
+    return null;
+  }
+
+  function pickDagenItem(kind, forcedId) {
+    var pool, keys, key, i, item, opts;
+    pool = dagenBuildPool(kind);
+    item = null;
+    if (forcedId) {
+      item = dagenFindItem(kind, forcedId);
+      if (item) rememberRoundKey(item.id);
+    }
+    if (!item) {
+      keys = [];
+      for (i = 0; i < pool.length; i++) keys.push(pool[i].id);
+      key = pickAvoiding(keys);
+      if (!key) key = keys[Math.floor(Math.random() * keys.length)];
+      rememberRoundKey(key);
+      item = dagenFindItem(kind, key);
+    }
+    if (item.mode === 'quiz') {
+      opts = item.options.slice();
+      tijdShuffle(opts);
+      item = {
+        id: item.id, mode: 'quiz', kind: item.kind, prompt: item.prompt,
+        speak: item.speak, answer: item.answer, answerId: item.answerId,
+        options: opts, refId: item.refId, dir: item.dir
+      };
+    }
+    return item;
+  }
+
+  function dagenWeekIcon(w, h) {
+    var i, x, cols, html, d;
+    w = w || 72;
+    h = h || 56;
+    cols = DAGEN_DAYS;
+    html = '<svg viewBox="0 0 72 56" width="' + w + '" height="' + h + '" aria-hidden="true">';
+    html += '<rect x="4" y="8" width="64" height="40" rx="8" fill="#FFF8E1" stroke="#FF8F00" stroke-width="2"/>';
+    html += '<rect x="4" y="8" width="64" height="12" rx="8" fill="#FFA000"/>';
+    html += '<rect x="4" y="14" width="64" height="6" fill="#FFA000"/>';
+    for (i = 0; i < 7; i++) {
+      x = 8 + i * 8.4;
+      d = cols[i];
+      html += '<rect x="' + x + '" y="26" width="7.2" height="16" rx="2" fill="' + d.color + '"/>';
+    }
+    html += '</svg>';
+    return html;
+  }
+
+  function dagenYearIcon(w, h) {
+    var i, r, c, x, y, html, cols;
+    w = w || 72;
+    h = h || 56;
+    cols = DAGEN_MONTHS;
+    html = '<svg viewBox="0 0 72 56" width="' + w + '" height="' + h + '" aria-hidden="true">';
+    html += '<rect x="8" y="4" width="56" height="48" rx="8" fill="#FFF8E1" stroke="#00897B" stroke-width="2"/>';
+    html += '<rect x="8" y="4" width="56" height="12" rx="8" fill="#26A69A"/>';
+    html += '<rect x="8" y="10" width="56" height="6" fill="#26A69A"/>';
+    for (i = 0; i < 12; i++) {
+      r = Math.floor(i / 4);
+      c = i - r * 4;
+      x = 14 + c * 12;
+      y = 20 + r * 10;
+      html += '<rect x="' + x + '" y="' + y + '" width="10" height="8" rx="2" fill="' + cols[i].color + '"/>';
+    }
+    html += '</svg>';
+    return html;
+  }
+
+  function dagenChipHtml(item, extraClass, extraAttr) {
+    var cls;
+    cls = 'dagen-chip' + (extraClass ? (' ' + extraClass) : '');
+    return '<div class="' + cls + '" data-dagen-id="' + item.id + '"' +
+      (extraAttr || '') +
+      ' style="background:' + item.color + ';color:' + item.ink + '">' +
+      item.name + '</div>';
+  }
+
+  function dagenQuizVisual(item) {
+    var list, i, it, cls, html, lab;
+    list = dagenList(item.kind);
+    lab = item.kind === 'maand' ? 'maanden' : 'dagen';
+    html = '<div class="dagen-quiz-vis dagen-quiz-vis-' + item.kind + '">';
+    for (i = 0; i < list.length; i++) {
+      it = list[i];
+      cls = 'dagen-pill';
+      if (it.id === item.refId) cls += ' is-ref';
+      html += '<span class="' + cls + '" style="background:' + it.color + ';color:' + it.ink + '">' + it.name + '</span>';
+    }
+    html += '</div>';
+    return html;
+  }
+
+  function dagenResetState(item) {
+    var list, i, it, pre, locked, slots, tray, miss, isMiss;
+    list = dagenList(item.kind);
+    slots = [];
+    locked = [];
+    tray = [];
+    pre = item.pre || [];
+    miss = item.miss || [];
+    for (i = 0; i < list.length; i++) {
+      it = list[i];
+      if (item.kind === 'maand' && miss.length) {
+        isMiss = contains(miss, it.id);
+        slots.push(isMiss ? null : it.id);
+        locked.push(!isMiss);
+        if (isMiss) tray.push(it.id);
+      } else {
+        if (contains(pre, it.id)) {
+          slots.push(it.id);
+          locked.push(true);
+        } else {
+          slots.push(null);
+          locked.push(false);
+          tray.push(it.id);
+        }
+      }
+    }
+    tijdShuffle(tray);
+    dagenState.items = list;
+    dagenState.slots = slots;
+    dagenState.locked = locked;
+    dagenState.tray = tray;
+  }
+
+  function renderDagenOrder() {
+    var board, tray, html, i, id, item, list, kindClass;
+    board = $('tijd-cal-board');
+    tray = $('tijd-cal-tray');
+    if (!board || !tray) return;
+    list = dagenState.items;
+    kindClass = dagenState.kind === 'maand' ? 'is-month' : 'is-week';
+    html = '';
+    for (i = 0; i < list.length; i++) {
+      html += '<div class="dagen-slot' + (dagenState.slots[i] ? ' is-filled' : '') +
+        (dagenState.locked[i] ? ' is-locked' : '') +
+        '" data-dagen-slot="' + i + '">';
+      id = dagenState.slots[i];
+      if (id) {
+        item = dagenFindIn(list, id);
+        if (item) {
+          html += dagenChipHtml(item, dagenState.locked[i] ? 'is-locked' : '', ' data-dagen-slot="' + i + '"');
+        }
+      }
+      html += '</div>';
+    }
+    board.className = kindClass;
+    board.innerHTML = html;
+    html = '';
+    for (i = 0; i < dagenState.tray.length; i++) {
+      item = dagenFindIn(list, dagenState.tray[i]);
+      if (item) html += dagenChipHtml(item, '', ' data-dagen-tray="1"');
+    }
+    tray.innerHTML = html;
+  }
+
+  function renderDagenQuiz(item) {
+    var wrap, choices, i, btn;
+    wrap = $('tijd-clock');
+    if (wrap) wrap.innerHTML = dagenQuizVisual(item);
+    choices = $('tijd-choices');
+    if (choices) {
+      choices.className = '';
+      choices.innerHTML = '';
+      for (i = 0; i < item.options.length; i++) {
+        btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tap tijd-choice tijd-choice-lang';
+        btn.setAttribute('data-act', 'dagen-answer');
+        btn.setAttribute('data-value', item.options[i]);
+        if (item.options[i] === item.answer) btn.setAttribute('data-ok', '1');
+        btn.innerHTML = item.options[i];
+        choices.appendChild(btn);
+      }
+    }
+  }
+
+  function startDagen(kind, fresh, forcedId) {
+    var item, promptEl, klaar, stage, choices, wrap;
+    if (typeof kind === 'boolean') {
+      forcedId = fresh;
+      fresh = kind;
+      kind = '';
+    }
+    if (kind) state.tijdKind = kind;
+    kind = state.tijdKind || 'week';
+    state.tijdGame = 'dagen';
+    state.level = 'dagen';
+    state.locked = false;
+    if (fresh) {
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+      resetVoiceCycle();
+      state.lastWasPersonal = false;
+    }
+    if (typeof stopZetDrag === 'function') stopZetDrag();
+    stopDagenDrag();
+    item = pickDagenItem(kind, forcedId);
+    dagenState.kind = kind;
+    dagenState.mode = item.mode;
+    dagenState.id = item.id;
+    dagenState.answer = item.answer || '';
+    dagenState.options = item.options || [];
+    dagenState.prompt = item.prompt;
+    dagenState.speak = item.speak;
+    dagenState.refId = item.refId || '';
+    dagenState.dir = item.dir || '';
+    if (item.mode === 'order') dagenResetState(item);
+    else {
+      dagenState.items = dagenList(kind);
+      dagenState.slots = [];
+      dagenState.locked = [];
+      dagenState.tray = [];
+    }
+    hideReward();
+    hideToast();
+    showScreen('tijdplay');
+    updateStarsUI();
+    promptEl = $('tijd-prompt');
+    if (promptEl) promptEl.innerHTML = item.prompt;
+    klaar = $('tijd-klaar-wrap');
+    choices = $('tijd-choices');
+    wrap = $('tijd-clock');
+    if (item.mode === 'order') {
+      if (klaar) klaar.className = '';
+      if (choices) {
+        choices.className = '';
+        choices.innerHTML = '';
+      }
+      if (wrap) wrap.innerHTML = '';
+      renderDagenOrder();
+    } else {
+      if (klaar) klaar.className = 'is-hidden';
+      renderDagenQuiz(item);
+    }
+    stage = $('tijd-stage');
+    if (stage) {
+      stage.className = 'is-dagen ' + (item.mode === 'order' ? 'is-dagen-order' : 'is-dagen-quiz');
+      stage.setAttribute('data-mode', item.mode);
+      stage.setAttribute('data-kind', kind);
+      stage.setAttribute('data-id', item.id);
+      if (item.answer) stage.setAttribute('data-answer', item.answer);
+      else stage.removeAttribute('data-answer');
+    }
+    beginQuestionVoice();
+    speak(item.speak);
+  }
+
+  function dagenSpeakName(id) {
+    if (id) speak('nm-' + id);
+  }
+
+  function dagenSlotsFull() {
+    var i;
+    for (i = 0; i < dagenState.slots.length; i++) {
+      if (!dagenState.slots[i]) return false;
+    }
+    return dagenState.slots.length > 0;
+  }
+
+  function dagenSlotsCorrect() {
+    var i, list;
+    list = dagenState.items;
+    if (dagenState.slots.length !== list.length) return false;
+    for (i = 0; i < list.length; i++) {
+      if (dagenState.slots[i] !== list[i].id) return false;
+    }
+    return true;
+  }
+
+  function dagenKlaar() {
+    var board;
+    if (state.screen !== 'tijdplay' || state.level !== 'dagen' || state.locked) return;
+    if (dagenState.mode !== 'order') return;
+    if (!dagenSlotsFull()) {
+      playWrong();
+      showToast('Nog niet af!', false);
+      return;
+    }
+    if (dagenSlotsCorrect()) {
+      awardCorrect();
+      return;
+    }
+    playWrong();
+    showToast('Oeps, kijk nog eens!', false);
+    board = $('tijd-cal-board');
+    if (board) {
+      board.className = board.className.replace(/\s*shake/g, '') + ' shake';
+      window.setTimeout(function () {
+        if (board) board.className = board.className.replace(/\s*shake/g, '');
+      }, 500);
+    }
+  }
+
+  function dagenAnswer(btn) {
+    var val;
+    if (state.locked) return;
+    if (state.level !== 'dagen') return;
+    if (dagenState.mode !== 'quiz') return;
+    val = btn.getAttribute('data-value');
+    if (val === dagenState.answer) {
+      btn.className = 'tap tijd-choice tijd-choice-lang is-correct';
+      awardCorrect();
+    } else {
+      playWrong();
+      btn.className = 'tap tijd-choice tijd-choice-lang is-wrong shake';
+    }
+  }
+
+  function dagenPlace(id, slotI) {
+    var cur, i, from;
+    if (slotI < 0 || slotI >= dagenState.slots.length) return false;
+    if (dagenState.locked[slotI]) return false;
+    from = -1;
+    for (i = 0; i < dagenState.slots.length; i++) {
+      if (dagenState.slots[i] === id) from = i;
+    }
+    cur = dagenState.slots[slotI];
+    if (from >= 0) {
+      dagenState.slots[from] = cur;
+      dagenState.slots[slotI] = id;
+    } else {
+      i = dagenState.tray.indexOf(id);
+      if (i >= 0) dagenState.tray.splice(i, 1);
+      if (cur) dagenState.tray.push(cur);
+      dagenState.slots[slotI] = id;
+    }
+    return true;
+  }
+
+  function dagenReturnToTray(id) {
+    var i;
+    for (i = 0; i < dagenState.slots.length; i++) {
+      if (dagenState.slots[i] === id) {
+        if (dagenState.locked[i]) return false;
+        dagenState.slots[i] = null;
+      }
+    }
+    if (!contains(dagenState.tray, id)) dagenState.tray.push(id);
+    return true;
+  }
+
+  function stopDagenDrag() {
+    if (dagenDrag.ghost && dagenDrag.ghost.parentNode) {
+      dagenDrag.ghost.parentNode.removeChild(dagenDrag.ghost);
+    }
+    if (dagenDrag.srcEl) dagenDrag.srcEl.style.opacity = '';
+    dagenDrag.on = false;
+    dagenDrag.id = '';
+    dagenDrag.fromSlot = -1;
+    dagenDrag.ghost = null;
+    dagenDrag.moved = false;
+    dagenDrag.srcEl = null;
+  }
+
+  function dagenEventPoint(e) {
+    var src;
+    if (e.touches && e.touches.length) src = e.touches[0];
+    else if (e.changedTouches && e.changedTouches.length) src = e.changedTouches[0];
+    else src = e;
+    return { x: src.clientX, y: src.clientY };
+  }
+
+  function dagenFindChip(e) {
+    var el;
+    el = e.target;
+    while (el && el !== document.body) {
+      if (el.getAttribute && el.getAttribute('data-dagen-id')) {
+        if ((' ' + el.className + ' ').indexOf(' is-locked ') !== -1) return null;
+        return el;
+      }
+      el = el.parentNode;
+    }
+    return null;
+  }
+
+  function dagenSlotAt(p) {
+    var slots, i, r, tray;
+    slots = document.querySelectorAll ? document.querySelectorAll('#tijd-cal-board .dagen-slot') : [];
+    for (i = 0; i < slots.length; i++) {
+      r = slots[i].getBoundingClientRect();
+      if (p.x >= r.left && p.x <= r.right && p.y >= r.top && p.y <= r.bottom) {
+        return parseInt(slots[i].getAttribute('data-dagen-slot'), 10);
+      }
+    }
+    tray = $('tijd-cal-tray');
+    if (tray) {
+      r = tray.getBoundingClientRect();
+      if (p.x >= r.left - 8 && p.x <= r.right + 8 && p.y >= r.top - 8 && p.y <= r.bottom + 8) return -2;
+    }
+    return -1;
+  }
+
+  function dagenDragStart(e) {
+    var tile, p, r, ghost, id;
+    if (state.screen !== 'tijdplay' || state.level !== 'dagen' || state.locked) return false;
+    if (dagenState.mode !== 'order') return false;
+    tile = dagenFindChip(e);
+    if (!tile) return false;
+    id = tile.getAttribute('data-dagen-id') || '';
+    if (!id) return false;
+    p = dagenEventPoint(e);
+    r = tile.getBoundingClientRect();
+    stopDagenDrag();
+    ghost = tile.cloneNode(true);
+    ghost.className = (ghost.className || '') + ' is-ghost';
+    ghost.style.position = 'fixed';
+    ghost.style.left = r.left + 'px';
+    ghost.style.top = r.top + 'px';
+    ghost.style.width = r.width + 'px';
+    ghost.style.height = r.height + 'px';
+    ghost.style.margin = '0';
+    ghost.style.zIndex = '80';
+    ghost.style.pointerEvents = 'none';
+    document.body.appendChild(ghost);
+    tile.style.opacity = '0.35';
+    dagenDrag.on = true;
+    dagenDrag.id = id;
+    dagenDrag.fromSlot = tile.getAttribute('data-dagen-slot') != null ? parseInt(tile.getAttribute('data-dagen-slot'), 10) : -1;
+    dagenDrag.ghost = ghost;
+    dagenDrag.moved = false;
+    dagenDrag.offX = p.x - r.left;
+    dagenDrag.offY = p.y - r.top;
+    dagenDrag.startX = p.x;
+    dagenDrag.startY = p.y;
+    dagenDrag.w = r.width;
+    dagenDrag.h = r.height;
+    dagenDrag.srcEl = tile;
+    dagenSpeakName(id);
+    return true;
+  }
+
+  function dagenDragMove(e) {
+    var p;
+    if (!dagenDrag.on) return false;
+    p = dagenEventPoint(e);
+    if (!dagenDrag.moved) {
+      if (Math.abs(p.x - dagenDrag.startX) < 8 && Math.abs(p.y - dagenDrag.startY) < 8) return true;
+      dagenDrag.moved = true;
+    }
+    if (dagenDrag.ghost) {
+      dagenDrag.ghost.style.left = (p.x - dagenDrag.offX) + 'px';
+      dagenDrag.ghost.style.top = (p.y - dagenDrag.offY) + 'px';
+    }
+    return true;
+  }
+
+  function dagenDragEnd(e) {
+    var p, slot, ok, id;
+    if (!dagenDrag.on) return false;
+    id = dagenDrag.id;
+    if (!dagenDrag.moved) {
+      stopDagenDrag();
+      lastTouchEnd = new Date().getTime();
+      dagenSpeakName(id);
+      return true;
+    }
+    p = dagenEventPoint(e);
+    slot = dagenSlotAt(p);
+    ok = false;
+    if (slot >= 0) ok = dagenPlace(id, slot);
+    else if (slot === -2 || slot === -1) ok = dagenReturnToTray(id);
+    stopDagenDrag();
+    lastTouchEnd = new Date().getTime();
+    renderDagenOrder();
+    if (ok && dagenSlotsFull()) dagenKlaar();
+    return true;
+  }
+
+
   window.__tijdTest = {
     format: formatNlTime,
     pool: tijdPool,
@@ -17512,6 +18377,17 @@
     startZet: startZet,
     startDigi: startDigi,
     startLang: startLang,
+    startDagen: startDagen,
+    dagenState: function () { return dagenState; },
+    dagenPool: dagenBuildPool,
+    dagenFind: dagenFindItem,
+    dagenNeighbor: dagenNeighbor,
+    dagenPlace: dagenPlace,
+    dagenReturn: dagenReturnToTray,
+    dagenKlaar: dagenKlaar,
+    dagenRender: renderDagenOrder,
+    DAYS: DAGEN_DAYS,
+    MONTHS: DAGEN_MONTHS,
     clockSvg: tijdClockSvg,
     langPool: langPool,
     langFind: langFind,
@@ -17594,6 +18470,9 @@
     }
     if ($('icon-tijd-lang')) {
       $('icon-tijd-lang').innerHTML = langHourglassSvg(72, 56);
+    }
+    if ($('icon-tijd-dagen')) {
+      $('icon-tijd-dagen').innerHTML = dagenWeekIcon(72, 56);
     }
     if ($('icon-klok-hele')) {
       $('icon-klok-hele').innerHTML = tijdClockSvg('clkHele', 3, 0, 72, 56);
