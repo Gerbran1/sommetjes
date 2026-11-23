@@ -548,12 +548,14 @@
       margin: 8px auto 0 auto;
     }
     #tijd-grid .level-btn {
-      -webkit-flex: 0 0 30%;
-      flex: 0 0 30%;
+      -webkit-flex: 0 0 40%;
+      flex: 0 0 40%;
       max-width: 300px;
-      min-height: 220px;
-      max-height: 280px;
+      min-height: 180px;
+      max-height: 240px;
     }
+    .lvl-tijd-lang { background: #FFA000; -webkit-box-shadow: 0 10px 0 #F57C00, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #F57C00, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-tijd-lang.pressed, .lvl-tijd-lang:active { -webkit-box-shadow: 0 2px 0 #F57C00, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #F57C00, 0 4px 8px rgba(0,0,0,0.15); }
     #tijdlevel-grid .level-btn {
       -webkit-flex: 0 0 40%;
       flex: 0 0 40%;
@@ -684,8 +686,41 @@
     #tijd-stage.is-zet #tijd-choices { display: none; }
     #tijd-stage.is-klok #tijd-klaar-wrap { display: none; }
     #tijd-stage.is-digi #tijd-klaar-wrap { display: none; }
+    #tijd-stage.is-lang #tijd-klaar-wrap { display: none; }
     #tijd-prompt {
       font-size: 42px;
+    }
+    #tijd-stage.is-lang #tijd-clock, #tijd-stage.is-lang #tijd-clock svg {
+      width: 100%;
+      height: auto;
+      max-width: 360px;
+      max-height: 260px;
+    }
+    #tijd-stage.is-lang .tijd-choice {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      min-height: 70px;
+      padding: 10px 14px;
+      font-size: 28px;
+      text-align: center;
+    }
+    #tijd-choices.is-n4 {
+      -webkit-flex-direction: row;
+      flex-direction: row;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: space-between;
+      justify-content: space-between;
+    }
+    #tijd-choices.is-n4 .tijd-choice {
+      -webkit-flex: 0 0 48%;
+      flex: 0 0 48%;
+      width: 48%;
+      box-sizing: border-box;
     }
     #tijd-stage.is-digi #tijd-clock, #tijd-stage.is-digi #tijd-clock svg {
       width: 100%;
@@ -745,6 +780,11 @@
       #tijd-stage.is-digi #tijd-choices { width: 48%; max-width: 440px; margin: 0 12px 0 0; }
       #tijd-stage.is-digi .tijd-choice { min-height: 68px; margin: 0 0 8px 0; }
       #tijd-stage.is-digi .tijd-choice svg { height: 68px; max-height: 80px; }
+      #tijd-grid .level-btn { min-height: 120px; max-height: 170px; }
+      #tijd-stage.is-lang #tijd-clock-wrap { width: 44%; max-width: 340px; }
+      #tijd-stage.is-lang #tijd-choices { width: 50%; max-width: 480px; margin: 0 12px 0 0; }
+      #tijd-stage.is-lang .tijd-choice { min-height: 58px; font-size: 24px; margin: 0 0 8px 0; }
+      #tijd-choices.is-n4 .tijd-choice { min-height: 64px; font-size: 24px; }
     }
 
     #program-grid {
@@ -4990,6 +5030,10 @@
           <div class="level-icon" id="icon-tijd-digi"></div>
           <div class="level-label">Analoog en digitaal</div>
         </button>
+        <button type="button" class="tap level-btn lvl-tijd-lang" data-act="tijd-game" data-game="lang">
+          <div class="level-icon" id="icon-tijd-lang"></div>
+          <div class="level-label">Hoe lang is…?</div>
+        </button>
       </div>
     </div>
 
@@ -5787,6 +5831,7 @@
     if (level === 'klok') return 'klok-' + (state.tijdKind || 'hele');
     if (level === 'zet') return 'zet-' + (state.tijdKind || 'hele');
     if (level === 'digi') return 'digi-' + (state.tijdKind || 'helehalve');
+    if (level === 'lang') return 'lang-' + (state.tijdKind || 'easy');
     return level || 'game';
   }
 
@@ -7190,6 +7235,10 @@
     }
     else if (state.level === 'digi') {
       startDigi(false);
+      return;
+    }
+    else if (state.level === 'lang') {
+      startLang(false);
       return;
     }
     else if (state.level === 'weg') {
@@ -15173,9 +15222,10 @@
     }
     if (act === 'tijd-kind') {
       g = state.tijdGame || 'klok';
-      kind = el.getAttribute('data-kind') || ((g === 'digi') ? 'helehalve' : 'hele');
+      kind = el.getAttribute('data-kind') || (g === 'digi' ? 'helehalve' : (g === 'lang' ? 'easy' : 'hele'));
       if (g === 'zet') startZet(kind, true);
       else if (g === 'digi') startDigi(kind, true);
+      else if (g === 'lang') startLang(kind, true);
       else startKlok(kind, true);
       return;
     }
@@ -15189,6 +15239,10 @@
     }
     if (act === 'digi-answer') {
       digiAnswer(el);
+      return;
+    }
+    if (act === 'lang-answer') {
+      langAnswer(el);
       return;
     }
     if (act === 'geld-game') {
@@ -16562,6 +16616,7 @@
     hideReward();
     if (game === 'zet') title = 'Zet de klok';
     else if (game === 'digi') title = 'Analoog en digitaal';
+    else if (game === 'lang') title = 'Hoe lang is…?';
     else title = 'Klok kijken';
     el = $('tijdlevel-prompt');
     if (el) el.innerHTML = title;
@@ -17026,22 +17081,53 @@
     };
   }
 
+  function langHideBtn(el, hidden) {
+    if (!el) return;
+    if (hidden) {
+      if ((' ' + el.className + ' ').indexOf(' is-hidden ') === -1) el.className += ' is-hidden';
+    } else {
+      el.className = el.className.replace(/\s*is-hidden/g, '');
+    }
+  }
+
   function setTijdLevelButtons(game) {
-    var hele, halve, lab;
+    var hele, halve, kwart, vijf, lab, lab2;
     hele = $('tijd-kind-hele');
     halve = $('tijd-kind-halve');
+    kwart = $('tijd-kind-kwart');
+    vijf = $('tijd-kind-vijf');
     if (!hele) return;
     lab = hele.querySelector ? hele.querySelector('.level-label') : null;
+    lab2 = (halve && halve.querySelector) ? halve.querySelector('.level-label') : null;
+    if (game === 'lang') {
+      hele.setAttribute('data-kind', 'easy');
+      if (lab) lab.innerHTML = 'Makkelijk';
+      if ($('icon-klok-hele')) $('icon-klok-hele').innerHTML = langVisSunMoon();
+      if (halve) {
+        halve.setAttribute('data-kind', 'hard');
+        if (lab2) lab2.innerHTML = 'Moeilijk';
+      }
+      if ($('icon-klok-halve')) $('icon-klok-halve').innerHTML = langHourglassSvg(72, 56);
+      langHideBtn(halve, false);
+      langHideBtn(kwart, true);
+      langHideBtn(vijf, true);
+      return;
+    }
+    langHideBtn(halve, false);
+    langHideBtn(kwart, false);
+    langHideBtn(vijf, false);
+    if (halve) halve.setAttribute('data-kind', 'halve');
+    if (lab2) lab2.innerHTML = 'Halve uren';
+    if ($('icon-klok-halve')) $('icon-klok-halve').innerHTML = tijdClockSvg('clkHalve', 6, 30, 72, 56);
     if (game === 'digi') {
       hele.setAttribute('data-kind', 'helehalve');
       if (lab) lab.innerHTML = 'Hele en halve uren';
       if ($('icon-klok-hele')) $('icon-klok-hele').innerHTML = tijdClockSvg('clkHele', 6, 30, 72, 56);
-      if (halve && (' ' + halve.className + ' ').indexOf(' is-hidden ') === -1) halve.className += ' is-hidden';
+      langHideBtn(halve, true);
     } else {
       hele.setAttribute('data-kind', 'hele');
       if (lab) lab.innerHTML = 'Hele uren';
       if ($('icon-klok-hele')) $('icon-klok-hele').innerHTML = tijdClockSvg('clkHele', 3, 0, 72, 56);
-      if (halve) halve.className = halve.className.replace(/\s*is-hidden/g, '');
     }
   }
 
@@ -17146,13 +17232,267 @@
   }
 
 
+
+  var langState = { kind: 'easy', id: '', answer: '', options: [], prompt: '', vis: '' };
+
+  var LANG_Q = [
+    { id: 'uur', easy: 1, speak: 'lang-uur', prompt: 'Hoe lang is een uur?', answer: '60 minuten', options: ['60 minuten', '24 minuten', '12 minuten', '30 minuten'], vis: 'clock' },
+    { id: 'dag', easy: 1, speak: 'lang-dag', prompt: 'Hoe lang is een dag?', answer: '24 uur', options: ['24 uur', '12 uur', '7 uur', '60 uur'], vis: 'sunmoon' },
+    { id: 'week', easy: 1, speak: 'lang-week', prompt: 'Hoe lang is een week?', answer: '7 dagen', options: ['7 dagen', '5 dagen', '10 dagen', '12 dagen'], vis: 'week' },
+    { id: 'minuut', easy: 0, speak: 'lang-minuut', prompt: 'Hoe lang is een minuut?', answer: '60 seconden', options: ['60 seconden', '30 seconden', '100 seconden', '24 seconden'], vis: 'stopwatch' },
+    { id: 'jaar-maand', easy: 0, speak: 'lang-jaar-maand', prompt: 'Hoeveel maanden heeft een jaar?', answer: '12', options: ['12', '10', '7', '24'], vis: 'months' },
+    { id: 'jaar-week', easy: 0, speak: 'lang-jaar-week', prompt: 'Hoeveel weken heeft een jaar?', answer: '52', options: ['52', '12', '60', '365'], vis: 'year' },
+    { id: 'jaar-dag', easy: 0, speak: 'lang-jaar-dag', prompt: 'Hoeveel dagen heeft een jaar?', answer: '365', options: ['365', '52', '100', '12'], vis: 'year' },
+    { id: 'l-mu', easy: 1, speak: 'lang-l-mu', prompt: 'Wat duurt langer: een minuut of een uur?', answer: 'een uur', options: ['een uur', 'een minuut', 'even lang'], vis: 'clock' },
+    { id: 'k-dw', easy: 1, speak: 'lang-k-dw', prompt: 'Wat is korter: een dag of een week?', answer: 'een dag', options: ['een dag', 'een week', 'even lang'], vis: 'sunmoon' },
+    { id: 'l-ud', easy: 1, speak: 'lang-l-ud', prompt: 'Wat duurt langer: een uur of een dag?', answer: 'een dag', options: ['een dag', 'een uur', 'even lang'], vis: 'sunmoon' },
+    { id: 'k-mu', easy: 1, speak: 'lang-k-mu', prompt: 'Wat is korter: een minuut of een uur?', answer: 'een minuut', options: ['een minuut', 'een uur', 'even lang'], vis: 'clock' },
+    { id: 'l-dw', easy: 1, speak: 'lang-l-dw', prompt: 'Wat duurt langer: een dag of een week?', answer: 'een week', options: ['een week', 'een dag', 'even lang'], vis: 'week' },
+    { id: 'k-ud', easy: 1, speak: 'lang-k-ud', prompt: 'Wat is korter: een uur of een dag?', answer: 'een uur', options: ['een uur', 'een dag', 'even lang'], vis: 'clock' },
+    { id: 'l-sm', easy: 0, speak: 'lang-l-sm', prompt: 'Wat duurt langer: een seconde of een minuut?', answer: 'een minuut', options: ['een minuut', 'een seconde', 'even lang'], vis: 'stopwatch' },
+    { id: 'k-sm', easy: 0, speak: 'lang-k-sm', prompt: 'Wat is korter: een seconde of een minuut?', answer: 'een seconde', options: ['een seconde', 'een minuut', 'even lang'], vis: 'stopwatch' },
+    { id: 'l-mj', easy: 0, speak: 'lang-l-mj', prompt: 'Wat duurt langer: een maand of een jaar?', answer: 'een jaar', options: ['een jaar', 'een maand', 'even lang'], vis: 'months' },
+    { id: 'k-mj', easy: 0, speak: 'lang-k-mj', prompt: 'Wat is korter: een maand of een jaar?', answer: 'een maand', options: ['een maand', 'een jaar', 'even lang'], vis: 'months' },
+    { id: 'l-wj', easy: 0, speak: 'lang-l-wj', prompt: 'Wat duurt langer: een week of een jaar?', answer: 'een jaar', options: ['een jaar', 'een week', 'even lang'], vis: 'year' },
+    { id: 'k-wj', easy: 0, speak: 'lang-k-wj', prompt: 'Wat is korter: een week of een jaar?', answer: 'een week', options: ['een week', 'een jaar', 'even lang'], vis: 'year' },
+    { id: 'l-wm', easy: 0, speak: 'lang-l-wm', prompt: 'Wat duurt langer: een week of een maand?', answer: 'een maand', options: ['een maand', 'een week', 'even lang'], vis: 'week' }
+  ];
+
+  function langHourglassSvg(w, ht) {
+    w = w || 72;
+    ht = ht || 56;
+    return '<svg viewBox="0 0 72 56" width="' + w + '" height="' + ht + '" aria-hidden="true">' +
+      '<rect x="22" y="6" width="28" height="6" rx="2" fill="#8D6E63" stroke="#5D4037" stroke-width="2"/>' +
+      '<rect x="22" y="44" width="28" height="6" rx="2" fill="#8D6E63" stroke="#5D4037" stroke-width="2"/>' +
+      '<path d="M26 12 L36 28 L46 12 Z" fill="#FFF8E1" stroke="#5D4037" stroke-width="2" stroke-linejoin="round"/>' +
+      '<path d="M26 44 L36 28 L46 44 Z" fill="#FFF8E1" stroke="#5D4037" stroke-width="2" stroke-linejoin="round"/>' +
+      '<path d="M30 16 L36 26 L42 16 Z" fill="#FFB74D"/>' +
+      '<path d="M32 40 L36 36 L40 40 L40 42 L32 42 Z" fill="#FFB74D"/>' +
+      '</svg>';
+  }
+
+  function langVisStopwatch() {
+    return '<svg viewBox="0 0 200 160" width="200" height="160" aria-hidden="true">' +
+      '<rect x="86" y="8" width="28" height="14" rx="4" fill="#90A4AE" stroke="#455A64" stroke-width="2"/>' +
+      '<circle cx="118" cy="18" r="8" fill="none" stroke="#455A64" stroke-width="3"/>' +
+      '<circle cx="100" cy="92" r="62" fill="#ECEFF1" stroke="#37474F" stroke-width="6"/>' +
+      '<circle cx="100" cy="92" r="52" fill="#FFF8E1"/>' +
+      '<circle cx="100" cy="92" r="4" fill="#E53935"/>' +
+      '<line x1="100" y1="92" x2="100" y2="48" stroke="#E53935" stroke-width="5" stroke-linecap="round"/>' +
+      '<line x1="100" y1="40" x2="100" y2="48" stroke="#37474F" stroke-width="3"/>' +
+      '<line x1="100" y1="136" x2="100" y2="144" stroke="#37474F" stroke-width="3"/>' +
+      '<line x1="48" y1="92" x2="56" y2="92" stroke="#37474F" stroke-width="3"/>' +
+      '<line x1="144" y1="92" x2="152" y2="92" stroke="#37474F" stroke-width="3"/>' +
+      '</svg>';
+  }
+
+  function langVisSunMoon() {
+    return '<svg viewBox="0 0 200 160" width="200" height="160" aria-hidden="true">' +
+      '<circle cx="70" cy="80" r="32" fill="#FFD54F" stroke="#F9A825" stroke-width="3"/>' +
+      '<path d="M70 36 L70 24 M70 136 L70 124 M34 80 L22 80 M118 80 L106 80 M45 45 L36 36 M105 45 L114 36 M45 115 L36 124 M105 115 L114 124" stroke="#FFD54F" stroke-width="4" stroke-linecap="round"/>' +
+      '<path d="M150 58 A28 28 0 1 0 150 114 A22 22 0 1 1 150 58 Z" fill="#FFF8E1" stroke="#F9A825" stroke-width="2"/>' +
+      '<circle cx="168" cy="52" r="2.5" fill="#FFF8E1"/>' +
+      '<circle cx="180" cy="70" r="2" fill="#FFF8E1"/>' +
+      '</svg>';
+  }
+
+  function langVisWeek() {
+    var i, x, html, letters, col;
+    letters = ['M', 'D', 'W', 'D', 'V', 'Z', 'Z'];
+    html = '<svg viewBox="0 0 200 160" width="200" height="160" aria-hidden="true">' +
+      '<rect x="16" y="28" width="168" height="108" rx="14" fill="#FFF8E1" stroke="#6D4C41" stroke-width="3"/>' +
+      '<rect x="16" y="28" width="168" height="28" rx="14" fill="#E53935"/>' +
+      '<rect x="16" y="42" width="168" height="14" fill="#E53935"/>' +
+      '<text x="100" y="48" text-anchor="middle" font-size="14" font-weight="700" fill="#FFF8E1" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">week</text>';
+    for (i = 0; i < 7; i++) {
+      x = 26 + i * 22;
+      col = (i >= 5) ? '#BBDEFB' : '#FFFDE7';
+      html += '<rect x="' + x + '" y="70" width="20" height="48" rx="4" fill="' + col + '" stroke="#6D4C41" stroke-width="1.5"/>' +
+        '<text x="' + (x + 10) + '" y="88" text-anchor="middle" font-size="11" font-weight="700" fill="#1A237E" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">' + letters[i] + '</text>' +
+        '<text x="' + (x + 10) + '" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="#37474F" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">' + (i + 1) + '</text>';
+    }
+    html += '</svg>';
+    return html;
+  }
+
+  function langVisMonths() {
+    var i, x, y, html;
+    html = '<svg viewBox="0 0 200 160" width="200" height="160" aria-hidden="true">' +
+      '<rect x="28" y="18" width="144" height="128" rx="12" fill="#FFF8E1" stroke="#6D4C41" stroke-width="3"/>' +
+      '<rect x="28" y="18" width="144" height="26" rx="12" fill="#43A047"/>' +
+      '<rect x="28" y="32" width="144" height="12" fill="#43A047"/>' +
+      '<text x="100" y="38" text-anchor="middle" font-size="14" font-weight="700" fill="#FFF8E1" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">jaar</text>';
+    for (i = 0; i < 12; i++) {
+      x = 44 + (i % 4) * 30;
+      y = 56 + Math.floor(i / 4) * 26;
+      html += '<rect x="' + x + '" y="' + y + '" width="22" height="20" rx="3" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5"/>' +
+        '<text x="' + (x + 11) + '" y="' + (y + 15) + '" text-anchor="middle" font-size="10" font-weight="700" fill="#1B5E20" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">' + (i + 1) + '</text>';
+    }
+    html += '</svg>';
+    return html;
+  }
+
+  function langVisYear() {
+    return '<svg viewBox="0 0 200 160" width="200" height="160" aria-hidden="true">' +
+      '<rect x="36" y="22" width="128" height="118" rx="12" fill="#FFF8E1" stroke="#6D4C41" stroke-width="3"/>' +
+      '<rect x="36" y="22" width="128" height="28" rx="12" fill="#5C6BC0"/>' +
+      '<rect x="36" y="36" width="128" height="14" fill="#5C6BC0"/>' +
+      '<text x="100" y="42" text-anchor="middle" font-size="16" font-weight="700" fill="#FFF8E1" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">jaar</text>' +
+      '<circle cx="74" cy="92" r="22" fill="#FFD54F" stroke="#F9A825" stroke-width="2"/>' +
+      '<rect x="108" y="70" width="40" height="50" rx="4" fill="#E8EAF6" stroke="#3949AB" stroke-width="2"/>' +
+      '<line x1="116" y1="82" x2="140" y2="82" stroke="#9FA8DA" stroke-width="3" stroke-linecap="round"/>' +
+      '<line x1="116" y1="94" x2="140" y2="94" stroke="#9FA8DA" stroke-width="3" stroke-linecap="round"/>' +
+      '<line x1="116" y1="106" x2="132" y2="106" stroke="#9FA8DA" stroke-width="3" stroke-linecap="round"/>' +
+      '</svg>';
+  }
+
+  function langVisual(name) {
+    if (name === 'stopwatch') return langVisStopwatch();
+    if (name === 'sunmoon') return langVisSunMoon();
+    if (name === 'week') return langVisWeek();
+    if (name === 'months') return langVisMonths();
+    if (name === 'year') return langVisYear();
+    return tijdClockSvg('langClk', 3, 0, 200, 200);
+  }
+
+  function langPool(kind) {
+    var i, list;
+    list = [];
+    for (i = 0; i < LANG_Q.length; i++) {
+      if (kind === 'hard' || LANG_Q[i].easy) list.push(LANG_Q[i]);
+    }
+    return list;
+  }
+
+  function langFind(id) {
+    var i;
+    for (i = 0; i < LANG_Q.length; i++) {
+      if (LANG_Q[i].id === id) return LANG_Q[i];
+    }
+    return null;
+  }
+
+  function pickLangItem(kind, forcedId) {
+    var pool, keys, key, i, item, opts;
+    pool = langPool(kind);
+    if (forcedId) {
+      item = langFind(forcedId);
+      if (item) {
+        rememberRoundKey(item.id);
+      }
+    }
+    if (!item) {
+      keys = [];
+      for (i = 0; i < pool.length; i++) keys.push(pool[i].id);
+      key = pickAvoiding(keys);
+      if (!key) key = keys[Math.floor(Math.random() * keys.length)];
+      rememberRoundKey(key);
+      item = langFind(key);
+    }
+    opts = item.options.slice();
+    tijdShuffle(opts);
+    return { id: item.id, prompt: item.prompt, speak: item.speak, answer: item.answer, options: opts, vis: item.vis };
+  }
+
+  function startLang(kind, fresh, forcedId) {
+    var item, wrap, promptEl, choices, klaar, stage, i, btn;
+    if (typeof kind === 'boolean') {
+      forcedId = fresh;
+      fresh = kind;
+      kind = '';
+    }
+    if (kind) state.tijdKind = kind;
+    kind = state.tijdKind || 'easy';
+    state.tijdGame = 'lang';
+    state.level = 'lang';
+    state.locked = false;
+    if (fresh) {
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+      resetVoiceCycle();
+      state.lastWasPersonal = false;
+    }
+    if (typeof stopZetDrag === 'function') stopZetDrag();
+    item = pickLangItem(kind, forcedId);
+    langState.kind = kind;
+    langState.id = item.id;
+    langState.answer = item.answer;
+    langState.options = item.options;
+    langState.prompt = item.prompt;
+    langState.vis = item.vis;
+    hideReward();
+    hideToast();
+    showScreen('tijdplay');
+    updateStarsUI();
+    promptEl = $('tijd-prompt');
+    if (promptEl) promptEl.innerHTML = item.prompt;
+    klaar = $('tijd-klaar-wrap');
+    if (klaar) klaar.className = 'is-hidden';
+    wrap = $('tijd-clock');
+    if (wrap) wrap.innerHTML = langVisual(item.vis);
+    choices = $('tijd-choices');
+    if (choices) {
+      choices.className = (item.options.length >= 4) ? 'is-n4' : '';
+      choices.innerHTML = '';
+      for (i = 0; i < item.options.length; i++) {
+        btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tap tijd-choice tijd-choice-lang';
+        btn.setAttribute('data-act', 'lang-answer');
+        btn.setAttribute('data-value', item.options[i]);
+        if (item.options[i] === item.answer) btn.setAttribute('data-ok', '1');
+        btn.innerHTML = item.options[i];
+        choices.appendChild(btn);
+      }
+    }
+    stage = $('tijd-stage');
+    if (stage) {
+      stage.className = 'is-lang';
+      stage.setAttribute('data-mode', 'lang');
+      stage.setAttribute('data-kind', kind);
+      stage.setAttribute('data-id', item.id);
+      stage.setAttribute('data-answer', item.answer);
+      stage.setAttribute('data-vis', item.vis);
+    }
+    beginQuestionVoice();
+    speak(item.speak);
+  }
+
+  function langAnswer(btn) {
+    var val;
+    if (state.locked) return;
+    if (state.level !== 'lang') return;
+    val = btn.getAttribute('data-value');
+    if (val === langState.answer) {
+      btn.className = 'tap tijd-choice tijd-choice-lang is-correct';
+      awardCorrect();
+    } else {
+      playWrong();
+      btn.className = 'tap tijd-choice tijd-choice-lang is-wrong shake';
+      showToast('Probeer nog eens', false);
+      speak('klok-fout');
+      window.setTimeout(function () {
+        if (btn && btn.className.indexOf('is-correct') === -1) {
+          btn.className = 'tap tijd-choice tijd-choice-lang is-wrong';
+        }
+      }, 450);
+    }
+  }
+
+
   window.__tijdTest = {
     format: formatNlTime,
     pool: tijdPool,
     start: startKlok,
     startZet: startZet,
     startDigi: startDigi,
+    startLang: startLang,
     clockSvg: tijdClockSvg,
+    langPool: langPool,
+    langFind: langFind,
+    langVisual: langVisual,
+    langState: function () { return langState; },
+    LANG_Q: LANG_Q,
     digiSvg: tijdDigiSvg,
     formatDigi: formatDigiTime,
     swapTime: digiSwapTime,
@@ -17222,6 +17562,9 @@
     }
     if ($('icon-tijd-digi')) {
       $('icon-tijd-digi').innerHTML = tijdDigiSvg('clkDigiMenu', 6, 15, 72, 56);
+    }
+    if ($('icon-tijd-lang')) {
+      $('icon-tijd-lang').innerHTML = langHourglassSvg(72, 56);
     }
     if ($('icon-klok-hele')) {
       $('icon-klok-hele').innerHTML = tijdClockSvg('clkHele', 3, 0, 72, 56);
