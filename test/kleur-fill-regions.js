@@ -37,9 +37,9 @@ const LEAK_SAMPLES = {
   kasteel: [{ x: 512, y: 680, name: 'gracht' }, { x: 500, y: 400, name: 'muur' }],
   raket: [{ x: 512, y: 300, name: 'raket' }, { x: 200, y: 150, name: 'maan' }],
   vliegtuig: [{ x: 500, y: 350, name: 'toestel' }, { x: 180, y: 680, name: 'wolk' }],
-  alien: [{ x: 250, y: 430, name: 'lijf' }, { x: 180, y: 620, name: 'tentakel' }, { x: 750, y: 430, name: 'schotel' }, { x: 700, y: 700, name: 'grond' }],
-  saturnus: [{ x: 300, y: 400, name: 'raket' }, { x: 720, y: 420, name: 'saturnus' }, { x: 400, y: 530, name: 'vlam' }, { x: 130, y: 150, name: 'maan' }],
-  poes: [{ x: 500, y: 400, name: 'poes' }, { x: 300, y: 560, name: 'plank' }, { x: 512, y: 720, name: 'gras' }, { x: 100, y: 100, name: 'zon' }]
+  alien: [{ x: 280, y: 430, name: 'lijf' }, { x: 200, y: 700, name: 'grond' }, { x: 700, y: 280, name: 'koepel' }],
+  saturnus: [{ x: 360, y: 380, name: 'raket' }, { x: 750, y: 220, name: 'saturnus' }, { x: 250, y: 540, name: 'vlam' }],
+  poes: [{ x: 430, y: 360, name: 'poes' }, { x: 700, y: 550, name: 'plank' }, { x: 512, y: 720, name: 'gras' }, { x: 120, y: 90, name: 'zon' }]
 };
 
 async function waitOutline(page) {
