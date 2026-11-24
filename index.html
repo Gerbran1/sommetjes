@@ -4528,14 +4528,15 @@
     #teken-title { font-size: 32px; -webkit-flex: 1 1 auto; flex: 1 1 auto; text-align: center; margin: 0; }
     #teken-stage {
       position: relative;
-      -webkit-flex: 1 1 auto;
-      flex: 1 1 auto;
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
       width: 100%;
+      max-width: 100%;
       min-height: 0;
       background: #FFFDF7;
       border-radius: 18px;
       overflow: hidden;
-      margin: 0 10px;
+      margin: 4px auto;
       -webkit-box-shadow: 0 6px 0 rgba(0,0,0,0.08);
       box-shadow: 0 6px 0 rgba(0,0,0,0.08);
     }
@@ -10487,11 +10488,14 @@
     { id: 'monstertruck', label: 'Monstertruck', src: 'img/kleurplaten/monstertruck.png' },
     { id: 'dino', label: 'Dino', src: 'img/kleurplaten/dino.png' },
     { id: 'raket', label: 'Raket', src: 'img/kleurplaten/raket.png' },
+    { id: 'saturnus', label: 'Saturnus', src: 'img/kleurplaten/saturnus.png' },
+    { id: 'alien', label: 'Alien', src: 'img/kleurplaten/alien.png' },
     { id: 'draak', label: 'Draak', src: 'img/kleurplaten/draak.png' },
     { id: 'eenhoorn', label: 'Eenhoorn', src: 'img/kleurplaten/eenhoorn.png' },
     { id: 'brandweerauto', label: 'Brandweerauto', src: 'img/kleurplaten/brandweerauto.png' },
     { id: 'piratenschip', label: 'Piratenschip', src: 'img/kleurplaten/piratenschip.png' },
     { id: 'boerderijdieren', label: 'Boerderijdieren', src: 'img/kleurplaten/boerderijdieren.png' },
+    { id: 'poes', label: 'Poes', src: 'img/kleurplaten/poes.png' },
     { id: 'kasteel', label: 'Kasteel', src: 'img/kleurplaten/kasteel.png' },
     { id: 'vliegtuig', label: 'Vliegtuig', src: 'img/kleurplaten/vliegtuig.png' },
     { id: 'prinses', label: 'Prinses', src: 'img/kleurplaten/prinses.png' },
@@ -10515,6 +10519,15 @@
     undoPushed: false
   };
   var TEKEN_UNDO_MAX = 20;
+  var TEKEN_PIXEL_LIMIT = 2500000;
+
+  function tekenUndoLimit(w, h) {
+    var max;
+    max = Math.floor(36000000 / Math.max(1, w * h * 4));
+    if (max > TEKEN_UNDO_MAX) max = TEKEN_UNDO_MAX;
+    if (max < 4) max = 4;
+    return max;
+  }
 
   function tekenThickPx() {
     var t = tekenState.thick || 2;
@@ -10574,11 +10587,12 @@
     tctx = tmp.getContext('2d');
     if (!tctx) return;
     tctx.clearRect(0, 0, w, h);
-    tctx.imageSmoothingEnabled = false;
-    if (tctx.webkitImageSmoothingEnabled !== undefined) tctx.webkitImageSmoothingEnabled = false;
-    if (tctx.mozImageSmoothingEnabled !== undefined) tctx.mozImageSmoothingEnabled = false;
-    if (tctx.msImageSmoothingEnabled !== undefined) tctx.msImageSmoothingEnabled = false;
-    drawImageContained(tctx, img, w, h, Math.round(Math.min(w, h) * 0.03));
+    /* Downscale high-res line art with smoothing, then threshold so edges stay sharp walls. */
+    tctx.imageSmoothingEnabled = true;
+    if (tctx.webkitImageSmoothingEnabled !== undefined) tctx.webkitImageSmoothingEnabled = true;
+    if (tctx.mozImageSmoothingEnabled !== undefined) tctx.mozImageSmoothingEnabled = true;
+    if (tctx.msImageSmoothingEnabled !== undefined) tctx.msImageSmoothingEnabled = true;
+    tctx.drawImage(img, 0, 0, w, h);
     imgd = tctx.getImageData(0, 0, w, h);
     data = imgd.data;
     n = data.length;
@@ -10604,8 +10618,25 @@
       }
     }
     thickenOutlineInk(data, w, h);
+    strokeOutlineFrame(data, w, h);
     ctx.clearRect(0, 0, w, h);
     ctx.putImageData(imgd, 0, 0);
+  }
+
+  function strokeOutlineFrame(data, w, h) {
+    var t, x, y, p;
+    t = Math.max(6, Math.round(Math.min(w, h) * 0.01));
+    for (y = 0; y < h; y++) {
+      for (x = 0; x < w; x++) {
+        if (x < t || y < t || x >= w - t || y >= h - t) {
+          p = (y * w + x) * 4;
+          data[p] = 20;
+          data[p + 1] = 20;
+          data[p + 2] = 20;
+          data[p + 3] = 255;
+        }
+      }
+    }
   }
 
   function thickenOutlineInk(data, w, h) {
@@ -10736,15 +10767,36 @@
     paper = $('teken-paper');
     outline = $('teken-outline');
     if (!stage || !paper || !outline) return;
-    cssW = stage.clientWidth || 640;
-    cssH = stage.clientHeight || 400;
+    (function () {
+      var screenEl, topbar, dock, availW, availH, side;
+      screenEl = $('screen-teken');
+      topbar = screenEl ? screenEl.querySelector('.topbar') : null;
+      dock = $('teken-dock');
+      availW = ((screenEl && screenEl.clientWidth) || 640) - 20;
+      availH = (screenEl && screenEl.clientHeight) || 400;
+      if (topbar) availH -= topbar.offsetHeight || 0;
+      if (dock) availH -= dock.offsetHeight || 0;
+      availH -= 8;
+      if (availW < 40) availW = 40;
+      if (availH < 40) availH = 40;
+      side = Math.min(availW / 4, availH / 3);
+      cssW = Math.round(side * 4);
+      cssH = Math.round(side * 3);
+    }());
     if (cssW < 20 || cssH < 20) return;
     dpr = window.devicePixelRatio || 1;
-    limit = 900000;
-    if (cssW * cssH * dpr * dpr > limit) dpr = 1;
-    if (dpr > 1.5) dpr = 1.5;
+    /* Supersample on 1x screens (iPad 2) so line art stays crisp; cap at 2 for memory. */
+    if (dpr < 2) dpr = 2;
+    if (dpr > 2) dpr = 2;
+    limit = TEKEN_PIXEL_LIMIT;
+    if (cssW * cssH * dpr * dpr > limit) {
+      dpr = Math.sqrt(limit / (cssW * cssH));
+      if (dpr < 1) dpr = 1;
+    }
     w = Math.round(cssW * dpr);
     h = Math.round(cssH * dpr);
+    stage.style.width = cssW + 'px';
+    stage.style.height = cssH + 'px';
     paper.width = w;
     paper.height = h;
     paper.style.width = cssW + 'px';
@@ -10761,6 +10813,7 @@
     if (tekenState.mode === 'kleur' && tekenState.page) {
       paintKleurOutline(w, h, tekenState.page);
     }
+    tekenState.undoMax = tekenUndoLimit(w, h);
     resetTekenUndo();
   }
 
@@ -10940,26 +10993,52 @@
     tol = 48;
     seen = new Uint8Array(w * h);
     stack = [x, y];
+    function canFillAt(fx, fy) {
+      var fpos, fidx, fr, fg, fb, fa;
+      if (fx < 0 || fy < 0 || fx >= w || fy >= h) return false;
+      fpos = fy * w + fx;
+      if (seen[fpos]) return false;
+      fidx = fpos * 4;
+      if (odata && odata[fidx + 3] > 40) return false;
+      fr = data[fidx]; fg = data[fidx + 1]; fb = data[fidx + 2]; fa = data[fidx + 3];
+      if ((0.299 * fr + 0.587 * fg + 0.114 * fb) < 140 && fa > 40) return false;
+      if (Math.abs(fr - sr) > tol || Math.abs(fg - sg) > tol || Math.abs(fb - sb) > tol || Math.abs(fa - sa) > tol) return false;
+      return true;
+    }
     while (stack.length) {
       py = stack.pop();
       px = stack.pop();
-      if (px < 0 || py < 0 || px >= w || py >= h) continue;
-      pos = py * w + px;
-      if (seen[pos]) continue;
-      seen[pos] = 1;
-      idx = pos * 4;
-      if (odata && odata[idx + 3] > 40) continue;
-      cr = data[idx]; cg = data[idx + 1]; cb = data[idx + 2]; ca = data[idx + 3];
-      if ((0.299 * cr + 0.587 * cg + 0.114 * cb) < 140 && ca > 40) continue;
-      if (Math.abs(cr - sr) > tol || Math.abs(cg - sg) > tol || Math.abs(cb - sb) > tol || Math.abs(ca - sa) > tol) continue;
-      data[idx] = fill.r;
-      data[idx + 1] = fill.g;
-      data[idx + 2] = fill.b;
-      data[idx + 3] = 255;
-      stack.push(px + 1, py);
-      stack.push(px - 1, py);
-      stack.push(px, py + 1);
-      stack.push(px, py - 1);
+      if (!canFillAt(px, py)) continue;
+      /* Scanline fill: paint the whole horizontal span, then seed the rows above and below. */
+      while (canFillAt(px - 1, py)) px -= 1;
+      wall = false;
+      seed = false;
+      while (px < w && canFillAt(px, py)) {
+        pos = py * w + px;
+        seen[pos] = 1;
+        idx = pos * 4;
+        data[idx] = fill.r;
+        data[idx + 1] = fill.g;
+        data[idx + 2] = fill.b;
+        data[idx + 3] = 255;
+        if (canFillAt(px, py - 1)) {
+          if (!wall) {
+            stack.push(px, py - 1);
+            wall = true;
+          }
+        } else {
+          wall = false;
+        }
+        if (canFillAt(px, py + 1)) {
+          if (!seed) {
+            stack.push(px, py + 1);
+            seed = true;
+          }
+        } else {
+          seed = false;
+        }
+        px += 1;
+      }
     }
     pctx.putImageData(img, 0, 0);
   }
@@ -11067,7 +11146,7 @@
     }
     if (!tekenState.undo) tekenState.undo = [];
     tekenState.undo.push(img);
-    while (tekenState.undo.length > TEKEN_UNDO_MAX) tekenState.undo.shift();
+    while (tekenState.undo.length > (tekenState.undoMax || TEKEN_UNDO_MAX)) tekenState.undo.shift();
     updateTekenUndoBtn();
   }
 

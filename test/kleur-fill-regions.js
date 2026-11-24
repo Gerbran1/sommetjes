@@ -2,7 +2,9 @@
 /**
  * For every kleurplaat, flood-fill sample points on the live canvas and
  * assert that a fill stays under ~25% of the canvas, except the intended
- * background (the region that touches the canvas border / paper edge).
+ * background (the region just inside the ink frame).
+ *
+ * Also checks that the drawing canvas is 4:3 at the higher internal resolution.
  *
  * Serve the app at http://127.0.0.1:8765 then:
  *   NODE_PATH=/path/to/node_modules node test/kleur-fill-regions.js
@@ -13,13 +15,15 @@ const wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms)
 const APP = process.env.APP_URL || 'http://127.0.0.1:8765/index.html';
 const CHROME = process.env.CHROME || '/usr/bin/google-chrome';
 const MAX_INNER_PCT = 25;
+const MIN_CANVAS_PIXELS = 1400000;
 
 const PAGES = [
-  'monstertruck', 'dino', 'raket', 'draak', 'eenhoorn', 'brandweerauto',
-  'piratenschip', 'boerderijdieren', 'kasteel', 'vliegtuig', 'prinses', 'onderwater'
+  'monstertruck', 'dino', 'raket', 'saturnus', 'alien', 'draak', 'eenhoorn',
+  'brandweerauto', 'piratenschip', 'boerderijdieren', 'poes', 'kasteel',
+  'vliegtuig', 'prinses', 'onderwater'
 ];
 
-/* Known spots that used to leak into the sky / half the page (PNG 1024x768). */
+/* Known spots in logical 1024x768 art space (hi-res sources are 2048x1536). */
 const LEAK_SAMPLES = {
   monstertruck: [{ x: 512, y: 620, name: 'heuvel' }, { x: 121, y: 87, name: 'ster' }, { x: 635, y: 308, name: 'portier' }],
   dino: [{ x: 191, y: 124, name: 'rook' }, { x: 500, y: 720, name: 'grond' }, { x: 910, y: 418, name: 'palmstam' }, { x: 600, y: 400, name: 'dino' }],
@@ -32,7 +36,10 @@ const LEAK_SAMPLES = {
   eenhoorn: [{ x: 500, y: 350, name: 'regenboog' }, { x: 400, y: 200, name: 'lijf' }],
   kasteel: [{ x: 512, y: 680, name: 'gracht' }, { x: 500, y: 400, name: 'muur' }],
   raket: [{ x: 512, y: 300, name: 'raket' }, { x: 200, y: 150, name: 'maan' }],
-  vliegtuig: [{ x: 500, y: 350, name: 'toestel' }, { x: 200, y: 500, name: 'wolk' }]
+  vliegtuig: [{ x: 500, y: 350, name: 'toestel' }, { x: 180, y: 680, name: 'wolk' }],
+  alien: [{ x: 250, y: 430, name: 'lijf' }, { x: 180, y: 620, name: 'tentakel' }, { x: 750, y: 430, name: 'schotel' }, { x: 700, y: 700, name: 'grond' }],
+  saturnus: [{ x: 300, y: 400, name: 'raket' }, { x: 720, y: 420, name: 'saturnus' }, { x: 400, y: 530, name: 'vlam' }, { x: 130, y: 150, name: 'maan' }],
+  poes: [{ x: 500, y: 400, name: 'poes' }, { x: 300, y: 560, name: 'plank' }, { x: 512, y: 720, name: 'gras' }, { x: 100, y: 100, name: 'zon' }]
 };
 
 async function waitOutline(page) {
@@ -92,6 +99,7 @@ async function openFromKies(page, id) {
 
   var failed = [];
   var i, id, report, j, rec;
+  var fillTimes = [];
 
   for (i = 0; i < PAGES.length; i++) {
     id = PAGES[i];
@@ -99,48 +107,82 @@ async function openFromKies(page, id) {
     report = await page.evaluate(function (samples) {
       var paper = document.getElementById('teken-paper');
       var outline = document.getElementById('teken-outline');
+      var stage = document.getElementById('teken-stage');
       if (!paper || !outline) return { error: 'geen canvas' };
       var w = paper.width, h = paper.height, tot = w * h;
       var odata = outline.getContext('2d').getImageData(0, 0, w, h).data;
+      var cssW = stage ? stage.clientWidth : 0;
+      var cssH = stage ? stage.clientHeight : 0;
 
       function isWall(x, y) {
         if (x < 0 || y < 0 || x >= w || y >= h) return true;
         return odata[(y * w + x) * 4 + 3] > 40;
       }
 
+      function findBackgroundSeed() {
+        var t = 0, x, y;
+        while (t < 80 && isWall(t, Math.floor(h / 2))) t++;
+        y = t + 1;
+        for (x = t + 1; x < w - t - 1; x++) {
+          if (!isWall(x, y)) return { x: x, y: y };
+        }
+        x = t + 1;
+        for (y = t + 1; y < h - t - 1; y++) {
+          if (!isWall(x, y)) return { x: x, y: y };
+        }
+        return { x: Math.max(2, t + 2), y: Math.max(2, t + 2) };
+      }
+
       function floodArea(sx, sy) {
-        if (isWall(sx, sy)) return { area: 0, pct: 0, wall: true, touchesBorder: false };
+        if (isWall(sx, sy)) return { area: 0, pct: 0, wall: true, touchesBorder: false, ms: 0 };
         var seen = new Uint8Array(tot);
         var stack = [sx, sy];
-        var area = 0, touches = false, x, y, pos;
-        seen[sy * w + sx] = 1;
+        var area = 0, touches = false, x, y, pos, t0, wall, seed;
+        var t0 = typeof performance !== 'undefined' ? performance.now() : Date.now();
+        /* Scanline fill, same idea as the app. */
         while (stack.length) {
           y = stack.pop();
           x = stack.pop();
-          if (x === 0 || y === 0 || x === w - 1 || y === h - 1) touches = true;
-          area++;
-          if (x + 1 < w && !seen[y * w + x + 1] && !isWall(x + 1, y)) { seen[y * w + x + 1] = 1; stack.push(x + 1, y); }
-          if (x - 1 >= 0 && !seen[y * w + x - 1] && !isWall(x - 1, y)) { seen[y * w + x - 1] = 1; stack.push(x - 1, y); }
-          if (y + 1 < h && !seen[(y + 1) * w + x] && !isWall(x, y + 1)) { seen[(y + 1) * w + x] = 1; stack.push(x, y + 1); }
-          if (y - 1 >= 0 && !seen[(y - 1) * w + x] && !isWall(x, y - 1)) { seen[(y - 1) * w + x] = 1; stack.push(x, y - 1); }
+          pos = y * w + x;
+          if (seen[pos] || isWall(x, y)) continue;
+          while (x > 0 && !seen[y * w + x - 1] && !isWall(x - 1, y)) x -= 1;
+          wall = false;
+          seed = false;
+          while (x < w && !seen[y * w + x] && !isWall(x, y)) {
+            seen[y * w + x] = 1;
+            area++;
+            if (x === 0 || y === 0 || x === w - 1 || y === h - 1) touches = true;
+            if (y > 0 && !seen[(y - 1) * w + x] && !isWall(x, y - 1)) {
+              if (!wall) { stack.push(x, y - 1); wall = true; }
+            } else {
+              wall = false;
+            }
+            if (y + 1 < h && !seen[(y + 1) * w + x] && !isWall(x, y + 1)) {
+              if (!seed) { stack.push(x, y + 1); seed = true; }
+            } else {
+              seed = false;
+            }
+            x += 1;
+          }
         }
-        return { area: area, pct: area * 100 / tot, wall: false, touchesBorder: touches };
+        var t1 = typeof performance !== 'undefined' ? performance.now() : Date.now();
+        return { area: area, pct: area * 100 / tot, wall: false, touchesBorder: touches, ms: t1 - t0 };
       }
 
       function pngToCanvas(px, py) {
-        var pad = Math.round(Math.min(w, h) * 0.03);
         var iw = 1024, ih = 768;
-        var s = Math.min((w - pad * 2) / iw, (h - pad * 2) / ih);
+        var s = Math.min(w / iw, h / ih);
         var dw = iw * s, dh = ih * s;
         var dx = (w - dw) / 2, dy = (h - dh) / 2;
         return { x: Math.floor(dx + px * s), y: Math.floor(dy + py * s) };
       }
 
-      /* Connected components of free pixels; take the largest inner seeds. */
+      var frameT = 0;
+      while (frameT < 80 && isWall(frameT, Math.floor(h / 2))) frameT++;
       var labels = new Int32Array(tot);
       var comp = 0;
       var stats = [];
-      var x, y, pos, k, qx, qy, q, area, touches, cx, cy, start;
+      var x, y, pos, k, qx, qy, q, area, touches, touchesTop, cx, cy, start, bg, bgId;
       for (y = 0; y < h; y++) {
         for (x = 0; x < w; x++) {
           pos = y * w + x;
@@ -150,6 +192,7 @@ async function openFromKies(page, id) {
           labels[pos] = comp;
           area = 0;
           touches = false;
+          touchesTop = false;
           cx = 0;
           cy = 0;
           while (q.length) {
@@ -159,6 +202,7 @@ async function openFromKies(page, id) {
             cx += qx;
             cy += qy;
             if (qx === 0 || qy === 0 || qx === w - 1 || qy === h - 1) touches = true;
+            if (qy === frameT) touchesTop = true;
             if (qx + 1 < w && !labels[qy * w + qx + 1] && odata[(qy * w + qx + 1) * 4 + 3] <= 40) {
               labels[qy * w + qx + 1] = comp; q.push(qx + 1, qy);
             }
@@ -177,19 +221,23 @@ async function openFromKies(page, id) {
             area: area,
             pct: area * 100 / tot,
             touches: touches,
-            cx: Math.floor(cx / area),
-            cy: Math.floor(cy / area)
+            touchesTop: touchesTop,
+            cx: x,
+            cy: y
           });
         }
       }
       stats.sort(function (a, b) { return b.area - a.area; });
 
+      bg = findBackgroundSeed();
+      bgId = labels[bg.y * w + bg.x] || 0;
+
       var results = [];
       var inner = [];
       for (k = 0; k < stats.length; k++) {
-        if (!stats[k].touches && stats[k].pct >= 0.2) inner.push(stats[k]);
+        if (stats[k].id === bgId || stats[k].touches || stats[k].touchesTop) continue;
+        if (stats[k].pct >= 0.2) inner.push(stats[k]);
       }
-      /* A few of the largest inner regions. */
       for (k = 0; k < inner.length && k < 10; k++) {
         results.push({
           name: 'inner-' + k,
@@ -199,16 +247,14 @@ async function openFromKies(page, id) {
           kind: 'inner'
         });
       }
-      /* Background corner should be allowed to be large. */
-      start = floodArea(2, 2);
-      results.push({ name: 'hoek-achtergrond', x: 2, y: 2, fill: start, kind: 'background' });
+      start = floodArea(bg.x, bg.y);
+      results.push({ name: 'hoek-achtergrond', x: bg.x, y: bg.y, fill: start, kind: 'background' });
 
       for (k = 0; k < samples.length; k++) {
         var p = pngToCanvas(samples[k].x, samples[k].y);
-        /* If we landed on ink, walk a few pixels for a free neighbour. */
         var sx = p.x, sy = p.y, found = !isWall(sx, sy), r, a, b;
         if (!found) {
-          for (r = 1; r <= 12 && !found; r++) {
+          for (r = 1; r <= 16 && !found; r++) {
             for (a = -r; a <= r && !found; a++) {
               for (b = -r; b <= r && !found; b++) {
                 if (!isWall(p.x + a, p.y + b)) { sx = p.x + a; sy = p.y + b; found = true; }
@@ -220,11 +266,21 @@ async function openFromKies(page, id) {
           name: samples[k].name,
           x: sx,
           y: sy,
-          fill: found ? floodArea(sx, sy) : { area: 0, pct: 0, wall: true, touchesBorder: false },
+          fill: found ? floodArea(sx, sy) : { area: 0, pct: 0, wall: true, touchesBorder: false, ms: 0 },
           kind: 'sample'
         });
       }
-      return { w: w, h: h, results: results, nInner: inner.length, nComp: stats.length };
+
+      /* Edge-to-edge: ink should sit on every canvas edge (the frame). */
+      var edgeInk = true;
+      var midX = Math.floor(w / 2), midY = Math.floor(h / 2);
+      if (!(isWall(midX, 0) && isWall(midX, h - 1) && isWall(0, midY) && isWall(w - 1, midY))) edgeInk = false;
+
+      return {
+        w: w, h: h, cssW: cssW, cssH: cssH, tot: tot,
+        results: results, nInner: inner.length, nComp: stats.length,
+        edgeInk: edgeInk, bgMs: start.ms, aspect: w / h
+      };
     }, LEAK_SAMPLES[id] || []);
 
     if (report.error) {
@@ -234,24 +290,49 @@ async function openFromKies(page, id) {
     }
     var okPage = true;
     var lines = [];
+    if (report.tot < MIN_CANVAS_PIXELS) {
+      okPage = false;
+      failed.push(id + ' canvas te klein: ' + report.w + 'x' + report.h + ' (' + report.tot + ' px, min ' + MIN_CANVAS_PIXELS + ')');
+    }
+    if (Math.abs(report.aspect - 4 / 3) > 0.02) {
+      okPage = false;
+      failed.push(id + ' canvas niet 4:3: ' + report.w + 'x' + report.h + ' aspect=' + report.aspect.toFixed(3));
+    }
+    if (!report.edgeInk) {
+      okPage = false;
+      failed.push(id + ' ontbreekt inktkader op de rand');
+    }
+    if (report.bgMs) fillTimes.push(report.bgMs);
     for (j = 0; j < report.results.length; j++) {
       rec = report.results[j];
       var pct = rec.fill && rec.fill.pct ? rec.fill.pct : 0;
-      var isBg = rec.kind === 'background' || (rec.fill && rec.fill.touchesBorder);
+      var isBg = rec.kind === 'background';
       var bad = !isBg && !rec.fill.wall && pct > MAX_INNER_PCT;
       if (bad) {
         okPage = false;
         failed.push(id + ' ' + rec.name + ' vult ' + pct.toFixed(2) + '% (max ' + MAX_INNER_PCT + '%)');
       }
       lines.push((bad ? 'FAIL ' : 'ok   ') + rec.name + ' ' + pct.toFixed(2) + '%' +
-        (isBg ? ' [achtergrond]' : '') + (rec.fill.wall ? ' [lijn]' : ''));
+        (isBg ? ' [achtergrond]' : '') + (rec.fill.wall ? ' [lijn]' : '') +
+        (rec.fill.ms ? ' ' + rec.fill.ms.toFixed(1) + 'ms' : ''));
     }
     console.log((okPage ? 'OK  ' : 'FAIL') + ' ' + id + ' canvas=' + report.w + 'x' + report.h +
-      ' inner-regios>=0.2%=' + report.nInner);
+      ' css=' + report.cssW + 'x' + report.cssH +
+      ' inner-regios>=0.2%=' + report.nInner +
+      ' bg-fill=' + (report.bgMs ? report.bgMs.toFixed(1) + 'ms' : '?'));
     for (j = 0; j < lines.length; j++) console.log('     ' + lines[j]);
   }
 
   await browser.close();
+  if (fillTimes.length) {
+    var sum = 0, maxMs = 0;
+    for (i = 0; i < fillTimes.length; i++) {
+      sum += fillTimes[i];
+      if (fillTimes[i] > maxMs) maxMs = fillTimes[i];
+    }
+    console.log('\nScanline achtergrond-vul: gem ' + (sum / fillTimes.length).toFixed(1) +
+      'ms, max ' + maxMs.toFixed(1) + 'ms over ' + fillTimes.length + ' pagina\'s');
+  }
   if (failed.length) {
     console.error('\nFAILED:\n' + failed.join('\n'));
     process.exit(1);

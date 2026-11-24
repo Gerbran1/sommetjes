@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 768" width="2048" height="1536">
+  <rect width="1024" height="768" fill="#ffffff"/>
+  <g stroke="#111" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- stars -->
+    <path fill="#fff" d="M 48,60 L 56,82 L 80,82 L 61,96 L 70,118 L 48,104 L 26,118 L 35,96 L 16,82 L 40,82 Z"/>
+    <path fill="#fff" d="M 150,40 L 155,54 L 170,54 L 158,64 L 163,78 L 150,70 L 137,78 L 142,64 L 130,54 L 145,54 Z"/>
+    <path fill="#fff" d="M 240,100 L 244,112 L 257,112 L 247,120 L 251,132 L 240,125 L 229,132 L 233,120 L 223,112 L 236,112 Z"/>
+    <path fill="#fff" d="M 40,200 L 44,212 L 57,212 L 47,220 L 51,232 L 40,225 L 29,232 L 33,220 L 23,212 L 36,212 Z"/>
+    <path fill="#fff" d="M 90,300 L 95,314 L 110,314 L 98,324 L 103,338 L 90,328 L 77,338 L 82,324 L 70,314 L 85,314 Z"/>
+    <path fill="#fff" d="M 70,520 L 76,536 L 93,536 L 80,546 L 86,562 L 70,552 L 54,562 L 60,546 L 47,536 L 64,536 Z"/>
+    <path fill="#fff" d="M 180,700 L 185,714 L 200,714 L 188,724 L 193,738 L 180,728 L 167,738 L 172,724 L 160,714 L 175,714 Z"/>
+    <path fill="#fff" d="M 920,40 L 927,58 L 946,58 L 931,70 L 938,88 L 920,78 L 902,88 L 909,70 L 894,58 L 913,58 Z"/>
+    <path fill="#fff" d="M 980,130 L 984,142 L 997,142 L 987,150 L 991,162 L 980,155 L 969,162 L 973,150 L 963,142 L 976,142 Z"/>
+    <path fill="#fff" d="M 1000,210 L 1004,222 L 1017,222 L 1007,230 L 1011,242 L 1000,235 L 989,242 L 993,230 L 983,222 L 996,222 Z"/>
+    <path fill="#fff" d="M 980,520 L 984,532 L 997,532 L 987,540 L 991,552 L 980,545 L 969,552 L 973,540 L 963,532 L 976,532 Z"/>
+    <path fill="#fff" d="M 900,690 L 905,704 L 920,704 L 908,714 L 913,728 L 900,718 L 887,728 L 892,714 L 880,704 L 895,704 Z"/>
+    <circle fill="#fff" cx="30" cy="400" r="5"/>
+    <circle fill="#fff" cx="20" cy="620" r="4"/>
+    <circle fill="#fff" cx="300" cy="40" r="5"/>
+    <circle fill="#fff" cx="400" cy="720" r="4"/>
+    <circle fill="#fff" cx="1000" cy="400" r="5"/>
+    <path fill="none" d="M 310,180 l 8,0 m -4,-4 l 0,8"/>
+    <path fill="none" d="M 960,620 l 8,0 m -4,-4 l 0,8"/>
+
+    <!-- small moon, upper left, clear of the rocket -->
+    <circle fill="#fff" cx="130" cy="160" r="44"/>
+    <circle fill="#fff" cx="116" cy="150" r="10"/>
+    <circle fill="#fff" cx="145" cy="175" r="8"/>
+    <circle fill="#fff" cx="150" cy="145" r="5"/>
+
+    <!-- little planet, bottom left -->
+    <circle fill="#fff" cx="120" cy="640" r="52"/>
+    <path fill="none" d="M 80,625 C 100,615 130,635 158,620"/>
+    <path fill="none" d="M 78,650 C 105,640 132,658 160,646"/>
+    <path fill="none" d="M 85,672 C 110,664 135,676 152,666"/>
+
+    <!-- SATURN rings (full ellipses, behind) -->
+    <g fill="none" transform="rotate(-20 720 390)">
+      <ellipse cx="720" cy="390" rx="320" ry="82"/>
+      <ellipse cx="720" cy="390" rx="270" ry="64"/>
+      <ellipse cx="720" cy="390" rx="225" ry="48"/>
+    </g>
+    <!-- planet covers the rings that pass behind it -->
+    <circle fill="#fff" cx="720" cy="390" r="172"/>
+    <!-- belts -->
+    <path fill="none" d="M 560,350 C 640,328 800,328 880,350"/>
+    <path fill="none" d="M 552,390 C 640,370 800,370 888,390"/>
+    <path fill="none" d="M 562,432 C 640,414 800,414 878,432"/>
+    <path fill="none" d="M 600,470 C 670,456 770,456 840,470"/>
+    <path fill="none" d="M 600,310 C 670,296 770,296 840,310"/>
+    <!-- front rings (only the lower-front arcs, drawn on top of the planet) -->
+    <g fill="none" transform="rotate(-20 720 390)">
+      <path d="M 400,390 A 320,82 0 0 0 1040,390"/>
+      <path d="M 450,390 A 270,64 0 0 0 990,390"/>
+      <path d="M 495,390 A 225,48 0 0 0 945,390"/>
+    </g>
+
+    <!-- COOL ROCKET, left, flying up-right -->
+    <g transform="translate(300,430) rotate(-38)">
+      <!-- flame outer -->
+      <path fill="#fff" d="M -28,95 C -55,130 -70,185 -40,240 C -28,260 0,245 -2,210
+                           C 2,245 32,268 42,225 C 62,175 30,125 10,98 C 0,88 -16,88 -28,95 Z"/>
+      <!-- flame inner -->
+      <path fill="#fff" d="M -16,120 C -32,150 -36,190 -18,220 C -10,232 8,222 6,198
+                           C 14,222 30,232 36,205 C 46,175 24,140 8,120 C 2,112 -8,112 -16,120 Z"/>
+      <!-- side fins -->
+      <path fill="#fff" d="M -42,20 L -110,80 L -90,95 L -28,50 Z"/>
+      <path fill="#fff" d="M 42,20 L 110,80 L 90,95 L 28,50 Z"/>
+      <!-- rear fins / boosters -->
+      <path fill="#fff" d="M -38,70 L -52,110 L -28,115 L -22,80 Z"/>
+      <path fill="#fff" d="M 38,70 L 52,110 L 28,115 L 22,80 Z"/>
+      <!-- body -->
+      <path fill="#fff" d="M 0,-210
+                           C -28,-170 -48,-90 -44,10
+                           C -40,70 -22,115 0,135
+                           C 22,115 40,70 44,10
+                           C 48,-90 28,-170 0,-210 Z"/>
+      <!-- nose band -->
+      <path fill="none" d="M -28,-150 C -30,-120 30,-120 28,-150"/>
+      <!-- stripe bands (closed-looking with body sides) -->
+      <path fill="none" d="M -43, -20 L 43,-20"/>
+      <path fill="none" d="M -44, 20 L 44,20"/>
+      <path fill="none" d="M -42, 60 L 42,60"/>
+      <!-- windows -->
+      <circle fill="#fff" cx="0" cy="-80" r="26"/>
+      <circle fill="#fff" cx="0" cy="-80" r="14"/>
+      <circle fill="#fff" cx="0" cy="40" r="16"/>
+      <circle fill="#111" stroke="none" cx="0" cy="-80" r="7"/>
+    </g>
+  </g>
+</svg>
