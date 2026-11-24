@@ -10574,6 +10574,10 @@
     tctx = tmp.getContext('2d');
     if (!tctx) return;
     tctx.clearRect(0, 0, w, h);
+    tctx.imageSmoothingEnabled = false;
+    if (tctx.webkitImageSmoothingEnabled !== undefined) tctx.webkitImageSmoothingEnabled = false;
+    if (tctx.mozImageSmoothingEnabled !== undefined) tctx.mozImageSmoothingEnabled = false;
+    if (tctx.msImageSmoothingEnabled !== undefined) tctx.msImageSmoothingEnabled = false;
     drawImageContained(tctx, img, w, h, Math.round(Math.min(w, h) * 0.03));
     imgd = tctx.getImageData(0, 0, w, h);
     data = imgd.data;
@@ -10599,8 +10603,45 @@
         data[i + 3] = (a > 255) ? 255 : a;
       }
     }
+    thickenOutlineInk(data, w, h);
     ctx.clearRect(0, 0, w, h);
     ctx.putImageData(imgd, 0, 0);
+  }
+
+  function thickenOutlineInk(data, w, h) {
+    var src, x, y, p, nx, ny, dx, dy, hit, i, n;
+    n = w * h;
+    src = new Uint8Array(n);
+    for (i = 0; i < n; i++) {
+      src[i] = data[i * 4 + 3] > 40 ? 1 : 0;
+    }
+    for (y = 0; y < h; y++) {
+      for (x = 0; x < w; x++) {
+        if (src[y * w + x]) continue;
+        hit = 0;
+        for (dy = -1; dy <= 1; dy++) {
+          if (hit) break;
+          ny = y + dy;
+          if (ny < 0 || ny >= h) continue;
+          for (dx = -1; dx <= 1; dx++) {
+            if (!dx && !dy) continue;
+            nx = x + dx;
+            if (nx < 0 || nx >= w) continue;
+            if (src[ny * w + nx]) {
+              hit = 1;
+              break;
+            }
+          }
+        }
+        if (hit) {
+          p = (y * w + x) * 4;
+          data[p] = 20;
+          data[p + 1] = 20;
+          data[p + 2] = 20;
+          data[p + 3] = 255;
+        }
+      }
+    }
   }
 
   function ensureKleurRaster(page, done) {
