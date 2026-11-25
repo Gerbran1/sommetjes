@@ -323,6 +323,31 @@ async function waitSpiegelNext(page) {
 
 
     await fresh(page);
+    await tap(page, '#btn-goto-topo');
+    await tap(page, '#topo-grid [data-game="continent"]');
+    await expectScreen(page, 'topolevel', 'continent kiezer');
+    await tap(page, '#btn-topolevel-back');
+    await expectScreen(page, 'topo', 'continent kiezer back');
+    await tap(page, '#topo-grid [data-game="continent"]');
+    await tap(page, '#btn-topolevel-home');
+    await expectScreen(page, 'start', 'continent kiezer home');
+    ok('Continenten-kiezer terug → Topografie, home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-topo');
+    await tap(page, '#topo-grid [data-game="continent"]');
+    await tap(page, '#topolevel-grid [data-kind="easy"]');
+    await expectScreen(page, 'topopuzzel', 'continent play');
+    await tap(page, '#btn-topopuzzel-back');
+    await expectScreen(page, 'topolevel', 'continent play back');
+    await tap(page, '#topolevel-grid [data-kind="easy"]');
+    await tap(page, '#btn-topopuzzel-home');
+    await expectScreen(page, 'start', 'continent play home');
+    ok('Continenten puzzel terug → kiezer, home → start');
+
+
+
+    await fresh(page);
     await tap(page, '#btn-goto-tijd');
     await tap(page, '#tijd-grid [data-game="klok"]');
     await expectScreen(page, 'tijdlevel', 'klok kiezer');
