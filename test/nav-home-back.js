@@ -13,7 +13,7 @@ const wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms)
 const SCREENS = [
   'start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay',
   'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken',
-  'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay', 'program', 'tijd', 'tijdlevel', 'tijdplay', 'topo', 'topolevel', 'topopuzzel', 'topoplay'
+  'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay', 'program', 'tijd', 'tijdlevel', 'tijdplay', 'topo', 'topolevel', 'topopuzzel', 'topoplay', 'topowaar'
 ];
 
 async function visibleScreen(page) {
@@ -333,7 +333,28 @@ async function waitSpiegelNext(page) {
     await expectScreen(page, 'start', 'continent play home');
     ok('Continenten puzzel start direct, terug → Topografie, home → start');
 
+    await fresh(page);
+    await tap(page, '#btn-goto-topo');
+    await tap(page, '#topo-grid [data-game="waar"]');
+    await expectScreen(page, 'topolevel', 'waar kiezer');
+    await tap(page, '#btn-topolevel-back');
+    await expectScreen(page, 'topo', 'waar kiezer back');
+    await tap(page, '#topo-grid [data-game="waar"]');
+    await tap(page, '#btn-topolevel-home');
+    await expectScreen(page, 'start', 'waar kiezer home');
+    ok('Waar-ligt-kiezer terug → Topografie, home → start');
 
+    await fresh(page);
+    await tap(page, '#btn-goto-topo');
+    await tap(page, '#topo-grid [data-game="waar"]');
+    await tap(page, '#topolevel-grid [data-kind="easy"]');
+    await expectScreen(page, 'topowaar', 'waar play');
+    await tap(page, '#btn-topowaar-back');
+    await expectScreen(page, 'topolevel', 'waar play back');
+    await tap(page, '#topolevel-grid [data-kind="easy"]');
+    await tap(page, '#btn-topowaar-home');
+    await expectScreen(page, 'start', 'waar play home');
+    ok('Waar ligt…? terug → kiezer, home → start');
 
     await fresh(page);
     await tap(page, '#btn-goto-tijd');

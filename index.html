@@ -197,7 +197,7 @@
       line-height: 1;
     }
 
-    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-doolhoflevel, #screen-verschillen, #screen-robotlevel, #screen-robot, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij, #screen-cups, #screen-veranderd, #screen-tekenmenu, #screen-kleurkies, #screen-teken, #screen-klinkers, #screen-lijnlevel, #screen-lijn, #screen-geld, #screen-geldlevel, #screen-geldplay, #screen-program, #screen-tijd, #screen-tijdlevel, #screen-tijdplay, #screen-topo, #screen-topolevel, #screen-topopuzzel, #screen-topoplay {
+    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-doolhoflevel, #screen-verschillen, #screen-robotlevel, #screen-robot, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij, #screen-cups, #screen-veranderd, #screen-tekenmenu, #screen-kleurkies, #screen-teken, #screen-klinkers, #screen-lijnlevel, #screen-lijn, #screen-geld, #screen-geldlevel, #screen-geldplay, #screen-program, #screen-tijd, #screen-tijdlevel, #screen-tijdplay, #screen-topo, #screen-topolevel, #screen-topopuzzel, #screen-topoplay, #screen-topowaar {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -569,9 +569,9 @@
       margin: 8px auto 0 auto;
     }
     #topo-grid .level-btn {
-      -webkit-flex: 0 0 30%;
-      flex: 0 0 30%;
-      max-width: 280px;
+      -webkit-flex: 0 0 42%;
+      flex: 0 0 42%;
+      max-width: 360px;
       min-height: 150px;
       max-height: 220px;
       margin: 8px 1.5%;
@@ -590,6 +590,64 @@
     .lvl-topo-vlag.pressed, .lvl-topo-vlag:active { -webkit-box-shadow: 0 2px 0 #3949AB, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #3949AB, 0 4px 8px rgba(0,0,0,0.15); }
     .lvl-topo-continent { background: #00897B; -webkit-box-shadow: 0 10px 0 #00695C, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #00695C, 0 14px 16px rgba(0,0,0,0.12); }
     .lvl-topo-continent.pressed, .lvl-topo-continent:active { -webkit-box-shadow: 0 2px 0 #00695C, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #00695C, 0 4px 8px rgba(0,0,0,0.15); }
+    .lvl-topo-waar { background: #7E57C2; -webkit-box-shadow: 0 10px 0 #5E35B1, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #5E35B1, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-topo-waar.pressed, .lvl-topo-waar:active { -webkit-box-shadow: 0 2px 0 #5E35B1, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #5E35B1, 0 4px 8px rgba(0,0,0,0.15); }
+    #topo-waar-stage {
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      min-height: 0;
+      padding: 0 8px 8px;
+      box-sizing: border-box;
+    }
+    #topo-waar-map-wrap {
+      width: 100%;
+      height: 100%;
+      background: #B3E5FC;
+      border-radius: 16px;
+      overflow: hidden;
+      -webkit-box-shadow: inset 0 0 0 3px rgba(2, 80, 140, 0.18);
+      box-shadow: inset 0 0 0 3px rgba(2, 80, 140, 0.18);
+      position: relative;
+      box-sizing: border-box;
+    }
+    #topo-waar-map-wrap svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    #topo-waar-prompt {
+      font-weight: 800;
+      text-align: center;
+      padding: 2px 12px 6px;
+      -webkit-flex-shrink: 0;
+      flex-shrink: 0;
+      line-height: 1.15;
+      max-width: 100%;
+    }
+    #topo-waar-map-wrap.topo-waar-shake {
+      -webkit-animation: topoWaarShake 0.4s ease-in-out;
+      animation: topoWaarShake 0.4s ease-in-out;
+    }
+    @-webkit-keyframes topoWaarShake {
+      0%, 100% { -webkit-transform: translateX(0); }
+      20% { -webkit-transform: translateX(-8px); }
+      40% { -webkit-transform: translateX(8px); }
+      60% { -webkit-transform: translateX(-5px); }
+      80% { -webkit-transform: translateX(5px); }
+    }
+    @keyframes topoWaarShake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+    @media (orientation: portrait) {
+      #topo-waar-stage { padding: 0 6px 6px; }
+      #topo-waar-map-wrap { border-radius: 12px; }
+      #topo-waar-prompt { font-size: 22px; padding-bottom: 4px; }
+    }
     .lvl-topo-easy { background: #66BB6A; -webkit-box-shadow: 0 10px 0 #388E3C, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #388E3C, 0 14px 16px rgba(0,0,0,0.12); }
     .lvl-topo-easy.pressed, .lvl-topo-easy:active { -webkit-box-shadow: 0 2px 0 #388E3C, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #388E3C, 0 4px 8px rgba(0,0,0,0.15); }
     .lvl-topo-hard { background: #FFA726; -webkit-box-shadow: 0 10px 0 #F57C00, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #F57C00, 0 14px 16px rgba(0,0,0,0.12); }
@@ -6178,6 +6236,10 @@
           <div class="level-icon" id="icon-topo-continent"></div>
           <div class="level-label">Continenten puzzel</div>
         </button>
+        <button type="button" class="tap level-btn lvl-topo-waar" data-act="topo-game" data-game="waar">
+          <div class="level-icon" id="icon-topo-waar"></div>
+          <div class="level-label">Waar ligt…?</div>
+        </button>
       </div>
     </div>
 
@@ -6261,6 +6323,30 @@
           <div id="topo-vlag-choices"></div>
         </div>
         <div id="topo-minimap-wrap"></div>
+      </div>
+    </div>
+
+    <div id="screen-topowaar" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-topowaar-back" data-act="back" title="Terug">
+            <span id="topowaar-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-topowaar-home" data-act="home" title="Start">
+            <span id="topowaar-home-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="topowaar-star-icon"></span>
+            <span class="star-count" id="topowaar-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt" id="topo-waar-prompt">Waar ligt …?</div>
+      <div class="progress-row"></div>
+      <div id="topo-waar-stage">
+        <div id="topo-waar-map-wrap"></div>
       </div>
     </div>
 
@@ -9738,7 +9824,7 @@
   /* ---------- UI ---------- */
   function updateStarsUI() {
     var i, row, html, filled, el, rows;
-    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'vers-stars', 'robot-stars', 'robotlevel-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars', 'cups-stars', 'veranderd-stars', 'klinkers-stars', 'lijnlevel-stars', 'lijn-stars', 'doolhoflevel-stars', 'geld-stars', 'geldlevel-stars', 'geldplay-stars', 'program-stars', 'tijd-stars', 'tijdlevel-stars', 'tijdplay-stars', 'topo-stars', 'topolevel-stars', 'topopuzzel-stars', 'topoplay-stars'], String(state.stars));
+    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'vers-stars', 'robot-stars', 'robotlevel-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars', 'cups-stars', 'veranderd-stars', 'klinkers-stars', 'lijnlevel-stars', 'lijn-stars', 'doolhoflevel-stars', 'geld-stars', 'geldlevel-stars', 'geldplay-stars', 'program-stars', 'tijd-stars', 'tijdlevel-stars', 'tijdplay-stars', 'topo-stars', 'topolevel-stars', 'topopuzzel-stars', 'topoplay-stars', 'topowaar-stars'], String(state.stars));
     filled = state.towardsReward;
     if (filled > 5) filled = 5;
     html = '';
@@ -9771,7 +9857,7 @@
   function showScreen(name) {
     var ids, i, el;
     state.screen = name;
-    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay', 'program', 'tijd', 'tijdlevel', 'tijdplay', 'topo', 'topolevel', 'topopuzzel', 'topoplay'];
+    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay', 'program', 'tijd', 'tijdlevel', 'tijdplay', 'topo', 'topolevel', 'topopuzzel', 'topoplay', 'topowaar'];
     for (i = 0; i < ids.length; i++) {
       el = $('screen-' + ids[i]);
       if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
@@ -9863,7 +9949,7 @@
       showTijdMenu();
       return;
     }
-    if (s === 'topoplay' || s === 'topopuzzel') {
+    if (s === 'topoplay' || s === 'topopuzzel' || s === 'topowaar') {
       leavePlay();
       showTopoMenu();
       return;
@@ -16381,7 +16467,7 @@
       showTijdLevel();
     } else if (s === 'tijdlevel') {
       showTijdMenu();
-    } else if (s === 'topopuzzel' || s === 'topoplay') {
+    } else if (s === 'topopuzzel' || s === 'topoplay' || s === 'topowaar') {
       if (s === 'topopuzzel' && topoIsContinent()) showTopoMenu();
       else showTopoLevel();
     } else if (s === 'topolevel') {
@@ -16574,6 +16660,7 @@
     if (act === 'topo-kind') {
       kind = el.getAttribute('data-kind') || 'easy';
       if ((topoState.game || 'puzzel') === 'vlag') startTopoVlag(kind, true);
+      else if (topoState.game === 'waar') startTopoWaar(kind, true);
       else startTopoPuzzel(kind, true);
       return;
     }
@@ -16997,6 +17084,12 @@
     var el, now, handled;
     now = new Date().getTime();
     handled = false;
+    if (state.screen === 'topowaar' && onTopoWaarPointer(e)) {
+      clearPressed();
+      e.preventDefault();
+      lastTouchEnd = now;
+      return;
+    }
     if (state.screen === 'vormen' && vormenDragEnd(e)) {
       clearPressed();
       e.preventDefault();
@@ -17082,6 +17175,11 @@
     unlockAudio();
     now = new Date().getTime();
     if (now - lastTouchEnd < 600) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+    if (state.screen === 'topowaar' && onTopoWaarPointer(e)) {
       e.preventDefault();
       e.stopPropagation();
       return;
@@ -21434,7 +21532,7 @@
     state.question = null;
     hideReward();
     stopTopoDrag();
-    $('topolevel-prompt').innerHTML = (topoState.game === 'vlag') ? 'Vlaggen van Europa' : ((topoState.game === 'continent') ? 'Continenten puzzel' : 'Europa puzzel');
+    $('topolevel-prompt').innerHTML = (topoState.game === 'vlag') ? 'Vlaggen van Europa' : ((topoState.game === 'continent') ? 'Continenten puzzel' : ((topoState.game === 'waar') ? 'Waar ligt…?' : 'Europa puzzel'));
     showScreen('topolevel');
     updateStarsUI();
   }
@@ -21624,6 +21722,14 @@
   }
 
   function stopTopoDrag() {
+    if (topoState.waarTimer) {
+      clearTimeout(topoState.waarTimer);
+      topoState.waarTimer = null;
+    }
+    if (topoState.waarBlink) {
+      clearInterval(topoState.waarBlink);
+      topoState.waarBlink = null;
+    }
     if (topoDrag.ghost && topoDrag.ghost.parentNode) {
       topoDrag.ghost.parentNode.removeChild(topoDrag.ghost);
     }
@@ -21976,6 +22082,233 @@
     }
   }
 
+  function topoWaarPromptText(land) {
+    if (!land) return 'Waar ligt …?';
+    if (land.id === 'gb') return 'Waar ligt het Verenigd Koninkrijk?';
+    return 'Waar ligt ' + land.name + '?';
+  }
+
+  function topoWaarAudio(land) {
+    if (!land || !land.audio) return '';
+    return String(land.audio).replace('land-', 'waar-ligt-');
+  }
+
+  function topoWaarMapHtml(found, wrongId, hintId) {
+    var i, land, fill, html;
+    html = '<svg id="topo-waar-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + TOPO_VB_W + ' ' + TOPO_VB_H + '" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">';
+    html += '<rect width="' + TOPO_VB_W + '" height="' + TOPO_VB_H + '" fill="#B3E5FC"/>';
+    for (i = 0; i < TOPO_LANDEN.length; i++) {
+      land = TOPO_LANDEN[i];
+      if (!land.path) continue;
+      fill = '#E8E0D0';
+      if (found && found[land.id]) fill = '#43A047';
+      else if (wrongId && land.id === wrongId) fill = '#E53935';
+      else if (hintId && land.id === hintId) fill = '#FFF59D';
+      html += '<path data-topo-id="' + land.id + '" fill="' + fill + '" stroke="#455A64" stroke-width="1.2" stroke-linejoin="round" d="' + land.path + '"/>';
+    }
+    html += '</svg>';
+    return html;
+  }
+
+  function topoPaintWaar() {
+    var wrap, hint, el, n, flip;
+    wrap = $('topo-waar-map-wrap');
+    if (!wrap) return;
+    if (topoState.waarBlink) {
+      clearInterval(topoState.waarBlink);
+      topoState.waarBlink = null;
+    }
+    wrap.innerHTML = topoWaarMapHtml(topoState.found, topoState.wrongId, topoState.hintId);
+    hint = topoState.hintId;
+    if (!hint) return;
+    el = wrap.querySelector('path[data-topo-id="' + hint + '"]');
+    if (!el) return;
+    n = 0;
+    flip = true;
+    topoState.waarBlink = setInterval(function () {
+      n += 1;
+      if (!el.getAttribute) {
+        clearInterval(topoState.waarBlink);
+        topoState.waarBlink = null;
+        return;
+      }
+      el.setAttribute('fill', flip ? '#F9A825' : '#FFF59D');
+      flip = !flip;
+      if (n >= 8) {
+        clearInterval(topoState.waarBlink);
+        topoState.waarBlink = null;
+        el.setAttribute('fill', '#FFF59D');
+      }
+    }, 250);
+  }
+
+  function topoWaarClientToVb(x, y) {
+    var r, scale, w, h, left, top, svg;
+    svg = $('topo-waar-svg');
+    if (!svg) return { x: 0, y: 0 };
+    r = svg.getBoundingClientRect();
+    scale = Math.min(r.width / TOPO_VB_W, r.height / TOPO_VB_H);
+    if (!scale || scale <= 0) scale = 1;
+    w = TOPO_VB_W * scale;
+    h = TOPO_VB_H * scale;
+    left = r.left + (r.width - w) / 2;
+    top = r.top + (r.height - h) / 2;
+    return { x: (x - left) / scale, y: (y - top) / scale };
+  }
+
+  function topoWaarHit(x, y, kind) {
+    var i, land, hits, best, bestD, d, r, pad;
+    hits = [];
+    for (i = 0; i < TOPO_LANDEN.length; i++) {
+      land = TOPO_LANDEN[i];
+      if (!land.path) continue;
+      if (topoPointInPath(x, y, land.path)) hits.push(land);
+    }
+    if (hits.length === 1) return hits[0];
+    if (hits.length > 1) {
+      best = hits[0];
+      bestD = 1e9;
+      for (i = 0; i < hits.length; i++) {
+        d = Math.sqrt((x - hits[i].cx) * (x - hits[i].cx) + (y - hits[i].cy) * (y - hits[i].cy));
+        if (d < bestD) {
+          bestD = d;
+          best = hits[i];
+        }
+      }
+      return best;
+    }
+    pad = (kind === 'hard') ? 28 : 44;
+    best = null;
+    bestD = 1e9;
+    for (i = 0; i < TOPO_LANDEN.length; i++) {
+      land = TOPO_LANDEN[i];
+      if (!land.path) continue;
+      if (x < land.x - pad || x > land.x + land.w + pad || y < land.y - pad || y > land.y + land.h + pad) continue;
+      d = Math.sqrt((x - land.cx) * (x - land.cx) + (y - land.cy) * (y - land.cy));
+      r = Math.max(pad, Math.min(land.w, land.h) * 0.5);
+      if (kind !== 'hard') r = Math.max(r, 52);
+      if (d <= r + pad && d < bestD) {
+        bestD = d;
+        best = land;
+      }
+    }
+    return best;
+  }
+
+  function topoWaarShouldHint(misses) {
+    return misses >= 2;
+  }
+
+  function startTopoWaar(kind, fresh) {
+    var pool, other, i, land, ans;
+    if (fresh) {
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+      state.lastWasPersonal = false;
+      resetVoiceCycle();
+      topoState.used = [];
+      topoState.found = {};
+    }
+    topoState.game = 'waar';
+    topoState.kind = kind || 'easy';
+    state.level = 'waar-' + topoState.kind;
+    state.locked = false;
+    topoState.misses = 0;
+    topoState.wrongId = null;
+    topoState.hintId = null;
+    hideReward();
+    pool = [];
+    for (i = 0; i < TOPO_LANDEN.length; i++) {
+      land = TOPO_LANDEN[i];
+      if (topoState.kind === 'hard' ? land.hardP : land.easyP) pool.push(land);
+    }
+    other = [];
+    for (i = 0; i < pool.length; i++) {
+      if (!topoIdUsed(pool[i].id)) other.push(pool[i]);
+    }
+    if (other.length) pool = other;
+    else if (!pool.length) return;
+    else {
+      topoState.used = [];
+    }
+    shuffle(pool);
+    ans = pool[0];
+    topoState.q = { id: ans.id };
+    topoState.used.push(ans.id);
+    $('topo-waar-prompt').innerHTML = topoWaarPromptText(ans);
+    topoPaintWaar();
+    showScreen('topowaar');
+    updateStarsUI();
+    beginQuestionVoice();
+    speak(topoWaarAudio(ans));
+  }
+
+  function onTopoWaarTap(land) {
+    var q, wrap;
+    if (state.screen !== 'topowaar' || state.locked || !topoState.q || !land) return;
+    q = topoLandById(topoState.q.id);
+    if (!q) return;
+    if (land.id === q.id) {
+      topoState.misses = 0;
+      topoState.wrongId = null;
+      topoState.hintId = null;
+      if (!topoState.found) topoState.found = {};
+      topoState.found[land.id] = 1;
+      topoPaintWaar();
+      state.locked = true;
+      state.stars += 1;
+      state.sessionCorrect += 1;
+      state.towardsReward += 1;
+      saveStars();
+      showBurst();
+      updateStarsUI();
+      deliverPraise(function () {
+        if (state.towardsReward >= 5) {
+          showReward();
+        } else {
+          startTopoWaar(topoState.kind, false);
+        }
+      });
+      return;
+    }
+    topoState.misses += 1;
+    topoState.wrongId = land.id;
+    if (topoWaarShouldHint(topoState.misses)) topoState.hintId = q.id;
+    topoPaintWaar();
+    wrap = $('topo-waar-map-wrap');
+    if (wrap) {
+      wrap.className = '';
+      wrap.offsetWidth;
+      wrap.className = 'topo-waar-shake';
+    }
+    if (topoState.waarTimer) clearTimeout(topoState.waarTimer);
+    topoState.waarTimer = setTimeout(function () {
+      var w = $('topo-waar-map-wrap');
+      if (w) w.className = '';
+      if (topoState.wrongId) {
+        topoState.wrongId = null;
+        topoPaintWaar();
+      }
+      topoState.waarTimer = null;
+    }, 450);
+    speak('oeps');
+  }
+
+  function onTopoWaarPointer(e) {
+    var p, wrap, r, vb, land;
+    if (state.screen !== 'topowaar' || state.locked) return false;
+    wrap = $('topo-waar-map-wrap');
+    if (!wrap) return false;
+    p = topoEventPoint(e);
+    r = wrap.getBoundingClientRect();
+    if (p.x < r.left || p.x > r.right || p.y < r.top || p.y > r.bottom) return false;
+    vb = topoWaarClientToVb(p.x, p.y);
+    land = topoWaarHit(vb.x, vb.y, topoState.kind);
+    if (!land) return true;
+    onTopoWaarTap(land);
+    return true;
+  }
+
   window.__topoTest = {
     snapRadius: topoSnapRadiusVb,
     pickSnap: topoPickSnap,
@@ -22001,7 +22334,14 @@
         offX: topoDrag.offX,
         offY: topoDrag.offY
       };
-    }
+    },
+    waarHit: topoWaarHit,
+    waarShouldHint: topoWaarShouldHint,
+    waarPrompt: topoWaarPromptText,
+    waarAudio: topoWaarAudio,
+    startWaar: startTopoWaar,
+    waarTap: onTopoWaarTap,
+    getState: function () { return topoState; }
   };
 
 
@@ -22038,6 +22378,15 @@
     }
     if ($('icon-topo-continent')) {
       $('icon-topo-continent').innerHTML = topoWorldIconSvg(72, 40);
+    }
+    if ($('icon-topo-waar')) {
+      $('icon-topo-waar').innerHTML =
+        '<div style="position:relative;width:72px;height:56px;">' +
+        topoMiniIconSvg(72, 56) +
+        '<svg viewBox="0 0 28 28" width="28" height="28" style="position:absolute;right:-2px;bottom:-2px;" aria-hidden="true">' +
+        '<circle cx="14" cy="14" r="13" fill="#FFD54F" stroke="#6A3E00" stroke-width="2"/>' +
+        '<text x="14" y="20" text-anchor="middle" font-size="18" font-weight="700" font-family="sans-serif" fill="#4E342E">?</text>' +
+        '</svg></div>';
     }
     if ($('icon-topo-easy')) {
       $('icon-topo-easy').innerHTML = topoFlagSvg('nl', 72, 48);
@@ -22128,6 +22477,7 @@
     elSet('topolevel-home-icon', homeIconHtml());
     elSet('topopuzzel-home-icon', homeIconHtml());
     elSet('topoplay-home-icon', homeIconHtml());
+    elSet('topowaar-home-icon', homeIconHtml());
     elSet('play-back-icon', backIconHtml());
     elSet('picker-back-icon', backIconHtml());
     elSet('trace-back-icon', backIconHtml());
@@ -22169,6 +22519,7 @@
     elSet('topolevel-back-icon', backIconHtml());
     elSet('topopuzzel-back-icon', backIconHtml());
     elSet('topoplay-back-icon', backIconHtml());
+    elSet('topowaar-back-icon', backIconHtml());
     elSet('letters-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('trace-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('names-star-icon', starSvg('#FFD54F', '#F9A825'));
@@ -22208,6 +22559,7 @@
     elSet('topolevel-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('topopuzzel-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('topoplay-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('topowaar-star-icon', starSvg('#FFD54F', '#F9A825'));
     if ($('icon-vormen')) {
       $('icon-vormen').innerHTML =
         vormSvg('circle', '#2FB3F0', '#1A7FB3', 0) +
