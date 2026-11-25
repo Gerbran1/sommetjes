@@ -13,7 +13,7 @@ const wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms)
 const SCREENS = [
   'start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay',
   'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken',
-  'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay', 'program', 'tijd', 'tijdlevel', 'tijdplay', 'topo', 'topolevel', 'topopuzzel', 'topoplay', 'topowaar'
+  'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay', 'program', 'tijd', 'tijdlevel', 'tijdplay', 'topo', 'topolevel', 'topopuzzel', 'topoplay', 'topowaar', 'topodrop'
 ];
 
 async function visibleScreen(page) {
@@ -355,6 +355,17 @@ async function waitSpiegelNext(page) {
     await tap(page, '#btn-topowaar-home');
     await expectScreen(page, 'start', 'waar play home');
     ok('Waar ligt…? terug → kiezer, home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-topo');
+    await tap(page, '#topo-grid [data-game="ocean"]');
+    await expectScreen(page, 'topodrop', 'ocean play');
+    await tap(page, '#btn-topodrop-back');
+    await expectScreen(page, 'topo', 'ocean play back');
+    await tap(page, '#topo-grid [data-game="ocean"]');
+    await tap(page, '#btn-topodrop-home');
+    await expectScreen(page, 'start', 'ocean play home');
+    ok('Oceanen start direct, terug → Topografie, home → start');
 
     await fresh(page);
     await tap(page, '#btn-goto-tijd');
