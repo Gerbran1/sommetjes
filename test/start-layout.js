@@ -57,9 +57,10 @@ async function check(page, width, height, shotName) {
     };
   }, width, height);
 
-  if (info.nTiles !== 8) throw new Error(shotName + ' expected 8 tiles, got ' + info.nTiles);
+  if (info.nTiles !== 9) throw new Error(shotName + ' expected 9 tiles, got ' + info.nTiles);
   if (info.nPlayers !== 3) throw new Error(shotName + ' expected 3 player buttons, got ' + info.nPlayers);
   if (info.labels.indexOf('Logica') === -1) throw new Error(shotName + ' Logica label missing: ' + info.labels.join(','));
+  if (info.labels.indexOf('Topografie') === -1) throw new Error(shotName + ' Topografie label missing: ' + info.labels.join(','));
   if (info.labels.indexOf('Programmeren') !== -1) throw new Error(shotName + ' still says Programmeren');
   if (info.issues.length) {
     console.error('FAIL ' + shotName, info.issues, JSON.stringify({ tiles: info.tiles, players: info.players }));

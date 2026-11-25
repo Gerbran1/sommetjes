@@ -685,7 +685,7 @@ function intersection(a, b) {
     await wait(280);
     await page.click('#program-grid [data-game="robot"]');
     await wait(280);
-    await page.click('[data-kind="easy"]');
+    await page.click('#robotlevel-grid [data-kind="easy"]');
     await wait(400);
     var rob1 = await playRobotRound(page, 5);
     assertUnique(rob1, 'robot r1');
@@ -704,7 +704,7 @@ function intersection(a, b) {
     if (!onPuzzR) throw new Error('robot did not return to Logica after reward');
     await page.click('#program-grid [data-game="robot"]');
     await wait(280);
-    await page.click('[data-kind="easy"]');
+    await page.click('#robotlevel-grid [data-kind="easy"]');
     await wait(400);
     var rob2 = await playRobotRound(page, 5);
     assertUnique(rob2, 'robot r2');

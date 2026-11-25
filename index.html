@@ -197,7 +197,7 @@
       line-height: 1;
     }
 
-    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-doolhoflevel, #screen-verschillen, #screen-robotlevel, #screen-robot, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij, #screen-cups, #screen-veranderd, #screen-tekenmenu, #screen-kleurkies, #screen-teken, #screen-klinkers, #screen-lijnlevel, #screen-lijn, #screen-geld, #screen-geldlevel, #screen-geldplay, #screen-program, #screen-tijd, #screen-tijdlevel, #screen-tijdplay {
+    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-doolhoflevel, #screen-verschillen, #screen-robotlevel, #screen-robot, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij, #screen-cups, #screen-veranderd, #screen-tekenmenu, #screen-kleurkies, #screen-teken, #screen-klinkers, #screen-lijnlevel, #screen-lijn, #screen-geld, #screen-geldlevel, #screen-geldplay, #screen-program, #screen-tijd, #screen-tijdlevel, #screen-tijdplay, #screen-topo, #screen-topolevel, #screen-topopuzzel, #screen-topoplay {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -529,6 +529,311 @@
       max-width: 230px;
       min-width: 0;
     }
+
+    .choice-topo {
+      background: #1E88A8;
+      -webkit-box-shadow: 0 10px 0 #1565A0, 0 14px 20px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 0 #1565A0, 0 14px 20px rgba(0,0,0,0.15);
+    }
+    .choice-topo.pressed, .choice-topo:active {
+      -webkit-box-shadow: 0 2px 0 #1565A0, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #1565A0, 0 4px 8px rgba(0,0,0,0.15);
+      -webkit-transform: translateY(8px);
+      transform: translateY(8px);
+    }
+    .topo-glyph { width: 72px; height: 56px; margin: 0 auto 4px auto; }
+    .topo-glyph svg { width: 72px; height: 56px; display: block; }
+
+    #choice-grid.choices-9 .choice-btn {
+      -webkit-flex: 0 0 30%;
+      flex: 0 0 30%;
+      max-width: 300px;
+      min-width: 0;
+    }
+
+    #topo-grid, #topolevel-grid {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-align-content: center;
+      align-content: center;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      max-width: 980px;
+      margin: 8px auto 0 auto;
+    }
+    #topo-grid .level-btn, #topolevel-grid .level-btn {
+      -webkit-flex: 0 0 42%;
+      flex: 0 0 42%;
+      max-width: 360px;
+      min-height: 160px;
+      max-height: 240px;
+      margin: 10px 2%;
+    }
+    .lvl-topo-puzzel { background: #43A047; -webkit-box-shadow: 0 10px 0 #2E7D32, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #2E7D32, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-topo-puzzel.pressed, .lvl-topo-puzzel:active { -webkit-box-shadow: 0 2px 0 #2E7D32, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #2E7D32, 0 4px 8px rgba(0,0,0,0.15); }
+    .lvl-topo-vlag { background: #5C6BC0; -webkit-box-shadow: 0 10px 0 #3949AB, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #3949AB, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-topo-vlag.pressed, .lvl-topo-vlag:active { -webkit-box-shadow: 0 2px 0 #3949AB, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #3949AB, 0 4px 8px rgba(0,0,0,0.15); }
+    .lvl-topo-easy { background: #66BB6A; -webkit-box-shadow: 0 10px 0 #388E3C, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #388E3C, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-topo-easy.pressed, .lvl-topo-easy:active { -webkit-box-shadow: 0 2px 0 #388E3C, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #388E3C, 0 4px 8px rgba(0,0,0,0.15); }
+    .lvl-topo-hard { background: #FFA726; -webkit-box-shadow: 0 10px 0 #F57C00, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #F57C00, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-topo-hard.pressed, .lvl-topo-hard:active { -webkit-box-shadow: 0 2px 0 #F57C00, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #F57C00, 0 4px 8px rgba(0,0,0,0.15); }
+
+    #topo-puzzel-stage {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      -webkit-align-items: stretch;
+      align-items: stretch;
+      width: 100%;
+      min-height: 0;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      padding: 0 8px 8px 8px;
+    }
+    #topo-map-wrap {
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      min-width: 0;
+      min-height: 0;
+      position: relative;
+      background: #B3E5FC;
+      border-radius: 16px;
+      overflow: hidden;
+      -webkit-box-shadow: 0 4px 0 rgba(0,0,0,0.08);
+      box-shadow: 0 4px 0 rgba(0,0,0,0.08);
+    }
+    #topo-map-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    #topo-tray {
+      -webkit-flex: 0 0 210px;
+      flex: 0 0 210px;
+      width: 210px;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      padding: 4px 6px;
+      margin-left: 8px;
+      background: #FFF8E8;
+      border-radius: 16px;
+      -webkit-box-shadow: 0 4px 0 rgba(0,0,0,0.08);
+      box-shadow: 0 4px 0 rgba(0,0,0,0.08);
+    }
+    #topo-tray-inner {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: flex-start;
+      align-items: flex-start;
+    }
+    .topo-piece {
+      -webkit-flex: 0 0 86px;
+      flex: 0 0 86px;
+      width: 86px;
+      min-height: 92px;
+      margin: 5px;
+      padding: 4px 2px 2px 2px;
+      background: #fff;
+      border-radius: 12px;
+      -webkit-box-shadow: 0 3px 0 rgba(0,0,0,0.12);
+      box-shadow: 0 3px 0 rgba(0,0,0,0.12);
+      text-align: center;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    .topo-piece.is-hidden, .topo-piece.is-placed { display: none; }
+    .topo-piece-shape { height: 58px; width: 100%; }
+    .topo-piece-shape svg { width: 78px; height: 58px; display: block; margin: 0 auto; }
+    .topo-piece-name {
+      font-size: 11px;
+      line-height: 1.15;
+      font-weight: 700;
+      color: #37474F;
+      padding: 0 2px;
+      max-height: 28px;
+      overflow: hidden;
+    }
+    .topo-ghost {
+      position: fixed;
+      z-index: 80;
+      pointer-events: none;
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+    }
+    .topo-ghost svg { display: block; }
+
+    #topo-vlag-stage {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      -webkit-align-items: stretch;
+      align-items: stretch;
+      -webkit-justify-content: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 0;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      padding: 0 8px 8px 8px;
+    }
+    #topo-vlag-main {
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      min-width: 0;
+      min-height: 0;
+    }
+    #topo-vlag-flag {
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+      margin: 4px 0 10px 0;
+    }
+    #topo-vlag-flag svg, #topo-vlag-flag .topo-vlag-name {
+      display: block;
+      margin: 0 auto;
+    }
+    #topo-vlag-flag .topo-vlag-name {
+      font-size: 36px;
+      font-weight: 800;
+      color: #1565A0;
+      text-align: center;
+      padding: 18px 16px;
+    }
+    #topo-vlag-choices {
+      width: 100%;
+      max-width: 520px;
+    }
+    .topo-vlag-choice {
+      display: block;
+      width: 100%;
+      min-height: 58px;
+      margin: 0 0 10px 0;
+      padding: 8px 12px;
+      border: 0;
+      border-radius: 16px;
+      background: #FFF8E8;
+      color: #263238;
+      font-size: 22px;
+      font-weight: 700;
+      -webkit-box-shadow: 0 5px 0 #D7C8A4;
+      box-shadow: 0 5px 0 #D7C8A4;
+    }
+    .topo-vlag-choice.pressed, .topo-vlag-choice:active {
+      -webkit-box-shadow: 0 2px 0 #D7C8A4;
+      box-shadow: 0 2px 0 #D7C8A4;
+      -webkit-transform: translateY(3px);
+      transform: translateY(3px);
+    }
+    .topo-vlag-choice.is-correct { background: #C8E6C9; -webkit-box-shadow: 0 5px 0 #81C784; box-shadow: 0 5px 0 #81C784; }
+    .topo-vlag-choice.is-wrong { background: #FFCDD2; -webkit-box-shadow: 0 5px 0 #E57373; box-shadow: 0 5px 0 #E57373; }
+    .topo-vlag-choice .topo-choice-flag { display: block; margin: 0 auto; }
+    .topo-vlag-choice.is-flagbtn { min-height: 72px; padding: 8px 8px; }
+    #topo-minimap-wrap {
+      -webkit-flex: 0 0 240px;
+      flex: 0 0 240px;
+      width: 240px;
+      min-height: 0;
+      margin-left: 10px;
+      background: #E3F2FD;
+      border-radius: 16px;
+      overflow: hidden;
+      -webkit-box-shadow: 0 4px 0 rgba(0,0,0,0.08);
+      box-shadow: 0 4px 0 rgba(0,0,0,0.08);
+      display: none;
+    }
+    #topo-minimap-wrap.is-on { display: block; }
+    #topo-minimap-wrap svg { width: 100%; height: 100%; display: block; }
+
+    #topo-puzzel-status {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1565A0;
+      margin-top: -4px;
+      margin-bottom: 4px;
+    }
+
+    @media screen and (max-height: 800px) {
+      #choice-grid.choices-9 .choice-btn { min-height: 100px; }
+      #choice-grid.choices-9 .choice-label { font-size: 18px; }
+      #choice-grid.choices-9 .topo-glyph,
+      #choice-grid.choices-9 .topo-glyph svg,
+      #choice-grid.choices-9 .tijd-glyph,
+      #choice-grid.choices-9 .tijd-glyph svg,
+      #choice-grid.choices-9 .program-glyph,
+      #choice-grid.choices-9 .program-glyph svg,
+      #choice-grid.choices-9 .geld-glyph,
+      #choice-grid.choices-9 .geld-glyph svg { width: 48px; height: 36px; }
+      #topo-grid .level-btn, #topolevel-grid .level-btn { min-height: 120px; max-height: 170px; }
+      .topo-vlag-choice { min-height: 50px; font-size: 20px; margin: 0 0 8px 0; }
+      #topo-vlag-flag .topo-vlag-name { font-size: 30px; padding: 10px 12px; }
+      #topo-minimap-wrap { -webkit-flex-basis: 200px; flex-basis: 200px; width: 200px; }
+      #topo-tray { -webkit-flex-basis: 190px; flex-basis: 190px; width: 190px; }
+      .topo-piece { -webkit-flex-basis: 80px; flex-basis: 80px; width: 80px; min-height: 84px; margin: 4px; }
+      .topo-piece-shape { height: 50px; }
+      .topo-piece-shape svg { width: 72px; height: 50px; }
+      #topo-puzzel-status { font-size: 16px; }
+    }
+    @media screen and (max-width: 800px) {
+      #choice-grid.choices-9 .choice-btn { min-height: 140px; }
+      #choice-grid.choices-9 .choice-label { font-size: 22px; }
+      #choice-grid.choices-9 .topo-glyph,
+      #choice-grid.choices-9 .topo-glyph svg { width: 52px; height: 40px; }
+      #topo-puzzel-stage {
+        -webkit-flex-direction: column;
+        flex-direction: column;
+      }
+      #topo-tray {
+        -webkit-flex: 0 0 190px;
+        flex: 0 0 190px;
+        width: auto;
+        height: 190px;
+        margin-left: 0;
+        margin-top: 8px;
+      }
+      #topo-vlag-stage {
+        -webkit-flex-direction: column;
+        flex-direction: column;
+      }
+      #topo-minimap-wrap {
+        -webkit-flex: 0 0 150px;
+        flex: 0 0 150px;
+        width: auto;
+        height: 150px;
+        margin-left: 0;
+        margin-top: 8px;
+      }
+      #topo-grid .level-btn, #topolevel-grid .level-btn { min-height: 140px; }
+    }
+
 
     #tijd-grid, #tijdlevel-grid {
       display: -webkit-flex;
@@ -4971,7 +5276,7 @@
         <div class="home-hint" id="home-hint"></div>
       </div>
 
-      <div id="choice-grid" class="choices-8">
+      <div id="choice-grid" class="choices-9">
         <button type="button" class="tap choice-btn choice-numbers" id="btn-goto-games" data-act="goto-games">
           <div class="choice-glyph">123</div>
           <div class="choice-label">Getallen</div>
@@ -5008,6 +5313,10 @@
         <button type="button" class="tap choice-btn choice-tijd" id="btn-goto-tijd" data-act="goto-tijd">
           <div class="choice-glyph tijd-glyph" id="icon-tijd-start"></div>
           <div class="choice-label">Tijd</div>
+        </button>
+        <button type="button" class="tap choice-btn choice-topo" id="btn-goto-topo" data-act="goto-topo">
+          <div class="choice-glyph topo-glyph" id="icon-topo-start"></div>
+          <div class="choice-label">Topografie</div>
         </button>
       </div>
       <div id="player-bar">
@@ -5827,6 +6136,119 @@
       </div>
     </div>
 
+
+    <div id="screen-topo" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-topo-back" data-act="back" title="Terug">
+            <span id="topo-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-topo-home" data-act="home" title="Start">
+            <span id="topo-home-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="topo-star-icon"></span>
+            <span class="star-count" id="topo-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt">Topografie</div>
+      <div id="topo-grid">
+        <button type="button" class="tap level-btn lvl-topo-puzzel" data-act="topo-game" data-game="puzzel">
+          <div class="level-icon" id="icon-topo-puzzel"></div>
+          <div class="level-label">Europa puzzel</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-topo-vlag" data-act="topo-game" data-game="vlag">
+          <div class="level-icon" id="icon-topo-vlag"></div>
+          <div class="level-label">Vlaggen van Europa</div>
+        </button>
+      </div>
+    </div>
+
+    <div id="screen-topolevel" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-topolevel-back" data-act="back" title="Terug">
+            <span id="topolevel-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-topolevel-home" data-act="home" title="Start">
+            <span id="topolevel-home-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="topolevel-star-icon"></span>
+            <span class="star-count" id="topolevel-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt" id="topolevel-prompt">Europa puzzel</div>
+      <div id="topolevel-grid">
+        <button type="button" class="tap level-btn lvl-topo-easy" data-act="topo-kind" data-kind="easy">
+          <div class="level-icon" id="icon-topo-easy"></div>
+          <div class="level-label">Makkelijk</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-topo-hard" data-act="topo-kind" data-kind="hard">
+          <div class="level-icon" id="icon-topo-hard"></div>
+          <div class="level-label">Moeilijk</div>
+        </button>
+      </div>
+    </div>
+
+    <div id="screen-topopuzzel" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-topopuzzel-back" data-act="back" title="Terug">
+            <span id="topopuzzel-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-topopuzzel-home" data-act="home" title="Start">
+            <span id="topopuzzel-home-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="topopuzzel-star-icon"></span>
+            <span class="star-count" id="topopuzzel-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt" id="topo-puzzel-prompt">Europa puzzel</div>
+      <div id="topo-puzzel-status"></div>
+      <div id="topo-puzzel-stage">
+        <div id="topo-map-wrap"></div>
+        <div id="topo-tray"><div id="topo-tray-inner"></div></div>
+      </div>
+    </div>
+
+    <div id="screen-topoplay" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-topoplay-back" data-act="back" title="Terug">
+            <span id="topoplay-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-topoplay-home" data-act="home" title="Start">
+            <span id="topoplay-home-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="topoplay-star-icon"></span>
+            <span class="star-count" id="topoplay-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt" id="topo-vlag-prompt">Welk land hoort bij deze vlag?</div>
+      <div class="progress-row"></div>
+      <div id="topo-vlag-stage">
+        <div id="topo-vlag-main">
+          <div id="topo-vlag-flag"></div>
+          <div id="topo-vlag-choices"></div>
+        </div>
+        <div id="topo-minimap-wrap"></div>
+      </div>
+    </div>
 
     <div id="screen-robotlevel" class="is-hidden">
       <div class="topbar">
@@ -9302,7 +9724,7 @@
   /* ---------- UI ---------- */
   function updateStarsUI() {
     var i, row, html, filled, el, rows;
-    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'vers-stars', 'robot-stars', 'robotlevel-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars', 'cups-stars', 'veranderd-stars', 'klinkers-stars', 'lijnlevel-stars', 'lijn-stars', 'doolhoflevel-stars', 'geld-stars', 'geldlevel-stars', 'geldplay-stars', 'program-stars', 'tijd-stars', 'tijdlevel-stars', 'tijdplay-stars'], String(state.stars));
+    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'vers-stars', 'robot-stars', 'robotlevel-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars', 'cups-stars', 'veranderd-stars', 'klinkers-stars', 'lijnlevel-stars', 'lijn-stars', 'doolhoflevel-stars', 'geld-stars', 'geldlevel-stars', 'geldplay-stars', 'program-stars', 'tijd-stars', 'tijdlevel-stars', 'tijdplay-stars', 'topo-stars', 'topolevel-stars', 'topopuzzel-stars', 'topoplay-stars'], String(state.stars));
     filled = state.towardsReward;
     if (filled > 5) filled = 5;
     html = '';
@@ -9335,7 +9757,7 @@
   function showScreen(name) {
     var ids, i, el;
     state.screen = name;
-    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay', 'program', 'tijd', 'tijdlevel', 'tijdplay'];
+    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay', 'program', 'tijd', 'tijdlevel', 'tijdplay', 'topo', 'topolevel', 'topopuzzel', 'topoplay'];
     for (i = 0; i < ids.length; i++) {
       el = $('screen-' + ids[i]);
       if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
@@ -9425,6 +9847,11 @@
     if (s === 'tijdplay') {
       leavePlay();
       showTijdMenu();
+      return;
+    }
+    if (s === 'topoplay' || s === 'topopuzzel') {
+      leavePlay();
+      showTopoMenu();
       return;
     }
     if (s === 'memoryplay' || s === 'weg' || s === 'simon' || s === 'rij' || s === 'cups' || s === 'veranderd') {
@@ -11702,6 +12129,10 @@
       if (sezDragStart(e) || mdDragStart(e) || dagenDragStart(e) || zetDragStart(e)) {
         if (e.preventDefault) e.preventDefault();
       }
+    } else if (state.screen === 'topopuzzel') {
+      if (topoDragStart(e)) {
+        if (e.preventDefault) e.preventDefault();
+      }
     }
   }
 
@@ -11755,6 +12186,11 @@
         zetDragMove(e);
         if (e.preventDefault) e.preventDefault();
       }
+    } else if (state.screen === 'topopuzzel') {
+      if (topoDrag.on) {
+        topoDragMove(e);
+        if (e.preventDefault) e.preventDefault();
+      }
     }
   }
 
@@ -11806,6 +12242,11 @@
         if (e.preventDefault) e.preventDefault();
       } else if (zetDrag.on) {
         zetDragEnd(e);
+        if (e.preventDefault) e.preventDefault();
+      }
+    } else if (state.screen === 'topopuzzel') {
+      if (topoDrag.on) {
+        topoDragEnd(e);
         if (e.preventDefault) e.preventDefault();
       }
     }
@@ -15854,6 +16295,7 @@
     if (typeof stopGeldDrag === 'function') stopGeldDrag();
     if (typeof stopZetDrag === 'function') stopZetDrag();
     if (typeof stopDagenDrag === 'function') stopDagenDrag();
+    if (typeof stopTopoDrag === 'function') stopTopoDrag();
     if (typeof stopMdDrag === 'function') stopMdDrag();
     if (typeof stopSezDrag === 'function') stopSezDrag();
     clearMemoryTimer();
@@ -15925,6 +16367,10 @@
       showTijdLevel();
     } else if (s === 'tijdlevel') {
       showTijdMenu();
+    } else if (s === 'topopuzzel' || s === 'topoplay') {
+      showTopoLevel();
+    } else if (s === 'topolevel') {
+      showTopoMenu();
     } else {
       goToStart();
     }
@@ -16091,6 +16537,27 @@
       showTijdMenu();
       beginQuestionVoice();
       speak('tijd-kies');
+      return;
+    }
+    if (act === 'goto-topo') {
+      cancelAdvanceWait();
+      showTopoMenu();
+      beginQuestionVoice();
+      speak('topo-kies');
+      return;
+    }
+    if (act === 'topo-game') {
+      showTopoLevel(el.getAttribute('data-game') || 'puzzel');
+      return;
+    }
+    if (act === 'topo-kind') {
+      kind = el.getAttribute('data-kind') || 'easy';
+      if ((topoState.game || 'puzzel') === 'vlag') startTopoVlag(kind, true);
+      else startTopoPuzzel(kind, true);
+      return;
+    }
+    if (act === 'topo-choice') {
+      onTopoChoice(el);
       return;
     }
     if (act === 'tijd-game') {
@@ -16449,6 +16916,8 @@
       e.preventDefault();
     } else if (state.screen === 'tijdplay' && (sezDragStart(e) || mdDragStart(e) || dagenDragStart(e) || zetDragStart(e))) {
       e.preventDefault();
+    } else if (state.screen === 'topopuzzel' && topoDragStart(e)) {
+      e.preventDefault();
     }
   }
 
@@ -16493,6 +16962,10 @@
       return;
     }
     if (state.screen === 'tijdplay' && (sezDragMove(e) || mdDragMove(e) || dagenDragMove(e) || zetDragMove(e))) {
+      e.preventDefault();
+      return;
+    }
+    if (state.screen === 'topopuzzel' && topoDragMove(e)) {
       e.preventDefault();
       return;
     }
@@ -16557,6 +17030,12 @@
       lastTouchEnd = now;
       return;
     }
+    if (state.screen === 'topopuzzel' && topoDragEnd(e)) {
+      clearPressed();
+      e.preventDefault();
+      lastTouchEnd = now;
+      return;
+    }
     el = findClickableFromEvent(e);
     clearPressed();
     if (el && (now - touchStartTime) < 700 && (!touchMoved || isNavAct(el))) {
@@ -16574,6 +17053,7 @@
     if (state.screen === 'lijn') stopLijnDrag();
     if (state.screen === 'geldplay') stopGeldDrag();
     if (state.screen === 'tijdplay') { stopZetDrag(); stopDagenDrag(); stopMdDrag(); stopSezDrag(); }
+    if (state.screen === 'topopuzzel') stopTopoDrag();
   }
 
   function onClick(e) {
@@ -17588,6 +18068,7 @@
     state.tijdGame = 'klok';
     if (typeof stopZetDrag === 'function') stopZetDrag();
     if (typeof stopDagenDrag === 'function') stopDagenDrag();
+    if (typeof stopTopoDrag === 'function') stopTopoDrag();
     if (typeof stopMdDrag === 'function') stopMdDrag();
     if (typeof stopSezDrag === 'function') stopSezDrag();
     hideReward();
@@ -17678,6 +18159,7 @@
     }
     stopZetDrag();
     if (typeof stopDagenDrag === 'function') stopDagenDrag();
+    if (typeof stopTopoDrag === 'function') stopTopoDrag();
     if (typeof stopMdDrag === 'function') stopMdDrag();
     if (typeof stopSezDrag === 'function') stopSezDrag();
     if (forced && forced.h) {
@@ -18137,6 +18619,7 @@
     }
     if (typeof stopZetDrag === 'function') stopZetDrag();
     if (typeof stopDagenDrag === 'function') stopDagenDrag();
+    if (typeof stopTopoDrag === 'function') stopTopoDrag();
     if (typeof stopMdDrag === 'function') stopMdDrag();
     if (typeof stopSezDrag === 'function') stopSezDrag();
     item = pickDigiItem(kind, forced);
@@ -18402,6 +18885,7 @@
     }
     if (typeof stopZetDrag === 'function') stopZetDrag();
     if (typeof stopDagenDrag === 'function') stopDagenDrag();
+    if (typeof stopTopoDrag === 'function') stopTopoDrag();
     if (typeof stopMdDrag === 'function') stopMdDrag();
     if (typeof stopSezDrag === 'function') stopSezDrag();
     item = pickLangItem(kind, forcedId);
@@ -20582,6 +21066,719 @@
   };
 
 
+  /* ---------- Topografie ---------- */
+  var TOPO_VB_W = 1000;
+  var TOPO_VB_H = 933;
+  var TOPO_LANDEN = [
+    {id:'nl',name:'Nederland',audio:'land-nederland',color:'#FF8A00',easyP:1,hardP:1,easyV:1,hardV:1,cx:363,cy:502,x:329,y:476,w:56,h:62,path:'M366 538L361 536L363 529L355 525L353 520L344 522L331 517L343 520L339 516L341 516L339 511L347 500L352 486L367 477L380 476L385 480L382 494L377 497L382 500L382 503L377 508L377 511L366 513L369 522L368 529L364 531L367 535ZM342 522L337 525L330 524L329 521L340 522ZM338 513L340 515L336 513Z'},
+    {id:'be',name:'België',audio:'land-belgie',color:'#FFE14A',easyP:1,hardP:1,easyV:1,hardV:1,cx:347,cy:540,x:317,y:520,w:53,h:47,path:'M342 522L353 520L355 525L364 529L361 536L369 542L370 549L361 557L362 566L357 567L348 560L348 551L344 555L338 555L339 548L332 546L325 534L320 535L317 526L329 521L330 524L337 525L341 522Z'},
+    {id:'de',name:'Duitsland',audio:'land-duitsland',color:'#7C5CFF',easyP:1,hardP:1,easyV:1,hardV:1,cx:428,cy:533,x:364,y:442,w:129,h:179,path:'M415 615L401 609L399 613L386 613L387 600L395 581L375 576L369 569L372 561L366 554L370 545L364 531L369 522L366 513L377 511L382 503L377 497L385 487L383 477L385 471L396 470L403 477L404 466L412 467L420 474L405 456L409 451L405 442L418 443L423 448L421 452L436 454L435 464L441 465L456 452L472 459L474 466L479 468L482 480L479 488L486 496L488 506L487 512L493 529L490 536L484 531L485 534L465 547L453 551L459 559L457 563L461 569L479 583L479 589L464 601L469 615L456 610L439 618L429 614L425 621L416 615ZM471 453L467 457L464 453L466 446L470 452ZM478 463L475 465L473 459L476 461Z'},
+    {id:'fr',name:'Frankrijk',audio:'land-frankrijk',color:'#2F8CFF',easyP:1,hardP:1,easyV:1,hardV:1,cx:306,cy:631,x:202,y:526,w:213,h:231,path:'M414 725L415 740L409 757L402 752L398 735L411 727L412 720L414 723ZM386 613L376 616L359 644L372 640L376 651L372 655L377 664L369 671L374 677L372 688L384 693L381 702L358 717L322 703L307 717L308 728L288 728L268 714L255 716L232 704L234 700L228 695L234 692L244 667L241 668L247 648L254 662L246 644L249 643L249 630L237 616L236 608L243 608L232 604L234 600L229 596L207 587L202 581L208 579L205 576L210 576L203 571L227 567L234 575L254 576L251 551L259 552L260 559L283 561L279 559L280 555L302 544L305 530L317 526L320 535L325 534L332 546L339 548L338 555L348 551L348 560L357 567L395 581L387 600L386 613Z'},
+    {id:'es',name:'Spanje',audio:'land-spanje',color:'#FF6B3D',easyP:1,hardP:1,easyV:1,hardV:1,cx:186,cy:758,x:103,y:667,w:219,h:181,path:'M301 788L307 791L299 799L287 792L297 785L302 787ZM322 789L314 783L322 788ZM269 805L265 805L272 800L270 805ZM228 695L234 700L233 704L255 716L267 714L278 719L279 725L308 728L308 739L262 760L264 763L240 787L240 798L247 806L232 814L226 829L209 832L198 844L156 838L130 848L119 832L123 826L120 827L114 815L103 815L106 803L117 795L111 787L121 775L114 760L125 759L126 751L130 748L132 732L147 723L142 713L116 709L116 702L105 704L110 697L110 688L106 688L109 684L105 679L107 675L134 667L143 675L227 695Z'},
+    {id:'it',name:'Italië',audio:'land-italie',color:'#3DCC6B',easyP:1,hardP:1,easyV:1,hardV:1,cx:461,cy:708,x:369,y:625,w:202,h:236,path:'M376 651L388 652L398 640L398 645L407 654L412 639L415 643L422 642L424 645L424 637L429 638L430 630L438 632L442 628L456 625L460 634L480 637L476 643L480 645L478 650L484 658L482 659L480 654L473 655L459 663L458 668L463 674L459 680L462 691L482 705L490 725L500 735L511 742L528 741L524 750L561 767L571 775L571 783L565 783L560 775L548 771L544 773L538 790L549 797L551 806L542 811L541 820L533 831L527 832L525 827L528 824L530 815L534 813L534 809L523 785L510 781L506 771L498 773L500 770L493 769L487 759L476 759L450 736L441 733L442 731L431 721L427 700L423 697L403 687L390 699L381 702L384 693L379 693L372 688L374 677L369 671L377 664L372 655L374 653ZM429 723L430 727L425 725L429 724ZM524 826L517 844L521 853L518 861L507 859L502 854L471 843L467 838L472 830L476 833L483 829L492 833L525 825ZM416 769L419 778L416 783L415 808L406 806L404 813L398 813L394 807L397 792L395 791L396 782L391 774L391 769L400 768L409 760L416 766L415 768Z'},
+    {id:'gb',name:'Verenigd Koninkrijk',audio:'land-verenigd-koninkrijk',color:'#FF4F8A',easyP:1,hardP:1,easyV:1,hardV:1,cx:259,cy:454,x:188,y:297,w:122,h:237,path:'M247 504L233 507L230 502L225 501L227 500L224 497L216 498L212 491L229 484L233 480L233 471L225 472L232 465L239 462L248 465L247 462L249 461L252 465L249 459L254 445L250 445L247 434L249 429L255 426L243 428L232 424L230 428L228 423L229 420L237 410L235 405L237 399L240 400L238 397L239 394L232 399L233 395L237 392L231 396L226 410L223 410L228 401L227 400L230 390L237 379L230 383L225 378L231 376L230 374L235 368L233 364L236 360L235 357L237 353L243 354L241 349L242 345L246 345L248 338L270 341L267 348L257 355L256 357L258 358L253 363L264 362L280 367L281 371L269 388L258 393L263 393L265 397L256 401L251 398L270 406L275 415L277 436L290 452L288 454L291 464L281 460L286 461L293 470L293 475L288 480L291 483L295 480L305 482L309 486L310 490L307 501L302 504L302 507L294 509L296 513L289 514L302 518L302 522L295 528L284 530L261 524L262 526L252 526L251 529L238 524L232 525L227 533L220 528L212 529L205 534L198 531L211 523L224 510L238 512L250 502L249 503ZM233 461L235 462L229 464L229 459L232 459ZM300 302L299 299L300 297L300 301ZM297 301L300 303L295 316L296 309L293 306L296 305L294 301L298 299ZM272 332L275 334L269 332L270 329L273 332ZM232 410L229 408L229 404L232 404L232 409ZM228 387L221 387L224 383L222 381L225 380L229 384ZM221 396L220 402L217 403L218 399L216 400L220 396ZM223 399L222 397L227 393L226 395ZM233 340L227 345L229 347L221 352L220 350L223 348L221 346L223 341L226 343L226 340L233 338ZM229 360L228 364L233 367L229 371L229 367L222 360L228 356L229 358ZM218 353L219 354L217 356L214 354L217 353ZM214 366L213 365L214 359L215 360L214 365ZM211 438L205 437L202 428L197 434L193 432L188 424L194 422L193 419L197 418L203 412L218 412L221 423L218 426L222 426L222 431L220 429L220 435L212 439ZM265 529L262 531L258 529L265 528Z'},
+    {id:'pl',name:'Polen',audio:'land-polen',color:'#26C6DA',easyP:1,hardP:1,easyV:1,hardV:1,cx:553,cy:499,x:478,y:438,w:145,h:128,path:'M612 504L622 518L623 526L607 550L611 564L593 557L574 561L570 566L566 566L560 558L554 563L547 553L533 549L533 544L521 543L523 547L518 551L512 544L514 540L512 538L493 531L491 535L493 525L487 512L488 506L486 496L479 488L482 480L479 468L484 470L483 466L478 464L527 438L536 441L532 440L540 448L590 440L599 444L609 469L611 476L603 487L610 492L611 502Z'},
+    {id:'pt',name:'Portugal',audio:'land-portugal',color:'#8BC34A',easyP:0,hardP:1,easyV:1,hardV:1,cx:106,cy:759,x:74,y:702,w:73,h:115,path:'M106 704L116 702L116 709L142 713L147 723L132 732L130 748L126 751L125 759L114 760L121 775L111 787L117 795L106 803L103 815L95 817L74 811L80 803L84 781L88 782L78 779L79 774L89 767L81 773L76 772L101 731L104 706Z'},
+    {id:'ie',name:'Ierland',audio:'land-ierland',color:'#00BFA5',easyP:0,hardP:1,easyV:1,hardV:1,cx:181,cy:453,x:143,y:405,w:68,h:82,path:'M203 412L188 424L193 432L202 428L205 437L211 439L208 441L207 465L198 477L200 480L170 481L169 485L156 487L148 485L153 481L145 481L154 477L143 476L151 470L146 467L170 462L154 460L171 449L157 441L166 434L162 431L163 422L182 427L189 419L182 416L191 407L199 407L197 413L203 405L207 409L204 411Z'},
+    {id:'at',name:'Oostenrijk',audio:'land-oostenrijk',color:'#EF5350',easyP:0,hardP:1,easyV:0,hardV:1,cx:486,cy:612,x:415,y:578,w:116,h:61,path:'M415 621L415 615L419 614L425 621L429 614L439 618L456 610L469 615L465 599L478 590L479 585L493 588L497 578L525 583L531 599L530 606L520 607L524 610L521 614L522 622L515 631L494 639L461 634L456 625L437 633L428 628L425 631L416 621Z'},
+    {id:'ch',name:'Zwitserland',audio:'land-zwitserland',color:'#EC407A',easyP:0,hardP:1,easyV:0,hardV:1,cx:395,cy:632,x:359,y:609,w:71,h:45,path:'M415 615L417 616L415 626L425 631L430 630L429 638L424 637L425 645L422 642L415 643L412 639L406 654L404 649L398 645L398 640L388 652L376 652L372 646L372 640L367 639L359 645L363 635L376 620L376 616L399 613L401 609L413 613Z'},
+    {id:'cz',name:'Tsjechië',audio:'land-tsjechie',color:'#5C6BC0',easyP:0,hardP:1,easyV:0,hardV:1,cx:501,cy:561,x:453,y:531,w:99,h:58,path:'M552 561L526 585L497 578L493 588L485 589L462 570L453 550L456 552L485 534L483 531L490 536L493 531L513 539L512 544L518 551L523 547L521 543L533 544L533 549L546 552L551 560Z'},
+    {id:'dk',name:'Denemarken',audio:'land-denemarken',color:'#FF5252',easyP:0,hardP:1,easyV:0,hardV:1,cx:415,cy:411,x:399,y:376,w:90,h:71,path:'M455 421L451 429L454 433L449 435L449 444L447 445L444 435L439 435L435 423L443 417L446 423L446 417L450 413L455 414L454 418ZM419 444L405 442L405 430L399 426L400 402L406 405L409 399L413 400L414 393L412 392L408 399L404 401L401 397L406 390L416 389L422 379L430 376L428 380L429 387L426 393L426 402L434 406L432 411L427 412L425 420L421 420L423 422L417 428L418 434L416 439L419 442ZM431 426L433 432L431 439L423 436L421 432L421 428L431 426ZM440 442L445 444L446 447L436 445L436 441L439 441ZM432 446L431 443L435 436L433 445ZM456 440L450 442L452 438L455 440ZM423 443L420 442L420 439L423 442ZM488 437L483 436L483 432L489 436Z'},
+    {id:'se',name:'Zweden',audio:'land-zweden',color:'#FFCA28',easyP:0,hardP:1,easyV:0,hardV:1,cx:488,cy:264,x:436,y:110,w:120,h:320,path:'M531 367L528 370L530 377L522 389L524 385L521 375L529 365ZM504 406L502 400L509 381L506 394ZM439 345L442 348L442 332L451 320L451 312L448 299L452 298L454 291L446 282L447 269L443 246L451 229L464 225L463 218L459 216L466 199L465 180L474 175L473 171L481 157L478 147L487 133L492 136L494 130L493 123L509 125L511 122L508 121L510 113L508 110L515 110L542 129L542 140L545 140L545 147L550 153L550 166L556 176L539 177L539 183L532 191L534 195L531 203L536 210L531 225L511 244L508 248L510 250L504 252L507 258L500 262L503 267L501 275L503 279L499 282L503 303L511 304L524 321L514 333L522 333L518 338L504 350L495 352L504 354L501 356L502 388L497 410L482 411L476 419L478 426L476 429L459 430L460 422L453 409L458 410L456 406L458 401L452 395L437 361L436 346L438 344Z'},
+    {id:'no',name:'Noorwegen',audio:'land-noorwegen',color:'#7986CB',easyP:0,hardP:1,easyV:0,hardV:1,cx:445,cy:236,x:367,y:54,w:226,h:314,path:'M512 109L508 110L510 113L509 125L494 122L492 136L487 133L482 138L477 149L481 157L473 171L474 175L465 180L466 199L459 216L463 218L463 227L451 229L445 239L443 246L447 269L446 282L454 291L452 298L448 299L451 312L451 320L442 332L442 348L432 342L429 328L425 346L418 344L419 347L401 366L387 368L370 351L372 344L380 345L375 343L382 332L367 339L369 329L380 326L374 325L379 316L384 312L384 318L389 310L380 314L367 329L369 319L374 319L369 311L375 305L369 306L368 297L387 295L390 300L397 294L395 289L392 295L369 293L369 288L372 287L369 277L388 278L372 276L371 271L388 265L382 266L385 261L403 259L389 259L398 250L408 256L404 249L409 245L406 241L408 239L430 242L437 230L423 241L418 237L439 211L435 212L437 207L451 199L443 200L448 186L451 184L449 181L460 176L452 178L452 169L459 165L456 162L460 157L471 155L463 154L467 147L473 151L473 147L465 142L475 131L478 139L476 129L488 126L479 124L491 109L491 102L497 105L494 101L502 93L503 101L507 89L507 103L512 98L509 90L521 90L514 82L524 77L531 84L530 79L538 60L547 63L544 69L544 79L552 59L554 60L555 70L558 67L560 60L557 57L559 54L566 55L564 62L567 61L568 70L570 56L589 62L574 71L581 73L583 78L593 77L587 79L581 95L579 92L582 85L579 81L566 75L554 86L555 102L550 112L528 114L520 102L513 108ZM529 66L525 73L518 72L528 66ZM544 56L548 57L543 57ZM531 72L529 78L526 76L530 71ZM456 132L458 132L451 138L456 132ZM467 116L469 119L467 123L460 122L466 115ZM498 88L501 88L495 99L489 99L497 85ZM485 100L490 104L489 108L480 112L485 100ZM472 124L476 117L479 120L474 127L460 133L469 123L469 114L474 108L472 114L472 123Z'},
+    {id:'fi',name:'Finland',audio:'land-finland',color:'#4FC3F7',easyP:0,hardP:1,easyV:0,hardV:1,cx:582,cy:206,x:512,y:75,w:131,h:239,path:'M556 176L550 166L549 161L550 153L545 147L545 140L542 140L541 131L542 129L533 121L526 118L512 109L516 108L515 104L519 102L528 114L536 114L540 109L550 112L555 102L554 96L554 87L557 81L567 75L579 81L582 85L579 92L581 95L577 99L581 100L580 108L584 114L590 115L598 122L594 141L610 163L611 165L608 168L609 168L609 176L612 178L611 182L617 186L617 191L624 196L625 200L622 209L637 217L643 223L642 233L619 286L606 292L605 288L604 293L599 293L600 295L598 298L569 314L571 309L566 305L566 308L563 310L562 302L549 299L547 291L547 276L542 267L542 261L538 253L541 243L542 243L541 239L548 235L547 232L549 227L558 216L564 197L571 195L568 181L561 178L560 173L556 175ZM537 239L539 239L536 238L537 238ZM558 303L561 304L561 307L558 303ZM566 193L563 192L567 191L566 192Z'},
+    {id:'gr',name:'Griekenland',audio:'land-griekenland',color:'#29B6F6',easyP:0,hardP:1,easyV:0,hardV:1,cx:645,cy:782,x:593,y:719,w:168,h:156,path:'M615 812L618 819L611 817L613 810ZM621 824L624 826L621 828L616 824L620 824ZM615 807L613 808L614 801L616 806ZM602 790L598 790L593 783L598 782L597 785L601 790ZM662 791L676 795L681 804L686 805L687 808L683 809L676 802L669 802L660 795L653 795L660 790ZM679 749L674 748L677 745L678 748ZM667 854L665 855L664 850L668 853ZM747 854L744 852L746 846L748 853ZM736 827L743 822L737 826ZM709 828L706 826L708 823L710 826ZM728 804L733 805L724 807L727 804ZM715 813L720 809L718 812ZM696 812L690 809L695 811ZM713 798L709 798L711 795L707 791L713 790L713 797ZM713 772L717 779L710 780L711 775L708 778L704 777L712 771ZM693 761L693 765L687 765L686 762L693 760ZM757 841L754 841L753 836L761 828L760 837L758 838ZM685 866L690 863L690 866L695 868L721 863L723 867L732 861L730 868L705 875L698 872L681 873L679 867L682 863L683 865ZM700 719L704 720L706 725L702 729L704 735L701 741L683 739L661 750L664 757L670 757L673 761L662 759L667 763L667 767L657 761L663 768L658 768L655 763L647 760L647 756L642 759L644 769L660 786L657 789L657 785L652 785L652 788L656 790L648 796L675 804L679 817L668 811L660 816L670 825L664 828L656 825L668 848L658 842L654 850L646 838L644 845L640 843L637 839L637 832L625 822L629 814L639 810L658 815L657 813L662 810L647 806L630 811L627 808L625 811L616 801L622 799L621 796L615 798L606 792L599 784L604 784L606 781L604 777L610 773L614 760L612 755L623 753L629 746L638 745L642 739L662 731L670 729L684 733L695 729L698 727L695 721L697 719Z'},
+    {id:'hu',name:'Hongarije',audio:'land-hongarije',color:'#66BB6A',easyP:0,hardP:1,easyV:0,hardV:1,cx:567,cy:614,x:517,y:580,w:100,h:69,path:'M604 580L617 588L605 601L595 632L573 637L548 649L517 627L522 623L521 614L524 610L520 607L530 606L531 599L540 603L555 601L555 596L572 590L579 580L603 580Z'},
+    {id:'ro',name:'Roemenië',audio:'land-roemenie',color:'#FFA726',easyP:0,hardP:1,easyV:0,hardV:1,cx:658,cy:630,x:583,y:569,w:151,h:113,path:'M710 628L719 630L728 623L734 626L734 636L727 640L726 635L723 637L725 664L699 661L676 678L634 682L635 676L625 670L628 665L618 668L605 664L606 656L594 650L593 644L583 637L596 631L605 601L620 584L642 584L648 588L672 569L699 594L703 601L709 626Z'},
+    {id:'ua',name:'Oekraïne',audio:'land-oekraine',color:'#42A5F5',easyP:0,hardP:1,easyV:0,hardV:1,cx:732,cy:531,x:603,y:450,w:255,h:180,path:'M847 543L816 566L808 582L809 573L805 581L810 590L790 586L771 595L760 594L761 589L754 589L768 583L760 585L752 573L758 585L752 584L742 592L738 610L730 616L734 626L728 623L719 630L710 628L718 611L715 602L733 598L721 588L719 581L712 578L709 567L683 562L648 588L640 584L620 584L617 588L603 576L607 563L612 563L607 550L623 526L622 518L612 502L621 494L642 489L668 493L674 488L682 490L686 485L691 489L702 484L708 487L706 478L709 468L743 450L756 460L753 463L757 472L774 472L783 485L798 483L807 475L820 482L821 478L841 479L858 519L844 531L846 542Z'},
+    {id:'hr',name:'Kroatië',audio:'land-kroatie',color:'#26A69A',easyP:0,hardP:1,easyV:0,hardV:1,cx:526,cy:666,x:479,y:634,w:94,h:91,path:'M480 660L492 661L495 656L499 660L508 660L506 654L512 650L511 643L520 638L521 634L546 649L555 649L563 644L566 656L573 660L569 660L568 666L566 668L561 664L548 665L533 662L527 664L524 669L515 666L515 676L522 681L526 690L543 704L550 713L549 715L537 706L522 704L507 690L506 688L512 687L503 680L500 669L495 665L491 664L486 676L481 670L479 661ZM534 715L543 716L534 716ZM542 711L529 711L540 711ZM535 709L529 708L537 708ZM500 672L494 669L496 666L499 670ZM507 686L499 678L507 686ZM495 679L492 674L492 668L495 679ZM564 722L566 725L540 714L553 715L563 722Z'},
+    {id:'sk',name:'Slowakije',audio:'land-slowakije',color:'#AB47BC',easyP:0,hardP:1,easyV:0,hardV:1,cx:563,cy:578,x:525,y:558,w:82,h:44,path:'M607 563L603 580L598 582L593 578L579 580L572 590L567 589L555 596L555 601L538 602L530 598L525 590L528 579L538 577L548 562L557 563L560 558L567 567L574 561L588 558L606 563Z'},
+    {id:'bg',name:'Bulgarije',audio:'land-bulgarije',color:'#9CCC65',easyP:0,hardP:1,easyV:0,hardV:1,cx:676,cy:699,x:625,y:662,w:101,h:77,path:'M726 706L703 712L696 719L698 727L695 729L684 733L670 729L644 739L644 729L630 718L633 715L630 706L637 697L628 691L625 681L629 674L635 676L634 682L676 678L696 662L713 662L725 664L715 697L725 705Z'},
+    {id:'si',name:'Slovenië',audio:'land-slovenie',color:'#7E57C2',easyP:0,hardP:1,easyV:0,hardV:1,cx:498,cy:645,x:476,y:626,w:48,h:35,path:'M524 634L511 643L512 650L506 654L506 661L499 660L495 656L492 661L480 661L484 658L478 650L480 645L476 643L480 637L494 639L499 634L515 631L517 627L520 626L524 634Z'},
+    {id:'lu',name:'Luxemburg',audio:'land-luxemburg',color:'#90A4AE',easyP:0,hardP:0,easyV:0,hardV:0,cx:366,cy:561,x:361,y:552,w:11,h:17,path:'M367 553L368 558L372 561L369 569L361 566L363 564L361 560L361 557L365 552L367 553Z'},
+    {id:'lt',name:'Litouwen',audio:'land-litouwen',color:'#90A4AE',easyP:0,hardP:0,easyV:0,hardV:0,cx:599,cy:416,x:561,y:388,w:74,h:61,path:'M589 441L588 429L584 425L566 423L561 404L572 395L598 393L606 388L631 401L631 408L635 409L626 420L625 434L627 438L624 435L616 444L601 449L589 440Z'},
+    {id:'lv',name:'Letland',audio:'land-letland',color:'#90A4AE',easyP:0,hardP:0,easyV:0,hardV:0,cx:605,cy:378,x:558,y:350,w:89,h:54,path:'M631 401L606 388L598 393L572 395L561 404L558 391L564 368L573 363L589 378L596 370L593 356L604 350L620 358L632 356L637 360L637 371L645 376L647 385L642 395L631 400Z'},
+    {id:'ee',name:'Estland',audio:'land-estland',color:'#90A4AE',easyP:0,hardP:0,easyV:0,hardV:0,cx:607,cy:333,x:562,y:310,w:71,h:50,path:'M630 356L620 358L603 350L593 356L593 344L584 346L580 340L581 336L578 334L578 327L586 319L598 315L598 313L627 310L629 312L624 327L628 340L633 347L630 356ZM570 342L579 345L569 352L565 360L567 354L563 352L563 349L562 347L569 342ZM573 337L569 341L562 336L568 332L574 337ZM579 343L575 342L579 342Z'},
+    {id:'rs',name:'Servië',audio:'land-servie',color:'#90A4AE',easyP:0,hardP:0,easyV:0,hardV:0,cx:598,cy:679,x:562,y:636,w:75,h:86,path:'M605 664L618 668L628 665L625 668L629 674L625 685L637 697L630 706L632 718L618 722L619 712L602 701L595 712L575 700L579 695L574 688L579 686L571 679L573 667L567 667L569 660L573 659L566 656L562 646L572 637L583 636L593 644L594 650L606 656L604 659L608 662L605 663Z'},
+    {id:'ba',name:'Bosnië en Herzegovina',audio:'land-bosnie',color:'#90A4AE',easyP:0,hardP:0,easyV:0,hardV:0,cx:550,cy:686,x:515,y:662,w:64,h:60,path:'M573 667L571 679L579 686L574 688L579 696L570 699L572 704L569 703L563 713L566 720L564 722L549 715L543 704L526 690L522 681L515 676L516 665L524 669L533 662L572 667Z'},
+    {id:'al',name:'Albanië',audio:'land-albanie',color:'#90A4AE',easyP:0,hardP:0,easyV:0,hardV:0,cx:596,cy:751,x:580,y:717,w:34,h:67,path:'M582 736L580 729L585 717L587 721L592 719L601 726L603 747L608 754L612 754L614 760L610 773L604 777L606 781L603 784L585 769L588 769L585 763L586 741L584 736Z'},
+    {id:'mk',name:'Noord-Macedonië',audio:'land-noord-macedonie',color:'#90A4AE',easyP:0,hardP:0,easyV:0,hardV:0,cx:622,cy:736,x:602,y:718,w:42,h:37,path:'M618 722L629 718L639 724L644 729L644 738L639 744L629 746L623 753L608 755L603 747L602 733L605 733L605 728L618 722Z'},
+    {id:'me',name:'Montenegro',audio:'land-montenegro',color:'#90A4AE',easyP:0,hardP:0,easyV:0,hardV:0,cx:577,cy:715,x:564,y:698,w:31,h:38,path:'M574 698L595 711L591 714L590 720L585 718L580 729L582 736L565 723L566 720L564 712L569 703L572 704L570 699L574 698Z'},
+    {id:'xk',name:'Kosovo',audio:'land-kosovo',color:'#90A4AE',easyP:0,hardP:0,easyV:0,hardV:0,cx:605,cy:717,x:590,y:701,w:29,h:32,path:'M595 712L602 701L613 711L619 712L618 722L605 728L604 733L592 719L590 715L593 713Z'},
+    {id:'md',name:'Moldavië',audio:'land-moldavie',color:'#90A4AE',easyP:0,hardP:0,easyV:0,hardV:0,cx:704,cy:587,x:670,y:562,w:63,h:66,path:'M670 570L683 562L709 567L712 578L719 581L721 588L727 590L729 596L733 598L715 602L718 611L713 622L714 625L710 628L707 625L703 601L699 594L676 571L672 569Z'},
+    {id:'by',name:'Wit-Rusland',audio:'land-wit-rusland',color:'#90A4AE',easyP:0,hardP:0,easyV:0,hardV:0,cx:661,cy:445,x:600,y:385,w:122,h:119,path:'M719 464L707 472L708 487L702 484L691 489L686 485L682 490L674 488L668 493L659 488L640 489L621 494L612 504L610 492L603 487L611 474L600 449L611 448L624 435L628 438L625 434L626 420L635 409L631 408L631 401L642 395L647 385L664 386L666 391L675 385L685 389L689 400L688 407L706 420L707 425L717 425L722 430L717 440L707 441L706 445L712 450L719 463Z'},
+    {id:'ru',name:'Rusland',audio:'land-rusland',color:'#90A4AE',easyP:0,hardP:0,easyV:0,hardV:0,cx:804,cy:603,x:548,y:159,w:289,h:467,path:'M667 159L668 164L664 161L666 159ZM562 423L559 431L566 431L566 423L568 422L584 425L588 429L587 436L589 441L548 444L551 433L558 430L562 423ZM787 589L790 586L804 586L821 597L837 589L837 597L823 601L820 610L814 612L807 624L802 626L796 624L794 611L776 610L788 590Z'},
+    {id:'tr',name:'Turkije',audio:'land-turkije',color:'#90A4AE',easyP:0,hardP:0,easyV:0,hardV:0,cx:834,cy:746,x:699,y:663,w:260,h:164,path:'M959 755L934 760L923 771L909 773L913 785L907 797L902 796L898 789L901 779L897 774L888 786L874 785L861 804L846 813L815 804L802 807L802 821L789 827L780 826L773 818L745 825L758 815L740 820L744 815L733 806L735 798L716 796L717 787L723 793L731 788L723 784L726 779L718 772L721 765L707 769L706 758L713 747L752 737L747 735L764 725L751 725L749 718L785 711L798 692L814 680L839 670L847 676L859 672L868 679L873 675L903 674L919 663ZM726 706L732 715L748 718L747 724L723 731L706 756L713 741L700 742L706 725L699 717L713 707L724 707Z'},
+  ];
+
+  function topoLandById(id) {
+    var i;
+    for (i = 0; i < TOPO_LANDEN.length; i++) {
+      if (TOPO_LANDEN[i].id === id) return TOPO_LANDEN[i];
+    }
+    return null;
+  }
+
+  function topoIdsWhere(key) {
+    var i, out;
+    out = [];
+    for (i = 0; i < TOPO_LANDEN.length; i++) {
+      if (TOPO_LANDEN[i][key]) out.push(TOPO_LANDEN[i].id);
+    }
+    return out;
+  }
+
+  function topoSnapRadiusVb(land) {
+    var m, r;
+    if (!land) return 28;
+    m = land.w < land.h ? land.w : land.h;
+    r = m * 0.5;
+    if (r < 28) r = 28;
+    if (r > 70) r = 70;
+    return r;
+  }
+
+  function topoPointInLandBox(x, y, land, pad) {
+    if (!land) return false;
+    if (typeof pad !== 'number') pad = 8;
+    return x >= (land.x - pad) && y >= (land.y - pad) &&
+      x <= (land.x + land.w + pad) && y <= (land.y + land.h + pad);
+  }
+
+  function topoPickSnap(x, y, remainIds) {
+    var i, land, d, best, bestD, boxed, boxedD, r, pad, dx, dy;
+    best = null;
+    bestD = 1e9;
+    boxed = null;
+    boxedD = 1e9;
+    pad = 8;
+    if (!remainIds) return null;
+    for (i = 0; i < remainIds.length; i++) {
+      land = typeof remainIds[i] === 'string' ? topoLandById(remainIds[i]) : remainIds[i];
+      if (!land) continue;
+      dx = x - land.cx;
+      dy = y - land.cy;
+      d = Math.sqrt(dx * dx + dy * dy);
+      r = topoSnapRadiusVb(land);
+      if (topoPointInLandBox(x, y, land, pad)) {
+        if (d < boxedD) {
+          boxedD = d;
+          boxed = land;
+        }
+      } else if (d <= r) {
+        if (d < bestD) {
+          bestD = d;
+          best = land;
+        }
+      }
+    }
+    return boxed || best;
+  }
+
+  function topoFlagSvg(id, w, h) {
+    var inner, vbW, vbH, ns;
+    vbW = 60;
+    vbH = 40;
+    ns = 'xmlns="http://www.w3.org/2000/svg"';
+    if (id === 'ch') {
+      vbW = 40;
+      vbH = 40;
+    }
+    if (id === 'nl') {
+      inner = '<rect width="60" height="13.4" fill="#AE1C28"/><rect y="13.3" width="60" height="13.4" fill="#FFF"/><rect y="26.6" width="60" height="13.4" fill="#21468B"/>';
+    } else if (id === 'be') {
+      inner = '<rect width="20" height="40" fill="#000"/><rect x="20" width="20" height="40" fill="#FAE042"/><rect x="40" width="20" height="40" fill="#ED2939"/>';
+    } else if (id === 'de') {
+      inner = '<rect width="60" height="13.4" fill="#000"/><rect y="13.3" width="60" height="13.4" fill="#DD0000"/><rect y="26.6" width="60" height="13.4" fill="#FFCE00"/>';
+    } else if (id === 'fr') {
+      inner = '<rect width="20" height="40" fill="#002395"/><rect x="20" width="20" height="40" fill="#FFF"/><rect x="40" width="20" height="40" fill="#ED2939"/>';
+    } else if (id === 'es') {
+      inner = '<rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/>';
+    } else if (id === 'it') {
+      inner = '<rect width="20" height="40" fill="#009246"/><rect x="20" width="20" height="40" fill="#FFF"/><rect x="40" width="20" height="40" fill="#CE2B37"/>';
+    } else if (id === 'gb') {
+      inner = '<rect width="60" height="40" fill="#012169"/>' +
+        '<path d="M0 0L60 40M60 0L0 40" fill="none" stroke="#FFF" stroke-width="8"/>' +
+        '<path d="M0 0L60 40M60 0L0 40" fill="none" stroke="#C8102E" stroke-width="2.6"/>' +
+        '<path d="M30 0V40M0 20H60" fill="none" stroke="#FFF" stroke-width="13"/>' +
+        '<path d="M30 0V40M0 20H60" fill="none" stroke="#C8102E" stroke-width="8"/>';
+    } else if (id === 'pl') {
+      inner = '<rect width="60" height="20" fill="#FFF"/><rect y="20" width="60" height="20" fill="#DC143C"/>';
+    } else if (id === 'pt') {
+      inner = '<rect width="60" height="40" fill="#FF0000"/><rect width="24" height="40" fill="#006600"/>';
+    } else if (id === 'ie') {
+      inner = '<rect width="20" height="40" fill="#169B62"/><rect x="20" width="20" height="40" fill="#FFF"/><rect x="40" width="20" height="40" fill="#FF883E"/>';
+    } else if (id === 'at') {
+      inner = '<rect width="60" height="40" fill="#ED2939"/><rect y="13.3" width="60" height="13.4" fill="#FFF"/>';
+    } else if (id === 'ch') {
+      inner = '<rect width="40" height="40" fill="#FF0000"/>' +
+        '<rect x="16" y="6" width="8" height="28" fill="#FFF"/>' +
+        '<rect x="6" y="16" width="28" height="8" fill="#FFF"/>';
+    } else if (id === 'cz') {
+      inner = '<rect width="60" height="20" fill="#FFF"/><rect y="20" width="60" height="20" fill="#D7141A"/>' +
+        '<polygon points="0,0 30,20 0,40" fill="#11457E"/>';
+    } else if (id === 'dk') {
+      inner = '<rect width="60" height="40" fill="#C60C30"/>' +
+        '<rect x="18" y="0" width="8" height="40" fill="#FFF"/>' +
+        '<rect x="0" y="16" width="60" height="8" fill="#FFF"/>';
+    } else if (id === 'se') {
+      inner = '<rect width="60" height="40" fill="#006AA7"/>' +
+        '<rect x="18" y="0" width="8" height="40" fill="#FECC00"/>' +
+        '<rect x="0" y="16" width="60" height="8" fill="#FECC00"/>';
+    } else if (id === 'no') {
+      inner = '<rect width="60" height="40" fill="#BA0C2F"/>' +
+        '<rect x="16" y="0" width="12" height="40" fill="#FFF"/>' +
+        '<rect x="0" y="14" width="60" height="12" fill="#FFF"/>' +
+        '<rect x="19" y="0" width="6" height="40" fill="#00205B"/>' +
+        '<rect x="0" y="17" width="60" height="6" fill="#00205B"/>';
+    } else if (id === 'fi') {
+      inner = '<rect width="60" height="40" fill="#FFF"/>' +
+        '<rect x="16" y="0" width="10" height="40" fill="#003580"/>' +
+        '<rect x="0" y="15" width="60" height="10" fill="#003580"/>';
+    } else if (id === 'gr') {
+      inner = '<rect width="60" height="4.45" fill="#0D5EAF"/><rect y="4.44" width="60" height="4.45" fill="#FFF"/>' +
+        '<rect y="8.88" width="60" height="4.45" fill="#0D5EAF"/><rect y="13.33" width="60" height="4.45" fill="#FFF"/>' +
+        '<rect y="17.77" width="60" height="4.45" fill="#0D5EAF"/><rect y="22.22" width="60" height="4.45" fill="#FFF"/>' +
+        '<rect y="26.66" width="60" height="4.45" fill="#0D5EAF"/><rect y="31.11" width="60" height="4.45" fill="#FFF"/>' +
+        '<rect y="35.55" width="60" height="4.45" fill="#0D5EAF"/>' +
+        '<rect width="24" height="22.22" fill="#0D5EAF"/>' +
+        '<rect x="9.5" y="0" width="5" height="22.22" fill="#FFF"/>' +
+        '<rect x="0" y="8.6" width="24" height="5" fill="#FFF"/>';
+    } else if (id === 'hu') {
+      inner = '<rect width="60" height="13.4" fill="#CE2939"/><rect y="13.3" width="60" height="13.4" fill="#FFF"/><rect y="26.6" width="60" height="13.4" fill="#436F4D"/>';
+    } else if (id === 'ro') {
+      inner = '<rect width="20" height="40" fill="#002B7F"/><rect x="20" width="20" height="40" fill="#FCD116"/><rect x="40" width="20" height="40" fill="#CE1126"/>';
+    } else if (id === 'ua') {
+      inner = '<rect width="60" height="20" fill="#005BBB"/><rect y="20" width="60" height="20" fill="#FFD500"/>';
+    } else if (id === 'hr') {
+      inner = '<rect width="60" height="13.4" fill="#FF0000"/><rect y="13.3" width="60" height="13.4" fill="#FFF"/><rect y="26.6" width="60" height="13.4" fill="#171796"/>';
+    } else if (id === 'sk') {
+      inner = '<rect width="60" height="13.4" fill="#FFF"/><rect y="13.3" width="60" height="13.4" fill="#0B4EA2"/><rect y="26.6" width="60" height="13.4" fill="#EE1C25"/>';
+    } else if (id === 'bg') {
+      inner = '<rect width="60" height="13.4" fill="#FFF"/><rect y="13.3" width="60" height="13.4" fill="#00966E"/><rect y="26.6" width="60" height="13.4" fill="#D62612"/>';
+    } else if (id === 'si') {
+      inner = '<rect width="60" height="13.4" fill="#FFF"/><rect y="13.3" width="60" height="13.4" fill="#005DA4"/><rect y="26.6" width="60" height="13.4" fill="#ED1C24"/>';
+    } else {
+      inner = '<rect width="60" height="40" fill="#B0BEC5"/>';
+    }
+    return '<svg ' + ns + ' viewBox="0 0 ' + vbW + ' ' + vbH + '" width="' + w + '" height="' + h + '" aria-hidden="true">' + inner + '</svg>';
+  }
+
+  var topoState = {
+    game: '',
+    kind: '',
+    remain: [],
+    placed: {},
+    total: 0,
+    q: null,
+    used: [],
+    answered: false
+  };
+
+  var topoDrag = {
+    on: false,
+    id: '',
+    ghost: null,
+    srcEl: null,
+    moved: false,
+    startX: 0,
+    startY: 0,
+    land: null,
+    gw: 0,
+    gh: 0,
+    spoke: false
+  };
+
+  function showTopoMenu() {
+    state.level = null;
+    state.locked = false;
+    state.question = null;
+    hideReward();
+    stopTopoDrag();
+    showScreen('topo');
+    updateStarsUI();
+  }
+
+  function showTopoLevel(game) {
+    if (game) topoState.game = game;
+    state.level = topoState.game || 'puzzel';
+    state.locked = false;
+    state.question = null;
+    hideReward();
+    stopTopoDrag();
+    $('topolevel-prompt').innerHTML = (topoState.game === 'vlag') ? 'Vlaggen van Europa' : 'Europa puzzel';
+    showScreen('topolevel');
+    updateStarsUI();
+  }
+
+  function topoMiniIconSvg(w, h) {
+    var i, land, html, fill;
+    html = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + TOPO_VB_W + ' ' + TOPO_VB_H + '" width="' + w + '" height="' + h + '" aria-hidden="true">';
+    html += '<rect width="' + TOPO_VB_W + '" height="' + TOPO_VB_H + '" fill="#B3E5FC"/>';
+    for (i = 0; i < TOPO_LANDEN.length; i++) {
+      land = TOPO_LANDEN[i];
+      fill = land.easyP ? land.color : '#90A4AE';
+      html += '<path d="' + land.path + '" fill="' + fill + '" stroke="#455A64" stroke-width="1.2" stroke-linejoin="round"/>';
+    }
+    html += '</svg>';
+    return html;
+  }
+
+  function topoMapSvgHtml(placedMap, highlightId) {
+    var i, land, html, fill, stroke, sw;
+    html = '<svg id="topo-map-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + TOPO_VB_W + ' ' + TOPO_VB_H + '" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" aria-hidden="true">';
+    html += '<rect width="' + TOPO_VB_W + '" height="' + TOPO_VB_H + '" fill="#B3E5FC"/>';
+    for (i = 0; i < TOPO_LANDEN.length; i++) {
+      land = TOPO_LANDEN[i];
+      stroke = '#455A64';
+      sw = 1.4;
+      if (highlightId && land.id === highlightId) {
+        fill = land.color;
+        stroke = '#1A237E';
+        sw = 3;
+      } else if (placedMap && placedMap[land.id]) {
+        fill = land.color;
+      } else if (land.easyP || land.hardP) {
+        if (topoState.kind === 'easy' && !land.easyP) fill = '#CFD8DC';
+        else fill = '#ECEFF1';
+      } else {
+        fill = '#CFD8DC';
+      }
+      html += '<path d="' + land.path + '" fill="' + fill + '" stroke="' + stroke + '" stroke-width="' + sw + '" stroke-linejoin="round"/>';
+    }
+    html += '</svg>';
+    return html;
+  }
+
+  function topoPieceSvg(land, dw, dh, fill) {
+    var pad, vx, vy, vw, vh;
+    pad = 3;
+    vx = land.x - pad;
+    vy = land.y - pad;
+    vw = land.w + pad * 2;
+    vh = land.h + pad * 2;
+    if (vw < 1) vw = 1;
+    if (vh < 1) vh = 1;
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="' + vx + ' ' + vy + ' ' + vw + ' ' + vh + '" width="' + dw + '" height="' + dh + '" aria-hidden="true">' +
+      '<path d="' + land.path + '" fill="' + fill + '" stroke="#263238" stroke-width="2.2" stroke-linejoin="round"/></svg>';
+  }
+
+  function topoUpdateStatus() {
+    var el, left, tot;
+    el = $('topo-puzzel-status');
+    if (!el) return;
+    tot = topoState.total;
+    left = topoState.remain.length;
+    el.innerHTML = (tot - left) + ' van ' + tot + ' landen';
+  }
+
+  function startTopoPuzzel(kind, fresh) {
+    var ids, i, land, html, tray, ratio, pw, ph;
+    stopTopoDrag();
+    if (fresh) {
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+      state.lastWasPersonal = false;
+      resetVoiceCycle();
+    }
+    topoState.game = 'puzzel';
+    topoState.kind = kind || 'easy';
+    state.level = 'puzzel-' + topoState.kind;
+    state.locked = false;
+    hideReward();
+    ids = topoIdsWhere(topoState.kind === 'hard' ? 'hardP' : 'easyP');
+    shuffle(ids);
+    topoState.remain = ids;
+    topoState.placed = {};
+    topoState.total = ids.length;
+    $('topo-map-wrap').innerHTML = topoMapSvgHtml(topoState.placed, null);
+    html = '';
+    for (i = 0; i < ids.length; i++) {
+      land = topoLandById(ids[i]);
+      if (!land) continue;
+      ratio = land.h ? (land.w / land.h) : 1;
+      ph = 56;
+      pw = Math.round(ph * ratio);
+      if (pw > 76) {
+        pw = 76;
+        ph = Math.round(pw / (ratio || 1));
+      }
+      if (pw < 36) pw = 36;
+      html += '<div class="topo-piece" data-topo-id="' + land.id + '">' +
+        '<div class="topo-piece-shape">' + topoPieceSvg(land, pw, ph, land.color) + '</div>' +
+        '<div class="topo-piece-name">' + land.name + '</div></div>';
+    }
+    tray = $('topo-tray-inner');
+    if (tray) tray.innerHTML = html;
+    topoUpdateStatus();
+    showScreen('topopuzzel');
+    updateStarsUI();
+    window.setTimeout(function () {
+      beginQuestionVoice();
+      speak('topo-puzzel');
+    }, 40);
+  }
+
+  function topoSvgMetrics(svg) {
+    var r, scale, w, h, left, top;
+    if (!svg) return null;
+    r = svg.getBoundingClientRect();
+    scale = Math.min(r.width / TOPO_VB_W, r.height / TOPO_VB_H);
+    if (!scale || scale <= 0) scale = 1;
+    w = TOPO_VB_W * scale;
+    h = TOPO_VB_H * scale;
+    left = r.left + (r.width - w) / 2;
+    top = r.top + (r.height - h) / 2;
+    return { left: left, top: top, scale: scale, width: w, height: h };
+  }
+
+  function topoClientToVb(x, y) {
+    var m, svg;
+    svg = $('topo-map-svg');
+    m = topoSvgMetrics(svg);
+    if (!m) return { x: 0, y: 0 };
+    return { x: (x - m.left) / m.scale, y: (y - m.top) / m.scale };
+  }
+
+  function topoEventPoint(e) {
+    var t;
+    if (e.touches && e.touches.length) t = e.touches[0];
+    else if (e.changedTouches && e.changedTouches.length) t = e.changedTouches[0];
+    else t = e;
+    return { x: t.clientX, y: t.clientY };
+  }
+
+  function topoClosestPiece(el) {
+    while (el && el !== document.body) {
+      if (el.getAttribute && el.getAttribute('data-topo-id') &&
+          (' ' + el.className + ' ').indexOf(' topo-piece ') !== -1) {
+        return el;
+      }
+      el = el.parentNode;
+    }
+    return null;
+  }
+
+  function stopTopoDrag() {
+    if (topoDrag.ghost && topoDrag.ghost.parentNode) {
+      topoDrag.ghost.parentNode.removeChild(topoDrag.ghost);
+    }
+    if (topoDrag.srcEl) topoDrag.srcEl.style.opacity = '';
+    topoDrag.on = false;
+    topoDrag.id = '';
+    topoDrag.ghost = null;
+    topoDrag.srcEl = null;
+    topoDrag.moved = false;
+    topoDrag.land = null;
+    topoDrag.spoke = false;
+  }
+
+  function topoPlaceGhost(x, y) {
+    var g, left, top;
+    g = topoDrag.ghost;
+    if (!g) return;
+    left = Math.round(x - topoDrag.gw / 2);
+    top = Math.round(y - topoDrag.gh / 2);
+    g.style.left = left + 'px';
+    g.style.top = top + 'px';
+  }
+
+  function topoDragStart(e) {
+    var p, el, id, land, m, ghost, pad, gw, gh;
+    if (state.screen !== 'topopuzzel' || state.locked) return false;
+    p = topoEventPoint(e);
+    el = topoClosestPiece(e.target);
+    if (!el) return false;
+    id = el.getAttribute('data-topo-id');
+    land = topoLandById(id);
+    if (!land) return false;
+    if (topoState.placed[id]) return false;
+    stopTopoDrag();
+    m = topoSvgMetrics($('topo-map-svg'));
+    pad = 3;
+    gw = Math.max(36, Math.round((land.w + pad * 2) * (m ? m.scale : 1)));
+    gh = Math.max(36, Math.round((land.h + pad * 2) * (m ? m.scale : 1)));
+    ghost = document.createElement('div');
+    ghost.className = 'topo-ghost';
+    ghost.innerHTML = topoPieceSvg(land, gw, gh, land.color);
+    ghost.style.width = gw + 'px';
+    ghost.style.height = gh + 'px';
+    ghost.style.position = 'fixed';
+    ghost.style.zIndex = '80';
+    ghost.style.pointerEvents = 'none';
+    document.body.appendChild(ghost);
+    topoDrag.on = true;
+    topoDrag.id = id;
+    topoDrag.land = land;
+    topoDrag.ghost = ghost;
+    topoDrag.srcEl = el;
+    topoDrag.moved = false;
+    topoDrag.startX = p.x;
+    topoDrag.startY = p.y;
+    topoDrag.gw = gw;
+    topoDrag.gh = gh;
+    topoDrag.spoke = false;
+    el.style.opacity = '0.35';
+    topoPlaceGhost(p.x, p.y);
+    return true;
+  }
+
+  function topoDragMove(e) {
+    var p, dx, dy;
+    if (!topoDrag.on) return false;
+    p = topoEventPoint(e);
+    dx = p.x - topoDrag.startX;
+    dy = p.y - topoDrag.startY;
+    if (!topoDrag.moved && (dx * dx + dy * dy) < 64) return true;
+    if (!topoDrag.moved) {
+      topoDrag.moved = true;
+      if (!topoDrag.spoke && topoDrag.land) {
+        topoDrag.spoke = true;
+        beginQuestionVoice();
+        speak(topoDrag.land.audio);
+      }
+    }
+    topoPlaceGhost(p.x, p.y);
+    return true;
+  }
+
+  function topoRemoveRemain(id) {
+    var i, next;
+    next = [];
+    for (i = 0; i < topoState.remain.length; i++) {
+      if (topoState.remain[i] !== id) next.push(topoState.remain[i]);
+    }
+    topoState.remain = next;
+  }
+
+  function topoPuzzelComplete() {
+    state.locked = true;
+    state.stars += 1;
+    saveStars();
+    showBurst();
+    updateStarsUI();
+    deliverPraise(function () {
+      showReward();
+    });
+  }
+
+  function topoSnapPiece(id) {
+    var el;
+    topoState.placed[id] = 1;
+    topoRemoveRemain(id);
+    el = document.querySelector('.topo-piece[data-topo-id="' + id + '"]');
+    if (el) {
+      el.className = el.className + ' is-placed';
+      el.style.opacity = '';
+    }
+    $('topo-map-wrap').innerHTML = topoMapSvgHtml(topoState.placed, null);
+    topoUpdateStatus();
+    playSuccess();
+    if (topoDrag.land) speak(topoDrag.land.audio);
+    if (topoState.remain.length === 0) {
+      window.setTimeout(function () {
+        topoPuzzelComplete();
+      }, 350);
+    }
+  }
+
+  function topoDragEnd(e) {
+    var p, vb, hit;
+    if (!topoDrag.on) return false;
+    p = topoEventPoint(e);
+    if (topoDrag.moved) {
+      vb = topoClientToVb(p.x, p.y);
+      hit = topoPickSnap(vb.x, vb.y, [topoDrag.id]);
+      if (hit && hit.id === topoDrag.id) {
+        topoSnapPiece(topoDrag.id);
+        stopTopoDrag();
+        return true;
+      }
+    } else if (topoDrag.land && !topoDrag.spoke) {
+      beginQuestionVoice();
+      speak(topoDrag.land.audio);
+    }
+    if (topoDrag.srcEl) topoDrag.srcEl.style.opacity = '';
+    stopTopoDrag();
+    return true;
+  }
+
+  function topoMinimapHtml(highlightId) {
+    var i, land, html, fill, stroke, sw;
+    html = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + TOPO_VB_W + ' ' + TOPO_VB_H + '" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" aria-hidden="true">';
+    html += '<rect width="' + TOPO_VB_W + '" height="' + TOPO_VB_H + '" fill="#B3E5FC"/>';
+    for (i = 0; i < TOPO_LANDEN.length; i++) {
+      land = TOPO_LANDEN[i];
+      if (highlightId && land.id === highlightId) {
+        fill = land.color;
+        stroke = '#1A237E';
+        sw = 3;
+      } else {
+        fill = '#CFD8DC';
+        stroke = '#78909C';
+        sw = 1;
+      }
+      html += '<path d="' + land.path + '" fill="' + fill + '" stroke="' + stroke + '" stroke-width="' + sw + '" stroke-linejoin="round"/>';
+    }
+    html += '</svg>';
+    return html;
+  }
+
+  function topoShowMinimap(id) {
+    var wrap;
+    wrap = $('topo-minimap-wrap');
+    if (!wrap) return;
+    wrap.innerHTML = topoMinimapHtml(id);
+    wrap.className = 'is-on';
+  }
+
+  function topoHideMinimap() {
+    var wrap;
+    wrap = $('topo-minimap-wrap');
+    if (!wrap) return;
+    wrap.className = '';
+    wrap.innerHTML = '';
+  }
+
+  function topoIdUsed(id) {
+    var i;
+    for (i = 0; i < topoState.used.length; i++) {
+      if (topoState.used[i] === id) return true;
+    }
+    return false;
+  }
+
+  function startTopoVlag(kind, fresh) {
+    var pool, i, ans, opts, html, mode, land, other, n, fw, fh;
+    if (fresh) {
+      state.sessionCorrect = 0;
+      state.towardsReward = 0;
+      state.lastWasPersonal = false;
+      resetVoiceCycle();
+      topoState.used = [];
+    }
+    topoState.game = 'vlag';
+    topoState.kind = kind || 'easy';
+    state.level = 'vlag-' + topoState.kind;
+    state.locked = false;
+    topoState.answered = false;
+    hideReward();
+    topoHideMinimap();
+    pool = [];
+    for (i = 0; i < TOPO_LANDEN.length; i++) {
+      land = TOPO_LANDEN[i];
+      if (topoState.kind === 'hard' ? land.hardV : land.easyV) {
+        if (!topoIdUsed(land.id) || pool.length === 0) pool.push(land);
+      }
+    }
+    if (pool.length === 0) {
+      topoState.used = [];
+      for (i = 0; i < TOPO_LANDEN.length; i++) {
+        land = TOPO_LANDEN[i];
+        if (topoState.kind === 'hard' ? land.hardV : land.easyV) pool.push(land);
+      }
+    }
+    /* prefer unused */
+    other = [];
+    for (i = 0; i < pool.length; i++) {
+      if (!topoIdUsed(pool[i].id)) other.push(pool[i]);
+    }
+    if (other.length) pool = other;
+    shuffle(pool);
+    ans = pool[0];
+    opts = [ans];
+    other = [];
+    for (i = 0; i < TOPO_LANDEN.length; i++) {
+      land = TOPO_LANDEN[i];
+      if (land.id === ans.id) continue;
+      if (topoState.kind === 'hard' ? land.hardV : land.easyV) other.push(land);
+    }
+    shuffle(other);
+    for (i = 0; i < other.length && opts.length < 3; i++) opts.push(other[i]);
+    shuffle(opts);
+    mode = 'flag';
+    if (topoState.kind === 'hard' && Math.random() < 0.5) mode = 'name';
+    topoState.q = { id: ans.id, mode: mode, opts: opts };
+    topoState.used.push(ans.id);
+    if (mode === 'name') {
+      $('topo-vlag-prompt').innerHTML = 'Welke vlag hoort bij dit land?';
+      $('topo-vlag-flag').innerHTML = '<div class="topo-vlag-name">' + ans.name + '</div>';
+    } else {
+      $('topo-vlag-prompt').innerHTML = 'Welk land hoort bij deze vlag?';
+      fw = 240;
+      fh = 160;
+      $('topo-vlag-flag').innerHTML = topoFlagSvg(ans.id, fw, fh);
+    }
+    html = '';
+    for (i = 0; i < opts.length; i++) {
+      land = opts[i];
+      if (mode === 'name') {
+        n = (land.id === 'ch') ? topoFlagSvg(land.id, 72, 72) : topoFlagSvg(land.id, 96, 64);
+        html += '<button type="button" class="tap topo-vlag-choice is-flagbtn" data-act="topo-choice" data-id="' + land.id + '">' +
+          '<span class="topo-choice-flag">' + n + '</span></button>';
+      } else {
+        html += '<button type="button" class="tap topo-vlag-choice" data-act="topo-choice" data-id="' + land.id + '">' +
+          land.name + '</button>';
+      }
+    }
+    $('topo-vlag-choices').innerHTML = html;
+    showScreen('topoplay');
+    updateStarsUI();
+    window.setTimeout(function () {
+      beginQuestionVoice();
+      if (mode === 'name') {
+        speak(ans.audio);
+      } else {
+        speak('vlag-vraag');
+      }
+    }, 40);
+  }
+
+  function onTopoChoice(el) {
+    var id, ok, btns, i, b;
+    if (state.screen !== 'topoplay' || state.locked || !topoState.q) return;
+    id = el.getAttribute('data-id');
+    if (!id) return;
+    ok = id === topoState.q.id;
+    topoShowMinimap(topoState.q.id);
+    if (ok) {
+      el.className += ' is-correct';
+      state.locked = true;
+      state.stars += 1;
+      state.sessionCorrect += 1;
+      state.towardsReward += 1;
+      saveStars();
+      showBurst();
+      updateStarsUI();
+      deliverPraise(function () {
+        if (state.towardsReward >= 5) {
+          showReward();
+        } else {
+          startTopoVlag(topoState.kind, false);
+        }
+      });
+    } else {
+      if ((' ' + el.className + ' ').indexOf(' is-wrong ') === -1) {
+        el.className += ' is-wrong';
+      }
+      playWrong();
+    }
+  }
+
+  window.__topoTest = {
+    snapRadius: topoSnapRadiusVb,
+    pickSnap: topoPickSnap,
+    pointInBox: topoPointInLandBox,
+    landen: TOPO_LANDEN,
+    flagSvg: topoFlagSvg,
+    landById: topoLandById,
+    idsWhere: topoIdsWhere,
+    vbW: TOPO_VB_W,
+    vbH: TOPO_VB_H
+  };
+
+
+
   function decorateStatic() {
     $('sun-icon').innerHTML = sunHtml();
     if ($('icon-tekenen-start')) {
@@ -20602,6 +21799,21 @@
     }
     if ($('icon-tijd-start')) {
       $('icon-tijd-start').innerHTML = tijdClockSvg('clkStart', 10, 10, 72, 56);
+    }
+    if ($('icon-topo-start')) {
+      $('icon-topo-start').innerHTML = topoMiniIconSvg(72, 56);
+    }
+    if ($('icon-topo-puzzel')) {
+      $('icon-topo-puzzel').innerHTML = topoMiniIconSvg(72, 56);
+    }
+    if ($('icon-topo-vlag')) {
+      $('icon-topo-vlag').innerHTML = topoFlagSvg('nl', 72, 48);
+    }
+    if ($('icon-topo-easy')) {
+      $('icon-topo-easy').innerHTML = topoFlagSvg('nl', 72, 48);
+    }
+    if ($('icon-topo-hard')) {
+      $('icon-topo-hard').innerHTML = topoFlagSvg('gb', 72, 48);
     }
     if ($('icon-tijd-klok')) {
       $('icon-tijd-klok').innerHTML = tijdClockSvg('clkMenu', 3, 0, 72, 56);
@@ -20682,6 +21894,10 @@
     elSet('tijd-home-icon', homeIconHtml());
     elSet('tijdlevel-home-icon', homeIconHtml());
     elSet('tijdplay-home-icon', homeIconHtml());
+    elSet('topo-home-icon', homeIconHtml());
+    elSet('topolevel-home-icon', homeIconHtml());
+    elSet('topopuzzel-home-icon', homeIconHtml());
+    elSet('topoplay-home-icon', homeIconHtml());
     elSet('play-back-icon', backIconHtml());
     elSet('picker-back-icon', backIconHtml());
     elSet('trace-back-icon', backIconHtml());
@@ -20719,6 +21935,10 @@
     elSet('tijd-back-icon', backIconHtml());
     elSet('tijdlevel-back-icon', backIconHtml());
     elSet('tijdplay-back-icon', backIconHtml());
+    elSet('topo-back-icon', backIconHtml());
+    elSet('topolevel-back-icon', backIconHtml());
+    elSet('topopuzzel-back-icon', backIconHtml());
+    elSet('topoplay-back-icon', backIconHtml());
     elSet('letters-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('trace-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('names-star-icon', starSvg('#FFD54F', '#F9A825'));
@@ -20754,6 +21974,10 @@
     elSet('tijd-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('tijdlevel-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('tijdplay-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('topo-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('topolevel-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('topopuzzel-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('topoplay-star-icon', starSvg('#FFD54F', '#F9A825'));
     if ($('icon-vormen')) {
       $('icon-vormen').innerHTML =
         vormSvg('circle', '#2FB3F0', '#1A7FB3', 0) +

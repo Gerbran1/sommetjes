@@ -114,7 +114,7 @@ const CHROME = process.env.CHROME || '/usr/bin/google-chrome';
     await wait(250);
     await page.click('#program-grid [data-game="volg"]');
     await wait(250);
-    await page.click('[data-kind="easy"]');
+    await page.click('#robotlevel-grid [data-kind="easy"]');
     await wait(400);
   }
 
