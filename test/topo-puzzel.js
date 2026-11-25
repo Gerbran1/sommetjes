@@ -65,11 +65,63 @@ function ok(msg) { console.log('OK  ' + msg); }
     assert(lu && !lu.easyP && !lu.hardP, 'Luxemburg is vooraf ingevuld (te klein)');
     return out;
   });
+
+  async function ghostBox() {
+    return page.evaluate(() => {
+      var g = document.querySelector('.topo-ghost');
+      if (!g) return null;
+      var b = g.getBoundingClientRect();
+      return { left: b.left, top: b.top, w: b.width, h: b.height };
+    });
+  }
+
+  async function assertGhostFollowsTouch(sel, label) {
+    var piece = await page.$(sel);
+    if (!piece) throw new Error(label + ': stuk niet gevonden (' + sel + ')');
+    var r = await piece.boundingBox();
+    if (!r) throw new Error(label + ': geen bounding box');
+    var x0 = r.x + r.width * 0.3;
+    var y0 = r.y + Math.min(r.height * 0.35, 28);
+    await page.touchscreen.touchStart(x0, y0);
+    await new Promise(function (res) { setTimeout(res, 40); });
+    var g1 = await ghostBox();
+    if (!g1) {
+      await page.touchscreen.touchEnd();
+      throw new Error(label + ': geen sleepstuk na touchStart');
+    }
+    var dx = 90, dy = -50;
+    await page.touchscreen.touchMove(x0 + dx, y0 + dy);
+    await new Promise(function (res) { setTimeout(res, 40); });
+    var g2 = await ghostBox();
+    await page.touchscreen.touchEnd();
+    if (!g2) throw new Error(label + ': geen sleepstuk na touchMove');
+    var gotX = g2.left - g1.left;
+    var gotY = g2.top - g1.top;
+    if (Math.abs(gotX - dx) > 3 || Math.abs(gotY - dy) > 3) {
+      throw new Error(label + ' volgt de vinger niet: dx=' + gotX.toFixed(1) + ' (wil ' + dx + '), dy=' + gotY.toFixed(1) + ' (wil ' + dy + ')');
+    }
+    ok(label + ' volgt de vinger (delta ' + Math.round(gotX) + ',' + Math.round(gotY) + ')');
+  }
+
   var failed = 0, i;
   for (i = 0; i < report.length; i++) {
     console.log(report[i]);
     if (report[i].indexOf('FAIL') === 0) failed += 1;
   }
+
+  await page.click('#btn-goto-topo');
+  await page.waitForSelector('#topo-grid [data-game="puzzel"]', { timeout: 8000 });
+  await page.click('#topo-grid [data-game="puzzel"]');
+  await page.waitForSelector('#topolevel-grid [data-kind="easy"]', { timeout: 8000 });
+  await page.click('#topolevel-grid [data-kind="easy"]');
+  await page.waitForSelector('#screen-topopuzzel:not(.is-hidden)', { timeout: 8000 });
+  try {
+    await assertGhostFollowsTouch('#topo-tray .topo-piece[data-topo-id="nl"], #topo-tray .topo-piece', 'Europa-sleep');
+  } catch (err) {
+    console.log('FAIL ' + (err && err.message ? err.message : err));
+    failed += 1;
+  }
+
   await browser.close();
   if (failed) {
     console.error('TEST FAILED (' + failed + ')');

@@ -16382,7 +16382,8 @@
     } else if (s === 'tijdlevel') {
       showTijdMenu();
     } else if (s === 'topopuzzel' || s === 'topoplay') {
-      showTopoLevel();
+      if (s === 'topopuzzel' && topoIsContinent()) showTopoMenu();
+      else showTopoLevel();
     } else if (s === 'topolevel') {
       showTopoMenu();
     } else {
@@ -16561,7 +16562,13 @@
       return;
     }
     if (act === 'topo-game') {
-      showTopoLevel(el.getAttribute('data-game') || 'puzzel');
+      g = el.getAttribute('data-game') || 'puzzel';
+      if (g === 'continent') {
+        topoState.game = 'continent';
+        startTopoPuzzel('hard', true);
+        return;
+      }
+      showTopoLevel(g);
       return;
     }
     if (act === 'topo-kind') {
@@ -21525,7 +21532,9 @@
     if ($('topo-puzzel-prompt')) {
       $('topo-puzzel-prompt').innerHTML = topoIsContinent() ? 'Continenten puzzel' : 'Europa puzzel';
     }
-    ids = topoIdsWhere(topoState.kind === 'hard' ? 'hardP' : 'easyP');
+    ids = topoIsContinent()
+      ? topoIdsWhere('hardP')
+      : topoIdsWhere(topoState.kind === 'hard' ? 'hardP' : 'easyP');
     shuffle(ids);
     topoState.remain = ids;
     topoState.placed = {};
@@ -21626,20 +21635,61 @@
     topoDrag.moved = false;
     topoDrag.land = null;
     topoDrag.spoke = false;
+    topoDrag.offX = 0;
+    topoDrag.offY = 0;
+  }
+
+  function topoPieceViewBox(land) {
+    var pad, vw, vh;
+    pad = 3;
+    vw = land.w + pad * 2;
+    vh = land.h + pad * 2;
+    if (vw < 1) vw = 1;
+    if (vh < 1) vh = 1;
+    return { x: land.x - pad, y: land.y - pad, w: vw, h: vh };
+  }
+
+  function topoPieceLocalPoint(svgEl, clientX, clientY, land) {
+    var r, vb, scale, left, top, x, y;
+    vb = topoPieceViewBox(land);
+    if (!svgEl) return { x: vb.w / 2, y: vb.h / 2 };
+    r = svgEl.getBoundingClientRect();
+    scale = Math.min(r.width / vb.w, r.height / vb.h);
+    if (!scale || scale <= 0) scale = 1;
+    left = r.left + (r.width - vb.w * scale) / 2;
+    top = r.top + (r.height - vb.h * scale) / 2;
+    x = (clientX - left) / scale;
+    y = (clientY - top) / scale;
+    if (x < 0) x = 0;
+    if (y < 0) y = 0;
+    if (x > vb.w) x = vb.w;
+    if (y > vb.h) y = vb.h;
+    return { x: x, y: y };
   }
 
   function topoPlaceGhost(x, y) {
-    var g, left, top;
+    var g, land, vb, scale, boxLeft, boxTop, left, top;
     g = topoDrag.ghost;
     if (!g) return;
-    left = Math.round(x - topoDrag.gw / 2);
-    top = Math.round(y - topoDrag.gh / 2);
+    land = topoDrag.land;
+    if (!land) {
+      left = Math.round(x - topoDrag.gw / 2);
+      top = Math.round(y - topoDrag.gh / 2);
+    } else {
+      vb = topoPieceViewBox(land);
+      scale = Math.min(topoDrag.gw / vb.w, topoDrag.gh / vb.h);
+      if (!scale || scale <= 0) scale = 1;
+      boxLeft = (topoDrag.gw - vb.w * scale) / 2;
+      boxTop = (topoDrag.gh - vb.h * scale) / 2;
+      left = Math.round(x - boxLeft - topoDrag.offX * scale);
+      top = Math.round(y - boxTop - topoDrag.offY * scale);
+    }
     g.style.left = left + 'px';
     g.style.top = top + 'px';
   }
 
   function topoDragStart(e) {
-    var p, el, id, land, m, ghost, pad, gw, gh;
+    var p, el, id, land, m, ghost, pad, gw, gh, svgs, srcSvg, local;
     if (state.screen !== 'topopuzzel' || state.locked) return false;
     p = topoEventPoint(e);
     el = topoClosestPiece(e.target);
@@ -21662,6 +21712,10 @@
     ghost.style.zIndex = '80';
     ghost.style.pointerEvents = 'none';
     document.body.appendChild(ghost);
+    srcSvg = null;
+    svgs = el.getElementsByTagName('svg');
+    if (svgs && svgs.length) srcSvg = svgs[0];
+    local = topoPieceLocalPoint(srcSvg, p.x, p.y, land);
     topoDrag.on = true;
     topoDrag.id = id;
     topoDrag.land = land;
@@ -21673,6 +21727,8 @@
     topoDrag.gw = gw;
     topoDrag.gh = gh;
     topoDrag.spoke = false;
+    topoDrag.offX = local.x;
+    topoDrag.offY = local.y;
     el.style.opacity = '0.35';
     topoPlaceGhost(p.x, p.y);
     return true;
@@ -21933,7 +21989,19 @@
     vbW: TOPO_VB_W,
     vbH: TOPO_VB_H,
     worldVbW: TOPO_WORLD_VB_W,
-    worldVbH: TOPO_WORLD_VB_H
+    worldVbH: TOPO_WORLD_VB_H,
+    placeGhost: topoPlaceGhost,
+    pieceLocal: topoPieceLocalPoint,
+    dragInfo: function () {
+      return {
+        on: topoDrag.on,
+        id: topoDrag.id,
+        gw: topoDrag.gw,
+        gh: topoDrag.gh,
+        offX: topoDrag.offX,
+        offY: topoDrag.offY
+      };
+    }
   };
 
 

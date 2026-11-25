@@ -121,13 +121,13 @@ function ok(msg) { console.log('OK  ' + msg); }
     }
     return { n: btns.length, className: grid ? grid.className : '', labels: labels };
   });
-  if (layout.n !== 8) {
-    console.error('FAIL expected 8 start tabs, got', layout.n, layout);
+  if (layout.n !== 9) {
+    console.error('FAIL expected 9 start tabs, got', layout.n, layout);
     await browser.close();
     process.exit(1);
   }
-  if (layout.className.indexOf('choices-8') === -1) {
-    console.error('FAIL choice-grid not choices-8', layout.className);
+  if (layout.className.indexOf('choices-9') === -1) {
+    console.error('FAIL choice-grid not choices-9', layout.className);
     await browser.close();
     process.exit(1);
   }
@@ -143,7 +143,7 @@ function ok(msg) { console.log('OK  ' + msg); }
     await browser.close();
     process.exit(1);
   }
-  ok('8 starttabs zichtbaar in 4+4 (' + names + ')');
+  ok('9 starttabs zichtbaar in 3x3 (' + names + ')');
 
   await page.screenshot({ path: SHOT + '/53-tijd-start.png' });
   ok('screenshot 53-tijd-start.png');
