@@ -379,6 +379,17 @@ async function waitSpiegelNext(page) {
     ok('Zeeën rond Europa start direct, terug → Topografie, home → start');
 
     await fresh(page);
+    await tap(page, '#btn-goto-topo');
+    await tap(page, '#topo-grid [data-game="fries"]');
+    await expectScreen(page, 'topodrop', 'fries play');
+    await tap(page, '#btn-topodrop-back');
+    await expectScreen(page, 'topo', 'fries play back');
+    await tap(page, '#topo-grid [data-game="fries"]');
+    await tap(page, '#btn-topodrop-home');
+    await expectScreen(page, 'start', 'fries play home');
+    ok('Friesland start direct, terug → Topografie, home → start');
+
+    await fresh(page);
     await tap(page, '#btn-goto-tijd');
     await tap(page, '#tijd-grid [data-game="klok"]');
     await expectScreen(page, 'tijdlevel', 'klok kiezer');
