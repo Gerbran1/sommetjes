@@ -368,6 +368,17 @@ async function waitSpiegelNext(page) {
     ok('Oceanen start direct, terug → Topografie, home → start');
 
     await fresh(page);
+    await tap(page, '#btn-goto-topo');
+    await tap(page, '#topo-grid [data-game="zee"]');
+    await expectScreen(page, 'topodrop', 'zee play');
+    await tap(page, '#btn-topodrop-back');
+    await expectScreen(page, 'topo', 'zee play back');
+    await tap(page, '#topo-grid [data-game="zee"]');
+    await tap(page, '#btn-topodrop-home');
+    await expectScreen(page, 'start', 'zee play home');
+    ok('Zeeën rond Europa start direct, terug → Topografie, home → start');
+
+    await fresh(page);
     await tap(page, '#btn-goto-tijd');
     await tap(page, '#tijd-grid [data-game="klok"]');
     await expectScreen(page, 'tijdlevel', 'klok kiezer');
