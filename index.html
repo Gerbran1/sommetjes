@@ -16638,6 +16638,7 @@
       showTijdMenu();
     } else if (s === 'topopuzzel' || s === 'topoplay' || s === 'topowaar' || s === 'topodrop') {
       if (s === 'topodrop') showTopoMenu();
+      else if (s === 'topowaar' && (topoState.game === 'ocean' || topoState.game === 'zee')) showTopoMenu();
       else if (s === 'topopuzzel' && topoIsContinent()) showTopoMenu();
       else showTopoLevel();
     } else if (s === 'topolevel') {
@@ -16824,7 +16825,11 @@
         startTopoPuzzel('hard', true);
         return;
       }
-      if (g === 'ocean' || g === 'zee' || g === 'fries') {
+      if (g === 'ocean' || g === 'zee') {
+        startTopoWaar('hard', true, g);
+        return;
+      }
+      if (g === 'fries') {
         startTopoDrop(g, true);
         return;
       }
@@ -21692,7 +21697,7 @@
   var TOPO_ZEEEN = [
     {id:'noordzee',name:'Noordzee',audio:'zee-noordzee',color:'#4FC3F7',cx:339,cy:397,x:261,y:294,w:140,h:195,r:39,path:'M278 333L290 316L298 313L309 294L311 294L372 302L366 306L367 311L371 314L366 314L364 322L376 310L384 307L379 314L379 309L375 312L370 319L375 320L366 323L363 331L367 336L367 345L380 357L390 384L394 385L397 379L400 379L399 385L396 384L393 389L388 386L386 406L391 410L390 423L393 428L389 433L392 434L392 441L396 442L401 449L394 442L388 441L386 451L384 446L382 450L381 444L376 444L371 444L369 450L371 452L367 448L348 447L345 449L337 467L329 476L332 483L322 480L331 485L322 483L300 489L297 484L298 480L287 476L292 475L291 471L303 465L306 453L300 448L288 446L292 442L292 438L283 429L292 433L290 424L291 422L281 408L281 390L273 379L268 379L262 376L261 374L265 377L273 374L267 370L276 368L288 353L286 347L265 345L269 341L268 338Z'},
     {id:'oostzee',name:'Oostzee',audio:'zee-oostzee',color:'#29B6F6',cx:501,cy:371,x:427,y:201,w:179,h:242,r:50,path:'M537 321L563 309L569 301L570 305L587 296L590 302L606 307L596 309L589 316L586 315L586 322L562 322L552 326L544 333L544 336L530 339L535 344L529 349L530 353L533 355L524 383L527 406L522 417L515 422L514 427L509 433L503 433L498 426L502 427L497 424L491 425L452 443L443 439L438 433L432 433L427 424L428 418L432 415L451 414L453 411L452 405L458 399L470 398L476 380L476 365L478 357L477 353L479 352L472 349L480 348L493 339L496 334L489 334L499 326L497 320L488 309L481 307L480 290L480 287L483 288L482 284L484 277L482 271L487 269L486 264L491 263L489 261L492 258L510 243L515 231L511 224L514 218L513 214L519 208L520 203L526 205L537 201L538 204L544 207L546 219L540 221L533 237L525 246L523 250L524 253L517 255L519 259L515 266L517 274L517 280L521 287L520 300L521 307L532 310L532 317L536 313L539 317ZM502 364L492 370L494 379L493 383L500 373L499 367ZM482 375L475 390L475 397ZM457 420L461 419L457 417ZM440 431L442 437L446 436L443 428ZM430 420L428 423L433 422ZM539 217L540 218L543 216L541 215ZM528 311L531 315L531 312ZM506 319L510 315L507 312L505 316Z'},
-    {id:'med',name:'Middellandse Zee',audio:'zee-middellandse-zee',color:'#26C6DA',cx:460,cy:783,x:190,y:637,w:612,h:198,r:55,path:'M396 776L385 781L384 772L378 773L376 769L347 776L340 772L332 773L325 769L305 775L298 770L282 767L237 768L218 777L212 775L197 780L190 751L200 742L215 740L214 737L221 728L233 722L229 715L229 706L246 687L251 686L249 684L255 680L271 678L290 669L289 664L292 662L289 651L294 644L306 638L334 652L359 640L380 658L387 637L393 640L396 660L405 669L404 672L411 674L432 696L441 696L446 704L452 706L450 709L457 707L459 716L470 721L479 741L470 756L471 761L477 760L484 751L485 744L493 739L492 732L483 725L490 710L503 714L509 722L530 723L534 728L538 730L534 724L536 723L548 736L554 735L549 739L556 749L558 746L560 749L575 745L587 749L584 754L566 748L556 758L565 767L564 773L570 779L572 773L579 783L583 776L589 782L589 788L601 805L614 804L621 808L644 803L644 797L656 793L656 786L657 789L670 778L671 771L668 767L671 763L683 763L687 770L695 772L707 767L707 755L717 754L744 763L758 757L770 740L782 742L790 733L794 737L790 745L802 777L799 789L393 835L397 821L397 811L395 804L387 793L398 780ZM470 754L441 760L425 755L420 762L452 783L462 785L465 778L462 770ZM379 663L367 670L369 685L375 690L381 675L380 658ZM375 692L359 701L362 710L359 731L363 737L367 737L369 732L377 734L382 708L378 695ZM299 712L293 706L292 708ZM745 789L755 789L769 777L766 772L774 763L760 772L750 774L750 779L741 783ZM269 712L279 719L286 711L281 710L282 707ZM256 720L252 719L249 722L252 723ZM554 761L549 757L548 759L551 762ZM546 747L543 753L550 755Z'},
+    {id:'med',name:'Middellandse Zee',audio:'zee-middellandse-zee',color:'#00ACC1',cx:460,cy:783,x:190,y:637,w:612,h:198,r:55,path:'M396 776L385 781L384 772L378 773L376 769L347 776L340 772L332 773L325 769L305 775L298 770L282 767L237 768L218 777L212 775L197 780L190 751L200 742L215 740L214 737L221 728L233 722L229 715L229 706L246 687L251 686L249 684L255 680L271 678L290 669L289 664L292 662L289 651L294 644L306 638L334 652L359 640L380 658L387 637L393 640L396 660L405 669L404 672L411 674L432 696L441 696L446 704L452 706L450 709L457 707L459 716L470 721L479 741L470 756L471 761L477 760L484 751L485 744L493 739L492 732L483 725L490 710L503 714L509 722L530 723L534 728L538 730L534 724L536 723L548 736L554 735L549 739L556 749L558 746L560 749L575 745L587 749L584 754L566 748L556 758L565 767L564 773L570 779L572 773L579 783L583 776L589 782L589 788L601 805L614 804L621 808L644 803L644 797L656 793L656 786L657 789L670 778L671 771L668 767L671 763L683 763L687 770L695 772L707 767L707 755L717 754L744 763L758 757L770 740L782 742L790 733L794 737L790 745L802 777L799 789L393 835L397 821L397 811L395 804L387 793L398 780ZM470 754L441 760L425 755L420 762L452 783L462 785L465 778L462 770ZM379 663L367 670L369 685L375 690L381 675L380 658ZM375 692L359 701L362 710L359 731L363 737L367 737L369 732L377 734L382 708L378 695ZM299 712L293 706L292 708ZM745 789L755 789L769 777L766 772L774 763L760 772L750 774L750 779L741 783ZM269 712L279 719L286 711L281 710L282 707ZM256 720L252 719L249 722L252 723ZM554 761L549 757L548 759L551 762ZM546 747L543 753L550 755Z'},
     {id:'zwart',name:'Zwarte Zee',audio:'zee-zwarte-zee',color:'#00ACC1',cx:715,cy:606,x:639,y:553,w:203,h:124,r:35,path:'M751 571L755 572L753 576L785 583L805 593L831 599L841 611L842 617L827 638L815 639L801 647L776 646L771 650L764 643L753 646L747 640L725 647L711 657L698 672L692 674L666 677L655 674L639 657L644 650L645 637L651 634L650 604L653 604L653 608L659 605L660 595L657 588L664 583L669 568L678 562L682 563L678 553L685 563L692 562L690 565L679 566L685 567L684 571L693 572L707 569L709 571L696 585L712 588L713 599L716 600L722 599L737 581L749 578Z'},
     {id:'atl',name:'Atlantische Oceaan',audio:'zee-atlantische-oceaan',color:'#039BE5',cx:137,cy:505,x:20,y:199,w:285,h:584,r:80,path:'M234 199L262 250L260 250L264 259L305 295L305 298L302 298L305 301L303 307L298 313L290 316L281 327L249 321L243 323L243 326L240 324L239 328L240 330L232 334L233 336L229 347L206 383L201 386L207 389L205 391L200 395L184 390L185 393L183 397L186 400L182 400L184 403L179 402L178 405L190 413L175 422L188 424L178 423L174 425L174 428L167 427L172 430L165 435L173 436L166 439L172 440L168 443L174 444L186 444L187 440L190 443L205 439L209 441L208 484L195 488L196 515L141 597L120 604L123 610L120 613L124 613L123 618L117 629L116 644L107 660L95 672L90 682L95 684L99 680L102 680L96 685L92 685L92 689L98 690L99 692L96 691L91 710L86 716L103 723L119 722L124 733L126 732L127 732L123 736L131 755L126 754L101 783L20 755ZM281 317L284 322L285 321Z'},
     {id:'noors',name:'Noorse Zee',audio:'zee-noorse-zee',color:'#4DD0E1',cx:370,cy:186,x:234,y:70,w:311,h:234,r:66,path:'M264 259L260 250L262 250L234 199L258 137L300 83L308 82L309 79L342 70L527 80L544 98L542 101L545 104L542 110L539 112L539 104L537 103L530 119L530 112L533 105L525 103L523 107L524 109L518 118L518 123L513 116L504 120L509 127L505 124L499 126L499 130L501 134L496 137L498 132L497 126L495 128L493 136L493 129L490 130L486 135L488 138L483 136L482 142L472 152L470 147L466 153L467 150L466 145L468 141L467 139L464 144L463 152L461 156L455 161L447 161L447 164L448 164L444 167L446 190L445 198L452 197L442 201L444 204L441 205L436 215L439 219L443 216L439 220L437 219L431 222L429 227L432 226L423 233L414 244L402 246L406 246L402 250L404 253L400 256L403 263L395 257L387 263L399 264L394 265L395 267L394 268L383 265L380 269L386 268L371 273L371 277L385 280L368 278L368 281L371 286L368 287L366 294L367 304L311 294L308 297L307 292L304 294ZM529 101L534 102L535 101ZM519 111L520 112L522 110L519 108ZM518 111L515 114L514 116L517 117L519 114ZM517 107L514 110L508 111L513 113ZM500 121L498 122L499 123ZM492 120L493 123L495 123ZM492 126L489 121L486 130L482 133L487 133ZM482 136L476 135L477 137L474 138L473 144L481 141ZM461 145L459 147L455 151L463 151ZM425 225L428 225L429 224L427 222ZM398 252L400 251L397 251ZM267 249L263 246L265 254L265 250Z'},
@@ -22321,29 +22326,153 @@
     }
   }
 
+  function topoWaarIsWater() {
+    return topoState.game === 'ocean' || topoState.game === 'zee';
+  }
+
+  function topoWaarGameItems() {
+    if (topoState.game === 'ocean') return TOPO_OCEANEN;
+    if (topoState.game === 'zee') return TOPO_ZEEEN;
+    return TOPO_LANDEN;
+  }
+
+  function topoWaarVb() {
+    if (topoState.game === 'ocean') return { w: TOPO_OCEAN_VB_W, h: TOPO_OCEAN_VB_H };
+    if (topoState.game === 'zee') return { w: TOPO_ZEE_VB_W, h: TOPO_ZEE_VB_H };
+    return { w: TOPO_VB_W, h: TOPO_VB_H };
+  }
+
+  function topoWaarItemById(id) {
+    var items, i;
+    items = topoWaarGameItems();
+    for (i = 0; i < items.length; i++) {
+      if (items[i].id === id) return items[i];
+    }
+    return topoLandById(id);
+  }
+
+  function topoWaarIsWaterItem(item) {
+    return !!(item && item.audio && String(item.audio).indexOf('zee-') === 0);
+  }
+
+  function topoWaarSpokenName(item) {
+    if (!item || !item.name) return '';
+    if (item.id === 'kanaal' || item.name.indexOf('Het ') === 0) {
+      return 'het ' + item.name.substring(4);
+    }
+    return 'de ' + item.name;
+  }
+
   function topoWaarPromptText(land) {
     if (!land) return 'Waar ligt …?';
     if (land.id === 'gb') return 'Waar ligt het Verenigd Koninkrijk?';
+    if (topoWaarIsWaterItem(land)) return 'Waar ligt ' + topoWaarSpokenName(land) + '?';
     return 'Waar ligt ' + land.name + '?';
   }
 
   function topoWaarAudio(land) {
     if (!land || !land.audio) return '';
+    if (topoWaarIsWaterItem(land)) {
+      if (land.id === 'kanaal') return 'waar-ligt-het-kanaal';
+      return 'waar-ligt-de-' + String(land.audio).replace(/^zee-/, '');
+    }
     return String(land.audio).replace('land-', 'waar-ligt-');
   }
 
+  function topoWaarHitRadius(it) {
+    var small;
+    small = { kanaal: 1, iers: 1, egeisch: 1, biskaje: 1, adria: 1 };
+    if (small[it.id]) return Math.max(it.r || 0, 52);
+    if (it.r) return Math.max(it.r, 40);
+    return 44;
+  }
+
+  function topoWaarAnchorDist(it, x, y) {
+    var d1, d2;
+    d1 = (x - it.cx) * (x - it.cx) + (y - it.cy) * (y - it.cy);
+    if (it.cx2 != null && (it.cx2 !== it.cx || it.cy2 !== it.cy)) {
+      d2 = (x - it.cx2) * (x - it.cx2) + (y - it.cy2) * (y - it.cy2);
+      if (d2 < d1) d1 = d2;
+    }
+    return Math.sqrt(d1);
+  }
+
+  function topoWaarLabelHtml(it) {
+    var html, fs, name, anchors, i, a, ax, ay, halo, hx, hy;
+    if (!it) return '';
+    name = it.name;
+    fs = 22;
+    html = '';
+    anchors = [{ x: it.cx, y: it.cy }];
+    if (it.id === 'pacific' && it.cx2 != null) {
+      anchors.push({ x: it.cx2 - 50, y: it.cy2 });
+    }
+    halo = [[-2, 0], [2, 0], [0, -2], [0, 2], [-2, -2], [2, -2], [-2, 2], [2, 2]];
+    for (i = 0; i < anchors.length; i++) {
+      ax = anchors[i].x;
+      ay = anchors[i].y + 6;
+      for (a = 0; a < halo.length; a++) {
+        hx = ax + halo[a][0];
+        hy = ay + halo[a][1];
+        html += '<text x="' + hx + '" y="' + hy + '" text-anchor="middle" font-size="' + fs + '" font-weight="700" font-family="sans-serif" fill="#FFFFFF">' + name + '</text>';
+      }
+      html += '<text x="' + ax + '" y="' + ay + '" text-anchor="middle" font-size="' + fs + '" font-weight="700" font-family="sans-serif" fill="#0D47A1">' + name + '</text>';
+    }
+    return html;
+  }
+
+  function topoWaarWaterFill(it, found, wrongId, hintId) {
+    if (wrongId && it.id === wrongId) return '#E53935';
+    if (hintId && it.id === hintId) return '#FFF59D';
+    if (found && found[it.id]) return it.color;
+    return it.color;
+  }
+
+  function topoWaarWaterOpacity(it, found, wrongId, hintId) {
+    if (wrongId && it.id === wrongId) return '0.8';
+    if (hintId && it.id === hintId) return '0.95';
+    if (found && found[it.id]) return '0.92';
+    return '0.55';
+  }
+
   function topoWaarMapHtml(found, wrongId, hintId) {
-    var i, land, fill, html;
-    html = '<svg id="topo-waar-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + TOPO_VB_W + ' ' + TOPO_VB_H + '" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">';
-    html += '<rect width="' + TOPO_VB_W + '" height="' + TOPO_VB_H + '" fill="#B3E5FC"/>';
-    for (i = 0; i < TOPO_LANDEN.length; i++) {
-      land = TOPO_LANDEN[i];
-      if (!land.path) continue;
-      fill = '#E8E0D0';
-      if (found && found[land.id]) fill = '#43A047';
-      else if (wrongId && land.id === wrongId) fill = '#E53935';
-      else if (hintId && land.id === hintId) fill = '#FFF59D';
-      html += '<path data-topo-id="' + land.id + '" fill="' + fill + '" stroke="#455A64" stroke-width="1.2" stroke-linejoin="round" d="' + land.path + '"/>';
+    var i, land, fill, html, vb, items, it, op, landStroke;
+    vb = topoWaarVb();
+    html = '<svg id="topo-waar-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + vb.w + ' ' + vb.h + '" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">';
+    html += '<rect width="' + vb.w + '" height="' + vb.h + '" fill="' + (topoWaarIsWater() ? '#E3F2FD' : '#B3E5FC') + '"/>';
+    if (topoState.game === 'ocean' || topoState.game === 'zee') {
+      items = topoWaarGameItems();
+      for (i = 0; i < items.length; i++) {
+        it = items[i];
+        if (!it.path) continue;
+        fill = topoWaarWaterFill(it, found, wrongId, hintId);
+        op = topoWaarWaterOpacity(it, found, wrongId, hintId);
+        html += '<path data-topo-id="' + it.id + '" fill="' + fill + '" fill-opacity="' + op + '" stroke="none" d="' + it.path + '"/>';
+      }
+      landStroke = '#78909C';
+      if (topoState.game === 'ocean') {
+        for (i = 0; i < TOPO_CONTINENTEN.length; i++) {
+          land = TOPO_CONTINENTEN[i];
+          if (!land.path) continue;
+          html += '<path fill="#E8E0D0" stroke="' + landStroke + '" stroke-width="1" stroke-linejoin="round" d="' + land.path + '"/>';
+        }
+      } else {
+        html += '<path fill="#E8E0D0" stroke="' + landStroke + '" stroke-width="1" stroke-linejoin="round" d="' + TOPO_ZEE_LAND + '"/>';
+      }
+      for (i = 0; i < items.length; i++) {
+        it = items[i];
+        if (found && found[it.id]) html += topoWaarLabelHtml(it);
+      }
+    } else {
+      for (i = 0; i < TOPO_LANDEN.length; i++) {
+        land = TOPO_LANDEN[i];
+        if (!land.path) continue;
+        fill = '#E8E0D0';
+        if (found && found[land.id]) fill = '#43A047';
+        else if (wrongId && land.id === wrongId) fill = '#E53935';
+        else if (hintId && land.id === hintId) fill = '#FFF59D';
+        html += '<path data-topo-id="' + land.id + '" fill="' + fill + '" stroke="#455A64" stroke-width="1.2" stroke-linejoin="round" d="' + land.path + '"/>';
+      }
     }
     html += '</svg>';
     return html;
@@ -22372,6 +22501,7 @@
         return;
       }
       el.setAttribute('fill', flip ? '#F9A825' : '#FFF59D');
+      el.setAttribute('fill-opacity', '0.95');
       flip = !flip;
       if (n >= 8) {
         clearInterval(topoState.waarBlink);
@@ -22382,21 +22512,69 @@
   }
 
   function topoWaarClientToVb(x, y) {
-    var r, scale, w, h, left, top, svg;
+    var r, scale, w, h, left, top, svg, vb;
     svg = $('topo-waar-svg');
     if (!svg) return { x: 0, y: 0 };
+    vb = topoWaarVb();
     r = svg.getBoundingClientRect();
-    scale = Math.min(r.width / TOPO_VB_W, r.height / TOPO_VB_H);
+    scale = Math.min(r.width / vb.w, r.height / vb.h);
     if (!scale || scale <= 0) scale = 1;
-    w = TOPO_VB_W * scale;
-    h = TOPO_VB_H * scale;
+    w = vb.w * scale;
+    h = vb.h * scale;
     left = r.left + (r.width - w) / 2;
     top = r.top + (r.height - h) / 2;
     return { x: (x - left) / scale, y: (y - top) / scale };
   }
 
   function topoWaarHit(x, y, kind) {
-    var i, land, hits, best, bestD, d, r, pad;
+    var i, land, items, hits, best, bestD, d, r, pad, it, cand, smallClose, inPathHits;
+    items = topoWaarGameItems();
+    if (topoWaarIsWater()) {
+      cand = [];
+      for (i = 0; i < items.length; i++) {
+        it = items[i];
+        if (!it.path) continue;
+        d = topoWaarAnchorDist(it, x, y);
+        r = topoWaarHitRadius(it);
+        if (topoPointInPath(x, y, it.path) || d <= r) {
+          cand.push({ it: it, d: d, inPath: !!(it.path && topoPointInPath(x, y, it.path)), r: r, small: r >= 52 && ((it.w && it.w < 130) || (it.h && it.h < 90) || it.id === 'kanaal' || it.id === 'iers' || it.id === 'egeisch' || it.id === 'biskaje' || it.id === 'adria') });
+        }
+      }
+      if (!cand.length) return null;
+      smallClose = [];
+      inPathHits = [];
+      for (i = 0; i < cand.length; i++) {
+        if (cand[i].small && cand[i].d <= cand[i].r) smallClose.push(cand[i]);
+        if (cand[i].inPath) inPathHits.push(cand[i]);
+      }
+      best = null;
+      bestD = 1e9;
+      if (smallClose.length) {
+        for (i = 0; i < smallClose.length; i++) {
+          if (smallClose[i].d < bestD) {
+            bestD = smallClose[i].d;
+            best = smallClose[i].it;
+          }
+        }
+        return best;
+      }
+      if (inPathHits.length) {
+        for (i = 0; i < inPathHits.length; i++) {
+          if (inPathHits[i].d < bestD) {
+            bestD = inPathHits[i].d;
+            best = inPathHits[i].it;
+          }
+        }
+        return best;
+      }
+      for (i = 0; i < cand.length; i++) {
+        if (cand[i].d < bestD) {
+          bestD = cand[i].d;
+          best = cand[i].it;
+        }
+      }
+      return best;
+    }
     hits = [];
     for (i = 0; i < TOPO_LANDEN.length; i++) {
       land = TOPO_LANDEN[i];
@@ -22438,28 +22616,49 @@
     return misses >= 2;
   }
 
-  function startTopoWaar(kind, fresh) {
-    var pool, other, i, land, ans;
+  function startTopoWaar(kind, fresh, game) {
+    var pool, other, i, land, ans, items, prevGame;
+    game = game || 'waar';
+    prevGame = topoState.game;
     if (fresh) {
       state.sessionCorrect = 0;
       state.towardsReward = 0;
       state.lastWasPersonal = false;
       resetVoiceCycle();
-      topoState.used = [];
-      topoState.found = {};
+      if (game === 'waar' || prevGame !== game) {
+        topoState.used = [];
+        topoState.found = {};
+      } else if (game === 'ocean' || game === 'zee') {
+        items = (game === 'ocean') ? TOPO_OCEANEN : TOPO_ZEEEN;
+        if (!topoState.used) topoState.used = [];
+        if (!topoState.found) topoState.found = {};
+        if (topoState.used.length >= items.length) {
+          topoState.used = [];
+          topoState.found = {};
+        }
+      } else {
+        topoState.used = [];
+        topoState.found = {};
+      }
     }
-    topoState.game = 'waar';
+    topoState.game = game;
     topoState.kind = kind || 'easy';
-    state.level = 'waar-' + topoState.kind;
+    state.level = 'waar-' + (game === 'waar' ? topoState.kind : game);
     state.locked = false;
     topoState.misses = 0;
     topoState.wrongId = null;
     topoState.hintId = null;
     hideReward();
     pool = [];
-    for (i = 0; i < TOPO_LANDEN.length; i++) {
-      land = TOPO_LANDEN[i];
-      if (topoState.kind === 'hard' ? land.hardP : land.easyP) pool.push(land);
+    if (game === 'ocean') {
+      for (i = 0; i < TOPO_OCEANEN.length; i++) pool.push(TOPO_OCEANEN[i]);
+    } else if (game === 'zee') {
+      for (i = 0; i < TOPO_ZEEEN.length; i++) pool.push(TOPO_ZEEEN[i]);
+    } else {
+      for (i = 0; i < TOPO_LANDEN.length; i++) {
+        land = TOPO_LANDEN[i];
+        if (topoState.kind === 'hard' ? land.hardP : land.easyP) pool.push(land);
+      }
     }
     other = [];
     for (i = 0; i < pool.length; i++) {
@@ -22485,7 +22684,7 @@
   function onTopoWaarTap(land) {
     var q, wrap;
     if (state.screen !== 'topowaar' || state.locked || !topoState.q || !land) return;
-    q = topoLandById(topoState.q.id);
+    q = topoWaarItemById(topoState.q.id);
     if (!q) return;
     if (land.id === q.id) {
       topoState.misses = 0;
@@ -22505,7 +22704,7 @@
         if (state.towardsReward >= 5) {
           showReward();
         } else {
-          startTopoWaar(topoState.kind, false);
+          startTopoWaar(topoState.kind, false, topoState.game);
         }
       });
       return;
@@ -23001,6 +23200,7 @@
     waarAudio: topoWaarAudio,
     startWaar: startTopoWaar,
     waarTap: onTopoWaarTap,
+    paintWaar: topoPaintWaar,
     oceanen: TOPO_OCEANEN,
     zeeen: TOPO_ZEEEN,
     friesland: TOPO_FRIESLAND,
