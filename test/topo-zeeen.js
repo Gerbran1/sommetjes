@@ -90,15 +90,19 @@ function ok(msg) { console.log('OK  ' + msg); }
     svg = document.getElementById('topo-waar-svg');
     assert(!!svg, 'zeeënkaart is getekend');
     stroke = 0;
+    var visible = 0, paths;
     if (svg) {
-      var paths = svg.querySelectorAll('path[data-topo-id]');
+      paths = svg.querySelectorAll('path[data-topo-id]');
       for (i = 0; i < paths.length; i++) {
         if (paths[i].getAttribute('stroke') && paths[i].getAttribute('stroke') !== 'none') stroke += 1;
+        if (paths[i].getAttribute('fill-opacity') !== '0') visible += 1;
+        assert(paths[i].getAttribute('fill') && paths[i].getAttribute('fill') !== 'none', paths[i].getAttribute('data-topo-id') + ' heeft een fill (niet none)');
       }
-      assert(paths.length === 13, '13 zeevlakken (kreeg ' + paths.length + ')');
-      assert(!!svg.querySelector('path[data-topo-id="med"]'), 'Middellandse Zee staat op de kaart');
+      assert(paths.length === 13, '13 onzichtbare tikzones (kreeg ' + paths.length + ')');
+      assert(!!svg.querySelector('path[data-topo-id="med"]'), 'Middellandse Zee heeft een tikzone');
     }
     assert(stroke === 0, 'geen belijning op zeevlakken (kreeg ' + stroke + ')');
+    assert(visible === 0, 'verse ronde toont geen zeevakken (zichtbaar: ' + visible + ')');
 
     // Every sea appears across rounds (13 unique questions)
     t.getState().used = [];
@@ -119,10 +123,14 @@ function ok(msg) { console.log('OK  ' + msg); }
     var q = byId[qid], other = byId[qid === 'med' ? 'noordzee' : 'med'];
     t.waarTap(other);
     assert(t.getState().misses === 1 && !t.getState().hintId, 'na 1 fout: geen hint');
+    var wrongPath = document.querySelector('#topo-waar-svg path[data-topo-id="' + other.id + '"]');
+    assert(wrongPath && wrongPath.getAttribute('fill-opacity') === '0', 'foute tik onthult geen zeevak');
     t.waarTap(other);
     assert(t.getState().misses === 2 && t.getState().hintId === qid, 'na 2 fouten knippert het goede antwoord');
     t.waarTap(q);
     assert(t.getState().found && t.getState().found[qid], 'goed tik markeert ' + qid);
+    var goodPath = document.querySelector('#topo-waar-svg path[data-topo-id="' + qid + '"]');
+    assert(goodPath && parseFloat(goodPath.getAttribute('fill-opacity')) > 0, 'goed antwoord krijgt een zachte highlight');
     var texts = document.querySelectorAll('#topo-waar-svg text');
     var foundName = false;
     for (i = 0; i < texts.length; i++) {

@@ -22421,25 +22421,27 @@
     return html;
   }
 
+  var TOPO_WAAR_SEA = '#5DADE2';
+  var TOPO_WAAR_LAND = '#F4E4C1';
+  var TOPO_WAAR_LAND_STROKE = '#D4B896';
+
   function topoWaarWaterFill(it, found, wrongId, hintId) {
-    if (wrongId && it.id === wrongId) return '#E53935';
     if (hintId && it.id === hintId) return '#FFF59D';
-    if (found && found[it.id]) return it.color;
-    return it.color;
+    if (found && found[it.id]) return '#9EE7E0';
+    return TOPO_WAAR_SEA;
   }
 
   function topoWaarWaterOpacity(it, found, wrongId, hintId) {
-    if (wrongId && it.id === wrongId) return '0.8';
-    if (hintId && it.id === hintId) return '0.95';
-    if (found && found[it.id]) return '0.92';
-    return '0.55';
+    if (hintId && it.id === hintId) return '0.85';
+    if (found && found[it.id]) return '0.6';
+    return '0';
   }
 
   function topoWaarMapHtml(found, wrongId, hintId) {
     var i, land, fill, html, vb, items, it, op, landStroke;
     vb = topoWaarVb();
     html = '<svg id="topo-waar-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + vb.w + ' ' + vb.h + '" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">';
-    html += '<rect width="' + vb.w + '" height="' + vb.h + '" fill="' + (topoWaarIsWater() ? '#E3F2FD' : '#B3E5FC') + '"/>';
+    html += '<rect width="' + vb.w + '" height="' + vb.h + '" fill="' + (topoWaarIsWater() ? TOPO_WAAR_SEA : '#B3E5FC') + '"/>';
     if (topoState.game === 'ocean' || topoState.game === 'zee') {
       items = topoWaarGameItems();
       for (i = 0; i < items.length; i++) {
@@ -22447,17 +22449,16 @@
         if (!it.path) continue;
         fill = topoWaarWaterFill(it, found, wrongId, hintId);
         op = topoWaarWaterOpacity(it, found, wrongId, hintId);
-        html += '<path data-topo-id="' + it.id + '" fill="' + fill + '" fill-opacity="' + op + '" stroke="none" d="' + it.path + '"/>';
+        html += '<path data-topo-id="' + it.id + '" fill="' + fill + '" fill-opacity="' + op + '" stroke="none" pointer-events="all" d="' + it.path + '"/>';
       }
-      landStroke = '#78909C';
       if (topoState.game === 'ocean') {
         for (i = 0; i < TOPO_CONTINENTEN.length; i++) {
           land = TOPO_CONTINENTEN[i];
           if (!land.path) continue;
-          html += '<path fill="#E8E0D0" stroke="' + landStroke + '" stroke-width="1" stroke-linejoin="round" d="' + land.path + '"/>';
+          html += '<path fill="' + TOPO_WAAR_LAND + '" stroke="' + TOPO_WAAR_LAND_STROKE + '" stroke-width="1.2" stroke-linejoin="round" d="' + land.path + '"/>';
         }
       } else {
-        html += '<path fill="#E8E0D0" stroke="' + landStroke + '" stroke-width="1" stroke-linejoin="round" d="' + TOPO_ZEE_LAND + '"/>';
+        html += '<path fill="' + TOPO_WAAR_LAND + '" stroke="' + TOPO_WAAR_LAND_STROKE + '" stroke-width="1.2" stroke-linejoin="round" d="' + TOPO_ZEE_LAND + '"/>';
       }
       for (i = 0; i < items.length; i++) {
         it = items[i];
@@ -22482,6 +22483,7 @@
     var wrap, hint, el, n, flip;
     wrap = $('topo-waar-map-wrap');
     if (!wrap) return;
+    wrap.style.background = topoWaarIsWater() ? TOPO_WAAR_SEA : '';
     if (topoState.waarBlink) {
       clearInterval(topoState.waarBlink);
       topoState.waarBlink = null;
