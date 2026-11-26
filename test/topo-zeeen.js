@@ -95,8 +95,11 @@ function ok(msg) { console.log('OK  ' + msg); }
       paths = svg.querySelectorAll('path[data-topo-id]');
       for (i = 0; i < paths.length; i++) {
         if (paths[i].getAttribute('stroke') && paths[i].getAttribute('stroke') !== 'none') stroke += 1;
-        if (paths[i].getAttribute('fill-opacity') !== '0') visible += 1;
+        if (paths[i].getAttribute('fill-opacity') !== '0' || paths[i].getAttribute('opacity') !== '0') visible += 1;
         assert(paths[i].getAttribute('fill') && paths[i].getAttribute('fill') !== 'none', paths[i].getAttribute('data-topo-id') + ' heeft een fill (niet none)');
+        assert(paths[i].getAttribute('fill') === t.seaColor, paths[i].getAttribute('data-topo-id') + ' fill is zeekleur');
+        assert(paths[i].getAttribute('opacity') === '0', paths[i].getAttribute('data-topo-id') + ' opacity=0');
+        assert((' ' + (paths[i].getAttribute('class') || '') + ' ').indexOf(' topo-waar-hit-inv ') !== -1, paths[i].getAttribute('data-topo-id') + ' heeft hit-inv class');
       }
       assert(paths.length === 13, '13 onzichtbare tikzones (kreeg ' + paths.length + ')');
       assert(!!svg.querySelector('path[data-topo-id="med"]'), 'Middellandse Zee heeft een tikzone');

@@ -14,7 +14,7 @@ function ok(msg) { console.log('OK  ' + msg); }
     args: ['--no-sandbox', '--disable-gpu', '--window-size=1024,768']
   });
   const page = await browser.newPage();
-  await page.setViewport({ width: 1024, height: 768 });
+  await page.setViewport({ width: 1024, height: 768, isMobile: true, hasTouch: true, isLandscape: true });
   await page.goto('http://127.0.0.1:8765/index.html', { waitUntil: 'networkidle0', timeout: 20000 });
   const report = await page.evaluate(() => {
     var t = window.__topoTest;
@@ -75,6 +75,20 @@ function ok(msg) { console.log('OK  ' + msg); }
     });
   }
 
+
+  async function fingerAlign(x, y, label, when) {
+    var pt = await page.evaluate(function () {
+      var t = window.__topoTest;
+      return t && t.ghostGrabPoint ? t.ghostGrabPoint() : null;
+    });
+    if (!pt) throw new Error(label + ': geen greeppunt ' + when);
+    var dx = pt.x - x, dy = pt.y - y;
+    if (Math.abs(dx) > 4 || Math.abs(dy) > 4) {
+      throw new Error(label + ' zit scheef ' + when + ': vinger ' + Math.round(x) + ',' + Math.round(y) + ' greep ' + pt.x.toFixed(1) + ',' + pt.y.toFixed(1));
+    }
+    ok(label + ' blijft onder de vinger ' + when + ' (dt ' + Math.round(dx) + ',' + Math.round(dy) + ')');
+  }
+
   async function assertGhostFollowsTouch(sel, label) {
     var piece = await page.$(sel);
     if (!piece) throw new Error(label + ': stuk niet gevonden (' + sel + ')');
@@ -89,12 +103,17 @@ function ok(msg) { console.log('OK  ' + msg); }
       await page.touchscreen.touchEnd();
       throw new Error(label + ': geen sleepstuk na touchStart');
     }
+    await fingerAlign(x0, y0, label, 'direct na oppakken');
     var dx = 90, dy = -50;
     await page.touchscreen.touchMove(x0 + dx, y0 + dy);
     await new Promise(function (res) { setTimeout(res, 40); });
     var g2 = await ghostBox();
+    if (!g2) {
+      await page.touchscreen.touchEnd();
+      throw new Error(label + ': geen sleepstuk na touchMove');
+    }
+    await fingerAlign(x0 + dx, y0 + dy, label, 'tijdens slepen');
     await page.touchscreen.touchEnd();
-    if (!g2) throw new Error(label + ': geen sleepstuk na touchMove');
     var gotX = g2.left - g1.left;
     var gotY = g2.top - g1.top;
     if (Math.abs(gotX - dx) > 3 || Math.abs(gotY - dy) > 3) {
@@ -116,7 +135,22 @@ function ok(msg) { console.log('OK  ' + msg); }
   await page.click('#topolevel-grid [data-kind="easy"]');
   await page.waitForSelector('#screen-topopuzzel:not(.is-hidden)', { timeout: 8000 });
   try {
-    await assertGhostFollowsTouch('#topo-tray .topo-piece[data-topo-id="nl"], #topo-tray .topo-piece', 'Europa-sleep');
+    await assertGhostFollowsTouch('#topo-tray .topo-piece[data-topo-id="nl"], #topo-tray .topo-piece', 'Europa-sleep iPad');
+  } catch (err) {
+    console.log('FAIL ' + (err && err.message ? err.message : err));
+    failed += 1;
+  }
+
+  await page.setViewport({ width: 667, height: 375, isMobile: true, hasTouch: true, isLandscape: true });
+  await page.goto('http://127.0.0.1:8765/index.html', { waitUntil: 'networkidle0', timeout: 20000 });
+  await page.click('#btn-goto-topo');
+  await page.waitForSelector('#topo-grid [data-game="puzzel"]', { timeout: 8000 });
+  await page.click('#topo-grid [data-game="puzzel"]');
+  await page.waitForSelector('#topolevel-grid [data-kind="easy"]', { timeout: 8000 });
+  await page.click('#topolevel-grid [data-kind="easy"]');
+  await page.waitForSelector('#screen-topopuzzel:not(.is-hidden)', { timeout: 8000 });
+  try {
+    await assertGhostFollowsTouch('#topo-tray .topo-piece[data-topo-id="nl"], #topo-tray .topo-piece', 'Europa-sleep telefoon liggend');
   } catch (err) {
     console.log('FAIL ' + (err && err.message ? err.message : err));
     failed += 1;

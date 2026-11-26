@@ -9,12 +9,15 @@
   <meta name="apple-mobile-web-app-title" content="Leer &amp; Speel">
   <meta name="format-detection" content="telephone=no">
   <meta name="theme-color" content="#6EC9F0">
+  <meta name="app-version" content="2026-11-26-69">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
   <title>Leer &amp; Speel</title>
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76.png">
-  <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-152.png">
-  <link rel="icon" type="image/png" href="apple-touch-icon-152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180.png?v=2026-11-26-69">
+  <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152.png?v=2026-11-26-69">
+  <link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76.png?v=2026-11-26-69">
+  <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-152.png?v=2026-11-26-69">
+  <link rel="icon" type="image/png" href="apple-touch-icon-152.png?v=2026-11-26-69">
   <style>
     html, body {
       margin: 0;
@@ -716,10 +719,25 @@
       position: relative;
       box-sizing: border-box;
     }
+    #topo-waar-map-wrap,
+    #topo-waar-map-wrap svg,
+    #topo-waar-svg,
+    #topo-waar-svg path {
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+    }
     #topo-waar-map-wrap svg {
       width: 100%;
       height: 100%;
       display: block;
+    }
+    #topo-waar-svg path.topo-waar-hit-inv {
+      fill-opacity: 0 !important;
+      opacity: 0 !important;
+      stroke: none !important;
+      -webkit-filter: none !important;
+      filter: none !important;
+      -webkit-box-shadow: none !important;
+      box-shadow: none !important;
     }
     #topo-waar-prompt {
       font-weight: 800;
@@ -21924,24 +21942,71 @@
     }, 40);
   }
 
-  function topoSvgMetrics(svg) {
-    var r, scale, w, h, left, top, vb;
-    if (!svg) return null;
-    r = svg.getBoundingClientRect();
-    vb = topoVb();
-    scale = Math.min(r.width / vb.w, r.height / vb.h);
+  function topoMeetFromRect(r, vbW, vbH) {
+    var scale, w, h;
+    if (!r) return null;
+    scale = Math.min(r.width / vbW, r.height / vbH);
     if (!scale || scale <= 0) scale = 1;
-    w = vb.w * scale;
-    h = vb.h * scale;
-    left = r.left + (r.width - w) / 2;
-    top = r.top + (r.height - h) / 2;
-    return { left: left, top: top, scale: scale, width: w, height: h };
+    w = vbW * scale;
+    h = vbH * scale;
+    return {
+      left: r.left + (r.width - w) / 2,
+      top: r.top + (r.height - h) / 2,
+      scale: scale,
+      width: w,
+      height: h
+    };
+  }
+
+  function topoHtmlBox(el) {
+    var host, r, sw, sh;
+    if (!el) return null;
+    host = el;
+    if (el.tagName && el.tagName.toLowerCase() === 'svg' && el.parentNode) host = el.parentNode;
+    if (!host.getBoundingClientRect) return null;
+    r = host.getBoundingClientRect();
+    if (host !== el) {
+      sw = el.offsetWidth || 0;
+      sh = el.offsetHeight || 0;
+      if ((!sw || !sh) && host.className && (' ' + host.className + ' ').indexOf(' topo-piece-shape ') !== -1) {
+        sw = 78;
+        sh = 58;
+      }
+      if (sw > 0 && sh > 0) {
+        return {
+          left: r.left + (r.width - sw) / 2,
+          top: r.top + (r.height - sh) / 2,
+          width: sw,
+          height: sh
+        };
+      }
+    }
+    return { left: r.left, top: r.top, width: r.width, height: r.height };
+  }
+
+  function topoMeetClientToVb(hostEl, clientX, clientY, vbW, vbH) {
+    var r, m;
+    if (!hostEl || !hostEl.getBoundingClientRect) return { x: 0, y: 0 };
+    r = hostEl.getBoundingClientRect();
+    m = topoMeetFromRect(r, vbW, vbH);
+    if (!m) return { x: 0, y: 0 };
+    return { x: (clientX - m.left) / m.scale, y: (clientY - m.top) / m.scale };
+  }
+
+  function topoSvgMetrics(svg) {
+    var host, r, vb;
+    vb = topoVb();
+    host = (svg && svg.parentNode) ? svg.parentNode : svg;
+    if (!host || !host.getBoundingClientRect) return null;
+    r = host.getBoundingClientRect();
+    return topoMeetFromRect(r, vb.w, vb.h);
   }
 
   function topoClientToVb(x, y) {
-    var m, svg;
+    var m, svg, host;
     svg = $('topo-map-svg');
-    m = topoSvgMetrics(svg);
+    host = $('topo-map-wrap') || (svg && svg.parentNode) || svg;
+    m = host ? topoMeetFromRect(host.getBoundingClientRect(), topoVb().w, topoVb().h) : topoSvgMetrics(svg);
     if (!m) return { x: 0, y: 0 };
     return { x: (x - m.left) / m.scale, y: (y - m.top) / m.scale };
   }
@@ -22000,16 +22065,14 @@
   }
 
   function topoPieceLocalPoint(svgEl, clientX, clientY, land) {
-    var r, vb, scale, left, top, x, y;
+    var vb, box, m, x, y;
     vb = topoPieceViewBox(land);
-    if (!svgEl) return { x: vb.w / 2, y: vb.h / 2 };
-    r = svgEl.getBoundingClientRect();
-    scale = Math.min(r.width / vb.w, r.height / vb.h);
-    if (!scale || scale <= 0) scale = 1;
-    left = r.left + (r.width - vb.w * scale) / 2;
-    top = r.top + (r.height - vb.h * scale) / 2;
-    x = (clientX - left) / scale;
-    y = (clientY - top) / scale;
+    box = topoHtmlBox(svgEl);
+    if (!box) return { x: vb.w / 2, y: vb.h / 2 };
+    m = topoMeetFromRect(box, vb.w, vb.h);
+    if (!m) return { x: vb.w / 2, y: vb.h / 2 };
+    x = (clientX - m.left) / m.scale;
+    y = (clientY - m.top) / m.scale;
     if (x < 0) x = 0;
     if (y < 0) y = 0;
     if (x > vb.w) x = vb.w;
@@ -22062,6 +22125,11 @@
     ghost.style.zIndex = '80';
     ghost.style.pointerEvents = 'none';
     document.body.appendChild(ghost);
+    if (ghost.firstChild && ghost.firstChild.style) {
+      ghost.firstChild.style.width = gw + 'px';
+      ghost.firstChild.style.height = gh + 'px';
+      ghost.firstChild.style.display = 'block';
+    }
     srcSvg = null;
     svgs = el.getElementsByTagName('svg');
     if (svgs && svgs.length) srcSvg = svgs[0];
@@ -22449,7 +22517,11 @@
         if (!it.path) continue;
         fill = topoWaarWaterFill(it, found, wrongId, hintId);
         op = topoWaarWaterOpacity(it, found, wrongId, hintId);
-        html += '<path data-topo-id="' + it.id + '" fill="' + fill + '" fill-opacity="' + op + '" stroke="none" pointer-events="all" d="' + it.path + '"/>';
+        if (op === '0') {
+          html += '<path class="topo-waar-hit-inv" data-topo-id="' + it.id + '" fill="' + TOPO_WAAR_SEA + '" fill-opacity="0" opacity="0" stroke="none" pointer-events="all" d="' + it.path + '"/>';
+        } else {
+          html += '<path data-topo-id="' + it.id + '" fill="' + fill + '" fill-opacity="' + op + '" stroke="none" pointer-events="all" d="' + it.path + '"/>';
+        }
       }
       if (topoState.game === 'ocean') {
         for (i = 0; i < TOPO_CONTINENTEN.length; i++) {
@@ -22514,18 +22586,10 @@
   }
 
   function topoWaarClientToVb(x, y) {
-    var r, scale, w, h, left, top, svg, vb;
-    svg = $('topo-waar-svg');
-    if (!svg) return { x: 0, y: 0 };
+    var host, vb;
     vb = topoWaarVb();
-    r = svg.getBoundingClientRect();
-    scale = Math.min(r.width / vb.w, r.height / vb.h);
-    if (!scale || scale <= 0) scale = 1;
-    w = vb.w * scale;
-    h = vb.h * scale;
-    left = r.left + (r.width - w) / 2;
-    top = r.top + (r.height - h) / 2;
-    return { x: (x - left) / scale, y: (y - top) / scale };
+    host = $('topo-waar-map-wrap') || $('topo-waar-svg');
+    return topoMeetClientToVb(host, x, y, vb.w, vb.h);
   }
 
   function topoWaarHit(x, y, kind) {
@@ -23022,18 +23086,10 @@
   }
 
   function topoDropClientToVb(x, y) {
-    var svg, r, vb, scale, w, h, left, top;
-    svg = $('topo-drop-svg');
-    if (!svg) return { x: 0, y: 0 };
-    r = svg.getBoundingClientRect();
+    var host, vb;
     vb = topoDropVb();
-    scale = Math.min(r.width / vb.w, r.height / vb.h);
-    if (!scale || scale <= 0) scale = 1;
-    w = vb.w * scale;
-    h = vb.h * scale;
-    left = r.left + (r.width - w) / 2;
-    top = r.top + (r.height - h) / 2;
-    return { x: (x - left) / scale, y: (y - top) / scale };
+    host = $('topo-drop-map-wrap') || $('topo-drop-svg');
+    return topoMeetClientToVb(host, x, y, vb.w, vb.h);
   }
 
   function topoDropPlaceGhost(x, y) {
@@ -23186,6 +23242,9 @@
     worldVbH: TOPO_WORLD_VB_H,
     placeGhost: topoPlaceGhost,
     pieceLocal: topoPieceLocalPoint,
+    pieceVb: topoPieceViewBox,
+    seaColor: TOPO_WAAR_SEA,
+    meetFromRect: topoMeetFromRect,
     dragInfo: function () {
       return {
         on: topoDrag.on,
@@ -23194,6 +23253,24 @@
         gh: topoDrag.gh,
         offX: topoDrag.offX,
         offY: topoDrag.offY
+      };
+    },
+    ghostGrabPoint: function () {
+      var g, land, vb, scale, boxLeft, boxTop, r;
+      g = topoDrag.ghost;
+      land = topoDrag.land;
+      if (!g || !land) return null;
+      vb = topoPieceViewBox(land);
+      scale = Math.min(topoDrag.gw / vb.w, topoDrag.gh / vb.h);
+      if (!scale || scale <= 0) scale = 1;
+      boxLeft = (topoDrag.gw - vb.w * scale) / 2;
+      boxTop = (topoDrag.gh - vb.h * scale) / 2;
+      r = g.getBoundingClientRect();
+      return {
+        x: r.left + boxLeft + topoDrag.offX * scale,
+        y: r.top + boxTop + topoDrag.offY * scale,
+        gw: topoDrag.gw,
+        gh: topoDrag.gh
       };
     },
     waarHit: topoWaarHit,
