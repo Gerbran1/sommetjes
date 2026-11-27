@@ -9,15 +9,15 @@
   <meta name="apple-mobile-web-app-title" content="Leer &amp; Speel">
   <meta name="format-detection" content="telephone=no">
   <meta name="theme-color" content="#6EC9F0">
-  <meta name="app-version" content="2026-11-26-69">
+  <meta name="app-version" content="2026-11-27-70">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <title>Leer &amp; Speel</title>
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180.png?v=2026-11-26-69">
-  <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152.png?v=2026-11-26-69">
-  <link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76.png?v=2026-11-26-69">
-  <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-152.png?v=2026-11-26-69">
-  <link rel="icon" type="image/png" href="apple-touch-icon-152.png?v=2026-11-26-69">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180.png?v=2026-11-27-70">
+  <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152.png?v=2026-11-27-70">
+  <link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76.png?v=2026-11-27-70">
+  <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-152.png?v=2026-11-27-70">
+  <link rel="icon" type="image/png" href="apple-touch-icon-152.png?v=2026-11-27-70">
   <style>
     html, body {
       margin: 0;
@@ -200,7 +200,7 @@
       line-height: 1;
     }
 
-    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-doolhoflevel, #screen-verschillen, #screen-robotlevel, #screen-robot, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij, #screen-cups, #screen-veranderd, #screen-tekenmenu, #screen-kleurkies, #screen-teken, #screen-klinkers, #screen-lijnlevel, #screen-lijn, #screen-geld, #screen-geldlevel, #screen-geldplay, #screen-program, #screen-tijd, #screen-tijdlevel, #screen-tijdplay, #screen-topo, #screen-topolevel, #screen-topopuzzel, #screen-topoplay, #screen-topowaar {
+    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-doolhoflevel, #screen-verschillen, #screen-robotlevel, #screen-robot, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij, #screen-cups, #screen-veranderd, #screen-tekenmenu, #screen-kleurkies, #screen-teken, #screen-klinkers, #screen-lijnlevel, #screen-lijn, #screen-geld, #screen-geldlevel, #screen-geldplay, #screen-program, #screen-tijd, #screen-tijdlevel, #screen-tijdplay, #screen-topo, #screen-topolevel, #screen-topopuzzel, #screen-topoplay, #screen-topowaar, #screen-planetenlevel, #screen-planeten {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -552,6 +552,151 @@
       flex: 0 0 30%;
       max-width: 300px;
       min-width: 0;
+    }
+    .choice-planeten {
+      background: #5C6BC0;
+      -webkit-box-shadow: 0 10px 0 #3949AB, 0 14px 20px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 0 #3949AB, 0 14px 20px rgba(0,0,0,0.15);
+    }
+    .choice-planeten.pressed, .choice-planeten:active {
+      -webkit-box-shadow: 0 2px 0 #3949AB, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #3949AB, 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .planeten-glyph { width: 72px; height: 56px; margin: 0 auto 4px auto; }
+    .planeten-glyph svg { width: 72px; height: 56px; display: block; }
+
+    #choice-grid.choices-10 .choice-btn {
+      -webkit-flex: 0 0 18%;
+      flex: 0 0 18%;
+      max-width: 180px;
+      min-width: 0;
+      min-height: 92px;
+      margin: 0.5%;
+      padding: 8px 4px;
+    }
+    #choice-grid.choices-10 .choice-label { font-size: 16px; }
+    #planetenlevel-grid {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: stretch;
+      align-items: stretch;
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      max-width: 980px;
+      margin: 8px auto 0 auto;
+    }
+    #planetenlevel-grid .level-btn {
+      -webkit-flex: 0 0 30%;
+      flex: 0 0 30%;
+      max-width: 280px;
+      min-height: 150px;
+      margin: 1%;
+    }
+    .lvl-planeten-easy { background: #66BB6A; -webkit-box-shadow: 0 10px 0 #388E3C, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #388E3C, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-planeten-easy.pressed, .lvl-planeten-easy:active { -webkit-box-shadow: 0 2px 0 #388E3C, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #388E3C, 0 4px 8px rgba(0,0,0,0.15); }
+    .lvl-planeten-normal { background: #42A5F5; -webkit-box-shadow: 0 10px 0 #1565C0, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #1565C0, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-planeten-normal.pressed, .lvl-planeten-normal:active { -webkit-box-shadow: 0 2px 0 #1565C0, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #1565C0, 0 4px 8px rgba(0,0,0,0.15); }
+    .lvl-planeten-hard { background: #FFA726; -webkit-box-shadow: 0 10px 0 #F57C00, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #F57C00, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-planeten-hard.pressed, .lvl-planeten-hard:active { -webkit-box-shadow: 0 2px 0 #F57C00, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #F57C00, 0 4px 8px rgba(0,0,0,0.15); }
+    #planeten-stage {
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      min-width: 0;
+      min-height: 0;
+      position: relative;
+      margin: 0 8px 8px 8px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #0B1533;
+      -webkit-box-shadow: 0 4px 0 rgba(0,0,0,0.18);
+      box-shadow: 0 4px 0 rgba(0,0,0,0.18);
+    }
+    #planeten-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+    }
+    #screen-planeten, #screen-planetenlevel {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+    }
+    #screen-planeten.is-hidden, #screen-planetenlevel.is-hidden { display: none; }
+    #planeten-prompt {
+      width: 100%;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 800;
+      color: #215078;
+      padding: 0 12px 8px 12px;
+    }
+    .overlay-planeten { z-index: 50; pointer-events: auto; top: 0; background: rgba(10, 18, 48, 0.55); }
+    .overlay-planeten .reward-card { pointer-events: auto; }
+    .planeten-ov-actions {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .planeten-ov-actions .reward-btn { margin: 8px; min-width: 160px; }
+    @media (orientation: portrait) {
+      #choice-grid.choices-10 .choice-btn {
+        -webkit-flex: 0 0 30%;
+        flex: 0 0 30%;
+        max-width: 300px;
+        min-height: 130px;
+        margin: 1%;
+        padding: 16px 8px;
+      }
+      #choice-grid.choices-10 .choice-label { font-size: 22px; }
+    }
+    @media screen and (max-height: 800px) {
+      #choice-grid.choices-10 .choice-btn { min-height: 78px; }
+      #choice-grid.choices-10 .choice-label { font-size: 15px; }
+      #choice-grid.choices-10 .planeten-glyph,
+      #choice-grid.choices-10 .planeten-glyph svg,
+      #choice-grid.choices-10 .topo-glyph,
+      #choice-grid.choices-10 .topo-glyph svg,
+      #choice-grid.choices-10 .tijd-glyph,
+      #choice-grid.choices-10 .tijd-glyph svg,
+      #choice-grid.choices-10 .program-glyph,
+      #choice-grid.choices-10 .program-glyph svg,
+      #choice-grid.choices-10 .geld-glyph,
+      #choice-grid.choices-10 .geld-glyph svg { width: 44px; height: 34px; }
+      #screen-start.start-10 .sun { width: 52px; height: 52px; }
+      #screen-start.start-10 .title { font-size: 38px; }
+      #screen-start.start-10 .subtitle { font-size: 16px; margin-top: 2px; }
+      #planetenlevel-grid .level-btn { min-height: 120px; }
+      #planeten-prompt { font-size: 18px; padding-bottom: 4px; }
+    }
+    @media screen and (max-height: 500px) {
+      #screen-start.start-10 .sun { width: 28px; height: 28px; }
+      #screen-start.start-10 .title { font-size: 24px; }
+      #screen-start.start-10 .subtitle,
+      #screen-start.start-10 .home-hint { display: none; }
+      #choice-grid.choices-10 .choice-btn { min-height: 52px; margin: 0.3%; padding: 4px 2px; }
+      #choice-grid.choices-10 .choice-label { font-size: 12px; }
+    }
+    @media screen and (max-width: 800px) {
+      #choice-grid.choices-10 .choice-btn { min-height: 100px; }
+      #choice-grid.choices-10 .choice-label { font-size: 18px; }
+    }
+    @media screen and (max-width: 800px) and (max-height: 500px) {
+      #choice-grid.choices-10 .choice-btn { min-height: 48px; }
+      #choice-grid.choices-10 .choice-label { font-size: 11px; }
     }
 
     #topo-grid, #topolevel-grid {
@@ -5460,7 +5605,7 @@
   <div id="c3" class="cloud"></div>
 
   <div id="app">
-    <div id="screen-start">
+    <div id="screen-start" class="start-10">
       <div class="topbar">
         <div class="topbar-left">
         </div>
@@ -5479,7 +5624,7 @@
         <div class="home-hint" id="home-hint"></div>
       </div>
 
-      <div id="choice-grid" class="choices-9">
+      <div id="choice-grid" class="choices-10">
         <button type="button" class="tap choice-btn choice-numbers" id="btn-goto-games" data-act="goto-games">
           <div class="choice-glyph">123</div>
           <div class="choice-label">Getallen</div>
@@ -5520,6 +5665,10 @@
         <button type="button" class="tap choice-btn choice-topo" id="btn-goto-topo" data-act="goto-topo">
           <div class="choice-glyph topo-glyph" id="icon-topo-start"></div>
           <div class="choice-label">Topografie</div>
+        </button>
+        <button type="button" class="tap choice-btn choice-planeten" id="btn-goto-planeten" data-act="goto-planeten">
+          <div class="choice-glyph planeten-glyph" id="icon-planeten-start"></div>
+          <div class="choice-label">Planeten</div>
         </button>
       </div>
       <div id="player-bar">
@@ -7121,6 +7270,66 @@
         <div id="teken-tools"></div>
       </div>
     </div>
+
+    <div id="screen-planetenlevel" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-planetenlevel-back" data-act="back" title="Terug">
+            <span id="planetenlevel-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-planetenlevel-home" data-act="home" title="Start" style="margin-left:8px;">
+            <span id="planetenlevel-home-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="planetenlevel-star-icon"></span>
+            <span class="star-count" id="planetenlevel-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt">Planeten veroveren</div>
+      <div id="planetenlevel-grid">
+        <button type="button" class="tap level-btn lvl-planeten-easy" data-act="planeten-level" data-kind="easy">
+          <div class="level-label">Makkelijk</div>
+          <div class="level-sub">Voor kleine helden</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-planeten-normal" data-act="planeten-level" data-kind="normal">
+          <div class="level-label">Gewoon</div>
+          <div class="level-sub">Een echte wedstrijd</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-planeten-hard" data-act="planeten-level" data-kind="hard">
+          <div class="level-label">Moeilijk</div>
+          <div class="level-sub">Twee computers</div>
+        </button>
+      </div>
+    </div>
+
+    <div id="screen-planeten" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-planeten-back" data-act="back" title="Terug">
+            <span id="planeten-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-planeten-home" data-act="home" title="Start" style="margin-left:8px;">
+            <span id="planeten-home-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-planeten-pause" data-act="planeten-pause" title="Pauze" style="margin-left:8px;">
+            <span id="planeten-pause-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="planeten-star-icon"></span>
+            <span class="star-count" id="planeten-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt" id="planeten-prompt">Sleep van jouw blauwe planeet naar een andere planeet</div>
+      <div id="planeten-stage">
+        <canvas id="planeten-canvas" width="1000" height="625"></canvas>
+      </div>
+    </div>
   </div>
 
   <div id="burst" class="is-hidden"></div>
@@ -7130,6 +7339,17 @@
       <div class="reward-stars" id="reward-stars"></div>
       <div class="reward-text" id="reward-text">Wat knap!</div>
       <button type="button" class="tap reward-btn" id="btn-verder" data-act="verder">Verder</button>
+    </div>
+  </div>
+  <div id="overlay-planeten" class="overlay is-hidden">
+    <div class="reward-card">
+      <div class="reward-stars" id="planeten-ov-stars"></div>
+      <div class="reward-text" id="planeten-ov-title">Gewonnen!</div>
+      <div id="planeten-ov-text">Alle planeten zijn van jou!</div>
+      <div class="planeten-ov-actions">
+        <button type="button" class="tap reward-btn" id="btn-planeten-opnieuw" data-act="planeten-opnieuw">Nog eens</button>
+        <button type="button" class="tap reward-btn" id="btn-planeten-naar-start" data-act="planeten-naar-start">Naar start</button>
+      </div>
     </div>
   </div>
 
@@ -9996,7 +10216,7 @@
   /* ---------- UI ---------- */
   function updateStarsUI() {
     var i, row, html, filled, el, rows;
-    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'vers-stars', 'robot-stars', 'robotlevel-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars', 'cups-stars', 'veranderd-stars', 'klinkers-stars', 'lijnlevel-stars', 'lijn-stars', 'doolhoflevel-stars', 'geld-stars', 'geldlevel-stars', 'geldplay-stars', 'program-stars', 'tijd-stars', 'tijdlevel-stars', 'tijdplay-stars', 'topo-stars', 'topolevel-stars', 'topopuzzel-stars', 'topoplay-stars', 'topowaar-stars', 'topodrop-stars'], String(state.stars));
+    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'vers-stars', 'robot-stars', 'robotlevel-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars', 'cups-stars', 'veranderd-stars', 'klinkers-stars', 'lijnlevel-stars', 'lijn-stars', 'doolhoflevel-stars', 'geld-stars', 'geldlevel-stars', 'geldplay-stars', 'program-stars', 'tijd-stars', 'tijdlevel-stars', 'tijdplay-stars', 'topo-stars', 'topolevel-stars', 'topopuzzel-stars', 'topoplay-stars', 'topowaar-stars', 'topodrop-stars', 'planetenlevel-stars', 'planeten-stars'], String(state.stars));
     filled = state.towardsReward;
     if (filled > 5) filled = 5;
     html = '';
@@ -10029,7 +10249,7 @@
   function showScreen(name) {
     var ids, i, el;
     state.screen = name;
-    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay', 'program', 'tijd', 'tijdlevel', 'tijdplay', 'topo', 'topolevel', 'topopuzzel', 'topoplay', 'topowaar', 'topodrop'];
+    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay', 'program', 'tijd', 'tijdlevel', 'tijdplay', 'topo', 'topolevel', 'topopuzzel', 'topoplay', 'topowaar', 'topodrop', 'planetenlevel', 'planeten'];
     for (i = 0; i < ids.length; i++) {
       el = $('screen-' + ids[i]);
       if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
@@ -12409,6 +12629,10 @@
       if (topoDropDragStart(e)) {
         if (e.preventDefault) e.preventDefault();
       }
+    } else if (state.screen === 'planeten') {
+      if (planetenDragStart(e)) {
+        if (e.preventDefault) e.preventDefault();
+      }
     }
   }
 
@@ -12472,6 +12696,11 @@
         topoDropDragMove(e);
         if (e.preventDefault) e.preventDefault();
       }
+    } else if (state.screen === 'planeten') {
+      if (planetenState.drag.on) {
+        planetenDragMove(e);
+        if (e.preventDefault) e.preventDefault();
+      }
     }
   }
 
@@ -12533,6 +12762,11 @@
     } else if (state.screen === 'topodrop') {
       if (topoDropDrag.on) {
         topoDropDragEnd(e);
+        if (e.preventDefault) e.preventDefault();
+      }
+    } else if (state.screen === 'planeten') {
+      if (planetenState.drag.on) {
+        planetenDragEnd(e);
         if (e.preventDefault) e.preventDefault();
       }
     }
@@ -16583,6 +16817,7 @@
     if (typeof stopDagenDrag === 'function') stopDagenDrag();
     if (typeof stopTopoDrag === 'function') stopTopoDrag();
     if (typeof stopTopoDropDrag === 'function') stopTopoDropDrag();
+    if (typeof stopPlaneten === 'function') stopPlaneten();
     if (typeof stopMdDrag === 'function') stopMdDrag();
     if (typeof stopSezDrag === 'function') stopSezDrag();
     clearMemoryTimer();
@@ -16661,6 +16896,10 @@
       else showTopoLevel();
     } else if (s === 'topolevel') {
       showTopoMenu();
+    } else if (s === 'planeten') {
+      showPlanetenLevel();
+    } else if (s === 'planetenlevel') {
+      goToStart();
     } else {
       goToStart();
     }
@@ -16834,6 +17073,34 @@
       showTopoMenu();
       beginQuestionVoice();
       speak('topo-kies');
+      return;
+    }
+    if (act === 'goto-planeten') {
+      cancelAdvanceWait();
+      showPlanetenLevel();
+      beginQuestionVoice();
+      speak('planeten-kies');
+      return;
+    }
+    if (act === 'planeten-level') {
+      startPlaneten(el.getAttribute('data-kind') || 'easy', true);
+      return;
+    }
+    if (act === 'planeten-pause') {
+      planetenTogglePause();
+      return;
+    }
+    if (act === 'planeten-opnieuw') {
+      g = ($('overlay-planeten') && $('overlay-planeten').getAttribute('data-mode')) || '';
+      if (g === 'pause') {
+        planetenTogglePause();
+      } else {
+        startPlaneten(planetenState.level, true);
+      }
+      return;
+    }
+    if (act === 'planeten-naar-start') {
+      goToStart();
       return;
     }
     if (act === 'topo-game') {
@@ -17225,6 +17492,8 @@
       e.preventDefault();
     } else if (state.screen === 'topodrop' && topoDropDragStart(e)) {
       e.preventDefault();
+    } else if (state.screen === 'planeten' && planetenDragStart(e)) {
+      e.preventDefault();
     }
   }
 
@@ -17277,6 +17546,10 @@
       return;
     }
     if (state.screen === 'topodrop' && topoDropDragMove(e)) {
+      e.preventDefault();
+      return;
+    }
+    if (state.screen === 'planeten' && planetenDragMove(e)) {
       e.preventDefault();
       return;
     }
@@ -17359,6 +17632,12 @@
       lastTouchEnd = now;
       return;
     }
+    if (state.screen === 'planeten' && planetenDragEnd(e)) {
+      clearPressed();
+      e.preventDefault();
+      lastTouchEnd = now;
+      return;
+    }
     el = findClickableFromEvent(e);
     clearPressed();
     if (el && (now - touchStartTime) < 700 && (!touchMoved || isNavAct(el))) {
@@ -17378,6 +17657,7 @@
     if (state.screen === 'tijdplay') { stopZetDrag(); stopDagenDrag(); stopMdDrag(); stopSezDrag(); }
     if (state.screen === 'topopuzzel') stopTopoDrag();
     if (state.screen === 'topodrop') stopTopoDropDrag();
+    if (state.screen === 'planeten') stopPlanetenDrag();
   }
 
   function onClick(e) {
@@ -23306,6 +23586,897 @@
 
 
 
+  /* ---------- Planeten veroveren ---------- */
+  var PLANETEN_W = 1000;
+  var PLANETEN_H = 625;
+  var PLANETEN_ME = 1;
+  var PLANETEN_AI1 = 2;
+  var PLANETEN_AI2 = 3;
+
+  var planetenState = {
+    level: 'easy',
+    planets: [],
+    fleets: [],
+    stars: [],
+    running: false,
+    paused: false,
+    over: false,
+    winner: 0,
+    hintOn: true,
+    hintT: 0,
+    selected: {},
+    drag: { on: false, from: -1, x: 0, y: 0, moved: false },
+    lastT: 0,
+    raf: 0,
+    aiWait: {},
+    frameCount: 0,
+    growAcc: 0,
+    awarded: false,
+    fleetUid: 1
+  };
+
+  var planetenCfg = {
+    easy: { fleetSpeed: 90, aiEvery: 5.6, aiMargin: 2, skipChance: 0.12, growth: 0.55 },
+    normal: { fleetSpeed: 110, aiEvery: 3.3, aiMargin: 2, skipChance: 0.08, growth: 0.7 },
+    hard: { fleetSpeed: 130, aiEvery: 2.05, aiMargin: 1, skipChance: 0, growth: 0.85 }
+  };
+
+  function planetenRaf() {
+    return window.requestAnimationFrame || window.webkitRequestAnimationFrame || function (fn) {
+      return window.setTimeout(function () { fn(new Date().getTime()); }, 16);
+    };
+  }
+
+  function planetenCaf() {
+    return window.cancelAnimationFrame || window.webkitCancelAnimationFrame || function (id) {
+      window.clearTimeout(id);
+    };
+  }
+
+  function planetenCap(r) {
+    var c = Math.round(r * 2.5);
+    if (c < 24) c = 24;
+    return c;
+  }
+
+  function planetenMk(id, x, y, r, owner, units) {
+    return { id: id, x: x, y: y, r: r, owner: owner, units: units, acc: 0 };
+  }
+
+  function planetenLayout(level) {
+    var p, i;
+    p = [];
+    if (level === 'easy') {
+      p.push(planetenMk(0, 150, 312, 42, PLANETEN_ME, 50));
+      p.push(planetenMk(1, 860, 312, 30, PLANETEN_AI1, 20));
+      p.push(planetenMk(2, 310, 170, 24, 0, 8));
+      p.push(planetenMk(3, 310, 460, 22, 0, 6));
+      p.push(planetenMk(4, 430, 312, 26, 0, 12));
+      p.push(planetenMk(5, 520, 130, 18, 0, 10));
+      p.push(planetenMk(6, 520, 500, 28, 0, 16));
+      p.push(planetenMk(7, 640, 230, 20, 0, 18));
+      p.push(planetenMk(8, 700, 420, 22, 0, 14));
+      p.push(planetenMk(9, 800, 150, 18, 0, 8));
+    } else if (level === 'normal') {
+      p.push(planetenMk(0, 140, 200, 34, PLANETEN_ME, 36));
+      p.push(planetenMk(1, 140, 430, 26, PLANETEN_ME, 18));
+      p.push(planetenMk(2, 860, 312, 34, PLANETEN_AI1, 36));
+      p.push(planetenMk(3, 300, 120, 20, 0, 10));
+      p.push(planetenMk(4, 300, 312, 24, 0, 14));
+      p.push(planetenMk(5, 300, 520, 20, 0, 10));
+      p.push(planetenMk(6, 500, 180, 22, 0, 16));
+      p.push(planetenMk(7, 500, 450, 28, 0, 20));
+      p.push(planetenMk(8, 650, 120, 18, 0, 12));
+      p.push(planetenMk(9, 680, 312, 22, 0, 18));
+      p.push(planetenMk(10, 650, 520, 18, 0, 12));
+      p.push(planetenMk(11, 800, 160, 20, 0, 10));
+    } else {
+      p.push(planetenMk(0, 130, 312, 32, PLANETEN_ME, 28));
+      p.push(planetenMk(1, 870, 160, 32, PLANETEN_AI1, 28));
+      p.push(planetenMk(2, 870, 470, 32, PLANETEN_AI2, 28));
+      p.push(planetenMk(3, 260, 140, 18, 0, 12));
+      p.push(planetenMk(4, 260, 480, 18, 0, 12));
+      p.push(planetenMk(5, 380, 312, 22, 0, 16));
+      p.push(planetenMk(6, 500, 120, 20, 0, 14));
+      p.push(planetenMk(7, 500, 312, 26, 0, 22));
+      p.push(planetenMk(8, 500, 510, 20, 0, 14));
+      p.push(planetenMk(9, 640, 200, 18, 0, 16));
+      p.push(planetenMk(10, 640, 420, 18, 0, 16));
+      p.push(planetenMk(11, 750, 312, 22, 0, 18));
+      p.push(planetenMk(12, 200, 250, 16, 0, 8));
+      p.push(planetenMk(13, 200, 380, 16, 0, 8));
+      p.push(planetenMk(14, 750, 80, 16, 0, 10));
+    }
+    for (i = 0; i < p.length; i++) p[i].acc = 0;
+    return p;
+  }
+
+  function planetenMakeStars() {
+    var i, out, seed, n;
+    out = [];
+    seed = 17;
+    for (i = 0; i < 70; i++) {
+      seed = (seed * 1103515245 + 12345) % 2147483648;
+      n = seed / 2147483648;
+      out.push({
+        x: Math.floor(n * PLANETEN_W),
+        y: Math.floor(((seed * 13) % 10000) / 10000 * PLANETEN_H),
+        r: (i % 5 === 0) ? 1.6 : 1.1,
+        a: 0.35 + (i % 7) * 0.07
+      });
+    }
+    return out;
+  }
+
+  function planetenCfgFor() {
+    return planetenCfg[planetenState.level] || planetenCfg.easy;
+  }
+
+  function planetenOwnerColor(o, ring) {
+    if (o === PLANETEN_ME) return ring ? '#1565C0' : '#42A5F5';
+    if (o === PLANETEN_AI1) return ring ? '#B71C1C' : '#EF5350';
+    if (o === PLANETEN_AI2) return ring ? '#E65100' : '#FFA726';
+    return ring ? '#546E7A' : '#B0BEC5';
+  }
+
+  function planetenCanvas() {
+    return $('planeten-canvas');
+  }
+
+  function planetenMeet() {
+    var c, r, scale, w, h;
+    c = planetenCanvas();
+    if (!c) return null;
+    r = c.getBoundingClientRect();
+    if (!r.width || !r.height) return null;
+    scale = Math.min(r.width / PLANETEN_W, r.height / PLANETEN_H);
+    if (!scale || scale <= 0) scale = 1;
+    w = PLANETEN_W * scale;
+    h = PLANETEN_H * scale;
+    return {
+      left: r.left + (r.width - w) / 2,
+      top: r.top + (r.height - h) / 2,
+      scale: scale,
+      width: w,
+      height: h
+    };
+  }
+
+  function planetenClientToWorld(cx, cy) {
+    var m;
+    m = planetenMeet();
+    if (!m) return { x: 0, y: 0 };
+    return { x: (cx - m.left) / m.scale, y: (cy - m.top) / m.scale };
+  }
+
+  function planetenWorldToClient(wx, wy) {
+    var m;
+    m = planetenMeet();
+    if (!m) return { x: 0, y: 0 };
+    return { x: m.left + wx * m.scale, y: m.top + wy * m.scale };
+  }
+
+  function planetenHit(wx, wy, extra) {
+    var i, p, d, best, bestD, pad;
+    best = -1;
+    bestD = 1e9;
+    pad = extra || 18;
+    for (i = 0; i < planetenState.planets.length; i++) {
+      p = planetenState.planets[i];
+      d = Math.sqrt((wx - p.x) * (wx - p.x) + (wy - p.y) * (wy - p.y));
+      if (d <= p.r + pad && d < bestD) {
+        best = i;
+        bestD = d;
+      }
+    }
+    return best;
+  }
+
+  function planetenSizeCanvas() {
+    var wrap, c, w, h, dpr, ctx;
+    wrap = $('planeten-stage');
+    c = planetenCanvas();
+    if (!wrap || !c) return;
+    w = wrap.clientWidth || wrap.offsetWidth || 800;
+    h = wrap.clientHeight || wrap.offsetHeight || 500;
+    if (w < 80) w = 80;
+    if (h < 80) h = 80;
+    dpr = window.devicePixelRatio || 1;
+    if (dpr > 2) dpr = 2;
+    if (dpr < 1) dpr = 1;
+    c.style.width = w + 'px';
+    c.style.height = h + 'px';
+    c.width = Math.round(w * dpr);
+    c.height = Math.round(h * dpr);
+    ctx = c.getContext('2d');
+    if (ctx && ctx.setTransform) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function planetenSend(fromId, toId, amount) {
+    var a, b, n, dx, dy, dist, f, i, src;
+    if (planetenState.over || planetenState.paused) return false;
+    a = null;
+    b = null;
+    for (i = 0; i < planetenState.planets.length; i++) {
+      if (planetenState.planets[i].id === fromId) a = planetenState.planets[i];
+      if (planetenState.planets[i].id === toId) b = planetenState.planets[i];
+    }
+    if (!a || !b || a.id === b.id) return false;
+    n = (amount != null) ? Math.floor(amount) : Math.floor(a.units / 2);
+    if (n < 1 || n >= a.units && a.units < 2) {
+      if (n < 1) return false;
+    }
+    if (n > a.units - 1) n = a.units - 1;
+    if (n < 1) return false;
+    a.units -= n;
+    dx = b.x - a.x;
+    dy = b.y - a.y;
+    dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < 1) dist = 1;
+    src = { x: a.x + dx / dist * a.r * 0.6, y: a.y + dy / dist * a.r * 0.6 };
+    f = {
+      id: planetenState.fleetUid,
+      owner: a.owner,
+      from: a.id,
+      to: b.id,
+      n: n,
+      x: src.x,
+      y: src.y
+    };
+    planetenState.fleetUid += 1;
+    planetenState.fleets.push(f);
+    if (a.owner === PLANETEN_ME) {
+      planetenState.hintOn = false;
+    }
+    return true;
+  }
+
+  function planetenSendSelected(toId) {
+    var id, sent;
+    sent = false;
+    for (id in planetenState.selected) {
+      if (planetenState.selected[id] && parseInt(id, 10) !== toId) {
+        if (planetenSend(parseInt(id, 10), toId, null)) sent = true;
+      }
+    }
+    return sent;
+  }
+
+  function planetenClearSel() {
+    planetenState.selected = {};
+  }
+
+  function planetenArrive(f) {
+    var i, p, left;
+    p = null;
+    for (i = 0; i < planetenState.planets.length; i++) {
+      if (planetenState.planets[i].id === f.to) p = planetenState.planets[i];
+    }
+    if (!p) return;
+    if (p.owner === f.owner) {
+      p.units += f.n;
+      if (p.units > planetenCap(p.r)) p.units = planetenCap(p.r);
+      return;
+    }
+    left = p.units - f.n;
+    if (left >= 0) {
+      p.units = left;
+      return;
+    }
+    p.owner = f.owner;
+    p.units = -left;
+    if (planetenState.selected[p.id] && p.owner !== PLANETEN_ME) {
+      planetenState.selected[p.id] = false;
+    }
+  }
+
+  function planetenCounts() {
+    var i, p, f, c;
+    c = { meP: 0, aiP: 0, meF: 0, aiF: 0 };
+    for (i = 0; i < planetenState.planets.length; i++) {
+      p = planetenState.planets[i];
+      if (p.owner === PLANETEN_ME) c.meP += 1;
+      else if (p.owner === PLANETEN_AI1 || p.owner === PLANETEN_AI2) c.aiP += 1;
+    }
+    for (i = 0; i < planetenState.fleets.length; i++) {
+      f = planetenState.fleets[i];
+      if (f.owner === PLANETEN_ME) c.meF += 1;
+      else if (f.owner === PLANETEN_AI1 || f.owner === PLANETEN_AI2) c.aiF += 1;
+    }
+    return c;
+  }
+
+  function planetenCheckEnd() {
+    var c;
+    if (planetenState.over) return;
+    c = planetenCounts();
+    if (c.aiP === 0 && c.aiF === 0) {
+      planetenFinish(PLANETEN_ME);
+      return;
+    }
+    if (c.meP === 0 && c.meF === 0) {
+      planetenFinish(-1);
+    }
+  }
+
+  function planetenIncoming(planetId, againstOwner) {
+    var i, f, n;
+    n = 0;
+    for (i = 0; i < planetenState.fleets.length; i++) {
+      f = planetenState.fleets[i];
+      if (f.to === planetId && f.owner !== againstOwner) n += f.n;
+    }
+    return n;
+  }
+
+  function planetenAIMove(owner, force) {
+    var i, j, mine, others, p, t, send, best, bestScore, score, threat, donor, d, cfg, margin, can, need;
+    cfg = planetenCfgFor();
+    if (!force && Math.random() < cfg.skipChance) return;
+    mine = [];
+    others = [];
+    for (i = 0; i < planetenState.planets.length; i++) {
+      p = planetenState.planets[i];
+      if (p.owner === owner) mine.push(p);
+      else others.push(p);
+    }
+    if (!mine.length) return;
+    /* Reinforce a threatened planet first. */
+    donor = null;
+    threat = null;
+    for (i = 0; i < mine.length; i++) {
+      p = mine[i];
+      d = planetenIncoming(p.id, owner);
+      if (d >= p.units && (!threat || d - p.units > planetenIncoming(threat.id, owner) - threat.units)) {
+        threat = p;
+      }
+    }
+    if (threat) {
+      for (i = 0; i < mine.length; i++) {
+        p = mine[i];
+        if (p.id === threat.id) continue;
+        if (p.units >= 8 && planetenIncoming(p.id, owner) < p.units * 0.4) {
+          if (!donor || p.units > donor.units) donor = p;
+        }
+      }
+      if (donor) {
+        planetenSend(donor.id, threat.id, null);
+        return;
+      }
+    }
+    margin = cfg.aiMargin;
+    best = null;
+    bestScore = -1e9;
+    for (i = 0; i < mine.length; i++) {
+      p = mine[i];
+      send = Math.floor(p.units / 2);
+      if (send < 2) send = p.units - 3;
+      if (send < 2) continue;
+      for (j = 0; j < others.length; j++) {
+        t = others[j];
+        need = t.units + margin + 1;
+        if (send < need && p.units - 3 >= need) send = need;
+        if (send < 2 || send > p.units - 1) continue;
+        can = send - t.units;
+        if (can <= margin) continue;
+        if (planetenState.level === 'easy' && t.owner === PLANETEN_ME && cEasySafe(p, t, send)) continue;
+        score = can * 2 - Math.sqrt((p.x - t.x) * (p.x - t.x) + (p.y - t.y) * (p.y - t.y)) / 40;
+        if (t.owner === 0) score += 8;
+        if (score > bestScore) {
+          bestScore = score;
+          best = { from: p.id, to: t.id };
+        }
+      }
+    }
+    if (best) planetenSend(best.from, best.to, null);
+  }
+
+  function cEasySafe(fromP, target, send) {
+    /* On easy, don't snipe the child's last strong planet early. */
+    var i, nMine, nAi;
+    nMine = 0;
+    nAi = 0;
+    for (i = 0; i < planetenState.planets.length; i++) {
+      if (planetenState.planets[i].owner === PLANETEN_ME) nMine += 1;
+      if (planetenState.planets[i].owner === PLANETEN_AI1) nAi += 1;
+    }
+    if (nMine <= 2 && nAi <= 1 && target.units + 6 >= send) return true;
+    return false;
+  }
+
+  function planetenAdvance(dt) {
+    var i, p, f, dx, dy, dist, step, speed, cfg, next, owners, o;
+    if (planetenState.over || planetenState.paused) return;
+    if (dt > 0.12) dt = 0.12;
+    if (dt < 0) dt = 0;
+    cfg = planetenCfgFor();
+    for (i = 0; i < planetenState.planets.length; i++) {
+      p = planetenState.planets[i];
+      if (p.owner === 0) continue;
+      p.acc += cfg.growth * (p.r / 22) * dt;
+      while (p.acc >= 1) {
+        p.acc -= 1;
+        if (p.units < planetenCap(p.r)) p.units += 1;
+      }
+    }
+    next = [];
+    speed = cfg.fleetSpeed;
+    for (i = 0; i < planetenState.fleets.length; i++) {
+      f = planetenState.fleets[i];
+      p = null;
+      for (step = 0; step < planetenState.planets.length; step++) {
+        if (planetenState.planets[step].id === f.to) p = planetenState.planets[step];
+      }
+      if (!p) continue;
+      dx = p.x - f.x;
+      dy = p.y - f.y;
+      dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist <= p.r * 0.55 || dist < 6) {
+        planetenArrive(f);
+      } else {
+        step = speed * dt;
+        if (step >= dist - p.r * 0.55) {
+          planetenArrive(f);
+        } else {
+          f.x += dx / dist * step;
+          f.y += dy / dist * step;
+          next.push(f);
+        }
+      }
+    }
+    planetenState.fleets = next;
+    if (planetenState.hintOn) planetenState.hintT += dt;
+    owners = {};
+    owners[PLANETEN_AI1] = 1;
+    if (planetenState.level === 'hard') owners[PLANETEN_AI2] = 1;
+    for (o in owners) {
+      o = parseInt(o, 10);
+      if (!planetenState.aiWait[o]) planetenState.aiWait[o] = cfg.aiEvery * 0.6;
+      planetenState.aiWait[o] -= dt;
+      if (planetenState.aiWait[o] <= 0) {
+        planetenAIMove(o);
+        planetenState.aiWait[o] = cfg.aiEvery;
+      }
+    }
+    planetenCheckEnd();
+  }
+
+  function planetenDraw() {
+    var c, ctx, m, i, p, f, col, ring, x, y, r, g, k, ang, hx, hy, target, pulse, label, cssW, cssH;
+    c = planetenCanvas();
+    if (!c) return;
+    ctx = c.getContext('2d');
+    if (!ctx) return;
+    cssW = c.clientWidth || c.width;
+    cssH = c.clientHeight || c.height;
+    ctx.clearRect(0, 0, cssW, cssH);
+    /* starry background fills the canvas; world is meet-centered */
+    ctx.fillStyle = '#0B1533';
+    ctx.fillRect(0, 0, cssW, cssH);
+    m = planetenMeet();
+    if (!m) return;
+    ctx.save();
+    ctx.translate(m.left - c.getBoundingClientRect().left, m.top - c.getBoundingClientRect().top);
+    ctx.scale(m.scale, m.scale);
+    ctx.fillStyle = '#0B1533';
+    ctx.fillRect(0, 0, PLANETEN_W, PLANETEN_H);
+    for (i = 0; i < planetenState.stars.length; i++) {
+      g = planetenState.stars[i];
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba(255,255,255,' + g.a + ')';
+      ctx.arc(g.x, g.y, g.r, 0, Math.PI * 2, false);
+      ctx.fill();
+    }
+    /* faint aim line while dragging */
+    if (planetenState.drag.on && planetenState.drag.from >= 0) {
+      p = null;
+      for (i = 0; i < planetenState.planets.length; i++) {
+        if (planetenState.planets[i].id === planetenState.drag.from) p = planetenState.planets[i];
+      }
+      if (p) {
+        ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(planetenState.drag.x, planetenState.drag.y);
+        ctx.stroke();
+      }
+    }
+    for (i = 0; i < planetenState.planets.length; i++) {
+      p = planetenState.planets[i];
+      col = planetenOwnerColor(p.owner, false);
+      ring = planetenOwnerColor(p.owner, true);
+      ctx.beginPath();
+      ctx.fillStyle = ring;
+      ctx.arc(p.x, p.y, p.r + 3, 0, Math.PI * 2, false);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.fillStyle = col;
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2, false);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba(255,255,255,0.28)';
+      ctx.arc(p.x - p.r * 0.28, p.y - p.r * 0.28, p.r * 0.38, 0, Math.PI * 2, false);
+      ctx.fill();
+      if (planetenState.selected[p.id]) {
+        ctx.strokeStyle = '#FFF59D';
+        ctx.lineWidth = 5;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r + 8, 0, Math.PI * 2, false);
+        ctx.stroke();
+      }
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = 'bold ' + Math.max(16, Math.round(p.r * 0.9)) + 'px Helvetica, Arial, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(String(p.units), p.x, p.y + 1);
+    }
+    for (i = 0; i < planetenState.fleets.length; i++) {
+      f = planetenState.fleets[i];
+      p = null;
+      for (k = 0; k < planetenState.planets.length; k++) {
+        if (planetenState.planets[k].id === f.to) p = planetenState.planets[k];
+      }
+      ang = 0;
+      if (p) ang = Math.atan2(p.y - f.y, p.x - f.x);
+      col = planetenOwnerColor(f.owner, false);
+      ring = planetenOwnerColor(f.owner, true);
+      for (k = 0; k < 3; k++) {
+        x = f.x - Math.cos(ang) * k * 7 + Math.sin(ang) * (k - 1) * 5;
+        y = f.y - Math.sin(ang) * k * 7 - Math.cos(ang) * (k - 1) * 5;
+        ctx.beginPath();
+        ctx.fillStyle = col;
+        ctx.arc(x, y, 5, 0, Math.PI * 2, false);
+        ctx.fill();
+        ctx.strokeStyle = ring;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      }
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = 'bold 16px Helvetica, Arial, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(String(f.n), f.x, f.y - 10);
+    }
+    if (planetenState.hintOn && !planetenState.over && planetenState.planets.length >= 3) {
+      p = planetenState.planets[0];
+      target = planetenState.planets[2];
+      pulse = 0.5 + 0.5 * Math.sin(planetenState.hintT * 4);
+      hx = p.x + (target.x - p.x) * (0.38 + pulse * 0.1);
+      hy = p.y + (target.y - p.y) * (0.38 + pulse * 0.1);
+      ang = Math.atan2(target.y - p.y, target.x - p.x);
+      ctx.save();
+      ctx.translate(hx, hy);
+      ctx.rotate(ang);
+      ctx.fillStyle = 'rgba(255,235,59,' + (0.75 + pulse * 0.25) + ')';
+      ctx.beginPath();
+      ctx.moveTo(28, 0);
+      ctx.lineTo(-18, 18);
+      ctx.lineTo(-8, 0);
+      ctx.lineTo(-18, -18);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+      label = 'Sleep van jouw blauwe planeet naar een andere planeet';
+      ctx.font = 'bold 22px Helvetica, Arial, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.fillStyle = 'rgba(8,16,40,0.7)';
+      r = ctx.measureText(label).width;
+      ctx.fillRect((PLANETEN_W - r) / 2 - 16, 12, r + 32, 40);
+      ctx.fillStyle = '#FFF59D';
+      ctx.fillText(label, PLANETEN_W / 2, 20);
+    }
+    ctx.restore();
+  }
+
+  function planetenLoop(now) {
+    var dt;
+    if (!planetenState.running) return;
+    if (!now) now = new Date().getTime();
+    if (!planetenState.lastT) planetenState.lastT = now;
+    dt = (now - planetenState.lastT) / 1000;
+    planetenState.lastT = now;
+    if (dt > 0.25) dt = 0.25;
+    if (!planetenState.paused && !planetenState.over) planetenAdvance(dt);
+    planetenDraw();
+    planetenState.frameCount += 1;
+    planetenState.raf = planetenRaf()(planetenLoop);
+  }
+
+  function stopPlaneten() {
+    planetenState.running = false;
+    planetenState.drag.on = false;
+    if (planetenState.raf) {
+      planetenCaf()(planetenState.raf);
+      planetenState.raf = 0;
+    }
+    hidePlanetenOverlay();
+  }
+
+  function hidePlanetenOverlay() {
+    var el = $('overlay-planeten');
+    if (el) el.className = 'overlay is-hidden';
+  }
+
+  function showPlanetenOverlay(kind) {
+    var el, title, text, again, home;
+    el = $('overlay-planeten');
+    title = $('planeten-ov-title');
+    text = $('planeten-ov-text');
+    again = $('btn-planeten-opnieuw');
+    home = $('btn-planeten-naar-start');
+    if (!el) return;
+    el.className = 'overlay tap overlay-planeten';
+    if (kind === 'pause') {
+      if (title) title.innerHTML = 'Pauze';
+      if (text) text.innerHTML = 'Tik op Verder om verder te spelen.';
+      if (again) again.innerHTML = 'Verder';
+      if (home) home.innerHTML = 'Naar start';
+      el.setAttribute('data-mode', 'pause');
+    } else if (kind === 'win') {
+      if (title) title.innerHTML = 'Gewonnen!';
+      if (text) text.innerHTML = 'Alle planeten zijn van jou!';
+      if (again) again.innerHTML = 'Nog eens';
+      if (home) home.innerHTML = 'Naar start';
+      el.setAttribute('data-mode', 'win');
+    } else {
+      if (title) title.innerHTML = 'Jammer!';
+      if (text) text.innerHTML = 'Probeer het nog eens.';
+      if (again) again.innerHTML = 'Nog eens';
+      if (home) home.innerHTML = 'Naar start';
+      el.setAttribute('data-mode', 'lose');
+    }
+  }
+
+  function planetenFinish(winner) {
+    if (planetenState.over) return;
+    planetenState.over = true;
+    planetenState.winner = winner;
+    planetenState.paused = false;
+    planetenState.hintOn = false;
+    planetenDraw();
+    if (winner === PLANETEN_ME) {
+      showPlanetenOverlay('win');
+      if (!planetenState.awarded) {
+        planetenState.awarded = true;
+        state.stars += 1;
+        state.sessionCorrect += 1;
+        state.towardsReward += 1;
+        saveStars();
+        updateStarsUI();
+        showBurst();
+      }
+      beginQuestionVoice();
+      speak('planeten-gewonnen');
+    } else {
+      showPlanetenOverlay('lose');
+      beginQuestionVoice();
+      speak('planeten-probeer');
+    }
+  }
+
+  function planetenTogglePause() {
+    var el;
+    if (planetenState.over || !planetenState.running) return;
+    if (planetenState.paused) {
+      planetenState.paused = false;
+      planetenState.lastT = new Date().getTime();
+      hidePlanetenOverlay();
+      el = $('planeten-prompt');
+      if (el) el.innerHTML = 'Sleep van jouw blauwe planeet naar een andere planeet';
+    } else {
+      planetenState.paused = true;
+      planetenState.drag.on = false;
+      showPlanetenOverlay('pause');
+    }
+    planetenDraw();
+  }
+
+  function showPlanetenLevel() {
+    stopPlaneten();
+    showScreen('planetenlevel');
+    updateStarsUI();
+  }
+
+  function startPlaneten(level, fresh) {
+    var el, owners;
+    if (!level) level = 'easy';
+    stopPlaneten();
+    planetenState.level = level;
+    planetenState.planets = planetenLayout(level);
+    planetenState.fleets = [];
+    planetenState.stars = planetenMakeStars();
+    planetenState.running = true;
+    planetenState.paused = false;
+    planetenState.over = false;
+    planetenState.winner = 0;
+    planetenState.hintOn = true;
+    planetenState.hintT = 0;
+    planetenState.selected = {};
+    planetenState.drag = { on: false, from: -1, x: 0, y: 0, moved: false };
+    planetenState.lastT = 0;
+    planetenState.frameCount = 0;
+    planetenState.awarded = false;
+    planetenState.fleetUid = 1;
+    planetenState.aiWait = {};
+    owners = [PLANETEN_AI1];
+    if (level === 'hard') owners.push(PLANETEN_AI2);
+    planetenState.aiWait[PLANETEN_AI1] = planetenCfgFor().aiEvery * (level === 'easy' ? 0.85 : 0.55);
+    if (level === 'hard') planetenState.aiWait[PLANETEN_AI2] = planetenCfgFor().aiEvery * 0.9;
+    showScreen('planeten');
+    updateStarsUI();
+    planetenSizeCanvas();
+    el = $('planeten-prompt');
+    if (el) el.innerHTML = 'Sleep van jouw blauwe planeet naar een andere planeet';
+    hidePlanetenOverlay();
+    planetenDraw();
+    planetenState.lastT = new Date().getTime();
+    planetenState.raf = planetenRaf()(planetenLoop);
+    if (fresh !== false) {
+      beginQuestionVoice();
+      speak('planeten-hint');
+    }
+  }
+
+  function planetenEventPoint(e) {
+    var t;
+    if (e.touches && e.touches.length) t = e.touches[0];
+    else if (e.changedTouches && e.changedTouches.length) t = e.changedTouches[0];
+    else t = e;
+    return { x: t.clientX, y: t.clientY };
+  }
+
+  function planetenOnStage(el) {
+    while (el && el !== document.body) {
+      if (el.id === 'planeten-stage' || el.id === 'planeten-canvas') return true;
+      el = el.parentNode;
+    }
+    return false;
+  }
+
+  function planetenDragStart(e) {
+    var pt, w, hit, p;
+    if (state.screen !== 'planeten') return false;
+    if (planetenState.over || planetenState.paused) return false;
+    if (!planetenOnStage(e.target)) return false;
+    pt = planetenEventPoint(e);
+    w = planetenClientToWorld(pt.x, pt.y);
+    hit = planetenHit(w.x, w.y, 22);
+    if (hit < 0) return false;
+    p = planetenState.planets[hit];
+    if (p.owner !== PLANETEN_ME) return false;
+    planetenState.drag.on = true;
+    planetenState.drag.from = p.id;
+    planetenState.drag.x = w.x;
+    planetenState.drag.y = w.y;
+    planetenState.drag.moved = false;
+    planetenState.selected[p.id] = true;
+    return true;
+  }
+
+  function planetenDragMove(e) {
+    var pt, w;
+    if (!planetenState.drag.on) return false;
+    pt = planetenEventPoint(e);
+    w = planetenClientToWorld(pt.x, pt.y);
+    if (Math.abs(w.x - planetenState.planets[planetenHitIdSafe(planetenState.drag.from)].x) > 8 ||
+        Math.abs(w.y - planetenState.planets[planetenHitIdSafe(planetenState.drag.from)].y) > 8) {
+      planetenState.drag.moved = true;
+    }
+    planetenState.drag.x = w.x;
+    planetenState.drag.y = w.y;
+    planetenDraw();
+    return true;
+  }
+
+  function planetenHitIdSafe(id) {
+    var i;
+    for (i = 0; i < planetenState.planets.length; i++) {
+      if (planetenState.planets[i].id === id) return i;
+    }
+    return 0;
+  }
+
+  function planetenDragEnd(e) {
+    var pt, w, hit, fromId, dest, src;
+    if (!planetenState.drag.on) return false;
+    pt = planetenEventPoint(e);
+    w = planetenClientToWorld(pt.x, pt.y);
+    hit = planetenHit(w.x, w.y, 26);
+    fromId = planetenState.drag.from;
+    dest = (hit >= 0) ? planetenState.planets[hit] : null;
+    src = planetenState.planets[planetenHitIdSafe(fromId)];
+    planetenState.drag.on = false;
+    if (dest && src && dest.id !== src.id) {
+      if (planetenState.selected[src.id]) {
+        planetenSendSelected(dest.id);
+      } else {
+        planetenSend(src.id, dest.id, null);
+      }
+      planetenClearSel();
+    } else if (!planetenState.drag.moved) {
+      /* tap toggle stays selected for a later target tap */
+      if (src && src.owner === PLANETEN_ME) {
+        /* already selected on start */
+      }
+    } else {
+      planetenClearSel();
+    }
+    planetenState.drag.from = -1;
+    planetenDraw();
+    return true;
+  }
+
+  function stopPlanetenDrag() {
+    planetenState.drag.on = false;
+    planetenState.drag.from = -1;
+  }
+
+  window.__planetenTest = {
+    start: startPlaneten,
+    stop: stopPlaneten,
+    send: planetenSend,
+    step: function (sec) {
+      var left, chunk;
+      left = sec;
+      while (left > 0 && !planetenState.over) {
+        chunk = left > 0.05 ? 0.05 : left;
+        planetenAdvance(chunk);
+        left -= chunk;
+      }
+      planetenDraw();
+    },
+    tickAI: function (owner) {
+      planetenAIMove(owner || PLANETEN_AI1, true);
+      planetenDraw();
+    },
+    forceWin: function () {
+      var i;
+      for (i = 0; i < planetenState.planets.length; i++) {
+        planetenState.planets[i].owner = PLANETEN_ME;
+        planetenState.planets[i].units = 10;
+      }
+      planetenState.fleets = [];
+      planetenCheckEnd();
+      planetenDraw();
+    },
+    forceLose: function () {
+      var i;
+      for (i = 0; i < planetenState.planets.length; i++) {
+        if (planetenState.planets[i].owner === PLANETEN_ME) {
+          planetenState.planets[i].owner = PLANETEN_AI1;
+        }
+      }
+      planetenState.fleets = [];
+      planetenCheckEnd();
+      planetenDraw();
+    },
+    worldToClient: planetenWorldToClient,
+    clientToWorld: planetenClientToWorld,
+    getState: function () {
+      return {
+        level: planetenState.level,
+        over: planetenState.over,
+        winner: planetenState.winner,
+        paused: planetenState.paused,
+        hintOn: planetenState.hintOn,
+        nPlanets: planetenState.planets.length,
+        nFleets: planetenState.fleets.length,
+        frameCount: planetenState.frameCount,
+        planets: planetenState.planets,
+        fleets: planetenState.fleets
+      };
+    },
+    planet: function (id) {
+      var i;
+      for (i = 0; i < planetenState.planets.length; i++) {
+        if (planetenState.planets[i].id === id) return planetenState.planets[i];
+      }
+      return null;
+    }
+  };
+
   function decorateStatic() {
     $('sun-icon').innerHTML = sunHtml();
     if ($('icon-tekenen-start')) {
@@ -23329,6 +24500,18 @@
     }
     if ($('icon-topo-start')) {
       $('icon-topo-start').innerHTML = topoMiniIconSvg(72, 56);
+    }
+    if ($('icon-planeten-start')) {
+      $('icon-planeten-start').innerHTML =
+        '<svg viewBox="0 0 72 56" width="72" height="56" aria-hidden="true">' +
+        '<circle cx="14" cy="12" r="2" fill="#FFF59D"/>' +
+        '<circle cx="60" cy="16" r="1.5" fill="#FFFFFF"/>' +
+        '<circle cx="36" cy="8" r="1.2" fill="#FFFFFF"/>' +
+        '<circle cx="26" cy="32" r="16" fill="#42A5F5" stroke="#1565C0" stroke-width="2"/>' +
+        '<circle cx="20" cy="26" r="5" fill="rgba(255,255,255,0.35)"/>' +
+        '<circle cx="50" cy="36" r="12" fill="#EF5350" stroke="#B71C1C" stroke-width="2"/>' +
+        '<circle cx="46" cy="32" r="4" fill="rgba(255,255,255,0.35)"/>' +
+        '</svg>';
     }
     if ($('icon-topo-puzzel')) {
       $('icon-topo-puzzel').innerHTML = topoMiniIconSvg(72, 56);
@@ -23458,6 +24641,8 @@
     elSet('topoplay-home-icon', homeIconHtml());
     elSet('topowaar-home-icon', homeIconHtml());
     elSet('topodrop-home-icon', homeIconHtml());
+    elSet('planetenlevel-home-icon', homeIconHtml());
+    elSet('planeten-home-icon', homeIconHtml());
     elSet('play-back-icon', backIconHtml());
     elSet('picker-back-icon', backIconHtml());
     elSet('trace-back-icon', backIconHtml());
@@ -23501,6 +24686,8 @@
     elSet('topoplay-back-icon', backIconHtml());
     elSet('topowaar-back-icon', backIconHtml());
     elSet('topodrop-back-icon', backIconHtml());
+    elSet('planetenlevel-back-icon', backIconHtml());
+    elSet('planeten-back-icon', backIconHtml());
     elSet('letters-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('trace-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('names-star-icon', starSvg('#FFD54F', '#F9A825'));
@@ -23542,6 +24729,16 @@
     elSet('topoplay-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('topowaar-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('topodrop-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('planetenlevel-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('planeten-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('planeten-ov-stars', '<span class="rs">' + starSvg('#FFD54F', '#F9A825') + '</span><span class="rs">' + starSvg('#FFD54F', '#F9A825') + '</span><span class="rs">' + starSvg('#FFD54F', '#F9A825') + '</span>');
+    if ($('planeten-pause-icon')) {
+      $('planeten-pause-icon').innerHTML =
+        '<svg viewBox="0 0 24 24" width="26" height="26" focusable="false">' +
+        '<rect x="5" y="4" width="5" height="16" rx="1.5" fill="#1A7FB3"/>' +
+        '<rect x="14" y="4" width="5" height="16" rx="1.5" fill="#1A7FB3"/>' +
+        '</svg>';
+    }
     if ($('icon-vormen')) {
       $('icon-vormen').innerHTML =
         vormSvg('circle', '#2FB3F0', '#1A7FB3', 0) +
@@ -23716,6 +24913,7 @@
       if (state.screen === 'lijn') layoutLijn();
       if (state.screen === 'verschillen') layoutVers();
       if (state.screen === 'robot') layoutRobot();
+      if (state.screen === 'planeten') { planetenSizeCanvas(); planetenDraw(); }
     }, false);
     document.addEventListener('click', onClick, false);
     document.addEventListener('mousedown', onMouseDown, false);
@@ -23738,6 +24936,7 @@
         if (state.screen === 'verschillen') layoutVers();
         if (state.screen === 'robot') layoutRobot();
         if (state.screen === 'memoryplay') layoutMemory();
+        if (state.screen === 'planeten') { planetenSizeCanvas(); planetenDraw(); }
       }, 250);
     }, false);
 

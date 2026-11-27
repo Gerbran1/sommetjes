@@ -13,7 +13,7 @@ const wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms)
 const SCREENS = [
   'start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay',
   'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken',
-  'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay', 'program', 'tijd', 'tijdlevel', 'tijdplay', 'topo', 'topolevel', 'topopuzzel', 'topoplay', 'topowaar', 'topodrop'
+  'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay', 'program', 'tijd', 'tijdlevel', 'tijdplay', 'topo', 'topolevel', 'topopuzzel', 'topoplay', 'topowaar', 'topodrop', 'planetenlevel', 'planeten'
 ];
 
 async function visibleScreen(page) {
@@ -388,6 +388,27 @@ async function waitSpiegelNext(page) {
     await tap(page, '#btn-topodrop-home');
     await expectScreen(page, 'start', 'fries play home');
     ok('Friesland start direct, terug → Topografie, home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-planeten');
+    await expectScreen(page, 'planetenlevel', 'planeten kiezer');
+    await tap(page, '#btn-planetenlevel-back');
+    await expectScreen(page, 'start', 'planeten kiezer back');
+    await tap(page, '#btn-goto-planeten');
+    await tap(page, '#btn-planetenlevel-home');
+    await expectScreen(page, 'start', 'planeten kiezer home');
+    ok('Planeten-kiezer terug/home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-planeten');
+    await tap(page, '#planetenlevel-grid [data-kind="easy"]');
+    await expectScreen(page, 'planeten', 'planeten play');
+    await tap(page, '#btn-planeten-back');
+    await expectScreen(page, 'planetenlevel', 'planeten play back');
+    await tap(page, '#planetenlevel-grid [data-kind="easy"]');
+    await tap(page, '#btn-planeten-home');
+    await expectScreen(page, 'start', 'planeten play home');
+    ok('Planeten-spel terug → kiezer, home → start');
 
     await fresh(page);
     await tap(page, '#btn-goto-tijd');
