@@ -9,15 +9,15 @@
   <meta name="apple-mobile-web-app-title" content="Leer &amp; Speel">
   <meta name="format-detection" content="telephone=no">
   <meta name="theme-color" content="#6EC9F0">
-  <meta name="app-version" content="2026-11-27-70">
+  <meta name="app-version" content="2026-11-27-71">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <title>Leer &amp; Speel</title>
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180.png?v=2026-11-27-70">
-  <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152.png?v=2026-11-27-70">
-  <link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76.png?v=2026-11-27-70">
-  <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-152.png?v=2026-11-27-70">
-  <link rel="icon" type="image/png" href="apple-touch-icon-152.png?v=2026-11-27-70">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180.png?v=2026-11-27-71">
+  <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152.png?v=2026-11-27-71">
+  <link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76.png?v=2026-11-27-71">
+  <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-152.png?v=2026-11-27-71">
+  <link rel="icon" type="image/png" href="apple-touch-icon-152.png?v=2026-11-27-71">
   <style>
     html, body {
       margin: 0;
@@ -578,31 +578,49 @@
     #planetenlevel-grid {
       display: -webkit-flex;
       display: flex;
-      -webkit-flex-wrap: wrap;
-      flex-wrap: wrap;
+      -webkit-flex-wrap: nowrap;
+      flex-wrap: nowrap;
       -webkit-justify-content: center;
       justify-content: center;
-      -webkit-align-items: stretch;
-      align-items: stretch;
-      -webkit-flex: 1 1 auto;
-      flex: 1 1 auto;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
       width: 100%;
       max-width: 980px;
-      margin: 8px auto 0 auto;
+      margin: 16px auto 0 auto;
+      padding: 0 12px;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
     }
     #planetenlevel-grid .level-btn {
-      -webkit-flex: 0 0 30%;
-      flex: 0 0 30%;
-      max-width: 280px;
-      min-height: 150px;
-      margin: 1%;
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+      width: auto;
+      min-width: 148px;
+      max-width: 200px;
+      height: 52px;
+      min-height: 52px;
+      max-height: 52px;
+      margin: 0 8px;
+      padding: 4px 16px;
+      border-radius: 18px;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
     }
-    .lvl-planeten-easy { background: #66BB6A; -webkit-box-shadow: 0 10px 0 #388E3C, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #388E3C, 0 14px 16px rgba(0,0,0,0.12); }
-    .lvl-planeten-easy.pressed, .lvl-planeten-easy:active { -webkit-box-shadow: 0 2px 0 #388E3C, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #388E3C, 0 4px 8px rgba(0,0,0,0.15); }
-    .lvl-planeten-normal { background: #42A5F5; -webkit-box-shadow: 0 10px 0 #1565C0, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #1565C0, 0 14px 16px rgba(0,0,0,0.12); }
-    .lvl-planeten-normal.pressed, .lvl-planeten-normal:active { -webkit-box-shadow: 0 2px 0 #1565C0, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #1565C0, 0 4px 8px rgba(0,0,0,0.15); }
-    .lvl-planeten-hard { background: #FFA726; -webkit-box-shadow: 0 10px 0 #F57C00, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #F57C00, 0 14px 16px rgba(0,0,0,0.12); }
-    .lvl-planeten-hard.pressed, .lvl-planeten-hard:active { -webkit-box-shadow: 0 2px 0 #F57C00, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #F57C00, 0 4px 8px rgba(0,0,0,0.15); }
+    #planetenlevel-grid .level-label { font-size: 20px; }
+    #planetenlevel-grid .level-sub { display: block; font-size: 12px; margin-top: 2px; }
+    #planetenlevel-grid .level-btn.pressed,
+    #planetenlevel-grid .level-btn:active {
+      -webkit-transform: translateY(3px);
+      transform: translateY(3px);
+    }
+    .lvl-planeten-easy { background: #66BB6A; -webkit-box-shadow: 0 4px 0 #388E3C, 0 6px 10px rgba(0,0,0,0.12); box-shadow: 0 4px 0 #388E3C, 0 6px 10px rgba(0,0,0,0.12); }
+    .lvl-planeten-easy.pressed, .lvl-planeten-easy:active { -webkit-box-shadow: 0 1px 0 #388E3C, 0 2px 6px rgba(0,0,0,0.15); box-shadow: 0 1px 0 #388E3C, 0 2px 6px rgba(0,0,0,0.15); }
+    .lvl-planeten-normal { background: #42A5F5; -webkit-box-shadow: 0 4px 0 #1565C0, 0 6px 10px rgba(0,0,0,0.12); box-shadow: 0 4px 0 #1565C0, 0 6px 10px rgba(0,0,0,0.12); }
+    .lvl-planeten-normal.pressed, .lvl-planeten-normal:active { -webkit-box-shadow: 0 1px 0 #1565C0, 0 2px 6px rgba(0,0,0,0.15); box-shadow: 0 1px 0 #1565C0, 0 2px 6px rgba(0,0,0,0.15); }
+    .lvl-planeten-hard { background: #FFA726; -webkit-box-shadow: 0 4px 0 #F57C00, 0 6px 10px rgba(0,0,0,0.12); box-shadow: 0 4px 0 #F57C00, 0 6px 10px rgba(0,0,0,0.12); }
+    .lvl-planeten-hard.pressed, .lvl-planeten-hard:active { -webkit-box-shadow: 0 1px 0 #F57C00, 0 2px 6px rgba(0,0,0,0.15); box-shadow: 0 1px 0 #F57C00, 0 2px 6px rgba(0,0,0,0.15); }
     #planeten-stage {
       -webkit-flex: 1 1 auto;
       flex: 1 1 auto;
@@ -679,10 +697,21 @@
       #screen-start.start-10 .sun { width: 52px; height: 52px; }
       #screen-start.start-10 .title { font-size: 38px; }
       #screen-start.start-10 .subtitle { font-size: 16px; margin-top: 2px; }
-      #planetenlevel-grid .level-btn { min-height: 120px; }
+      #planetenlevel-grid .level-btn { height: 52px; min-height: 52px; max-height: 52px; }
       #planeten-prompt { font-size: 18px; padding-bottom: 4px; }
     }
     @media screen and (max-height: 500px) {
+      #planetenlevel-grid { margin-top: 10px; }
+      #planetenlevel-grid .level-btn {
+        height: 46px;
+        min-height: 46px;
+        max-height: 46px;
+        min-width: 120px;
+        margin: 0 6px;
+        padding: 2px 12px;
+      }
+      #planetenlevel-grid .level-label { font-size: 17px; }
+      #planetenlevel-grid .level-sub { display: block; font-size: 11px; margin-top: 1px; }
       #screen-start.start-10 .sun { width: 28px; height: 28px; }
       #screen-start.start-10 .title { font-size: 24px; }
       #screen-start.start-10 .subtitle,

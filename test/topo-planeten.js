@@ -168,6 +168,68 @@ function ok(msg) { console.log('OK  ' + msg); }
     fail('fps: ' + (err && err.message ? err.message : err));
   }
 
+  async function checkLevelButtons(width, height, label, opts) {
+    opts = opts || {};
+    var minH = opts.minH != null ? opts.minH : 44;
+    var maxH = opts.maxH != null ? opts.maxH : 56;
+    await page.setViewport({ width: width, height: height, isMobile: true, hasTouch: true, isLandscape: width > height });
+    await page.goto(APP, { waitUntil: 'networkidle0', timeout: 20000 });
+    await page.click('#btn-goto-planeten');
+    await page.waitForSelector('#screen-planetenlevel:not(.is-hidden)', { timeout: 8000 });
+    await wait(80);
+    var info = await page.evaluate(function (vw, vh) {
+      var btns = document.querySelectorAll('#planetenlevel-grid .level-btn');
+      var i, b, items = [], issues = [], labels = [];
+      for (i = 0; i < btns.length; i++) {
+        b = btns[i].getBoundingClientRect();
+        labels.push(((btns[i].querySelector('.level-label') || {}).textContent || '').trim());
+        items.push({
+          left: b.left, right: b.right, top: b.top, bottom: b.bottom,
+          w: b.width, h: b.height
+        });
+        if (b.left < -0.5) issues.push('clipped left');
+        if (b.right > vw + 0.5) issues.push('clipped right ' + Math.round(b.right) + '>' + vw);
+        if (b.top < -0.5) issues.push('clipped top');
+        if (b.bottom > vh + 0.5) issues.push('clipped bottom');
+        var lab = btns[i].querySelector('.level-label');
+        var sub = btns[i].querySelector('.level-sub');
+        if (lab && lab.scrollWidth > lab.clientWidth + 1) issues.push(lab.textContent + ' text overflow');
+        if (sub && sub.scrollWidth > sub.clientWidth + 1) issues.push(sub.textContent + ' text overflow');
+      }
+      return { n: btns.length, items: items, labels: labels, issues: issues };
+    }, width, height);
+    if (info.n !== 3) throw new Error(label + ': verwacht 3 knoppen, kreeg ' + info.n);
+    if (info.labels.join(',') !== 'Makkelijk,Gewoon,Moeilijk') {
+      throw new Error(label + ': labels ' + info.labels.join(','));
+    }
+    var i, it, tops = [];
+    for (i = 0; i < info.items.length; i++) {
+      it = info.items[i];
+      if (it.h < minH || it.h > maxH) {
+        throw new Error(label + ': hoogte ' + Math.round(it.h) + 'px buiten ' + minH + '-' + maxH);
+      }
+      if (it.w < 44 || it.w > 220) {
+        throw new Error(label + ': breedte ' + Math.round(it.w) + 'px niet compact (44-220)');
+      }
+      tops.push(Math.round(it.top));
+    }
+    if (Math.max.apply(null, tops) - Math.min.apply(null, tops) > 4) {
+      throw new Error(label + ': knoppen staan niet op één rij (tops ' + tops.join(',') + ')');
+    }
+    if (info.issues.length) throw new Error(label + ': ' + info.issues.join('; '));
+    ok('niveauknoppen ' + label + '  ' + info.items.map(function (b) {
+      return Math.round(b.w) + 'x' + Math.round(b.h);
+    }).join(', '));
+  }
+
+  try {
+    await checkLevelButtons(1024, 768, 'iPad liggend');
+    await checkLevelButtons(768, 1024, 'iPad portret');
+    await checkLevelButtons(667, 375, 'telefoon liggend', { minH: 44, maxH: 56 });
+  } catch (err) {
+    fail(err && err.message ? err.message : String(err));
+  }
+
   await browser.close();
   if (failed) {
     console.error('TEST FAILED (' + failed + ')');
