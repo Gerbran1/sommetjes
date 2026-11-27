@@ -30,12 +30,67 @@ function ok(msg) { console.log('OK  ' + msg); }
     t.resetProgress();
     var pr = t.getProgress();
     assert(pr.unlocked.gras && !pr.unlocked.zand && !pr.unlocked.ijs, 'alleen Grasveld is vrij');
-    assert(t.maps.length === 3, '3 kaarten (kreeg ' + t.maps.length + ')');
+    assert(t.maps.length >= 3, 'minstens 3 kaarten (kreeg ' + t.maps.length + ')');
     assert(t.maps[0].id === 'gras' && t.maps[1].id === 'zand' && t.maps[2].id === 'ijs', 'Grasveld, Woestijn, IJswereld');
     assert(t.maps[0].paths.length === 1, 'Grasveld heeft 1 pad');
     assert(t.maps[1].paths[0].length >= t.maps[0].paths[0].length + 2, 'Woestijn is langer (meer bochten)');
     assert(t.maps[2].paths.length === 2, 'IJswereld heeft een gesplitst pad (2 routes)');
     assert(t.types.length === 4, '4 torentypes');
+
+    function hexRgb(h) {
+      h = String(h || '').replace('#', '');
+      if (h.length === 3) h = h.charAt(0) + h.charAt(0) + h.charAt(1) + h.charAt(1) + h.charAt(2) + h.charAt(2);
+      return { r: parseInt(h.slice(0, 2), 16), g: parseInt(h.slice(2, 4), 16), b: parseInt(h.slice(4, 6), 16) };
+    }
+    function distToSeg(px, py, ax, ay, bx, by) {
+      var abx = bx - ax, aby = by - ay;
+      var ab2 = abx * abx + aby * aby;
+      var tt = ab2 === 0 ? 0 : ((px - ax) * abx + (py - ay) * aby) / ab2;
+      if (tt < 0) tt = 0;
+      if (tt > 1) tt = 1;
+      var cx = ax + tt * abx, cy = ay + tt * aby;
+      return Math.sqrt((px - cx) * (px - cx) + (py - cy) * (py - cy));
+    }
+    var pijl = null, ijsTyp = null, typ, ti, minRange, margin, mi, map, si, pi, path, sj, best, d, rgb, msg;
+    minRange = Infinity;
+    for (ti = 0; ti < t.types.length; ti++) {
+      typ = t.types[ti];
+      if (typ.id === 'pijl') pijl = typ;
+      if (typ.id === 'ijs') ijsTyp = typ;
+      if (typ.range[0] < minRange) minRange = typ.range[0];
+    }
+    assert(!!pijl && !!ijsTyp, 'pijl- en ijs-type bestaan');
+    rgb = hexRgb(pijl.color);
+    assert(rgb.g > rgb.r + 30 && rgb.g > rgb.b + 30, 'pijltorenkleur is duidelijk groen (kreeg ' + pijl.color + ')');
+    rgb = hexRgb(pijl.dark);
+    assert(rgb.g > rgb.r && rgb.g > rgb.b, 'pijltoren-donker is groen (kreeg ' + pijl.dark + ')');
+    if (pijl.accent) {
+      rgb = hexRgb(pijl.accent);
+      assert(rgb.g > rgb.b + 20, 'pijl-accent is groen (kreeg ' + pijl.accent + ')');
+    }
+    rgb = hexRgb(ijsTyp.color);
+    assert(rgb.b > rgb.r + 30 && rgb.b >= rgb.g, 'ijstoren blijft ijsblauw (kreeg ' + ijsTyp.color + ')');
+    assert(pijl.color !== ijsTyp.color && pijl.dark !== ijsTyp.dark, 'pijl en ijs hebben andere kleuren');
+
+    margin = 10;
+    assert(t.maps && t.maps.length >= 3, 'minstens 3 kaarten (kreeg ' + (t.maps && t.maps.length) + ')');
+    for (mi = 0; mi < t.maps.length; mi++) {
+      map = t.maps[mi];
+      assert(map.spots && map.spots.length, map.name + ' heeft bouwvlekken');
+      assert(map.paths && map.paths.length, map.name + ' heeft paden');
+      for (si = 0; si < map.spots.length; si++) {
+        best = 1e9;
+        for (pi = 0; pi < map.paths.length; pi++) {
+          path = map.paths[pi];
+          for (sj = 0; sj < path.length - 1; sj++) {
+            d = distToSeg(map.spots[si].x, map.spots[si].y, path[sj].x, path[sj].y, path[sj + 1].x, path[sj + 1].y);
+            if (d < best) best = d;
+          }
+        }
+        msg = map.name + ' plek ' + si + ' (' + map.spots[si].x + ',' + map.spots[si].y + ') ligt ' + Math.round(best) + ' px van het pad (max ' + (minRange - margin) + ', bereik ' + minRange + ')';
+        assert(best + margin <= minRange, msg);
+      }
+    }
 
     t.start('easy', false, 'gras');
     var st = t.getState();
