@@ -29,13 +29,21 @@ function ok(msg) { console.log('OK  ' + msg); }
     if (!t) { out.push('FAIL no __torenTest'); return out; }
     t.resetProgress();
     var pr = t.getProgress();
-    assert(pr.unlocked.gras && !pr.unlocked.zand && !pr.unlocked.ijs, 'alleen Grasveld is vrij');
-    assert(t.maps.length >= 3, 'minstens 3 kaarten (kreeg ' + t.maps.length + ')');
+    assert(pr.unlocked.gras && !pr.unlocked.zand && !pr.unlocked.ijs && !pr.unlocked.lava && !pr.unlocked.eiland, 'alleen Grasveld is vrij');
+    assert(t.maps.length >= 5, 'minstens 5 kaarten (kreeg ' + t.maps.length + ')');
     assert(t.maps[0].id === 'gras' && t.maps[1].id === 'zand' && t.maps[2].id === 'ijs', 'Grasveld, Woestijn, IJswereld');
+    assert(t.maps[3].id === 'lava' && t.maps[3].name === 'Lava', 'kaart 4 is Lava');
+    assert(t.maps[4].id === 'eiland' && t.maps[4].name === 'Eilanden', 'kaart 5 is Eilanden');
     assert(t.maps[0].paths.length === 1, 'Grasveld heeft 1 pad');
     assert(t.maps[1].paths[0].length >= t.maps[0].paths[0].length + 2, 'Woestijn is langer (meer bochten)');
     assert(t.maps[2].paths.length === 2, 'IJswereld heeft een gesplitst pad (2 routes)');
+    assert(t.maps[3].paths.length === 1 && t.maps[3].lava && t.maps[3].lava.length >= 3, 'Lava heeft lavarivieren en 1 pad');
+    assert(t.maps[4].islands && t.maps[4].islands.length >= 5, 'Eilanden heeft minstens 5 eilanden');
     assert(t.types.length === 4, '4 torentypes');
+    for (ti = 0; ti < t.types.length; ti++) {
+      typ = t.types[ti];
+      assert(typ.up.length === 4 && typ.range.length === 4 && typ.dmg.length === 4 && typ.rate.length === 4, typ.name + ' heeft 4 niveaus');
+    }
 
     function hexRgb(h) {
       h = String(h || '').replace('#', '');
@@ -89,6 +97,17 @@ function ok(msg) { console.log('OK  ' + msg); }
         }
         msg = map.name + ' plek ' + si + ' (' + map.spots[si].x + ',' + map.spots[si].y + ') ligt ' + Math.round(best) + ' px van het pad (max ' + (minRange - margin) + ', bereik ' + minRange + ')';
         assert(best + margin <= minRange, msg);
+        if (map.islands && map.islands.length) {
+          var onLand = false, ii, isl, ddx, ddy, landR;
+          for (ii = 0; ii < map.islands.length; ii++) {
+            isl = map.islands[ii];
+            ddx = map.spots[si].x - isl.x;
+            ddy = map.spots[si].y - isl.y;
+            landR = isl.r - 8;
+            if (ddx * ddx + ddy * ddy <= landR * landR) onLand = true;
+          }
+          assert(onLand, map.name + ' plek ' + si + ' ligt op een eiland');
+        }
       }
     }
 
@@ -113,13 +132,22 @@ function ok(msg) { console.log('OK  ' + msg); }
     t.upgrade(0);
     st = t.getState();
     assert(st.towers[0].level === 3, 'upgrade naar niveau 3');
+    t.setCoins(80);
+    var up4 = t.upgrade(0);
+    st = t.getState();
+    assert(up4 && st.towers[0].level === 4, 'upgrade naar niveau 4 (munten ' + st.coins + ')');
     var noMore = t.upgrade(0);
-    assert(!noMore && t.getState().towers[0].level === 3, 'niet hoger dan niveau 3');
+    assert(!noMore && t.getState().towers[0].level === 4, 'niet hoger dan niveau 4');
+    t.openSpot(0);
+    var shopTxt = (document.getElementById('toren-shop') || {}).textContent || '';
+    assert(shopTxt.indexOf('niveau 4') !== -1, 'winkel toont niveau 4: ' + shopTxt.replace(/\s+/g, ' ').slice(0, 80));
+    assert(shopTxt.indexOf('Hoogste niveau') !== -1, 'winkel toont hoogste niveau');
+    assert(shopTxt.indexOf('Verkopen') !== -1 && shopTxt.indexOf('+') !== -1, 'winkel toont verkoopwaarde');
 
     var coinsBeforeSell = t.getState().coins;
     var sold = t.sell(0);
     st = t.getState();
-    assert(sold && st.nTowers === 0 && st.coins > coinsBeforeSell, 'verkopen geeft munten terug (nu ' + st.coins + ')');
+    assert(sold && st.nTowers === 0 && st.coins === coinsBeforeSell + 60, 'verkopen niveau 4 geeft 60 munten terug (nu ' + st.coins + ')');
 
     t.place(0, 'pijl');
     t.place(2, 'kanon');
@@ -139,12 +167,29 @@ function ok(msg) { console.log('OK  ' + msg); }
     var title = document.getElementById('toren-ov-title');
     assert(title && title.textContent.indexOf('Gewonnen') !== -1, 'winsttekst: ' + (title && title.textContent));
     assert(pr.unlocked.zand, 'Woestijn gaat open na winst op Grasveld');
-    assert(!pr.unlocked.ijs, 'IJswereld blijft dicht tot Woestijn is gewonnen');
+    assert(!pr.unlocked.ijs && !pr.unlocked.lava && !pr.unlocked.eiland, 'IJswereld, Lava en Eilanden blijven dicht tot de vorige is gewonnen');
     assert(pr.stars.gras >= 1, 'minstens 1 ster op Grasveld (kreeg ' + pr.stars.gras + ')');
+
+    t.start('easy', false, 'zand');
+    t.forceWin();
+    pr = t.getProgress();
+    assert(pr.unlocked.ijs, 'IJswereld gaat open na winst op Woestijn');
+    assert(!pr.unlocked.lava && !pr.unlocked.eiland, 'Lava blijft dicht tot IJswereld is gewonnen');
 
     t.start('easy', false, 'ijs');
     st = t.getState();
     assert(st.nPaths === 2, 'IJswereld-spel heeft 2 paden (kreeg ' + st.nPaths + ')');
+    t.forceWin();
+    pr = t.getProgress();
+    assert(pr.unlocked.lava, 'Lava gaat open na winst op IJswereld');
+    assert(!pr.unlocked.eiland, 'Eilanden blijven dicht tot Lava is gewonnen');
+    assert(pr.stars.ijs >= 1, 'ster op IJswereld');
+
+    t.start('easy', false, 'lava');
+    t.forceWin();
+    pr = t.getProgress();
+    assert(pr.unlocked.eiland, 'Eilanden gaan open na winst op Lava');
+    assert(pr.stars.lava >= 1, 'ster op Lava (kreeg ' + pr.stars.lava + ')');
     return out;
   });
 
@@ -163,17 +208,26 @@ function ok(msg) { console.log('OK  ' + msg); }
       var g = document.getElementById('toren-kaart-gras');
       var z = document.getElementById('toren-kaart-zand');
       var ijs = document.getElementById('toren-kaart-ijs');
+      var lava = document.getElementById('toren-kaart-lava');
+      var eiland = document.getElementById('toren-kaart-eiland');
+      function locked(el) { return el && (' ' + el.className + ' ').indexOf(' is-locked ') !== -1; }
       return {
         title: (document.querySelector('#screen-torenkaarten .prompt') || {}).textContent,
-        zandLocked: z && (' ' + z.className + ' ').indexOf(' is-locked ') !== -1,
-        ijsLocked: ijs && (' ' + ijs.className + ' ').indexOf(' is-locked ') !== -1,
-        grasLocked: g && (' ' + g.className + ' ').indexOf(' is-locked ') !== -1
+        n: document.querySelectorAll('#torenkaart-grid .toren-kaart-btn').length,
+        names: [g, z, ijs, lava, eiland].map(function (el) { return el ? (el.querySelector('.toren-kaart-name') || {}).textContent : null; }),
+        zandLocked: locked(z),
+        ijsLocked: locked(ijs),
+        lavaLocked: locked(lava),
+        eilandLocked: locked(eiland),
+        grasLocked: locked(g)
       };
     });
     if (maps.title.indexOf('Torenverdediging') === -1) fail('kaarttitel ontbreekt: ' + maps.title);
     else ok('kaartenscherm: ' + maps.title.trim());
-    if (maps.grasLocked || !maps.zandLocked || !maps.ijsLocked) fail('slotten kloppen niet: ' + JSON.stringify(maps));
-    else ok('Grasveld open, Woestijn en IJswereld op slot');
+    if (maps.n !== 5) fail('verwacht 5 kaartknoppen, kreeg ' + maps.n);
+    else ok('5 kaartknoppen: ' + (maps.names || []).join(', '));
+    if (maps.grasLocked || !maps.zandLocked || !maps.ijsLocked || !maps.lavaLocked || !maps.eilandLocked) fail('slotten kloppen niet: ' + JSON.stringify(maps));
+    else ok('Grasveld open, de andere vier kaarten op slot');
 
     await page.click('#toren-kaart-gras');
     await page.waitForSelector('#screen-torenlevel:not(.is-hidden)', { timeout: 8000 });
