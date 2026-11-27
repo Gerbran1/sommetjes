@@ -13,7 +13,7 @@ const wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms)
 const SCREENS = [
   'start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay',
   'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken',
-  'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay', 'program', 'tijd', 'tijdlevel', 'tijdplay', 'topo', 'topolevel', 'topopuzzel', 'topoplay', 'topowaar', 'topodrop', 'planetenlevel', 'planeten'
+  'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay', 'program', 'tijd', 'tijdlevel', 'tijdplay', 'topo', 'topolevel', 'topopuzzel', 'topoplay', 'topowaar', 'topodrop', 'planetenlevel', 'planeten', 'torenkaarten', 'torenlevel', 'toren'
 ];
 
 async function visibleScreen(page) {
@@ -409,6 +409,39 @@ async function waitSpiegelNext(page) {
     await tap(page, '#btn-planeten-home');
     await expectScreen(page, 'start', 'planeten play home');
     ok('Planeten-spel terug → kiezer, home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-toren');
+    await expectScreen(page, 'torenkaarten', 'toren kaarten');
+    await tap(page, '#btn-torenkaarten-back');
+    await expectScreen(page, 'start', 'toren kaarten back');
+    await tap(page, '#btn-goto-toren');
+    await tap(page, '#btn-torenkaarten-home');
+    await expectScreen(page, 'start', 'toren kaarten home');
+    ok('Toren-kaarten terug/home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-toren');
+    await tap(page, '#toren-kaart-gras');
+    await expectScreen(page, 'torenlevel', 'toren kiezer');
+    await tap(page, '#btn-torenlevel-back');
+    await expectScreen(page, 'torenkaarten', 'toren kiezer back');
+    await tap(page, '#toren-kaart-gras');
+    await tap(page, '#btn-torenlevel-home');
+    await expectScreen(page, 'start', 'toren kiezer home');
+    ok('Toren-kiezer terug → kaarten, home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-toren');
+    await tap(page, '#toren-kaart-gras');
+    await tap(page, '#torenlevel-grid [data-kind="easy"]');
+    await expectScreen(page, 'toren', 'toren play');
+    await tap(page, '#btn-toren-back');
+    await expectScreen(page, 'torenlevel', 'toren play back');
+    await tap(page, '#torenlevel-grid [data-kind="easy"]');
+    await tap(page, '#btn-toren-home');
+    await expectScreen(page, 'start', 'toren play home');
+    ok('Toren-spel terug → kiezer, home → start');
 
     await fresh(page);
     await tap(page, '#btn-goto-tijd');

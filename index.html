@@ -9,15 +9,15 @@
   <meta name="apple-mobile-web-app-title" content="Leer &amp; Speel">
   <meta name="format-detection" content="telephone=no">
   <meta name="theme-color" content="#6EC9F0">
-  <meta name="app-version" content="2026-11-27-71">
+  <meta name="app-version" content="2026-11-27-72">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <title>Leer &amp; Speel</title>
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180.png?v=2026-11-27-71">
-  <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152.png?v=2026-11-27-71">
-  <link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76.png?v=2026-11-27-71">
-  <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-152.png?v=2026-11-27-71">
-  <link rel="icon" type="image/png" href="apple-touch-icon-152.png?v=2026-11-27-71">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180.png?v=2026-11-27-72">
+  <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152.png?v=2026-11-27-72">
+  <link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76.png?v=2026-11-27-72">
+  <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-152.png?v=2026-11-27-72">
+  <link rel="icon" type="image/png" href="apple-touch-icon-152.png?v=2026-11-27-72">
   <style>
     html, body {
       margin: 0;
@@ -200,7 +200,7 @@
       line-height: 1;
     }
 
-    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-doolhoflevel, #screen-verschillen, #screen-robotlevel, #screen-robot, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij, #screen-cups, #screen-veranderd, #screen-tekenmenu, #screen-kleurkies, #screen-teken, #screen-klinkers, #screen-lijnlevel, #screen-lijn, #screen-geld, #screen-geldlevel, #screen-geldplay, #screen-program, #screen-tijd, #screen-tijdlevel, #screen-tijdplay, #screen-topo, #screen-topolevel, #screen-topopuzzel, #screen-topoplay, #screen-topowaar, #screen-planetenlevel, #screen-planeten {
+    #screen-start, #screen-home, #screen-play, #screen-picker, #screen-letters, #screen-trace, #screen-names, #screen-nameplay, #screen-puzzles, #screen-puzzlelevel, #screen-puzzle, #screen-vormen, #screen-spiegel, #screen-nateken, #screen-tangram, #screen-waar, #screen-doolhof, #screen-doolhoflevel, #screen-verschillen, #screen-robotlevel, #screen-robot, #screen-memory, #screen-memorylevel, #screen-memoryplay, #screen-weg, #screen-simon, #screen-rij, #screen-cups, #screen-veranderd, #screen-tekenmenu, #screen-kleurkies, #screen-teken, #screen-klinkers, #screen-lijnlevel, #screen-lijn, #screen-geld, #screen-geldlevel, #screen-geldplay, #screen-program, #screen-tijd, #screen-tijdlevel, #screen-tijdplay, #screen-topo, #screen-topolevel, #screen-topopuzzel, #screen-topoplay, #screen-topowaar, #screen-planetenlevel, #screen-planeten, #screen-torenkaarten, #screen-torenlevel, #screen-toren {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -727,6 +727,337 @@
       #choice-grid.choices-10 .choice-btn { min-height: 48px; }
       #choice-grid.choices-10 .choice-label { font-size: 11px; }
     }
+
+    .choice-toren {
+      background: #8D6E63;
+      -webkit-box-shadow: 0 10px 0 #5D4037, 0 14px 20px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 0 #5D4037, 0 14px 20px rgba(0,0,0,0.15);
+    }
+    .choice-toren.pressed, .choice-toren:active {
+      -webkit-box-shadow: 0 2px 0 #5D4037, 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 0 #5D4037, 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .toren-glyph { width: 72px; height: 56px; margin: 0 auto 4px auto; }
+    .toren-glyph svg { width: 72px; height: 56px; display: block; }
+
+    #choice-grid.choices-11 .choice-btn {
+      -webkit-flex: 0 0 15%;
+      flex: 0 0 15%;
+      max-width: 150px;
+      min-width: 0;
+      min-height: 80px;
+      margin: 0.4%;
+      padding: 6px 3px;
+    }
+    #choice-grid.choices-11 .choice-label { font-size: 14px; }
+
+    #torenkaart-grid, #torenlevel-grid {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+      width: 100%;
+      max-width: 980px;
+      margin: 16px auto 0 auto;
+      padding: 0 12px;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    .toren-kaart-btn {
+      -webkit-flex: 0 1 200px;
+      flex: 0 1 200px;
+      max-width: 200px;
+      min-width: 140px;
+      margin: 0 8px;
+      padding: 8px 8px 10px 8px;
+      border-radius: 18px;
+      background: #FFFDF7;
+      color: #215078;
+      -webkit-box-shadow: 0 4px 0 rgba(0,0,0,0.15), 0 6px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 0 rgba(0,0,0,0.15), 0 6px 10px rgba(0,0,0,0.1);
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+      position: relative;
+    }
+    .toren-kaart-btn.pressed, .toren-kaart-btn:active {
+      -webkit-transform: translateY(3px);
+      transform: translateY(3px);
+      -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.15);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.15);
+    }
+    .toren-kaart-preview {
+      width: 100%;
+      height: 64px;
+      border-radius: 12px;
+      margin-bottom: 6px;
+    }
+    .toren-kaart-gras .toren-kaart-preview { background: #6BB03A; }
+    .toren-kaart-zand .toren-kaart-preview { background: #E0B44C; }
+    .toren-kaart-ijs .toren-kaart-preview { background: #BBDEFB; }
+    .toren-kaart-name { font-size: 20px; font-weight: 800; line-height: 1.1; }
+    .toren-kaart-stars { margin-top: 4px; font-size: 18px; letter-spacing: 2px; color: #CFC8B8; }
+    .toren-kaart-star.on { color: #F9A825; }
+    .toren-kaart-btn.is-locked { opacity: 0.72; }
+    .toren-kaart-lock {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      font-size: 18px;
+    }
+    .toren-kaart-lock.is-hidden { display: none; }
+
+    #torenlevel-grid .level-btn {
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+      width: auto;
+      min-width: 148px;
+      max-width: 200px;
+      height: 52px;
+      min-height: 52px;
+      max-height: 52px;
+      margin: 0 8px;
+      padding: 4px 16px;
+      border-radius: 18px;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    #torenlevel-grid .level-label { font-size: 20px; }
+    #torenlevel-grid .level-sub { display: block; font-size: 12px; margin-top: 2px; }
+    #torenlevel-grid .level-btn.pressed,
+    #torenlevel-grid .level-btn:active {
+      -webkit-transform: translateY(3px);
+      transform: translateY(3px);
+    }
+    .lvl-toren-easy { background: #66BB6A; -webkit-box-shadow: 0 4px 0 #388E3C, 0 6px 10px rgba(0,0,0,0.12); box-shadow: 0 4px 0 #388E3C, 0 6px 10px rgba(0,0,0,0.12); }
+    .lvl-toren-easy.pressed, .lvl-toren-easy:active { -webkit-box-shadow: 0 1px 0 #388E3C, 0 2px 6px rgba(0,0,0,0.15); box-shadow: 0 1px 0 #388E3C, 0 2px 6px rgba(0,0,0,0.15); }
+    .lvl-toren-normal { background: #42A5F5; -webkit-box-shadow: 0 4px 0 #1565C0, 0 6px 10px rgba(0,0,0,0.12); box-shadow: 0 4px 0 #1565C0, 0 6px 10px rgba(0,0,0,0.12); }
+    .lvl-toren-normal.pressed, .lvl-toren-normal:active { -webkit-box-shadow: 0 1px 0 #1565C0, 0 2px 6px rgba(0,0,0,0.15); box-shadow: 0 1px 0 #1565C0, 0 2px 6px rgba(0,0,0,0.15); }
+    .lvl-toren-hard { background: #FFA726; -webkit-box-shadow: 0 4px 0 #F57C00, 0 6px 10px rgba(0,0,0,0.12); box-shadow: 0 4px 0 #F57C00, 0 6px 10px rgba(0,0,0,0.12); }
+    .lvl-toren-hard.pressed, .lvl-toren-hard:active { -webkit-box-shadow: 0 1px 0 #F57C00, 0 2px 6px rgba(0,0,0,0.15); box-shadow: 0 1px 0 #F57C00, 0 2px 6px rgba(0,0,0,0.15); }
+
+    #screen-toren, #screen-torenlevel, #screen-torenkaarten {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+    }
+    #screen-toren.is-hidden, #screen-torenlevel.is-hidden, #screen-torenkaarten.is-hidden { display: none; }
+    #toren-hud {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: space-between;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 10px 6px 10px;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+    }
+    #toren-hud-left, #toren-hud-right {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+    }
+    #toren-wave, #toren-map-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: #215078;
+      margin-right: 10px;
+    }
+    #toren-lives { display: -webkit-flex; display: flex; margin-right: 12px; }
+    .toren-heart { margin-right: 2px; line-height: 0; }
+    .toren-heart.is-empty { opacity: 0.25; }
+    #toren-coins-wrap {
+      font-size: 22px;
+      font-weight: 800;
+      color: #215078;
+      background: rgba(255,255,255,0.85);
+      border-radius: 16px;
+      padding: 4px 12px;
+    }
+    #toren-coins { color: #F9A825; }
+    .toren-golf-btn {
+      min-height: 44px;
+      padding: 6px 16px;
+      border-radius: 16px;
+      background: #66BB6A;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 800;
+      -webkit-box-shadow: 0 4px 0 #388E3C;
+      box-shadow: 0 4px 0 #388E3C;
+    }
+    .toren-golf-btn.is-disabled { background: #B0BEC5; -webkit-box-shadow: 0 3px 0 #78909C; box-shadow: 0 3px 0 #78909C; color: #FFF; opacity: 0.9; }
+    #toren-prompt {
+      width: 100%;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: #215078;
+      padding: 0 12px 6px 12px;
+    }
+    #toren-stage {
+      -webkit-flex: 1 1 auto;
+      flex: 1 1 auto;
+      width: 100%;
+      min-width: 0;
+      min-height: 0;
+      position: relative;
+      margin: 0 8px 0 8px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #6BB03A;
+      -webkit-box-shadow: 0 4px 0 rgba(0,0,0,0.18);
+      box-shadow: 0 4px 0 rgba(0,0,0,0.18);
+    }
+    #toren-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+    }
+    .toren-shop {
+      -webkit-flex: 0 0 auto;
+      flex: 0 0 auto;
+      width: 100%;
+      padding: 6px 8px 8px 8px;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      background: rgba(255,253,247,0.95);
+    }
+    .toren-shop.is-hidden { display: none; }
+    .toren-shop-title { text-align: center; font-size: 16px; font-weight: 800; color: #215078; margin-bottom: 4px; }
+    .toren-shop-row {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: stretch;
+      align-items: stretch;
+    }
+    .toren-shop-btn {
+      min-width: 110px;
+      min-height: 48px;
+      margin: 4px;
+      padding: 6px 10px;
+      border-radius: 14px;
+      background: #42A5F5;
+      color: #fff;
+      -webkit-box-shadow: 0 3px 0 #1565C0;
+      box-shadow: 0 3px 0 #1565C0;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+    }
+    .toren-shop-btn[data-type="kanon"] { background: #8D6E63; -webkit-box-shadow: 0 3px 0 #4E342E; box-shadow: 0 3px 0 #4E342E; }
+    .toren-shop-btn[data-type="ijs"] { background: #29B6F6; -webkit-box-shadow: 0 3px 0 #0277BD; box-shadow: 0 3px 0 #0277BD; }
+    .toren-shop-btn[data-type="bliksem"] { background: #FDD835; color: #5D4037; -webkit-box-shadow: 0 3px 0 #F9A825; box-shadow: 0 3px 0 #F9A825; }
+    .toren-shop-sell { background: #EF5350; -webkit-box-shadow: 0 3px 0 #C62828; box-shadow: 0 3px 0 #C62828; }
+    .toren-shop-btn.is-disabled { opacity: 0.45; -webkit-filter: grayscale(60%); }
+    .toren-shop-name { font-size: 14px; font-weight: 800; line-height: 1.1; }
+    .toren-shop-price { font-size: 18px; font-weight: 800; margin-top: 2px; }
+    .toren-shop-max { font-size: 16px; font-weight: 800; color: #215078; padding: 8px 12px; }
+    .overlay-toren { z-index: 50; pointer-events: auto; top: 0; background: rgba(10, 18, 48, 0.55); }
+    .overlay-toren .reward-card { pointer-events: auto; }
+    .toren-ov-actions {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .toren-ov-actions .reward-btn { margin: 8px; min-width: 160px; }
+    #toren-ov-extra { margin-top: 8px; font-weight: 700; color: #215078; }
+
+    @media (orientation: portrait) {
+      #choice-grid.choices-11 .choice-btn {
+        -webkit-flex: 0 0 30%;
+        flex: 0 0 30%;
+        max-width: 300px;
+        min-height: 110px;
+        margin: 1%;
+        padding: 12px 8px;
+      }
+      #choice-grid.choices-11 .choice-label { font-size: 20px; }
+    }
+    @media screen and (max-height: 800px) {
+      #choice-grid.choices-11 .choice-btn { min-height: 70px; }
+      #choice-grid.choices-11 .choice-label { font-size: 13px; }
+      #choice-grid.choices-11 .toren-glyph,
+      #choice-grid.choices-11 .toren-glyph svg,
+      #choice-grid.choices-11 .planeten-glyph,
+      #choice-grid.choices-11 .planeten-glyph svg,
+      #choice-grid.choices-11 .topo-glyph,
+      #choice-grid.choices-11 .topo-glyph svg,
+      #choice-grid.choices-11 .tijd-glyph,
+      #choice-grid.choices-11 .tijd-glyph svg,
+      #choice-grid.choices-11 .program-glyph,
+      #choice-grid.choices-11 .program-glyph svg,
+      #choice-grid.choices-11 .geld-glyph,
+      #choice-grid.choices-11 .geld-glyph svg { width: 40px; height: 30px; }
+      #screen-start.start-11 .sun { width: 48px; height: 48px; }
+      #screen-start.start-11 .title { font-size: 36px; }
+      #screen-start.start-11 .subtitle { font-size: 15px; margin-top: 2px; }
+      #toren-prompt { font-size: 16px; padding-bottom: 4px; }
+      #toren-wave, #toren-map-name { font-size: 16px; }
+      #toren-coins-wrap { font-size: 18px; padding: 3px 10px; }
+      .toren-kaart-preview { height: 52px; }
+      .toren-kaart-name { font-size: 18px; }
+    }
+    @media screen and (max-height: 500px) {
+      #choice-grid.choices-11 .choice-btn { min-height: 46px; margin: 0.3%; padding: 3px 2px; }
+      #choice-grid.choices-11 .choice-label { font-size: 11px; }
+      #screen-start.start-11 .sun { width: 24px; height: 24px; }
+      #screen-start.start-11 .title { font-size: 22px; }
+      #screen-start.start-11 .subtitle,
+      #screen-start.start-11 .home-hint { display: none; }
+      #torenlevel-grid .level-btn, #planetenlevel-grid .level-btn {
+        height: 46px; min-height: 46px; max-height: 46px; min-width: 120px; margin: 0 6px; padding: 2px 12px;
+      }
+      #torenlevel-grid .level-label { font-size: 17px; }
+      #torenlevel-grid .level-sub { display: block; font-size: 11px; margin-top: 1px; }
+      .toren-kaart-btn { min-width: 110px; margin: 0 4px; padding: 6px; }
+      .toren-kaart-preview { height: 36px; }
+      .toren-kaart-name { font-size: 14px; }
+      .toren-golf-btn { min-height: 36px; font-size: 15px; padding: 4px 10px; }
+      #toren-hud { padding-bottom: 2px; }
+    }
+    @media screen and (max-width: 800px) {
+      #choice-grid.choices-11 .choice-btn { min-height: 90px; }
+      #choice-grid.choices-11 .choice-label { font-size: 16px; }
+    }
+    @media screen and (max-width: 800px) and (max-height: 500px) {
+      #choice-grid.choices-11 .choice-btn { min-height: 44px; }
+      #choice-grid.choices-11 .choice-label { font-size: 10px; }
+    }
+
 
     #topo-grid, #topolevel-grid {
       display: -webkit-flex;
@@ -5634,7 +5965,7 @@
   <div id="c3" class="cloud"></div>
 
   <div id="app">
-    <div id="screen-start" class="start-10">
+    <div id="screen-start" class="start-10 start-11">
       <div class="topbar">
         <div class="topbar-left">
         </div>
@@ -5653,7 +5984,7 @@
         <div class="home-hint" id="home-hint"></div>
       </div>
 
-      <div id="choice-grid" class="choices-10">
+      <div id="choice-grid" class="choices-11">
         <button type="button" class="tap choice-btn choice-numbers" id="btn-goto-games" data-act="goto-games">
           <div class="choice-glyph">123</div>
           <div class="choice-label">Getallen</div>
@@ -5698,6 +6029,10 @@
         <button type="button" class="tap choice-btn choice-planeten" id="btn-goto-planeten" data-act="goto-planeten">
           <div class="choice-glyph planeten-glyph" id="icon-planeten-start"></div>
           <div class="choice-label">Planeten</div>
+        </button>
+        <button type="button" class="tap choice-btn choice-toren" id="btn-goto-toren" data-act="goto-toren">
+          <div class="choice-glyph toren-glyph" id="icon-toren-start"></div>
+          <div class="choice-label">Torens</div>
         </button>
       </div>
       <div id="player-bar">
@@ -7359,6 +7694,119 @@
         <canvas id="planeten-canvas" width="1000" height="625"></canvas>
       </div>
     </div>
+
+    <div id="screen-torenkaarten" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-torenkaarten-back" data-act="back" title="Terug">
+            <span id="torenkaarten-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-torenkaarten-home" data-act="home" title="Start" style="margin-left:8px;">
+            <span id="torenkaarten-home-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="torenkaarten-star-icon"></span>
+            <span class="star-count" id="torenkaarten-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt">Torenverdediging</div>
+      <div class="subtitle" id="torenkaarten-sub">Kies een kaart</div>
+      <div id="torenkaart-grid">
+        <button type="button" class="tap toren-kaart-btn toren-kaart-gras" id="toren-kaart-gras" data-act="toren-kaart" data-map="gras">
+          <div class="toren-kaart-preview"></div>
+          <div class="toren-kaart-name">Grasveld</div>
+          <div class="toren-kaart-stars" id="toren-kaart-stars-gras"></div>
+          <span class="toren-kaart-lock is-hidden" id="toren-kaart-lock-gras">🔒</span>
+        </button>
+        <button type="button" class="tap toren-kaart-btn toren-kaart-zand" id="toren-kaart-zand" data-act="toren-kaart" data-map="zand">
+          <div class="toren-kaart-preview"></div>
+          <div class="toren-kaart-name">Woestijn</div>
+          <div class="toren-kaart-stars" id="toren-kaart-stars-zand"></div>
+          <span class="toren-kaart-lock" id="toren-kaart-lock-zand">🔒</span>
+        </button>
+        <button type="button" class="tap toren-kaart-btn toren-kaart-ijs" id="toren-kaart-ijs" data-act="toren-kaart" data-map="ijs">
+          <div class="toren-kaart-preview"></div>
+          <div class="toren-kaart-name">IJswereld</div>
+          <div class="toren-kaart-stars" id="toren-kaart-stars-ijs"></div>
+          <span class="toren-kaart-lock" id="toren-kaart-lock-ijs">🔒</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="screen-torenlevel" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-torenlevel-back" data-act="back" title="Terug">
+            <span id="torenlevel-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-torenlevel-home" data-act="home" title="Start" style="margin-left:8px;">
+            <span id="torenlevel-home-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="torenlevel-star-icon"></span>
+            <span class="star-count" id="torenlevel-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="prompt" id="torenlevel-title">Grasveld</div>
+      <div id="torenlevel-grid">
+        <button type="button" class="tap level-btn lvl-toren-easy" data-act="toren-level" data-kind="easy">
+          <div class="level-label">Makkelijk</div>
+          <div class="level-sub">Meer munten en levens</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-toren-normal" data-act="toren-level" data-kind="normal">
+          <div class="level-label">Gewoon</div>
+          <div class="level-sub">Een echte wedstrijd</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-toren-hard" data-act="toren-level" data-kind="hard">
+          <div class="level-label">Moeilijk</div>
+          <div class="level-sub">Sterkere monsters</div>
+        </button>
+      </div>
+    </div>
+
+    <div id="screen-toren" class="is-hidden">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="tap icon-btn" id="btn-toren-back" data-act="back" title="Terug">
+            <span id="toren-back-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-toren-home" data-act="home" title="Start" style="margin-left:8px;">
+            <span id="toren-home-icon"></span>
+          </button>
+          <button type="button" class="tap icon-btn" id="btn-toren-pause" data-act="toren-pause" title="Pauze" style="margin-left:8px;">
+            <span id="toren-pause-icon"></span>
+          </button>
+        </div>
+        <div class="topbar-right">
+          <div class="star-badge">
+            <span class="mini-star" id="toren-star-icon"></span>
+            <span class="star-count" id="toren-stars">0</span>
+          </div>
+        </div>
+      </div>
+      <div id="toren-hud">
+        <div id="toren-hud-left">
+          <span id="toren-map-name">Grasveld</span>
+          <span id="toren-wave">Golf 0 / 10</span>
+          <button type="button" class="tap toren-golf-btn" id="btn-toren-golf" data-act="toren-golf">Start golf 1</button>
+        </div>
+        <div id="toren-hud-right">
+          <span id="toren-lives"></span>
+          <span id="toren-coins-wrap">Munten: <span id="toren-coins">0</span></span>
+        </div>
+      </div>
+      <div class="prompt" id="toren-prompt">Tik op een bouwvlek en kies een toren</div>
+      <div id="toren-stage">
+        <canvas id="toren-canvas" width="1000" height="560"></canvas>
+      </div>
+      <div id="toren-shop" class="toren-shop is-hidden"></div>
+    </div>
   </div>
 
   <div id="burst" class="is-hidden"></div>
@@ -7378,6 +7826,18 @@
       <div class="planeten-ov-actions">
         <button type="button" class="tap reward-btn" id="btn-planeten-opnieuw" data-act="planeten-opnieuw">Nog eens</button>
         <button type="button" class="tap reward-btn" id="btn-planeten-naar-start" data-act="planeten-naar-start">Naar start</button>
+      </div>
+    </div>
+  </div>
+  <div id="overlay-toren" class="overlay is-hidden">
+    <div class="reward-card">
+      <div class="reward-stars" id="toren-ov-stars"></div>
+      <div class="reward-text" id="toren-ov-title">Gewonnen!</div>
+      <div id="toren-ov-text">Alle golven zijn geklaard!</div>
+      <div id="toren-ov-extra"></div>
+      <div class="toren-ov-actions">
+        <button type="button" class="tap reward-btn" id="btn-toren-opnieuw" data-act="toren-opnieuw">Nog eens</button>
+        <button type="button" class="tap reward-btn" id="btn-toren-naar-kaarten" data-act="toren-naar-kaarten">Naar kaarten</button>
       </div>
     </div>
   </div>
@@ -7576,6 +8036,7 @@
       if (pl === 'Jasper' || pl === 'Laurens' || pl === 'Mirthe') state.playerName = pl;
       if (window.localStorage.getItem('sommetjes-all-letters') === '1') state.allLetters = true;
     } catch (e) {}
+    if (typeof loadTorenProgress === 'function') loadTorenProgress();
   }
 
   function saveStars() {
@@ -10245,7 +10706,7 @@
   /* ---------- UI ---------- */
   function updateStarsUI() {
     var i, row, html, filled, el, rows;
-    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'vers-stars', 'robot-stars', 'robotlevel-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars', 'cups-stars', 'veranderd-stars', 'klinkers-stars', 'lijnlevel-stars', 'lijn-stars', 'doolhoflevel-stars', 'geld-stars', 'geldlevel-stars', 'geldplay-stars', 'program-stars', 'tijd-stars', 'tijdlevel-stars', 'tijdplay-stars', 'topo-stars', 'topolevel-stars', 'topopuzzel-stars', 'topoplay-stars', 'topowaar-stars', 'topodrop-stars', 'planetenlevel-stars', 'planeten-stars'], String(state.stars));
+    fillCounts(['start-stars', 'games-stars', 'play-stars', 'picker-stars', 'letters-stars', 'trace-stars', 'names-stars', 'nameplay-stars', 'puzzles-stars', 'puzzlelevel-stars', 'puzzle-stars', 'vormen-stars', 'spiegel-stars', 'nateken-stars', 'tangram-stars', 'waar-stars', 'doolhof-stars', 'vers-stars', 'robot-stars', 'robotlevel-stars', 'memory-stars', 'memorylevel-stars', 'memoryplay-stars', 'weg-stars', 'simon-stars', 'rij-stars', 'cups-stars', 'veranderd-stars', 'klinkers-stars', 'lijnlevel-stars', 'lijn-stars', 'doolhoflevel-stars', 'geld-stars', 'geldlevel-stars', 'geldplay-stars', 'program-stars', 'tijd-stars', 'tijdlevel-stars', 'tijdplay-stars', 'topo-stars', 'topolevel-stars', 'topopuzzel-stars', 'topoplay-stars', 'topowaar-stars', 'topodrop-stars', 'planetenlevel-stars', 'planeten-stars', 'torenkaarten-stars', 'torenlevel-stars', 'toren-stars'], String(state.stars));
     filled = state.towardsReward;
     if (filled > 5) filled = 5;
     html = '';
@@ -10278,7 +10739,7 @@
   function showScreen(name) {
     var ids, i, el;
     state.screen = name;
-    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay', 'program', 'tijd', 'tijdlevel', 'tijdplay', 'topo', 'topolevel', 'topopuzzel', 'topoplay', 'topowaar', 'topodrop', 'planetenlevel', 'planeten'];
+    ids = ['start', 'home', 'picker', 'play', 'letters', 'trace', 'names', 'nameplay', 'puzzles', 'puzzlelevel', 'puzzle', 'vormen', 'spiegel', 'nateken', 'tangram', 'waar', 'doolhof', 'doolhoflevel', 'verschillen', 'robotlevel', 'robot', 'memory', 'memorylevel', 'memoryplay', 'weg', 'simon', 'rij', 'cups', 'veranderd', 'tekenmenu', 'kleurkies', 'teken', 'klinkers', 'lijnlevel', 'lijn', 'geld', 'geldlevel', 'geldplay', 'program', 'tijd', 'tijdlevel', 'tijdplay', 'topo', 'topolevel', 'topopuzzel', 'topoplay', 'topowaar', 'topodrop', 'planetenlevel', 'planeten', 'torenkaarten', 'torenlevel', 'toren'];
     for (i = 0; i < ids.length; i++) {
       el = $('screen-' + ids[i]);
       if (el) el.className = (name === ids[i]) ? '' : 'is-hidden';
@@ -16847,6 +17308,7 @@
     if (typeof stopTopoDrag === 'function') stopTopoDrag();
     if (typeof stopTopoDropDrag === 'function') stopTopoDropDrag();
     if (typeof stopPlaneten === 'function') stopPlaneten();
+    if (typeof stopToren === 'function') stopToren();
     if (typeof stopMdDrag === 'function') stopMdDrag();
     if (typeof stopSezDrag === 'function') stopSezDrag();
     clearMemoryTimer();
@@ -16928,6 +17390,12 @@
     } else if (s === 'planeten') {
       showPlanetenLevel();
     } else if (s === 'planetenlevel') {
+      goToStart();
+    } else if (s === 'toren') {
+      showTorenLevel(torenState.mapId);
+    } else if (s === 'torenlevel') {
+      showTorenKaarten();
+    } else if (s === 'torenkaarten') {
       goToStart();
     } else {
       goToStart();
@@ -17130,6 +17598,70 @@
     }
     if (act === 'planeten-naar-start') {
       goToStart();
+      return;
+    }
+    if (act === 'goto-toren') {
+      cancelAdvanceWait();
+      showTorenKaarten();
+      beginQuestionVoice();
+      speak('toren-kies-kaart');
+      return;
+    }
+    if (act === 'toren-kaart') {
+      showTorenLevel(el.getAttribute('data-map') || 'gras');
+      if (torenProg.unlocked[el.getAttribute('data-map') || 'gras']) {
+        beginQuestionVoice();
+        speak(torenMapById(el.getAttribute('data-map') || 'gras').audio);
+      }
+      return;
+    }
+    if (act === 'toren-level') {
+      startToren(el.getAttribute('data-kind') || 'easy', true, torenState.mapId);
+      return;
+    }
+    if (act === 'toren-pause') {
+      torenTogglePause();
+      return;
+    }
+    if (act === 'toren-golf') {
+      if ((' ' + el.className + ' ').indexOf(' is-disabled ') !== -1) return;
+      torenStartWave();
+      return;
+    }
+    if (act === 'toren-build') {
+      if ((' ' + el.className + ' ').indexOf(' is-disabled ') !== -1) {
+        showToast('Niet genoeg munten', false);
+        return;
+      }
+      torenPlace(torenState.selected, el.getAttribute('data-type') || 'pijl');
+      torenDraw();
+      return;
+    }
+    if (act === 'toren-upgrade') {
+      if ((' ' + el.className + ' ').indexOf(' is-disabled ') !== -1) {
+        showToast('Niet genoeg munten', false);
+        return;
+      }
+      torenUpgrade(torenState.selected);
+      torenDraw();
+      return;
+    }
+    if (act === 'toren-sell') {
+      torenSell(torenState.selected);
+      torenDraw();
+      return;
+    }
+    if (act === 'toren-opnieuw') {
+      g = ($('overlay-toren') && $('overlay-toren').getAttribute('data-mode')) || '';
+      if (g === 'pause') {
+        torenTogglePause();
+      } else {
+        startToren(torenState.level, true, torenState.mapId);
+      }
+      return;
+    }
+    if (act === 'toren-naar-kaarten') {
+      showTorenKaarten();
       return;
     }
     if (act === 'topo-game') {
@@ -17667,6 +18199,12 @@
       lastTouchEnd = now;
       return;
     }
+    if (state.screen === 'toren' && torenPointer(e)) {
+      clearPressed();
+      e.preventDefault();
+      lastTouchEnd = now;
+      return;
+    }
     el = findClickableFromEvent(e);
     clearPressed();
     if (el && (now - touchStartTime) < 700 && (!touchMoved || isNavAct(el))) {
@@ -17699,6 +18237,11 @@
       return;
     }
     if (state.screen === 'topowaar' && onTopoWaarPointer(e)) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+    if (state.screen === 'toren' && torenPointer(e)) {
       e.preventDefault();
       e.stopPropagation();
       return;
@@ -24506,6 +25049,1206 @@
     }
   };
 
+  /* ---------- Torenverdediging ---------- */
+  var TOREN_W = 1000;
+  var TOREN_H = 560;
+  var TOREN_PATH_W = 44;
+  var TOREN_LS_KEY = 'sommetjes-toren';
+
+  var TOREN_TYPES = [
+    { id: 'pijl', name: 'Pijltoren', price: 20, up: [0, 20, 30], range: [110, 125, 140], rate: [0.55, 0.45, 0.35], dmg: [1, 2, 3], splash: 0, slow: 0, color: '#42A5F5', dark: '#1565C0' },
+    { id: 'kanon', name: 'Kanon', price: 40, up: [0, 40, 60], range: [95, 105, 120], rate: [1.4, 1.2, 1.0], dmg: [2, 3, 5], splash: 55, slow: 0, color: '#8D6E63', dark: '#4E342E' },
+    { id: 'ijs', name: 'IJstoren', price: 30, up: [0, 30, 50], range: [100, 115, 130], rate: [1.0, 0.85, 0.7], dmg: [1, 1, 2], splash: 0, slow: 0.5, color: '#4FC3F7', dark: '#0277BD' },
+    { id: 'bliksem', name: 'Bliksem', price: 70, up: [0, 60, 90], range: [150, 165, 180], rate: [1.8, 1.5, 1.2], dmg: [5, 8, 12], splash: 0, slow: 0, color: '#FFD54F', dark: '#F9A825' }
+  ];
+
+  var TOREN_MOBS = {
+    slijm: { id: 'slijm', name: 'Slijm', hp: 8, speed: 38, reward: 5, r: 16, color: '#9CCC65', dark: '#558B2F' },
+    looper: { id: 'looper', name: 'Rups', hp: 16, speed: 54, reward: 8, r: 15, color: '#AB47BC', dark: '#6A1B9A' },
+    schildpad: { id: 'schildpad', name: 'Schildpad', hp: 32, speed: 24, reward: 10, r: 18, color: '#26A69A', dark: '#00695C' },
+    draak: { id: 'draak', name: 'Draakje', hp: 55, speed: 32, reward: 20, r: 20, color: '#FF7043', dark: '#D84315' }
+  };
+
+  var TOREN_WAVES = [
+    [{ k: 'slijm', n: 4, gap: 1.15 }],
+    [{ k: 'slijm', n: 6, gap: 0.95 }],
+    [{ k: 'slijm', n: 4, gap: 0.9 }, { k: 'looper', n: 2, gap: 1.1 }],
+    [{ k: 'looper', n: 6, gap: 0.95 }],
+    [{ k: 'slijm', n: 5, gap: 0.8 }, { k: 'schildpad', n: 2, gap: 1.3 }],
+    [{ k: 'looper', n: 8, gap: 0.85 }],
+    [{ k: 'schildpad', n: 4, gap: 1.2 }, { k: 'looper', n: 4, gap: 0.9 }],
+    [{ k: 'schildpad', n: 6, gap: 1.05 }],
+    [{ k: 'looper', n: 8, gap: 0.75 }, { k: 'schildpad', n: 3, gap: 1.1 }],
+    [{ k: 'looper', n: 6, gap: 0.7 }, { k: 'schildpad', n: 3, gap: 1.0 }, { k: 'draak', n: 1, gap: 1.6 }]
+  ];
+
+  var TOREN_LEVELS = {
+    easy: { coins: 80, lives: 5, hpMul: 0.85, spdMul: 0.8, stars: 1 },
+    normal: { coins: 60, lives: 3, hpMul: 1, spdMul: 1, stars: 2 },
+    hard: { coins: 50, lives: 3, hpMul: 1.25, spdMul: 1.15, stars: 3 }
+  };
+
+  var TOREN_MAPS = [
+    {
+      id: 'gras',
+      name: 'Grasveld',
+      audio: 'toren-grasveld',
+      theme: { bg: '#6BB03A', bg2: '#8BC34A', path: '#E8C87A', edge: '#C4A056', spot: '#BCAAA4', ring: '#5D4037' },
+      deco: 'grass',
+      paths: [[
+        { x: -30, y: 300 }, { x: 180, y: 300 }, { x: 180, y: 130 }, { x: 420, y: 130 },
+        { x: 420, y: 430 }, { x: 720, y: 430 }, { x: 720, y: 230 }, { x: 1030, y: 230 }
+      ]],
+      spots: [
+        { x: 90, y: 220 }, { x: 90, y: 380 }, { x: 260, y: 210 }, { x: 260, y: 60 },
+        { x: 500, y: 210 }, { x: 500, y: 350 }, { x: 620, y: 350 }, { x: 800, y: 350 }, { x: 800, y: 150 }
+      ]
+    },
+    {
+      id: 'zand',
+      name: 'Woestijn',
+      audio: 'toren-woestijn',
+      theme: { bg: '#E0B44C', bg2: '#EDC967', path: '#C48A3A', edge: '#8D5B1F', spot: '#D7CCC8', ring: '#5D4037' },
+      deco: 'sand',
+      paths: [[
+        { x: -30, y: 90 }, { x: 220, y: 90 }, { x: 220, y: 250 }, { x: 80, y: 250 },
+        { x: 80, y: 450 }, { x: 350, y: 450 }, { x: 350, y: 200 }, { x: 560, y: 200 },
+        { x: 560, y: 420 }, { x: 820, y: 420 }, { x: 820, y: 140 }, { x: 1030, y: 140 }
+      ]],
+      spots: [
+        { x: 120, y: 170 }, { x: 300, y: 170 }, { x: 300, y: 330 }, { x: 160, y: 370 },
+        { x: 160, y: 520 }, { x: 430, y: 370 }, { x: 430, y: 120 }, { x: 640, y: 120 },
+        { x: 640, y: 330 }, { x: 900, y: 330 }, { x: 900, y: 70 }
+      ]
+    },
+    {
+      id: 'ijs',
+      name: 'IJswereld',
+      audio: 'toren-ijswereld',
+      theme: { bg: '#BBDEFB', bg2: '#E3F2FD', path: '#90CAF9', edge: '#1565C0', spot: '#ECEFF1', ring: '#37474F' },
+      deco: 'ice',
+      paths: [
+        [
+          { x: -30, y: 280 }, { x: 180, y: 280 }, { x: 180, y: 90 }, { x: 500, y: 90 },
+          { x: 500, y: 280 }, { x: 760, y: 280 }, { x: 760, y: 120 }, { x: 1030, y: 120 }
+        ],
+        [
+          { x: -30, y: 280 }, { x: 180, y: 280 }, { x: 180, y: 470 }, { x: 500, y: 470 },
+          { x: 500, y: 280 }, { x: 760, y: 280 }, { x: 760, y: 120 }, { x: 1030, y: 120 }
+        ]
+      ],
+      spots: [
+        { x: 80, y: 200 }, { x: 80, y: 360 }, { x: 280, y: 180 }, { x: 280, y: 380 },
+        { x: 380, y: 180 }, { x: 380, y: 380 }, { x: 580, y: 200 }, { x: 580, y: 360 },
+        { x: 840, y: 200 }, { x: 840, y: 60 }
+      ]
+    }
+  ];
+
+  var torenProg = { stars: { gras: 0, zand: 0, ijs: 0 }, unlocked: { gras: true, zand: false, ijs: false } };
+
+  var torenState = {
+    mapId: 'gras',
+    level: 'easy',
+    running: false,
+    paused: false,
+    over: false,
+    winner: 0,
+    coins: 0,
+    lives: 0,
+    livesMax: 0,
+    wave: 0,
+    waveOn: false,
+    queue: [],
+    spawnWait: 0,
+    monsters: [],
+    towers: [],
+    shots: [],
+    bolts: [],
+    selected: -1,
+    shopMode: '',
+    frameCount: 0,
+    lastT: 0,
+    raf: 0,
+    awarded: false,
+    unlockedNow: '',
+    mobUid: 1
+  };
+
+  function torenRaf() {
+    return window.requestAnimationFrame || window.webkitRequestAnimationFrame || function (fn) {
+      return window.setTimeout(function () { fn(new Date().getTime()); }, 16);
+    };
+  }
+
+  function torenCaf() {
+    return window.cancelAnimationFrame || window.webkitCancelAnimationFrame || function (id) {
+      window.clearTimeout(id);
+    };
+  }
+
+  function torenMapById(id) {
+    var i;
+    for (i = 0; i < TOREN_MAPS.length; i++) {
+      if (TOREN_MAPS[i].id === id) return TOREN_MAPS[i];
+    }
+    return TOREN_MAPS[0];
+  }
+
+  function torenTypeById(id) {
+    var i;
+    for (i = 0; i < TOREN_TYPES.length; i++) {
+      if (TOREN_TYPES[i].id === id) return TOREN_TYPES[i];
+    }
+    return TOREN_TYPES[0];
+  }
+
+  function torenDist(ax, ay, bx, by) {
+    var dx = bx - ax, dy = by - ay;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  function torenPrepPath(pts) {
+    var i, segs, dx, dy, len, total;
+    segs = [];
+    total = 0;
+    for (i = 0; i < pts.length - 1; i++) {
+      dx = pts[i + 1].x - pts[i].x;
+      dy = pts[i + 1].y - pts[i].y;
+      len = Math.sqrt(dx * dx + dy * dy);
+      if (len < 1) len = 1;
+      segs.push({ x0: pts[i].x, y0: pts[i].y, dx: dx, dy: dy, len: len, acc: total });
+      total += len;
+    }
+    return { pts: pts, segs: segs, total: total };
+  }
+
+  function torenPosOnPath(path, dist) {
+    var i, s, t, d;
+    d = dist;
+    if (d < 0) d = 0;
+    if (d >= path.total) {
+      s = path.segs[path.segs.length - 1];
+      return { x: s.x0 + s.dx, y: s.y0 + s.dy, done: true };
+    }
+    for (i = 0; i < path.segs.length; i++) {
+      s = path.segs[i];
+      if (d <= s.acc + s.len) {
+        t = (d - s.acc) / s.len;
+        return { x: s.x0 + s.dx * t, y: s.y0 + s.dy * t, done: false };
+      }
+    }
+    s = path.segs[path.segs.length - 1];
+    return { x: s.x0 + s.dx, y: s.y0 + s.dy, done: true };
+  }
+
+  function loadTorenProgress() {
+    var raw, data, i, id;
+    torenProg = { stars: { gras: 0, zand: 0, ijs: 0 }, unlocked: { gras: true, zand: false, ijs: false } };
+    try {
+      raw = window.localStorage.getItem(TOREN_LS_KEY);
+      if (!raw) return;
+      data = JSON.parse(raw);
+      if (!data) return;
+      if (data.stars) {
+        for (i = 0; i < TOREN_MAPS.length; i++) {
+          id = TOREN_MAPS[i].id;
+          if (typeof data.stars[id] === 'number' && data.stars[id] > 0) {
+            torenProg.stars[id] = data.stars[id] > 3 ? 3 : data.stars[id];
+          }
+        }
+      }
+      if (data.unlocked) {
+        if (data.unlocked.zand) torenProg.unlocked.zand = true;
+        if (data.unlocked.ijs) torenProg.unlocked.ijs = true;
+        torenProg.unlocked.gras = true;
+      }
+    } catch (e) {}
+  }
+
+  function saveTorenProgress() {
+    try {
+      window.localStorage.setItem(TOREN_LS_KEY, JSON.stringify(torenProg));
+    } catch (e) {}
+  }
+
+  function torenCanvas() {
+    return $('toren-canvas');
+  }
+
+  function torenMeet() {
+    var c, r, scale, w, h;
+    c = torenCanvas();
+    if (!c) return null;
+    r = c.getBoundingClientRect();
+    if (!r.width || !r.height) return null;
+    scale = Math.min(r.width / TOREN_W, r.height / TOREN_H);
+    if (!scale || scale <= 0) scale = 1;
+    w = TOREN_W * scale;
+    h = TOREN_H * scale;
+    return {
+      left: r.left + (r.width - w) / 2,
+      top: r.top + (r.height - h) / 2,
+      scale: scale,
+      width: w,
+      height: h
+    };
+  }
+
+  function torenClientToWorld(cx, cy) {
+    var m;
+    m = torenMeet();
+    if (!m) return { x: 0, y: 0 };
+    return { x: (cx - m.left) / m.scale, y: (cy - m.top) / m.scale };
+  }
+
+  function torenWorldToClient(wx, wy) {
+    var m;
+    m = torenMeet();
+    if (!m) return { x: 0, y: 0 };
+    return { x: m.left + wx * m.scale, y: m.top + wy * m.scale };
+  }
+
+  function torenSizeCanvas() {
+    var wrap, c, w, h, dpr, ctx;
+    wrap = $('toren-stage');
+    c = torenCanvas();
+    if (!wrap || !c) return;
+    w = wrap.clientWidth || wrap.offsetWidth || 800;
+    h = wrap.clientHeight || wrap.offsetHeight || 400;
+    if (w < 80) w = 80;
+    if (h < 80) h = 80;
+    dpr = window.devicePixelRatio || 1;
+    if (dpr > 2) dpr = 2;
+    if (dpr < 1) dpr = 1;
+    c.style.width = w + 'px';
+    c.style.height = h + 'px';
+    c.width = Math.round(w * dpr);
+    c.height = Math.round(h * dpr);
+    ctx = c.getContext('2d');
+    if (ctx && ctx.setTransform) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function torenPreparedMap(map) {
+    var i, paths;
+    paths = [];
+    for (i = 0; i < map.paths.length; i++) paths.push(torenPrepPath(map.paths[i]));
+    return paths;
+  }
+
+  function hideTorenOverlay() {
+    var el = $('overlay-toren');
+    if (el) el.className = 'overlay is-hidden';
+  }
+
+  function showTorenOverlay(kind) {
+    var el, title, text, again, home, extra;
+    el = $('overlay-toren');
+    title = $('toren-ov-title');
+    text = $('toren-ov-text');
+    again = $('btn-toren-opnieuw');
+    home = $('btn-toren-naar-kaarten');
+    extra = $('toren-ov-extra');
+    if (!el) return;
+    el.className = 'overlay tap overlay-toren';
+    if (kind === 'pause') {
+      if (title) title.innerHTML = 'Pauze';
+      if (text) text.innerHTML = 'Tik op Verder om verder te spelen.';
+      if (again) again.innerHTML = 'Verder';
+      if (home) home.innerHTML = 'Naar kaarten';
+      if (extra) extra.innerHTML = '';
+      el.setAttribute('data-mode', 'pause');
+    } else if (kind === 'win') {
+      if (title) title.innerHTML = 'Gewonnen!';
+      if (text) text.innerHTML = 'Alle golven zijn geklaard!';
+      if (again) again.innerHTML = 'Nog eens';
+      if (home) home.innerHTML = 'Naar kaarten';
+      if (extra) {
+        extra.innerHTML = torenState.unlockedNow
+          ? 'Nieuwe kaart open: ' + torenMapById(torenState.unlockedNow).name + '!'
+          : '';
+      }
+      el.setAttribute('data-mode', 'win');
+    } else {
+      if (title) title.innerHTML = 'Jammer!';
+      if (text) text.innerHTML = 'Probeer het nog eens.';
+      if (again) again.innerHTML = 'Nog eens';
+      if (home) home.innerHTML = 'Naar kaarten';
+      if (extra) extra.innerHTML = '';
+      el.setAttribute('data-mode', 'lose');
+    }
+  }
+
+  function stopToren() {
+    torenState.running = false;
+    if (torenState.raf) {
+      torenCaf()(torenState.raf);
+      torenState.raf = 0;
+    }
+    hideTorenOverlay();
+    hideTorenShop();
+  }
+
+  function torenTowerAt(spotId) {
+    var i;
+    for (i = 0; i < torenState.towers.length; i++) {
+      if (torenState.towers[i].spot === spotId) return torenState.towers[i];
+    }
+    return null;
+  }
+
+  function torenSpent(t) {
+    var typ, n;
+    typ = torenTypeById(t.type);
+    n = typ.price;
+    if (t.level >= 2) n += typ.up[1];
+    if (t.level >= 3) n += typ.up[2];
+    return n;
+  }
+
+  function torenCanAfford(n) {
+    return torenState.coins >= n;
+  }
+
+  function torenPlace(spotId, typeId) {
+    var typ, map, spot, t;
+    if (torenState.over || torenState.paused) return false;
+    typ = torenTypeById(typeId);
+    if (!typ) return false;
+    map = torenMapById(torenState.mapId);
+    if (spotId < 0 || spotId >= map.spots.length) return false;
+    if (torenTowerAt(spotId)) return false;
+    if (!torenCanAfford(typ.price)) return false;
+    spot = map.spots[spotId];
+    t = { spot: spotId, type: typ.id, level: 1, cool: 0, x: spot.x, y: spot.y };
+    torenState.towers.push(t);
+    torenState.coins -= typ.price;
+    torenUpdateHud();
+    torenPaintShop();
+    return true;
+  }
+
+  function torenUpgrade(spotId) {
+    var t, typ, cost;
+    if (torenState.over || torenState.paused) return false;
+    t = torenTowerAt(spotId);
+    if (!t || t.level >= 3) return false;
+    typ = torenTypeById(t.type);
+    cost = typ.up[t.level];
+    if (!torenCanAfford(cost)) return false;
+    torenState.coins -= cost;
+    t.level += 1;
+    torenUpdateHud();
+    torenPaintShop();
+    return true;
+  }
+
+  function torenSell(spotId) {
+    var t, i, refund;
+    if (torenState.over || torenState.paused) return false;
+    t = torenTowerAt(spotId);
+    if (!t) return false;
+    refund = Math.floor(torenSpent(t) / 2);
+    torenState.coins += refund;
+    for (i = 0; i < torenState.towers.length; i++) {
+      if (torenState.towers[i].spot === spotId) {
+        torenState.towers.splice(i, 1);
+        break;
+      }
+    }
+    torenState.selected = -1;
+    hideTorenShop();
+    torenUpdateHud();
+    return true;
+  }
+
+  function torenBuildQueue(waveIdx) {
+    var groups, g, i, j, q, first;
+    groups = TOREN_WAVES[waveIdx] || TOREN_WAVES[0];
+    q = [];
+    first = true;
+    for (i = 0; i < groups.length; i++) {
+      g = groups[i];
+      for (j = 0; j < g.n; j++) {
+        q.push({ k: g.k, wait: first ? 0.15 : g.gap });
+        first = false;
+      }
+    }
+    return q;
+  }
+
+  function torenStartWave() {
+    if (torenState.over || torenState.paused || torenState.waveOn) return false;
+    if (torenState.wave >= 10) return false;
+    torenState.wave += 1;
+    torenState.waveOn = true;
+    torenState.queue = torenBuildQueue(torenState.wave - 1);
+    torenState.spawnWait = 0;
+    torenUpdateHud();
+    beginQuestionVoice();
+    speak('toren-golf-' + torenState.wave);
+    return true;
+  }
+
+  function torenSpawn(kindId) {
+    var map, paths, path, mob, hp, cfg, m;
+    map = torenMapById(torenState.mapId);
+    paths = torenState.paths;
+    path = paths[Math.floor(Math.random() * paths.length)];
+    mob = TOREN_MOBS[kindId] || TOREN_MOBS.slijm;
+    cfg = TOREN_LEVELS[torenState.level] || TOREN_LEVELS.easy;
+    hp = Math.max(1, Math.round(mob.hp * cfg.hpMul));
+    m = {
+      id: torenState.mobUid,
+      kind: mob.id,
+      hp: hp,
+      hpMax: hp,
+      speed: mob.speed * cfg.spdMul,
+      reward: mob.reward,
+      r: mob.r,
+      color: mob.color,
+      dark: mob.dark,
+      path: path,
+      dist: 0,
+      x: path.pts[0].x,
+      y: path.pts[0].y,
+      slow: 1,
+      slowT: 0
+    };
+    torenState.mobUid += 1;
+    torenState.monsters.push(m);
+  }
+
+  function torenHitMob(m, dmg, slow) {
+    if (!m || m.hp <= 0) return;
+    m.hp -= dmg;
+    if (slow && slow > 0) {
+      m.slow = slow;
+      m.slowT = 2.2;
+    }
+    if (m.hp <= 0) {
+      m.hp = 0;
+      torenState.coins += m.reward;
+      torenRemoveMob(m.id);
+      torenUpdateHud();
+    }
+  }
+
+  function torenRemoveMob(id) {
+    var i;
+    for (i = 0; i < torenState.monsters.length; i++) {
+      if (torenState.monsters[i].id === id) {
+        torenState.monsters.splice(i, 1);
+        return;
+      }
+    }
+  }
+
+  function torenFirstInRange(x, y, range) {
+    var i, m, d, best, bestDist;
+    best = null;
+    bestDist = -1;
+    for (i = 0; i < torenState.monsters.length; i++) {
+      m = torenState.monsters[i];
+      if (m.hp <= 0) continue;
+      d = torenDist(x, y, m.x, m.y);
+      if (d <= range && m.dist > bestDist) {
+        best = m;
+        bestDist = m.dist;
+      }
+    }
+    return best;
+  }
+
+  function torenFire(t, typ, target) {
+    var dmg, range;
+    dmg = typ.dmg[t.level - 1];
+    range = typ.range[t.level - 1];
+    if (typ.id === 'bliksem') {
+      torenState.bolts.push({ x0: t.x, y0: t.y - 18, x1: target.x, y1: target.y, t: 0.16 });
+      torenHitMob(target, dmg, 0);
+      return;
+    }
+    torenState.shots.push({
+      x: t.x,
+      y: t.y - 14,
+      target: target.id,
+      typ: typ.id,
+      dmg: dmg,
+      splash: typ.splash,
+      slow: typ.slow,
+      speed: typ.id === 'kanon' ? 220 : 320
+    });
+  }
+
+  function torenAdvance(dt) {
+    var i, j, m, t, typ, target, shot, pos, next, cfg, step, left, map, mob, d, bonus;
+    if (torenState.over || torenState.paused) return;
+    if (dt > 0.12) dt = 0.12;
+    if (dt < 0) dt = 0;
+    cfg = TOREN_LEVELS[torenState.level] || TOREN_LEVELS.easy;
+
+    if (torenState.waveOn && torenState.queue.length) {
+      torenState.spawnWait -= dt;
+      while (torenState.queue.length && torenState.spawnWait <= 0) {
+        torenSpawn(torenState.queue[0].k);
+        torenState.queue.shift();
+        if (torenState.queue.length) torenState.spawnWait += torenState.queue[0].wait;
+      }
+    }
+
+    next = [];
+    for (i = 0; i < torenState.monsters.length; i++) {
+      m = torenState.monsters[i];
+      if (m.slowT > 0) {
+        m.slowT -= dt;
+        if (m.slowT <= 0) { m.slowT = 0; m.slow = 1; }
+      }
+      step = m.speed * (m.slow < 1 ? m.slow : 1) * dt;
+      m.dist += step;
+      pos = torenPosOnPath(m.path, m.dist);
+      m.x = pos.x;
+      m.y = pos.y;
+      if (pos.done) {
+        torenState.lives -= 1;
+        if (torenState.lives < 0) torenState.lives = 0;
+        torenUpdateHud();
+        if (torenState.lives <= 0) {
+          torenFinish(-1);
+          return;
+        }
+      } else if (m.hp > 0) {
+        next.push(m);
+      }
+    }
+    torenState.monsters = next;
+
+    for (i = 0; i < torenState.towers.length; i++) {
+      t = torenState.towers[i];
+      typ = torenTypeById(t.type);
+      t.cool -= dt;
+      if (t.cool <= 0) {
+        target = torenFirstInRange(t.x, t.y, typ.range[t.level - 1]);
+        if (target) {
+          torenFire(t, typ, target);
+          t.cool = typ.rate[t.level - 1];
+        }
+      }
+    }
+
+    next = [];
+    for (i = 0; i < torenState.shots.length; i++) {
+      shot = torenState.shots[i];
+      target = null;
+      for (j = 0; j < torenState.monsters.length; j++) {
+        if (torenState.monsters[j].id === shot.target) target = torenState.monsters[j];
+      }
+      if (!target) continue;
+      d = torenDist(shot.x, shot.y, target.x, target.y);
+      step = shot.speed * dt;
+      if (d <= step + target.r * 0.5) {
+        if (shot.splash) {
+          for (j = 0; j < torenState.monsters.length; j++) {
+            mob = torenState.monsters[j];
+            if (torenDist(target.x, target.y, mob.x, mob.y) <= shot.splash) {
+              torenHitMob(mob, shot.dmg, 0);
+            }
+          }
+        } else {
+          torenHitMob(target, shot.dmg, shot.slow);
+        }
+      } else {
+        shot.x += (target.x - shot.x) / d * step;
+        shot.y += (target.y - shot.y) / d * step;
+        next.push(shot);
+      }
+    }
+    torenState.shots = next;
+
+    next = [];
+    for (i = 0; i < torenState.bolts.length; i++) {
+      torenState.bolts[i].t -= dt;
+      if (torenState.bolts[i].t > 0) next.push(torenState.bolts[i]);
+    }
+    torenState.bolts = next;
+
+    if (torenState.waveOn && !torenState.queue.length && !torenState.monsters.length && !torenState.over) {
+      torenState.waveOn = false;
+      bonus = 10 + torenState.wave * 5;
+      torenState.coins += bonus;
+      torenUpdateHud();
+      if (torenState.wave >= 10) {
+        torenFinish(1);
+      }
+    }
+  }
+
+  function torenFinish(winner) {
+    var got, id, nextId, i;
+    if (torenState.over) return;
+    torenState.over = true;
+    torenState.winner = winner;
+    torenState.paused = false;
+    torenState.waveOn = false;
+    torenDraw();
+    if (winner === 1) {
+      got = (TOREN_LEVELS[torenState.level] || TOREN_LEVELS.easy).stars;
+      id = torenState.mapId;
+      if (got > torenProg.stars[id]) torenProg.stars[id] = got;
+      nextId = '';
+      if (id === 'gras' && !torenProg.unlocked.zand) {
+        torenProg.unlocked.zand = true;
+        nextId = 'zand';
+      } else if (id === 'zand' && !torenProg.unlocked.ijs) {
+        torenProg.unlocked.ijs = true;
+        nextId = 'ijs';
+      }
+      torenState.unlockedNow = nextId;
+      saveTorenProgress();
+      if (!torenState.awarded) {
+        torenState.awarded = true;
+        state.stars += 1;
+        state.sessionCorrect += 1;
+        state.towardsReward += 1;
+        saveStars();
+        updateStarsUI();
+        showBurst();
+      }
+      showTorenOverlay('win');
+      beginQuestionVoice();
+      speak('toren-gewonnen');
+      if (nextId) {
+        window.setTimeout(function () { speak('toren-kaart-open'); }, 900);
+      }
+    } else {
+      showTorenOverlay('lose');
+      beginQuestionVoice();
+      speak('toren-probeer');
+    }
+  }
+
+  function torenTogglePause() {
+    if (torenState.over || !torenState.running) return;
+    if (torenState.paused) {
+      torenState.paused = false;
+      torenState.lastT = new Date().getTime();
+      hideTorenOverlay();
+    } else {
+      torenState.paused = true;
+      showTorenOverlay('pause');
+    }
+    torenDraw();
+  }
+
+  function torenHeartSvg() {
+    return '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 21 L3 12 A5 5 0 0 1 12 6 A5 5 0 0 1 21 12 Z" fill="#E53935" stroke="#B71C1C" stroke-width="1.2"/></svg>';
+  }
+
+  function torenUpdateHud() {
+    var el, i, html, btn, prompt;
+    el = $('toren-coins');
+    if (el) el.innerHTML = String(torenState.coins);
+    el = $('toren-lives');
+    if (el) {
+      html = '';
+      for (i = 0; i < torenState.livesMax; i++) {
+        html += '<span class="toren-heart' + (i < torenState.lives ? '' : ' is-empty') + '">' + torenHeartSvg() + '</span>';
+      }
+      el.innerHTML = html;
+    }
+    el = $('toren-wave');
+    if (el) el.innerHTML = 'Golf ' + (torenState.wave ? torenState.wave : 0) + ' / 10';
+    btn = $('btn-toren-golf');
+    if (btn) {
+      if (torenState.over) {
+        btn.disabled = true;
+        btn.className = 'tap toren-golf-btn is-disabled';
+      } else if (torenState.waveOn) {
+        btn.disabled = true;
+        btn.className = 'tap toren-golf-btn is-disabled';
+        btn.innerHTML = 'Golf bezig…';
+      } else if (torenState.wave >= 10) {
+        btn.disabled = true;
+        btn.className = 'tap toren-golf-btn is-disabled';
+        btn.innerHTML = 'Klaar!';
+      } else {
+        btn.disabled = false;
+        btn.className = 'tap toren-golf-btn';
+        btn.innerHTML = torenState.wave === 0 ? 'Start golf 1' : 'Start golf ' + (torenState.wave + 1);
+      }
+    }
+    prompt = $('toren-prompt');
+    if (prompt && !torenState.over) {
+      if (torenState.wave === 0) prompt.innerHTML = 'Tik op een bouwvlek en kies een toren';
+      else if (torenState.waveOn) prompt.innerHTML = 'Golf ' + torenState.wave + ' — verdedig het pad!';
+      else prompt.innerHTML = 'Bouw of verbeter, en start de volgende golf';
+    }
+    if (torenState.shopMode) torenPaintShop();
+  }
+
+  function hideTorenShop() {
+    var el = $('toren-shop');
+    if (el) el.className = 'toren-shop is-hidden';
+    torenState.shopMode = '';
+  }
+
+  function torenPaintShop() {
+    var el, html, typ, t, i, cost, can, map, disabled;
+    el = $('toren-shop');
+    if (!el) return;
+    if (torenState.selected < 0) {
+      hideTorenShop();
+      return;
+    }
+    t = torenTowerAt(torenState.selected);
+    html = '';
+    if (!t) {
+      torenState.shopMode = 'build';
+      html += '<div class="toren-shop-title">Bouw een toren</div><div class="toren-shop-row">';
+      for (i = 0; i < TOREN_TYPES.length; i++) {
+        typ = TOREN_TYPES[i];
+        can = torenCanAfford(typ.price);
+        disabled = can ? '' : ' is-disabled';
+        html += '<button type="button" class="tap toren-shop-btn' + disabled + '" data-act="toren-build" data-type="' + typ.id + '"' + (can ? '' : ' aria-disabled="true"') + '>';
+        html += '<span class="toren-shop-name">' + typ.name + '</span>';
+        html += '<span class="toren-shop-price">' + typ.price + '</span>';
+        html += '</button>';
+      }
+      html += '</div>';
+    } else {
+      typ = torenTypeById(t.type);
+      torenState.shopMode = 'upgrade';
+      html += '<div class="toren-shop-title">' + typ.name + ' — niveau ' + t.level + '</div><div class="toren-shop-row">';
+      if (t.level < 3) {
+        cost = typ.up[t.level];
+        can = torenCanAfford(cost);
+        disabled = can ? '' : ' is-disabled';
+        html += '<button type="button" class="tap toren-shop-btn' + disabled + '" data-act="toren-upgrade"' + (can ? '' : ' aria-disabled="true"') + '>';
+        html += '<span class="toren-shop-name">Verbeter naar ' + (t.level + 1) + '</span>';
+        html += '<span class="toren-shop-price">' + cost + '</span>';
+        html += '</button>';
+      } else {
+        html += '<div class="toren-shop-max">Hoogste niveau!</div>';
+      }
+      html += '<button type="button" class="tap toren-shop-btn toren-shop-sell" data-act="toren-sell">';
+      html += '<span class="toren-shop-name">Verkopen</span>';
+      html += '<span class="toren-shop-price">+' + Math.floor(torenSpent(t) / 2) + '</span>';
+      html += '</button></div>';
+    }
+    el.innerHTML = html;
+    el.className = 'toren-shop';
+  }
+
+  function torenOpenSpot(id) {
+    if (torenState.over || torenState.paused) return;
+    torenState.selected = id;
+    torenPaintShop();
+    torenDraw();
+  }
+
+  function paintTorenKaarten() {
+    var i, map, btn, lock, starsEl, html, s, j;
+    loadTorenProgress();
+    for (i = 0; i < TOREN_MAPS.length; i++) {
+      map = TOREN_MAPS[i];
+      btn = $('toren-kaart-' + map.id);
+      if (!btn) continue;
+      if (torenProg.unlocked[map.id]) {
+        btn.className = 'tap toren-kaart-btn toren-kaart-' + map.id;
+        btn.removeAttribute('aria-disabled');
+      } else {
+        btn.className = 'tap toren-kaart-btn toren-kaart-' + map.id + ' is-locked';
+        btn.setAttribute('aria-disabled', 'true');
+      }
+      starsEl = $('toren-kaart-stars-' + map.id);
+      if (starsEl) {
+        html = '';
+        s = torenProg.stars[map.id] || 0;
+        for (j = 0; j < 3; j++) {
+          html += '<span class="toren-kaart-star' + (j < s ? ' on' : '') + '">★</span>';
+        }
+        starsEl.innerHTML = html;
+      }
+      lock = $('toren-kaart-lock-' + map.id);
+      if (lock) lock.className = torenProg.unlocked[map.id] ? 'toren-kaart-lock is-hidden' : 'toren-kaart-lock';
+    }
+  }
+
+  function showTorenKaarten() {
+    stopToren();
+    loadTorenProgress();
+    showScreen('torenkaarten');
+    paintTorenKaarten();
+    updateStarsUI();
+  }
+
+  function showTorenLevel(mapId) {
+    var title, map;
+    if (!mapId) mapId = 'gras';
+    if (!torenProg.unlocked[mapId]) {
+      beginQuestionVoice();
+      speak('toren-op-slot');
+      return;
+    }
+    torenState.mapId = mapId;
+    map = torenMapById(mapId);
+    title = $('torenlevel-title');
+    if (title) title.innerHTML = map.name;
+    stopToren();
+    showScreen('torenlevel');
+    updateStarsUI();
+  }
+
+  function startToren(level, fresh, mapId) {
+    var cfg, map, el;
+    if (mapId) torenState.mapId = mapId;
+    if (!level) level = 'easy';
+    map = torenMapById(torenState.mapId);
+    cfg = TOREN_LEVELS[level] || TOREN_LEVELS.easy;
+    stopToren();
+    torenState.level = level;
+    torenState.running = true;
+    torenState.paused = false;
+    torenState.over = false;
+    torenState.winner = 0;
+    torenState.coins = cfg.coins;
+    torenState.lives = cfg.lives;
+    torenState.livesMax = cfg.lives;
+    torenState.wave = 0;
+    torenState.waveOn = false;
+    torenState.queue = [];
+    torenState.spawnWait = 0;
+    torenState.monsters = [];
+    torenState.towers = [];
+    torenState.shots = [];
+    torenState.bolts = [];
+    torenState.selected = -1;
+    torenState.shopMode = '';
+    torenState.frameCount = 0;
+    torenState.lastT = 0;
+    torenState.awarded = false;
+    torenState.unlockedNow = '';
+    torenState.mobUid = 1;
+    torenState.paths = torenPreparedMap(map);
+    showScreen('toren');
+    updateStarsUI();
+    torenSizeCanvas();
+    hideTorenOverlay();
+    hideTorenShop();
+    el = $('toren-map-name');
+    if (el) el.innerHTML = map.name;
+    torenUpdateHud();
+    torenDraw();
+    torenState.lastT = new Date().getTime();
+    torenState.raf = torenRaf()(torenLoop);
+    if (fresh !== false) {
+      beginQuestionVoice();
+      speak('toren-hint');
+    }
+  }
+
+  function torenDraw() {
+    var c, ctx, m, map, theme, i, pth, pts, j, sp, tw, typ, mob, shot, bolt, cssW, cssH, sel, r, hpW, cr, ang;
+    c = torenCanvas();
+    if (!c) return;
+    ctx = c.getContext('2d');
+    if (!ctx) return;
+    cssW = c.clientWidth || c.width;
+    cssH = c.clientHeight || c.height;
+    ctx.clearRect(0, 0, cssW, cssH);
+    map = torenMapById(torenState.mapId);
+    theme = map.theme;
+    m = torenMeet();
+    ctx.fillStyle = theme.bg;
+    ctx.fillRect(0, 0, cssW, cssH);
+    if (!m) return;
+    ctx.save();
+    ctx.translate(m.left - c.getBoundingClientRect().left, m.top - c.getBoundingClientRect().top);
+    ctx.scale(m.scale, m.scale);
+    ctx.fillStyle = theme.bg;
+    ctx.fillRect(0, 0, TOREN_W, TOREN_H);
+    ctx.fillStyle = theme.bg2;
+    for (i = 0; i < 18; i++) {
+      ctx.beginPath();
+      ctx.globalAlpha = 0.22;
+      ctx.arc((i * 137) % TOREN_W, (i * 97) % TOREN_H, 28 + (i % 5) * 8, 0, Math.PI * 2, false);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    if (map.deco === 'grass') {
+      ctx.fillStyle = '#F8BBD0';
+      for (i = 0; i < 12; i++) {
+        ctx.beginPath();
+        ctx.arc(60 + (i * 83) % 900, 40 + (i * 51) % 80, 4, 0, Math.PI * 2, false);
+        ctx.fill();
+      }
+    } else if (map.deco === 'sand') {
+      ctx.fillStyle = '#2E7D32';
+      for (i = 0; i < 8; i++) {
+        ctx.fillRect(40 + (i * 120) % 900, 30 + (i % 3) * 16, 6, 16);
+        ctx.beginPath();
+        ctx.arc(43 + (i * 120) % 900, 28 + (i % 3) * 16, 7, 0, Math.PI * 2, false);
+        ctx.fill();
+      }
+    } else {
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      for (i = 0; i < 20; i++) {
+        ctx.beginPath();
+        ctx.arc((i * 67) % TOREN_W, (i * 41) % TOREN_H, 1.4, 0, Math.PI * 2, false);
+        ctx.fill();
+      }
+    }
+    for (i = 0; i < map.paths.length; i++) {
+      pts = map.paths[i];
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = theme.edge;
+      ctx.lineWidth = TOREN_PATH_W + 8;
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x, pts[0].y);
+      for (j = 1; j < pts.length; j++) ctx.lineTo(pts[j].x, pts[j].y);
+      ctx.stroke();
+      ctx.strokeStyle = theme.path;
+      ctx.lineWidth = TOREN_PATH_W;
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x, pts[0].y);
+      for (j = 1; j < pts.length; j++) ctx.lineTo(pts[j].x, pts[j].y);
+      ctx.stroke();
+    }
+    sel = torenState.selected;
+    if (sel >= 0) {
+      tw = torenTowerAt(sel);
+      typ = tw ? torenTypeById(tw.type) : null;
+      r = typ ? typ.range[tw.level - 1] : 90;
+      sp = map.spots[sel];
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba(255,255,255,0.16)';
+      ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+      ctx.lineWidth = 2;
+      ctx.arc(sp.x, sp.y, r, 0, Math.PI * 2, false);
+      ctx.fill();
+      ctx.stroke();
+    }
+    for (i = 0; i < map.spots.length; i++) {
+      sp = map.spots[i];
+      ctx.beginPath();
+      ctx.fillStyle = theme.spot;
+      ctx.strokeStyle = theme.ring;
+      ctx.lineWidth = (sel === i) ? 4 : 2;
+      ctx.arc(sp.x, sp.y, 22, 0, Math.PI * 2, false);
+      ctx.fill();
+      ctx.stroke();
+    }
+    for (i = 0; i < torenState.towers.length; i++) {
+      tw = torenState.towers[i];
+      typ = torenTypeById(tw.type);
+      torenDrawTower(ctx, tw, typ);
+    }
+    for (i = 0; i < torenState.shots.length; i++) {
+      shot = torenState.shots[i];
+      ctx.beginPath();
+      ctx.fillStyle = shot.typ === 'kanon' ? '#4E342E' : (shot.typ === 'ijs' ? '#B3E5FC' : '#1565C0');
+      ctx.arc(shot.x, shot.y, shot.typ === 'kanon' ? 6 : 4, 0, Math.PI * 2, false);
+      ctx.fill();
+    }
+    for (i = 0; i < torenState.bolts.length; i++) {
+      bolt = torenState.bolts[i];
+      ctx.strokeStyle = 'rgba(255,235,59,' + (0.4 + bolt.t * 3) + ')';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(bolt.x0, bolt.y0);
+      ctx.lineTo(bolt.x1, bolt.y1);
+      ctx.stroke();
+    }
+    for (i = 0; i < torenState.monsters.length; i++) {
+      mob = torenState.monsters[i];
+      ctx.beginPath();
+      ctx.fillStyle = mob.color;
+      ctx.strokeStyle = mob.dark;
+      ctx.lineWidth = 2;
+      ctx.arc(mob.x, mob.y, mob.r, 0, Math.PI * 2, false);
+      ctx.fill();
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.fillStyle = '#FFFFFF';
+      ctx.arc(mob.x - 5, mob.y - 3, 3.2, 0, Math.PI * 2, false);
+      ctx.arc(mob.x + 5, mob.y - 3, 3.2, 0, Math.PI * 2, false);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.fillStyle = '#212121';
+      ctx.arc(mob.x - 4.5, mob.y - 3, 1.5, 0, Math.PI * 2, false);
+      ctx.arc(mob.x + 5.5, mob.y - 3, 1.5, 0, Math.PI * 2, false);
+      ctx.fill();
+      hpW = 28;
+      ctx.fillStyle = 'rgba(0,0,0,0.35)';
+      ctx.fillRect(mob.x - hpW / 2, mob.y - mob.r - 12, hpW, 7);
+      ctx.fillStyle = mob.hp / mob.hpMax > 0.4 ? '#66BB6A' : '#EF5350';
+      ctx.fillRect(mob.x - hpW / 2, mob.y - mob.r - 12, hpW * (mob.hp / mob.hpMax), 7);
+      ctx.strokeStyle = 'rgba(0,0,0,0.45)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(mob.x - hpW / 2, mob.y - mob.r - 12, hpW, 7);
+    }
+    ctx.restore();
+  }
+
+  function torenDrawTower(ctx, tw, typ) {
+    var h, w, i;
+    h = 20 + tw.level * 8;
+    w = 10 + tw.level * 2;
+    ctx.fillStyle = typ.dark;
+    ctx.fillRect(tw.x - w / 2 - 6, tw.y + 6, w + 12, 8);
+    ctx.fillStyle = typ.color;
+    ctx.fillRect(tw.x - w / 2, tw.y - h + 8, w, h);
+    ctx.fillStyle = typ.dark;
+    ctx.beginPath();
+    ctx.moveTo(tw.x - w / 2 - 4, tw.y - h + 10);
+    ctx.lineTo(tw.x, tw.y - h - 6);
+    ctx.lineTo(tw.x + w / 2 + 4, tw.y - h + 10);
+    ctx.closePath();
+    ctx.fill();
+    if (tw.level >= 2) {
+      ctx.fillStyle = '#FFF59D';
+      ctx.fillRect(tw.x - 2, tw.y - h + 16, 4, 6);
+    }
+    if (tw.level >= 3) {
+      ctx.fillStyle = '#FFD54F';
+      ctx.beginPath();
+      ctx.moveTo(tw.x, tw.y - h - 14);
+      ctx.lineTo(tw.x + 4, tw.y - h - 6);
+      ctx.lineTo(tw.x - 4, tw.y - h - 6);
+      ctx.closePath();
+      ctx.fill();
+    }
+  }
+
+  function torenLoop(now) {
+    var dt;
+    if (!torenState.running) return;
+    if (!now) now = new Date().getTime();
+    if (!torenState.lastT) torenState.lastT = now;
+    dt = (now - torenState.lastT) / 1000;
+    torenState.lastT = now;
+    if (dt > 0.25) dt = 0.25;
+    if (!torenState.paused && !torenState.over) torenAdvance(dt);
+    torenDraw();
+    torenState.frameCount += 1;
+    torenState.raf = torenRaf()(torenLoop);
+  }
+
+  function torenEventPoint(e) {
+    var t;
+    if (e.touches && e.touches.length) t = e.touches[0];
+    else if (e.changedTouches && e.changedTouches.length) t = e.changedTouches[0];
+    else t = e;
+    return { x: t.clientX, y: t.clientY };
+  }
+
+  function torenOnStage(el) {
+    while (el && el !== document.body) {
+      if (el.id === 'toren-stage' || el.id === 'toren-canvas') return true;
+      el = el.parentNode;
+    }
+    return false;
+  }
+
+  function torenHitSpot(wx, wy) {
+    var map, i, sp, best, bestD, d;
+    map = torenMapById(torenState.mapId);
+    best = -1;
+    bestD = 32;
+    for (i = 0; i < map.spots.length; i++) {
+      sp = map.spots[i];
+      d = torenDist(wx, wy, sp.x, sp.y);
+      if (d < bestD) {
+        best = i;
+        bestD = d;
+      }
+    }
+    return best;
+  }
+
+  function torenPointer(e) {
+    var pt, w, hit;
+    if (state.screen !== 'toren') return false;
+    if (torenState.over || torenState.paused) return false;
+    if (!torenOnStage(e.target)) return false;
+    pt = torenEventPoint(e);
+    w = torenClientToWorld(pt.x, pt.y);
+    hit = torenHitSpot(w.x, w.y);
+    if (hit >= 0) {
+      torenOpenSpot(hit);
+      return true;
+    }
+    torenState.selected = -1;
+    hideTorenShop();
+    torenDraw();
+    return true;
+  }
+
+  window.__torenTest = {
+    start: startToren,
+    stop: stopToren,
+    showKaarten: showTorenKaarten,
+    showLevel: showTorenLevel,
+    place: torenPlace,
+    upgrade: torenUpgrade,
+    sell: torenSell,
+    startWave: torenStartWave,
+    step: function (sec) {
+      var left, chunk;
+      left = sec;
+      while (left > 0 && !torenState.over) {
+        chunk = left > 0.05 ? 0.05 : left;
+        torenAdvance(chunk);
+        left -= chunk;
+      }
+      torenDraw();
+      torenUpdateHud();
+    },
+    forceWin: function () {
+      torenState.monsters = [];
+      torenState.queue = [];
+      torenState.wave = 10;
+      torenState.waveOn = false;
+      torenFinish(1);
+    },
+    worldToClient: torenWorldToClient,
+    loadProgress: loadTorenProgress,
+    saveProgress: saveTorenProgress,
+    resetProgress: function () {
+      torenProg = { stars: { gras: 0, zand: 0, ijs: 0 }, unlocked: { gras: true, zand: false, ijs: false } };
+      saveTorenProgress();
+    },
+    unlockAll: function () {
+      torenProg.unlocked = { gras: true, zand: true, ijs: true };
+      saveTorenProgress();
+    },
+    getProgress: function () {
+      return { stars: torenProg.stars, unlocked: torenProg.unlocked };
+    },
+    types: TOREN_TYPES,
+    maps: TOREN_MAPS,
+    getState: function () {
+      return {
+        mapId: torenState.mapId,
+        level: torenState.level,
+        over: torenState.over,
+        winner: torenState.winner,
+        coins: torenState.coins,
+        lives: torenState.lives,
+        wave: torenState.wave,
+        waveOn: torenState.waveOn,
+        nMonsters: torenState.monsters.length,
+        nTowers: torenState.towers.length,
+        selected: torenState.selected,
+        shopMode: torenState.shopMode,
+        unlockedNow: torenState.unlockedNow,
+        towers: torenState.towers,
+        nPaths: torenState.paths ? torenState.paths.length : 0
+      };
+    }
+  };
+
   function decorateStatic() {
     $('sun-icon').innerHTML = sunHtml();
     if ($('icon-tekenen-start')) {
@@ -24540,6 +26283,15 @@
         '<circle cx="20" cy="26" r="5" fill="rgba(255,255,255,0.35)"/>' +
         '<circle cx="50" cy="36" r="12" fill="#EF5350" stroke="#B71C1C" stroke-width="2"/>' +
         '<circle cx="46" cy="32" r="4" fill="rgba(255,255,255,0.35)"/>' +
+        '</svg>';
+    }
+    if ($('icon-toren-start')) {
+      $('icon-toren-start').innerHTML =
+        '<svg viewBox="0 0 72 56" width="72" height="56" aria-hidden="true">' +
+        '<rect x="28" y="22" width="16" height="26" fill="#FFCC80" stroke="#5D4037" stroke-width="2"/>' +
+        '<path d="M24 24 L36 10 L48 24 Z" fill="#E53935" stroke="#5D4037" stroke-width="2" stroke-linejoin="round"/>' +
+        '<rect x="20" y="44" width="32" height="8" rx="2" fill="#A1887F" stroke="#5D4037" stroke-width="2"/>' +
+        '<rect x="32" y="30" width="8" height="8" fill="#FFF8E1"/>' +
         '</svg>';
     }
     if ($('icon-topo-puzzel')) {
@@ -24672,6 +26424,9 @@
     elSet('topodrop-home-icon', homeIconHtml());
     elSet('planetenlevel-home-icon', homeIconHtml());
     elSet('planeten-home-icon', homeIconHtml());
+    elSet('torenkaarten-home-icon', homeIconHtml());
+    elSet('torenlevel-home-icon', homeIconHtml());
+    elSet('toren-home-icon', homeIconHtml());
     elSet('play-back-icon', backIconHtml());
     elSet('picker-back-icon', backIconHtml());
     elSet('trace-back-icon', backIconHtml());
@@ -24717,6 +26472,9 @@
     elSet('topodrop-back-icon', backIconHtml());
     elSet('planetenlevel-back-icon', backIconHtml());
     elSet('planeten-back-icon', backIconHtml());
+    elSet('torenkaarten-back-icon', backIconHtml());
+    elSet('torenlevel-back-icon', backIconHtml());
+    elSet('toren-back-icon', backIconHtml());
     elSet('letters-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('trace-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('names-star-icon', starSvg('#FFD54F', '#F9A825'));
@@ -24760,6 +26518,9 @@
     elSet('topodrop-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('planetenlevel-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('planeten-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('torenkaarten-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('torenlevel-star-icon', starSvg('#FFD54F', '#F9A825'));
+    elSet('toren-star-icon', starSvg('#FFD54F', '#F9A825'));
     elSet('planeten-ov-stars', '<span class="rs">' + starSvg('#FFD54F', '#F9A825') + '</span><span class="rs">' + starSvg('#FFD54F', '#F9A825') + '</span><span class="rs">' + starSvg('#FFD54F', '#F9A825') + '</span>');
     if ($('planeten-pause-icon')) {
       $('planeten-pause-icon').innerHTML =
@@ -24768,6 +26529,14 @@
         '<rect x="14" y="4" width="5" height="16" rx="1.5" fill="#1A7FB3"/>' +
         '</svg>';
     }
+    if ($('toren-pause-icon')) {
+      $('toren-pause-icon').innerHTML =
+        '<svg viewBox="0 0 24 24" width="26" height="26" focusable="false">' +
+        '<rect x="5" y="4" width="5" height="16" rx="1.5" fill="#1A7FB3"/>' +
+        '<rect x="14" y="4" width="5" height="16" rx="1.5" fill="#1A7FB3"/>' +
+        '</svg>';
+    }
+    elSet('toren-ov-stars', '<span class="rs">' + starSvg('#FFD54F', '#F9A825') + '</span><span class="rs">' + starSvg('#FFD54F', '#F9A825') + '</span><span class="rs">' + starSvg('#FFD54F', '#F9A825') + '</span>');
     if ($('icon-vormen')) {
       $('icon-vormen').innerHTML =
         vormSvg('circle', '#2FB3F0', '#1A7FB3', 0) +
@@ -24943,6 +26712,7 @@
       if (state.screen === 'verschillen') layoutVers();
       if (state.screen === 'robot') layoutRobot();
       if (state.screen === 'planeten') { planetenSizeCanvas(); planetenDraw(); }
+      if (state.screen === 'toren') { torenSizeCanvas(); torenDraw(); }
     }, false);
     document.addEventListener('click', onClick, false);
     document.addEventListener('mousedown', onMouseDown, false);
@@ -24966,6 +26736,7 @@
         if (state.screen === 'robot') layoutRobot();
         if (state.screen === 'memoryplay') layoutMemory();
         if (state.screen === 'planeten') { planetenSizeCanvas(); planetenDraw(); }
+        if (state.screen === 'toren') { torenSizeCanvas(); torenDraw(); }
       }, 250);
     }, false);
 

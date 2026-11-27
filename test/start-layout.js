@@ -57,11 +57,12 @@ async function check(page, width, height, shotName) {
     };
   }, width, height);
 
-  if (info.nTiles !== 10) throw new Error(shotName + ' expected 10 tiles, got ' + info.nTiles);
+  if (info.nTiles !== 11) throw new Error(shotName + ' expected 11 tiles, got ' + info.nTiles);
   if (info.nPlayers !== 3) throw new Error(shotName + ' expected 3 player buttons, got ' + info.nPlayers);
   if (info.labels.indexOf('Logica') === -1) throw new Error(shotName + ' Logica label missing: ' + info.labels.join(','));
   if (info.labels.indexOf('Topografie') === -1) throw new Error(shotName + ' Topografie label missing: ' + info.labels.join(','));
   if (info.labels.indexOf('Planeten') === -1) throw new Error(shotName + ' Planeten label missing: ' + info.labels.join(','));
+  if (info.labels.indexOf('Torens') === -1) throw new Error(shotName + ' Torens label missing: ' + info.labels.join(','));
   if (info.labels.indexOf('Programmeren') !== -1) throw new Error(shotName + ' still says Programmeren');
   if (info.issues.length) {
     console.error('FAIL ' + shotName, info.issues, JSON.stringify({ tiles: info.tiles, players: info.players }));
