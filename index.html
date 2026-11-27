@@ -9,15 +9,15 @@
   <meta name="apple-mobile-web-app-title" content="Leer &amp; Speel">
   <meta name="format-detection" content="telephone=no">
   <meta name="theme-color" content="#6EC9F0">
-  <meta name="app-version" content="2026-11-27-75">
+  <meta name="app-version" content="2026-11-27-76">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <title>Leer &amp; Speel</title>
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180.png?v=2026-11-27-75">
-  <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152.png?v=2026-11-27-75">
-  <link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76.png?v=2026-11-27-75">
-  <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-152.png?v=2026-11-27-75">
-  <link rel="icon" type="image/png" href="apple-touch-icon-152.png?v=2026-11-27-75">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180.png?v=2026-11-27-76">
+  <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152.png?v=2026-11-27-76">
+  <link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76.png?v=2026-11-27-76">
+  <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-152.png?v=2026-11-27-76">
+  <link rel="icon" type="image/png" href="apple-touch-icon-152.png?v=2026-11-27-76">
   <style>
     html, body {
       margin: 0;
@@ -1084,12 +1084,16 @@
       margin: 8px auto 0 auto;
     }
     #topo-grid .level-btn {
-      -webkit-flex: 0 0 30%;
-      flex: 0 0 30%;
-      max-width: 280px;
-      min-height: 118px;
-      max-height: 180px;
-      margin: 6px 1.2%;
+      -webkit-flex: 0 0 22%;
+      flex: 0 0 22%;
+      max-width: 230px;
+      min-height: 96px;
+      max-height: 150px;
+      margin: 5px 1%;
+    }
+    #topo-grid .level-label { font-size: 14px; }
+    @media (max-height: 500px) {
+      #topo-grid .level-btn { min-height: 72px; max-height: 110px; margin: 3px 1%; }
     }
     #topolevel-grid .level-btn {
       -webkit-flex: 0 0 42%;
@@ -1113,6 +1117,12 @@
     .lvl-topo-zee.pressed, .lvl-topo-zee:active { -webkit-box-shadow: 0 2px 0 #01579B, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #01579B, 0 4px 8px rgba(0,0,0,0.15); }
     .lvl-topo-fries { background: #C62828; -webkit-box-shadow: 0 10px 0 #8E0000, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #8E0000, 0 14px 16px rgba(0,0,0,0.12); }
     .lvl-topo-fries.pressed, .lvl-topo-fries:active { -webkit-box-shadow: 0 2px 0 #8E0000, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #8E0000, 0 4px 8px rgba(0,0,0,0.15); }
+    .lvl-topo-provpuzzel { background: #00897B; -webkit-box-shadow: 0 10px 0 #00695C, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #00695C, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-topo-provpuzzel.pressed, .lvl-topo-provpuzzel:active { -webkit-box-shadow: 0 2px 0 #00695C, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #00695C, 0 4px 8px rgba(0,0,0,0.15); }
+    .lvl-topo-provwaar { background: #5E35B1; -webkit-box-shadow: 0 10px 0 #4527A0, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #4527A0, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-topo-provwaar.pressed, .lvl-topo-provwaar:active { -webkit-box-shadow: 0 2px 0 #4527A0, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #4527A0, 0 4px 8px rgba(0,0,0,0.15); }
+    .lvl-topo-hoofdstad { background: #EF6C00; -webkit-box-shadow: 0 10px 0 #E65100, 0 14px 16px rgba(0,0,0,0.12); box-shadow: 0 10px 0 #E65100, 0 14px 16px rgba(0,0,0,0.12); }
+    .lvl-topo-hoofdstad.pressed, .lvl-topo-hoofdstad:active { -webkit-box-shadow: 0 2px 0 #E65100, 0 4px 8px rgba(0,0,0,0.15); box-shadow: 0 2px 0 #E65100, 0 4px 8px rgba(0,0,0,0.15); }
 
     #topo-drop-stage {
       display: -webkit-flex;
@@ -6906,6 +6916,18 @@
         <button type="button" class="tap level-btn lvl-topo-fries" data-act="topo-game" data-game="fries">
           <div class="level-icon" id="icon-topo-fries"></div>
           <div class="level-label">Steden in Friesland</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-topo-provpuzzel" data-act="topo-game" data-game="provpuzzel">
+          <div class="level-icon" id="icon-topo-provpuzzel"></div>
+          <div class="level-label">Provincies puzzel</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-topo-provwaar" data-act="topo-game" data-game="provwaar">
+          <div class="level-icon" id="icon-topo-provwaar"></div>
+          <div class="level-label">Waar ligt de provincie?</div>
+        </button>
+        <button type="button" class="tap level-btn lvl-topo-hoofdstad" data-act="topo-game" data-game="hoofdstad">
+          <div class="level-icon" id="icon-topo-hoofdstad"></div>
+          <div class="level-label">Hoofdsteden</div>
         </button>
       </div>
     </div>
@@ -17401,8 +17423,8 @@
       showTijdMenu();
     } else if (s === 'topopuzzel' || s === 'topoplay' || s === 'topowaar' || s === 'topodrop') {
       if (s === 'topodrop') showTopoMenu();
-      else if (s === 'topowaar' && (topoState.game === 'ocean' || topoState.game === 'zee')) showTopoMenu();
-      else if (s === 'topopuzzel' && topoIsContinent()) showTopoMenu();
+      else if (s === 'topowaar' && (topoState.game === 'ocean' || topoState.game === 'zee' || topoState.game === 'provwaar')) showTopoMenu();
+      else if (s === 'topopuzzel' && (topoIsContinent() || topoIsProvPuzzel())) showTopoMenu();
       else showTopoLevel();
     } else if (s === 'topolevel') {
       showTopoMenu();
@@ -17695,6 +17717,19 @@
         return;
       }
       if (g === 'fries') {
+        startTopoDrop(g, true);
+        return;
+      }
+      if (g === 'provpuzzel') {
+        topoState.game = 'provpuzzel';
+        startTopoPuzzel('hard', true);
+        return;
+      }
+      if (g === 'provwaar') {
+        startTopoWaar('hard', true, g);
+        return;
+      }
+      if (g === 'hoofdstad') {
         startTopoDrop(g, true);
         return;
       }
@@ -22327,14 +22362,20 @@
     return topoState.game === 'continent';
   }
 
+  function topoIsProvPuzzel() {
+    return topoState.game === 'provpuzzel';
+  }
+
   function topoActiveSet() {
-    return topoIsContinent() ? TOPO_CONTINENTEN : TOPO_LANDEN;
+    if (topoIsContinent()) return TOPO_CONTINENTEN;
+    if (topoIsProvPuzzel()) return TOPO_PROVINCIES;
+    return TOPO_LANDEN;
   }
 
   function topoVb() {
-    return topoIsContinent()
-      ? { w: TOPO_WORLD_VB_W, h: TOPO_WORLD_VB_H }
-      : { w: TOPO_VB_W, h: TOPO_VB_H };
+    if (topoIsContinent()) return { w: TOPO_WORLD_VB_W, h: TOPO_WORLD_VB_H };
+    if (topoIsProvPuzzel()) return { w: TOPO_PROV_VB_W, h: TOPO_PROV_VB_H };
+    return { w: TOPO_VB_W, h: TOPO_VB_H };
   }
 
   function topoItemById(id) {
@@ -22344,6 +22385,9 @@
     }
     for (i = 0; i < TOPO_CONTINENTEN.length; i++) {
       if (TOPO_CONTINENTEN[i].id === id) return TOPO_CONTINENTEN[i];
+    }
+    for (i = 0; i < TOPO_PROVINCIES.length; i++) {
+      if (TOPO_PROVINCIES[i].id === id) return TOPO_PROVINCIES[i];
     }
     return null;
   }
@@ -22428,6 +22472,40 @@
     }
     return (n % 2) === 1;
   }
+
+  function topoSegDist(x, y, x1, y1, x2, y2) {
+    var dx, dy, t, px, py;
+    dx = x2 - x1;
+    dy = y2 - y1;
+    if (dx === 0 && dy === 0) {
+      return Math.sqrt((x - x1) * (x - x1) + (y - y1) * (y - y1));
+    }
+    t = ((x - x1) * dx + (y - y1) * dy) / (dx * dx + dy * dy);
+    if (t < 0) t = 0;
+    else if (t > 1) t = 1;
+    px = x1 + t * dx;
+    py = y1 + t * dy;
+    return Math.sqrt((x - px) * (x - px) + (y - py) * (y - py));
+  }
+
+  function topoDistToPath(x, y, path) {
+    var rings, ring, i, j, d, best, a, b;
+    if (!path) return 1e9;
+    if (topoPointInPath(x, y, path)) return 0;
+    rings = topoParseRings(path);
+    best = 1e9;
+    for (i = 0; i < rings.length; i++) {
+      ring = rings[i];
+      for (j = 0; j < ring.length; j++) {
+        a = ring[j];
+        b = ring[(j + 1) % ring.length];
+        d = topoSegDist(x, y, a[0], a[1], b[0], b[1]);
+        if (d < best) best = d;
+      }
+    }
+    return best;
+  }
+
 
   function topoSnapRadiusVb(land) {
     var m, r;
@@ -22623,6 +22701,59 @@
     {id:'schiermonnikoog',name:'Schiermonnikoog',audio:'eiland-schiermonnikoog',kind:'eiland',pre:0,cx:845,cy:119,r:36,path:'M921 106L926 97L805 114L789 126L787 143L810 135L857 130L867 121L896 111L900 107Z'},
   ];
 
+  var TOPO_PROV_VB_W = 720;
+  var TOPO_PROV_VB_H = 857;
+  var TOPO_PROVINCIES = [
+    {id:'groningen',name:'Groningen',audio:'provincie-groningen',color:'#EF5350',easyP:1,hardP:1,
+     cx:613,cy:127,x:515,y:32,w:178,h:202,
+     capId:'groningen',capName:'Groningen',capAudio:'stad-groningen',capX:584,capY:127,
+     path:'M693 120L693 137L689 150L691 160L693 180L691 199L687 208L671 234L667 229L662 226L666 214L648 193L613 157L607 156L595 159L593 154L587 146L583 144L578 135L567 132L557 139L552 145L547 159L543 164L532 158L521 157L517 154L516 152L515 146L516 140L524 128L523 121L529 109L535 102L534 101L533 92L530 91L526 92L523 88L517 86L515 80L518 73L533 73L540 77L546 73L571 65L612 59L629 62L636 67L642 90L647 93L650 97L662 103L665 102L669 104L674 102L674 104L672 106L673 114L678 117L691 120L693 120ZM562 32L565 32L574 36L572 38L562 34L562 32Z'},
+    {id:'friesland',name:'Friesland',audio:'provincie-friesland',color:'#42A5F5',easyP:1,hardP:1,
+     cx:451,cy:164,x:292,y:44,w:269,h:205,
+     capId:'leeuwarden',capName:'Leeuwarden',capAudio:'stad-leeuwarden',capX:450,capY:133,
+     path:'M344 187L367 166L375 164L378 162L382 155L387 136L390 127L400 117L406 114L415 104L427 101L433 96L461 85L467 81L471 80L482 75L518 73L515 80L517 86L523 88L526 92L530 91L533 92L534 101L535 102L530 108L523 121L525 127L516 140L515 146L516 152L520 156L532 158L539 163L539 167L547 171L549 181L561 198L555 209L546 215L540 211L532 210L523 220L508 231L495 235L491 240L485 239L479 234L473 236L470 241L465 244L458 244L455 242L449 245L447 240L441 235L430 235L422 238L409 248L377 249L358 227L344 187L344 187ZM292 127L299 118L310 107L322 101L331 102L331 104L326 104L319 107L297 129L292 127ZM386 68L388 66L414 61L410 67L405 68L395 69L396 73L394 74L387 75L349 90L344 90L342 85L344 80L353 77L356 75L383 70L386 68ZM429 57L471 56L478 59L461 63L443 63L430 68L426 67L423 63L424 58L427 56L429 57ZM522 46L540 44L544 46L544 48L512 57L509 61L508 59L509 57L507 53L511 50L518 47L522 46Z'},
+    {id:'drenthe',name:'Drenthe',audio:'provincie-drenthe',color:'#FFA726',easyP:1,hardP:1,
+     cx:593,cy:228,x:508,y:132,w:163,h:167,
+     capId:'assen',capName:'Assen',capAudio:'stad-assen',capX:583,capY:191,
+     path:'M671 234L668 248L665 289L662 295L653 292L645 293L636 290L619 291L610 295L608 294L608 289L606 288L592 282L587 283L576 289L576 299L568 295L563 297L560 294L553 297L549 290L542 283L533 283L523 278L520 280L517 279L514 276L508 260L510 257L515 255L521 249L522 247L508 231L523 220L532 210L540 211L546 215L554 210L560 201L561 198L559 194L549 181L547 171L539 167L539 163L543 164L544 164L552 145L567 132L578 135L583 144L587 146L593 154L595 159L607 156L614 158L648 193L666 214L662 226L667 229L671 234L671 234Z'},
+    {id:'overijssel',name:'Overijssel',audio:'provincie-overijssel',color:'#66BB6A',easyP:1,hardP:1,
+     cx:561,cy:346,x:449,y:231,w:218,h:210,
+     capId:'zwolle',capName:'Zwolle',capAudio:'stad-zwolle',capX:502,capY:327,
+     path:'M610 295L607 297L609 300L608 307L615 314L602 319L604 323L606 337L610 341L614 344L628 345L642 350L651 348L654 344L665 361L667 369L666 379L661 391L661 396L664 407L656 411L646 423L639 426L630 440L619 441L617 439L600 436L602 431L602 427L599 424L591 425L588 421L572 422L566 417L557 403L552 402L542 407L531 407L517 405L513 408L511 407L511 401L507 399L507 395L504 387L501 385L498 381L501 370L500 367L507 364L509 357L509 353L505 347L502 340L494 329L491 327L481 335L474 336L467 325L463 324L459 309L457 306L457 303L459 301L468 297L475 298L489 292L485 287L473 282L476 277L472 263L469 258L461 252L449 245L455 242L458 244L465 244L470 241L473 236L479 234L485 239L491 240L495 235L508 231L522 247L521 249L515 255L510 257L508 260L514 276L518 280L520 280L523 278L533 283L542 283L549 290L553 297L560 294L563 297L568 295L576 299L576 289L587 283L592 282L606 288L608 289L608 294L610 295L610 295Z'},
+    {id:'flevoland',name:'Flevoland',audio:'provincie-flevoland',color:'#AB47BC',easyP:1,hardP:1,
+     cx:403,cy:315,x:329,y:235,w:160,h:162,
+     capId:'lelystad',capName:'Lelystad',capAudio:'stad-lelystad',capX:395,capY:325,
+     path:'M441 235L447 240L449 245L461 252L469 258L472 263L476 277L473 282L485 287L489 292L475 298L468 297L459 301L457 303L457 306L459 309L463 324L463 329L461 336L454 347L446 355L426 364L417 371L413 374L405 393L399 396L386 397L376 392L362 382L356 380L346 380L340 379L331 369L330 360L340 351L346 351L342 338L333 326L329 307L358 289L361 278L366 274L375 277L377 249L409 248L422 238L430 235L437 235L441 235Z'},
+    {id:'gelderland',name:'Gelderland',audio:'provincie-gelderland',color:'#26A69A',easyP:1,hardP:1,
+     cx:475,cy:454,x:313,y:324,w:313,h:223,
+     capId:'arnhem',capName:'Arnhem',capAudio:'stad-arnhem',capX:470,capY:476,
+     path:'M619 441L616 443L609 453L604 455L602 458L603 462L621 471L626 477L626 483L623 485L615 498L610 500L595 501L577 507L566 514L551 511L553 518L552 520L545 522L545 518L536 515L532 509L525 510L508 501L502 504L513 516L500 513L493 515L487 519L477 522L474 524L473 526L477 529L480 535L479 540L476 544L471 540L467 535L462 536L462 540L444 539L427 528L424 521L416 520L405 521L399 518L389 523L382 523L379 525L376 535L374 539L368 543L336 547L334 546L336 541L336 537L330 532L324 533L315 525L314 515L313 514L318 513L333 507L333 502L344 481L351 481L357 478L366 483L370 482L375 478L379 477L385 479L393 475L400 477L413 485L419 486L419 478L412 466L408 442L406 443L406 445L405 448L401 451L399 452L394 448L399 439L401 440L401 433L395 426L387 424L386 422L389 416L381 410L383 396L386 397L399 396L405 393L413 374L417 371L426 364L446 355L454 347L461 336L463 324L467 325L473 335L475 336L481 335L491 327L494 329L502 340L505 347L509 353L509 357L507 364L500 367L501 370L498 381L501 385L504 387L507 395L507 399L511 401L510 405L512 408L517 405L531 407L542 407L552 402L557 403L566 417L572 422L588 421L591 425L599 424L602 427L602 431L600 436L617 439L619 441L619 441Z'},
+    {id:'utrecht',name:'Utrecht',audio:'provincie-utrecht',color:'#EC407A',easyP:1,hardP:1,
+     cx:342,cy:443,x:272,y:391,w:147,h:97,
+     capId:'utrecht',capName:'Utrecht',capAudio:'stad-utrecht',capX:334,capY:446,
+     path:'M383 396L381 410L389 416L386 422L387 424L395 426L401 433L401 440L399 439L394 448L399 452L401 451L405 448L406 445L406 443L408 442L412 466L419 478L419 486L413 485L400 477L393 475L385 479L379 477L375 478L370 482L366 483L357 478L351 481L343 481L339 479L335 473L331 471L324 474L318 479L311 477L305 481L300 486L294 486L293 488L282 473L287 469L286 466L279 467L278 465L283 457L290 453L291 451L284 451L281 441L276 438L282 432L289 434L287 426L289 424L280 417L277 415L272 409L280 407L290 400L297 399L301 394L306 393L310 391L314 393L317 392L324 393L318 396L323 405L320 408L318 414L320 424L335 421L344 421L348 419L355 399L359 393L376 392L383 396L383 396Z'},
+    {id:'noordholland',name:'Noord-Holland',audio:'provincie-noordholland',color:'#5C6BC0',easyP:1,hardP:1,
+     cx:300,cy:302,x:226,y:136,w:151,h:288,
+     capId:'haarlem',capName:'Haarlem',capAudio:'stad-haarlem',capX:251,capY:364,
+     path:'M227 377L238 346L239 336L243 329L250 274L255 247L263 228L266 201L268 198L279 200L281 198L282 201L280 209L284 214L291 216L297 216L309 207L319 205L326 202L344 187L358 227L377 249L375 277L366 274L361 278L358 289L329 307L333 326L342 338L346 351L340 351L330 360L331 369L340 379L346 380L356 380L362 382L376 392L358 394L348 419L344 421L335 421L320 424L318 414L320 408L323 405L318 396L324 393L317 392L314 393L310 391L306 393L301 394L297 399L290 400L284 405L272 409L267 413L265 412L262 405L252 409L240 412L234 409L234 407L236 404L238 395L245 383L241 382L237 384L226 380L227 377ZM294 158L294 160L297 160L294 168L289 175L281 182L277 189L271 191L265 188L262 181L263 174L266 166L271 159L279 152L287 136L293 137L294 140L293 142L297 151L297 156L294 158Z'},
+    {id:'zuidholland',name:'Zuid-Holland',audio:'provincie-zuidholland',color:'#F9A825',easyP:1,hardP:1,
+     cx:227,cy:489,x:116,y:377,w:228,h:197,
+     capId:'den-haag',capName:'Den Haag',capAudio:'stad-den-haag',capX:191,capY:450,
+     path:'M159 571L159 565L161 562L170 560L164 555L152 551L149 548L148 538L145 533L136 525L133 528L117 531L116 524L121 520L131 517L133 515L142 516L148 519L153 516L145 503L147 497L141 477L143 473L151 475L158 474L164 470L189 440L210 409L227 377L226 380L234 383L237 384L241 382L245 383L238 395L234 409L236 409L239 411L244 411L262 405L265 412L267 413L272 409L277 415L280 417L289 424L287 426L289 434L282 432L276 438L281 441L284 451L291 451L290 453L283 457L278 465L279 467L286 466L287 469L282 473L293 488L294 486L300 486L305 481L311 477L318 479L324 474L331 471L333 471L339 479L344 481L333 502L333 507L318 513L313 514L314 515L314 521L297 520L290 526L286 527L276 527L268 535L265 540L256 551L251 551L234 557L227 558L209 554L204 564L197 569L173 574L162 568L159 571L159 571Z'},
+    {id:'zeeland',name:'Zeeland',audio:'provincie-zeeland',color:'#29B6F6',easyP:1,hardP:1,
+     cx:108,cy:628,x:27,y:543,w:161,h:153,
+     capId:'middelburg',capName:'Middelburg',capAudio:'stad-middelburg',capX:72,capY:613,
+     path:'M45 687L39 687L34 684L30 680L27 673L28 659L27 648L55 639L57 637L60 636L71 644L88 649L97 655L104 655L111 657L115 656L132 649L134 646L137 638L144 640L147 641L152 649L158 651L160 653L166 653L171 647L178 650L175 661L169 670L160 677L138 688L131 694L127 696L106 696L101 692L101 682L97 680L72 672L55 675L53 677L53 686L45 687ZM188 650L184 649L182 637L180 636L178 638L174 640L159 639L152 636L142 627L132 625L129 627L122 640L109 644L103 638L92 632L86 626L72 628L59 624L52 613L46 607L44 600L45 597L63 586L110 581L114 582L119 586L123 593L117 597L117 599L134 601L142 604L149 610L158 628L162 629L171 628L174 630L185 628L186 644L187 646L188 650L188 650ZM179 607L166 603L155 603L137 587L151 582L167 582L171 584L180 594L181 602L179 607ZM172 580L163 579L160 576L159 571L162 568L174 574L172 580ZM146 560L153 562L156 565L157 569L155 572L149 575L132 578L122 573L120 565L110 560L106 556L104 556L99 562L91 563L87 562L85 558L86 549L92 545L107 543L112 544L129 545L136 548L144 559L146 560Z'},
+    {id:'noordbrabant',name:'Noord-Brabant',audio:'provincie-noordbrabant',color:'#8D6E63',easyP:1,hardP:1,
+     cx:345,cy:596,x:172,y:518,w:322,h:175,
+     capId:'hertogenbosch',capName:'\'s-Hertogenbosch',capAudio:'stad-hertogenbosch',capX:365,capY:557,
+     path:'M282 637L281 632L282 624L282 620L280 617L274 614L272 614L266 617L253 634L248 636L240 635L233 635L230 633L232 622L230 620L228 619L214 624L205 629L207 631L205 638L211 648L211 653L207 655L199 655L188 650L187 646L186 644L185 628L188 628L191 621L189 615L186 610L179 607L182 597L180 594L175 588L174 582L172 580L174 574L197 569L204 564L209 554L227 558L234 557L251 551L256 551L265 540L268 535L276 527L286 527L290 526L297 520L314 521L315 525L324 533L330 532L336 537L336 541L334 546L336 547L368 543L374 539L376 535L379 525L382 523L389 523L399 518L405 521L416 520L424 521L427 528L444 539L462 540L465 541L465 545L466 548L469 550L476 551L479 553L481 563L484 566L483 569L490 579L494 592L494 594L492 596L486 593L473 597L458 594L464 628L470 636L474 645L464 654L430 665L422 677L419 688L417 690L408 693L405 680L402 676L398 673L394 673L380 681L359 680L353 682L350 681L350 671L347 667L337 667L334 666L330 655L324 648L323 645L324 639L326 630L323 624L317 619L315 620L309 632L301 642L297 643L287 639L275 639L271 637L272 634L274 634L282 637Z'},
+    {id:'limburg',name:'Limburg',audio:'provincie-limburg',color:'#7E57C2',easyP:1,hardP:1,
+     cx:472,cy:699,x:408,y:535,w:114,h:290,
+     capId:'maastricht',capName:'Maastricht',capAudio:'stad-maastricht',capX:432,capY:796,
+     path:'M476 543L475 547L482 548L490 554L487 562L491 567L503 572L500 582L501 586L519 610L521 625L519 641L522 645L519 657L511 664L497 689L496 694L495 701L496 706L500 708L509 702L513 703L508 708L511 711L509 715L499 720L483 733L475 745L472 746L465 739L460 742L464 757L464 764L473 760L480 762L486 761L485 768L486 774L491 778L497 780L495 785L497 790L496 796L494 798L490 798L487 799L486 802L485 810L483 813L480 812L481 816L485 821L485 825L450 824L443 818L439 823L437 824L432 822L434 812L424 806L421 802L420 796L433 781L438 779L445 765L442 764L438 765L447 747L445 744L446 738L448 737L450 738L451 737L453 731L452 727L456 727L459 725L455 720L456 717L458 715L456 710L448 711L439 702L427 703L421 698L411 695L408 693L417 690L419 688L422 677L430 665L464 654L474 645L470 636L464 628L458 594L473 597L486 593L492 596L494 594L490 579L483 569L484 566L481 563L479 553L476 551L469 550L466 548L465 545L465 541L462 540L462 536L467 535L471 541L476 543L476 543Z'}
+  ];
+
   var topoState = {
     game: '',
     kind: '',
@@ -22743,7 +22874,7 @@
     if (!el) return;
     tot = topoState.total;
     left = topoState.remain.length;
-    el.innerHTML = (tot - left) + ' van ' + tot + (topoIsContinent() ? ' werelddelen' : ' landen');
+    el.innerHTML = (tot - left) + ' van ' + tot + (topoIsContinent() ? ' werelddelen' : (topoIsProvPuzzel() ? ' provincies' : ' landen'));
   }
 
   function startTopoPuzzel(kind, fresh) {
@@ -22755,13 +22886,13 @@
       state.lastWasPersonal = false;
       resetVoiceCycle();
     }
-    if (topoState.game !== 'continent') topoState.game = 'puzzel';
+    if (topoState.game !== 'continent' && topoState.game !== 'provpuzzel') topoState.game = 'puzzel';
     topoState.kind = kind || 'easy';
-    state.level = (topoIsContinent() ? 'continent-' : 'puzzel-') + topoState.kind;
+    state.level = (topoIsContinent() ? 'continent-' : (topoIsProvPuzzel() ? 'provpuzzel-' : 'puzzel-')) + topoState.kind;
     state.locked = false;
     hideReward();
     if ($('topo-puzzel-prompt')) {
-      $('topo-puzzel-prompt').innerHTML = topoIsContinent() ? 'Continenten puzzel' : 'Europa puzzel';
+      $('topo-puzzel-prompt').innerHTML = topoIsContinent() ? 'Continenten puzzel' : (topoIsProvPuzzel() ? 'Provincies puzzel' : 'Europa puzzel');
     }
     ids = topoIsContinent()
       ? topoIdsWhere('hardP')
@@ -22809,7 +22940,7 @@
     updateStarsUI();
     window.setTimeout(function () {
       beginQuestionVoice();
-      speak(topoIsContinent() ? 'topo-continenten' : 'topo-puzzel');
+      speak(topoIsContinent() ? 'topo-continenten' : (topoIsProvPuzzel() ? 'topo-provpuzzel' : 'topo-puzzel'));
     }, 40);
   }
 
@@ -23272,12 +23403,14 @@
   function topoWaarGameItems() {
     if (topoState.game === 'ocean') return TOPO_OCEANEN;
     if (topoState.game === 'zee') return TOPO_ZEEEN;
+    if (topoState.game === 'provwaar') return TOPO_PROVINCIES;
     return TOPO_LANDEN;
   }
 
   function topoWaarVb() {
     if (topoState.game === 'ocean') return { w: TOPO_OCEAN_VB_W, h: TOPO_OCEAN_VB_H };
     if (topoState.game === 'zee') return { w: TOPO_ZEE_VB_W, h: TOPO_ZEE_VB_H };
+    if (topoState.game === 'provwaar') return { w: TOPO_PROV_VB_W, h: TOPO_PROV_VB_H };
     return { w: TOPO_VB_W, h: TOPO_VB_H };
   }
 
@@ -23315,6 +23448,7 @@
       if (land.id === 'kanaal') return 'waar-ligt-het-kanaal';
       return 'waar-ligt-de-' + String(land.audio).replace(/^zee-/, '');
     }
+    if (String(land.audio).indexOf('provincie-') === 0) return 'waar-ligt-' + land.audio;
     return String(land.audio).replace('land-', 'waar-ligt-');
   }
 
@@ -23340,7 +23474,7 @@
     var html, fs, name, anchors, i, a, ax, ay, halo, hx, hy;
     if (!it) return '';
     name = it.name;
-    fs = 22;
+    fs = (topoState.game === 'provwaar') ? 16 : 22;
     html = '';
     anchors = [{ x: it.cx, y: it.cy }];
     if (it.id === 'pacific' && it.cx2 != null) {
@@ -23408,14 +23542,21 @@
         if (found && found[it.id]) html += topoWaarLabelHtml(it);
       }
     } else {
-      for (i = 0; i < TOPO_LANDEN.length; i++) {
-        land = TOPO_LANDEN[i];
+      items = topoWaarGameItems();
+      for (i = 0; i < items.length; i++) {
+        land = items[i];
         if (!land.path) continue;
         fill = '#E8E0D0';
-        if (found && found[land.id]) fill = '#43A047';
+        if (found && found[land.id]) fill = (topoState.game === 'provwaar' && land.color) ? land.color : '#43A047';
         else if (wrongId && land.id === wrongId) fill = '#E53935';
         else if (hintId && land.id === hintId) fill = '#FFF59D';
-        html += '<path data-topo-id="' + land.id + '" fill="' + fill + '" stroke="#455A64" stroke-width="1.2" stroke-linejoin="round" d="' + land.path + '"/>';
+        html += '<path data-topo-id="' + land.id + '" fill="' + fill + '" stroke="#455A64" stroke-width="1.2" stroke-linejoin="round" pointer-events="all" d="' + land.path + '"/>';
+      }
+      if (topoState.game === 'provwaar') {
+        for (i = 0; i < items.length; i++) {
+          land = items[i];
+          if (found && found[land.id]) html += topoWaarLabelHtml(land);
+        }
       }
     }
     html += '</svg>';
@@ -23513,8 +23654,9 @@
       return best;
     }
     hits = [];
-    for (i = 0; i < TOPO_LANDEN.length; i++) {
-      land = TOPO_LANDEN[i];
+    items = topoWaarGameItems();
+    for (i = 0; i < items.length; i++) {
+      land = items[i];
       if (!land.path) continue;
       if (topoPointInPath(x, y, land.path)) hits.push(land);
     }
@@ -23532,15 +23674,17 @@
       return best;
     }
     pad = (kind === 'hard') ? 28 : 44;
+    if (topoState.game === 'provwaar') pad = 36;
     best = null;
     bestD = 1e9;
-    for (i = 0; i < TOPO_LANDEN.length; i++) {
-      land = TOPO_LANDEN[i];
+    for (i = 0; i < items.length; i++) {
+      land = items[i];
       if (!land.path) continue;
       if (x < land.x - pad || x > land.x + land.w + pad || y < land.y - pad || y > land.y + land.h + pad) continue;
       d = Math.sqrt((x - land.cx) * (x - land.cx) + (y - land.cy) * (y - land.cy));
       r = Math.max(pad, Math.min(land.w, land.h) * 0.5);
       if (kind !== 'hard') r = Math.max(r, 52);
+      if (topoState.game === 'provwaar' && Math.min(land.w, land.h) < 130) r = Math.max(r, 48);
       if (d <= r + pad && d < bestD) {
         bestD = d;
         best = land;
@@ -23565,8 +23709,8 @@
       if (game === 'waar' || prevGame !== game) {
         topoState.used = [];
         topoState.found = {};
-      } else if (game === 'ocean' || game === 'zee') {
-        items = (game === 'ocean') ? TOPO_OCEANEN : TOPO_ZEEEN;
+      } else if (game === 'ocean' || game === 'zee' || game === 'provwaar') {
+        items = (game === 'ocean') ? TOPO_OCEANEN : (game === 'zee' ? TOPO_ZEEEN : TOPO_PROVINCIES);
         if (!topoState.used) topoState.used = [];
         if (!topoState.found) topoState.found = {};
         if (topoState.used.length >= items.length) {
@@ -23591,6 +23735,8 @@
       for (i = 0; i < TOPO_OCEANEN.length; i++) pool.push(TOPO_OCEANEN[i]);
     } else if (game === 'zee') {
       for (i = 0; i < TOPO_ZEEEN.length; i++) pool.push(TOPO_ZEEEN[i]);
+    } else if (game === 'provwaar') {
+      for (i = 0; i < TOPO_PROVINCIES.length; i++) pool.push(TOPO_PROVINCIES[i]);
     } else {
       for (i = 0; i < TOPO_LANDEN.length; i++) {
         land = TOPO_LANDEN[i];
@@ -23689,10 +23835,38 @@
     offX: 0, offY: 0, startX: 0, startY: 0, moved: false, spoke: false
   };
 
+  function topoHoofdstedenItems() {
+    var i, p, out, small, r;
+    out = [];
+    for (i = 0; i < TOPO_PROVINCIES.length; i++) {
+      p = TOPO_PROVINCIES[i];
+      small = Math.min(p.w, p.h) < 130;
+      r = small ? 36 : 24;
+      out.push({
+        id: p.capId,
+        name: p.capName,
+        audio: p.capAudio,
+        path: p.path,
+        cx: p.capX,
+        cy: p.capY,
+        x: p.x,
+        y: p.y,
+        w: p.w,
+        h: p.h,
+        color: p.color,
+        provId: p.id,
+        r: r,
+        pre: 0
+      });
+    }
+    return out;
+  }
+
   function topoDropItems() {
     if (topoState.game === 'ocean') return TOPO_OCEANEN;
     if (topoState.game === 'zee') return TOPO_ZEEEN;
     if (topoState.game === 'fries') return TOPO_FRIESLAND;
+    if (topoState.game === 'hoofdstad') return topoHoofdstedenItems();
     return [];
   }
 
@@ -23700,6 +23874,7 @@
     if (topoState.game === 'ocean') return { w: TOPO_OCEAN_VB_W, h: TOPO_OCEAN_VB_H };
     if (topoState.game === 'zee') return { w: TOPO_ZEE_VB_W, h: TOPO_ZEE_VB_H };
     if (topoState.game === 'fries') return { w: TOPO_FRIES_VB_W, h: TOPO_FRIES_VB_H };
+    if (topoState.game === 'hoofdstad') return { w: TOPO_PROV_VB_W, h: TOPO_PROV_VB_H };
     return { w: 1000, h: 800 };
   }
 
@@ -23767,6 +23942,20 @@
         best = it;
       }
     }
+    if (best) return best;
+    if (topoState.game === 'hoofdstad') {
+      for (i = 0; i < items.length; i++) {
+        it = items[i];
+        if (it.pre || (topoState.placed && topoState.placed[it.id])) continue;
+        if (!it.path) continue;
+        d = topoDistToPath(x, y, it.path);
+        r = (Math.min(it.w, it.h) < 130) ? 32 : 20;
+        if (d <= r && d < bestD) {
+          bestD = d;
+          best = it;
+        }
+      }
+    }
     return best;
   }
 
@@ -23805,6 +23994,13 @@
         html += '<path d="' + it.path + '" fill="' + it.color + '" fill-opacity="' + (placed && placed[it.id] ? '0.75' : '0.4') + '" stroke="#0277BD" stroke-width="' + (placed && placed[it.id] ? '2' : '0.8') + '" stroke-linejoin="round"/>';
       }
       html += '<path d="' + TOPO_ZEE_LAND + '" fill="#E8E0D0" stroke="#546E7A" stroke-width="1" stroke-linejoin="round"/>';
+    } else if (topoState.game === 'hoofdstad') {
+      for (i = 0; i < TOPO_PROVINCIES.length; i++) {
+        land = TOPO_PROVINCIES[i];
+        if (!land.path) continue;
+        fill = (placed && placed[land.capId]) ? land.color : '#E8E0D0';
+        html += '<path d="' + land.path + '" fill="' + fill + '" stroke="#455A64" stroke-width="1.6" stroke-linejoin="round"/>';
+      }
     } else if (topoState.game === 'fries') {
       html += '<path d="' + TOPO_FRIES_LAND + '" fill="#C8E6C9" stroke="#2E7D32" stroke-width="2.2" stroke-linejoin="round"/>';
       for (i = 0; i < items.length; i++) {
@@ -23824,7 +24020,7 @@
       if (!(it.pre || (placed && placed[it.id]))) continue;
       off = topoDropLabelOffset(it);
       anch = { x: it.cx, y: it.cy };
-      html += '<text x="' + (anch.x + off.x) + '" y="' + (anch.y + off.y) + '" font-size="' + (topoState.game === 'fries' ? '15' : '16') + '" font-weight="700" font-family="sans-serif" fill="' + (it.pre ? '#455A64' : '#0D47A1') + '">' + it.name + '</text>';
+      html += '<text x="' + (anch.x + off.x) + '" y="' + (anch.y + off.y) + '" font-size="' + (topoState.game === 'hoofdstad' ? '14' : (topoState.game === 'fries' ? '15' : '16')) + '" font-weight="700" font-family="sans-serif" fill="' + (it.pre ? '#455A64' : '#0D47A1') + '">' + it.name + '</text>';
     }
     html += '</svg>';
     return html;
@@ -23838,6 +24034,7 @@
     left = (topoState.remain && topoState.remain.length) || 0;
     if (topoState.game === 'ocean') word = 'oceanen';
     else if (topoState.game === 'zee') word = 'zeeën';
+    else if (topoState.game === 'hoofdstad') word = 'hoofdsteden';
     else word = 'plaatsen';
     el.innerHTML = (tot - left) + ' van ' + tot + ' ' + word;
   }
@@ -23873,12 +24070,14 @@
   function topoDropPrompt() {
     if (topoState.game === 'ocean') return 'Oceanen';
     if (topoState.game === 'zee') return 'Zeeën rond Europa';
+    if (topoState.game === 'hoofdstad') return 'Hoofdsteden';
     return 'Steden in Friesland';
   }
 
   function topoDropIntroAudio() {
     if (topoState.game === 'ocean') return 'topo-oceanen';
     if (topoState.game === 'zee') return 'topo-zeeen';
+    if (topoState.game === 'hoofdstad') return 'topo-hoofdsteden';
     return 'topo-friesland';
   }
 
@@ -23908,6 +24107,7 @@
     topoState.trayIds = [];
     if (game === 'ocean') topoState.batch = ids.length;
     else if (game === 'zee') topoState.batch = 7;
+    else if (game === 'hoofdstad') topoState.batch = ids.length;
     else topoState.batch = 7;
     if ($('topo-drop-prompt')) $('topo-drop-prompt').innerHTML = topoDropPrompt();
     topoDropFillTray();
@@ -24154,6 +24354,11 @@
     oceanen: TOPO_OCEANEN,
     zeeen: TOPO_ZEEEN,
     friesland: TOPO_FRIESLAND,
+    provincies: TOPO_PROVINCIES,
+    provVbW: TOPO_PROV_VB_W,
+    provVbH: TOPO_PROV_VB_H,
+    startPuzzel: startTopoPuzzel,
+    distToPath: topoDistToPath,
     oceanVbW: TOPO_OCEAN_VB_W,
     oceanVbH: TOPO_OCEAN_VB_H,
     zeeVbW: TOPO_ZEE_VB_W,
@@ -26972,6 +27177,30 @@
     }
   };
 
+  function topoNlIconSvg(w, h, mark) {
+    var html, i, p, s, ox, oy;
+    w = w || 72;
+    h = h || 56;
+    s = Math.min(w / TOPO_PROV_VB_W, h / TOPO_PROV_VB_H) * 0.92;
+    ox = (w - TOPO_PROV_VB_W * s) / 2;
+    oy = (h - TOPO_PROV_VB_H * s) / 2;
+    html = '<svg viewBox="0 0 ' + w + ' ' + h + '" width="' + w + '" height="' + h + '" aria-hidden="true">';
+    html += '<rect width="' + w + '" height="' + h + '" rx="8" fill="#E3F2FD"/>';
+    html += '<g transform="translate(' + ox + ',' + oy + ') scale(' + s + ')">';
+    for (i = 0; i < TOPO_PROVINCIES.length; i++) {
+      p = TOPO_PROVINCIES[i];
+      html += '<path d="' + p.path + '" fill="' + p.color + '" stroke="#37474F" stroke-width="' + (1.6 / s) + '" stroke-linejoin="round"/>';
+    }
+    if (mark === 'stad') {
+      for (i = 0; i < TOPO_PROVINCIES.length; i++) {
+        p = TOPO_PROVINCIES[i];
+        html += '<circle cx="' + p.capX + '" cy="' + p.capY + '" r="' + (3.2 / s) + '" fill="#C62828" stroke="#fff" stroke-width="' + (1.2 / s) + '"/>';
+      }
+    }
+    html += '</g></svg>';
+    return html;
+  }
+
   function decorateStatic() {
     $('sun-icon').innerHTML = sunHtml();
     if ($('icon-tekenen-start')) {
@@ -27053,6 +27282,21 @@
         '<ellipse cx="40" cy="12" rx="9" ry="3.5" fill="#A5D6A7" stroke="#2E7D32" stroke-width="1.5"/>' +
         '<ellipse cx="58" cy="15" rx="7" ry="3.2" fill="#A5D6A7" stroke="#2E7D32" stroke-width="1.5"/>' +
         '</svg>';
+    }
+    if ($('icon-topo-provpuzzel')) {
+      $('icon-topo-provpuzzel').innerHTML = topoNlIconSvg(72, 56, '');
+    }
+    if ($('icon-topo-provwaar')) {
+      $('icon-topo-provwaar').innerHTML =
+        '<div style="position:relative;width:72px;height:56px;">' +
+        topoNlIconSvg(72, 56, '') +
+        '<svg viewBox="0 0 28 28" width="28" height="28" style="position:absolute;right:-2px;bottom:-2px;" aria-hidden="true">' +
+        '<circle cx="14" cy="14" r="13" fill="#FFD54F" stroke="#6A3E00" stroke-width="2"/>' +
+        '<text x="14" y="20" text-anchor="middle" font-size="18" font-weight="700" font-family="sans-serif" fill="#4E342E">?</text>' +
+        '</svg></div>';
+    }
+    if ($('icon-topo-hoofdstad')) {
+      $('icon-topo-hoofdstad').innerHTML = topoNlIconSvg(72, 56, 'stad');
     }
     if ($('icon-topo-easy')) {
       $('icon-topo-easy').innerHTML = topoFlagSvg('nl', 72, 48);

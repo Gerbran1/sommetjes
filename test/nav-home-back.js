@@ -390,6 +390,39 @@ async function waitSpiegelNext(page) {
     ok('Friesland start direct, terug → Topografie, home → start');
 
     await fresh(page);
+    await tap(page, '#btn-goto-topo');
+    await tap(page, '#topo-grid [data-game="provpuzzel"]');
+    await expectScreen(page, 'topopuzzel', 'provpuzzel play');
+    await tap(page, '#btn-topopuzzel-back');
+    await expectScreen(page, 'topo', 'provpuzzel play back');
+    await tap(page, '#topo-grid [data-game="provpuzzel"]');
+    await tap(page, '#btn-topopuzzel-home');
+    await expectScreen(page, 'start', 'provpuzzel play home');
+    ok('Provincies puzzel start direct, terug → Topografie, home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-topo');
+    await tap(page, '#topo-grid [data-game="provwaar"]');
+    await expectScreen(page, 'topowaar', 'provwaar play');
+    await tap(page, '#btn-topowaar-back');
+    await expectScreen(page, 'topo', 'provwaar play back');
+    await tap(page, '#topo-grid [data-game="provwaar"]');
+    await tap(page, '#btn-topowaar-home');
+    await expectScreen(page, 'start', 'provwaar play home');
+    ok('Waar ligt de provincie start direct, terug → Topografie, home → start');
+
+    await fresh(page);
+    await tap(page, '#btn-goto-topo');
+    await tap(page, '#topo-grid [data-game="hoofdstad"]');
+    await expectScreen(page, 'topodrop', 'hoofdstad play');
+    await tap(page, '#btn-topodrop-back');
+    await expectScreen(page, 'topo', 'hoofdstad play back');
+    await tap(page, '#topo-grid [data-game="hoofdstad"]');
+    await tap(page, '#btn-topodrop-home');
+    await expectScreen(page, 'start', 'hoofdstad play home');
+    ok('Hoofdsteden start direct, terug → Topografie, home → start');
+
+    await fresh(page);
     await tap(page, '#btn-goto-planeten');
     await expectScreen(page, 'planetenlevel', 'planeten kiezer');
     await tap(page, '#btn-planetenlevel-back');
